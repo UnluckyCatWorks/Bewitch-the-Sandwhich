@@ -1,0 +1,278 @@
+fileFormatVersion: 2
+guid: 988f489d2315cf44aac526b80384eefd
+timeCreated: 1518733562
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Barquitas
+    100004: Barquitas001
+    100006: Barquitas002
+    100008: Barquitas003
+    100010: Box018
+    100012: Cylinder001
+    100014: Destiladora
+    100016: Destiladora001
+    100018: Encantador
+    100020: Encantador001
+    100022: Moledor
+    100024: Moledor001
+    100026: Pilar1
+    100028: Plataforma003
+    100030: Plataforma004
+    100032: Plataforma005
+    100034: Plataforma006
+    100036: Plataforma1
+    100038: Plataforma2
+    100040: Puente
+    100042: Puente001
+    100044: Puente002
+    100046: Puente003
+    100048: Puente004
+    100050: Puente005
+    100052: Puente006
+    100054: Roquita1
+    100056: Sapo
+    100058: Sapo001
+    100060: Ship
+    400000: //RootNode
+    400002: Barquitas
+    400004: Barquitas001
+    400006: Barquitas002
+    400008: Barquitas003
+    400010: Box018
+    400012: Cylinder001
+    400014: Destiladora
+    400016: Destiladora001
+    400018: Encantador
+    400020: Encantador001
+    400022: Moledor
+    400024: Moledor001
+    400026: Pilar1
+    400028: Plataforma003
+    400030: Plataforma004
+    400032: Plataforma005
+    400034: Plataforma006
+    400036: Plataforma1
+    400038: Plataforma2
+    400040: Puente
+    400042: Puente001
+    400044: Puente002
+    400046: Puente003
+    400048: Puente004
+    400050: Puente005
+    400052: Puente006
+    400054: Roquita1
+    400056: Sapo
+    400058: Sapo001
+    400060: Ship
+    2100000: No Name
+    2300000: //RootNode
+    2300002: Barquitas
+    2300004: Barquitas001
+    2300006: Barquitas002
+    2300008: Barquitas003
+    2300010: Box018
+    2300012: Cylinder001
+    2300014: Destiladora
+    2300016: Destiladora001
+    2300018: Encantador
+    2300020: Encantador001
+    2300022: Moledor
+    2300024: Moledor001
+    2300026: Pilar1
+    2300028: Plataforma003
+    2300030: Plataforma004
+    2300032: Plataforma005
+    2300034: Plataforma006
+    2300036: Plataforma1
+    2300038: Plataforma2
+    2300040: Puente
+    2300042: Puente001
+    2300044: Puente002
+    2300046: Puente003
+    2300048: Puente004
+    2300050: Puente005
+    2300052: Puente006
+    2300054: Roquita1
+    2300056: Sapo
+    2300058: Sapo001
+    2300060: Ship
+    3300000: //RootNode
+    3300002: Barquitas
+    3300004: Barquitas001
+    3300006: Barquitas002
+    3300008: Barquitas003
+    3300010: Box018
+    3300012: Cylinder001
+    3300014: Destiladora
+    3300016: Destiladora001
+    3300018: Encantador
+    3300020: Encantador001
+    3300022: Moledor
+    3300024: Moledor001
+    3300026: Pilar1
+    3300028: Plataforma003
+    3300030: Plataforma004
+    3300032: Plataforma005
+    3300034: Plataforma006
+    3300036: Plataforma1
+    3300038: Plataforma2
+    3300040: Puente
+    3300042: Puente001
+    3300044: Puente002
+    3300046: Puente003
+    3300048: Puente004
+    3300050: Puente005
+    3300052: Puente006
+    3300054: Roquita1
+    3300056: Sapo
+    3300058: Sapo001
+    3300060: Ship
+    4300000: Plataforma1
+    4300002: Plataforma2
+    4300004: Puente
+    4300006: Pilar1
+    4300008: Sapo
+    4300010: Encantador
+    4300012: Moledor
+    4300014: Destiladora
+    4300016: Roquita1
+    4300018: Box018
+    4300020: Cylinder001
+    4300022: Encantador001
+    4300024: Sapo001
+    4300026: Moledor001
+    4300028: Destiladora001
+    4300030: Plataforma003
+    4300032: Puente001
+    4300034: Puente002
+    4300036: Puente003
+    4300038: Plataforma004
+    4300040: Puente004
+    4300042: Puente005
+    4300044: Plataforma005
+    4300046: Plataforma006
+    4300048: Puente006
+    4300050: Ship
+    4300052: Barquitas
+    4300054: Barquitas001
+    4300056: Barquitas002
+    4300058: Barquitas003
+    6400000: Barquitas
+    6400002: Barquitas001
+    6400004: Barquitas002
+    6400006: Barquitas003
+    6400008: Box018
+    6400010: Cylinder001
+    6400012: Destiladora
+    6400014: Destiladora001
+    6400016: Encantador
+    6400018: Encantador001
+    6400020: Moledor
+    6400022: Moledor001
+    6400024: Pilar1
+    6400026: Plataforma003
+    6400028: Plataforma004
+    6400030: Plataforma005
+    6400032: Plataforma006
+    6400034: Plataforma1
+    6400036: Plataforma2
+    6400038: Puente
+    6400040: Puente001
+    6400042: Puente002
+    6400044: Puente003
+    6400046: Puente004
+    6400048: Puente005
+    6400050: Puente006
+    6400052: Roquita1
+    6400054: Sapo
+    6400056: Sapo001
+    6400058: Ship
+    9500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: 9f130cc65f1e67848882133d83a7313b, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 1
+    importVisibility: 1
+    importBlendShapes: 0
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
