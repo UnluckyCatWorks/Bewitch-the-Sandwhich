@@ -125,7 +125,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1169719181453722}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.35, y: 3.87, z: 2.35}
+  m_LocalPosition: {x: -0.35, y: 0.77, z: 2.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4482167500549450}
@@ -231,14 +231,15 @@ MonoBehaviour:
   speed: 8.5
   angularSpeed: 50
   gravityMul: 1
-  grabHandle: {fileID: 0}
-  throwForce: 0
-  sprintForce: 0
-  sprintCooldown: 0
-  spellCooldown: 0
-  wallDuration: 0
-  wallDistance: 0
-  maxWallDistance: 0
+  grabHandle: {fileID: 4482167500549450}
+  throwForce: 20
+  sprintForce: 20
+  sprintCooldown: 1.5
+  spellCooldown: 1.5
+  wall: {fileID: 1601212921992768, guid: b98bd2432eb897b4fb2d49ed643baf4d, type: 2}
+  wallDuration: 2
+  wallDistance: 2
+  maxWallDistance: 3
 --- !u!136 &136404571711220796
 CapsuleCollider:
   m_ObjectHideFlags: 1

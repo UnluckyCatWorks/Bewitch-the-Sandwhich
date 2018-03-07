@@ -6,6 +6,7 @@ using UnityEngine;
 public class Char2 : BCharacter
 {
 	[Header ("Wall guy Settings")]
+	public GameObject wall;
 	public float wallDuration;
 	public float wallDistance;
 	public float maxWallDistance;
@@ -43,8 +44,9 @@ public class Char2 : BCharacter
 		if (closestCastPoint != Vector3.zero)
 		{
 			// Build wall
-			var go = GameObject.CreatePrimitive (PrimitiveType.Cube);
+			var go = Instantiate (wall);
 			go.transform.position = closestCastPoint;
+			go.transform.rotation = transform.rotation;
 		}
 		else print ("lol");
 	}

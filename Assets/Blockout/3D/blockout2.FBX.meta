@@ -349,7 +349,12 @@ ModelImporter:
     6400108: Roquita1
     6400110: Sapo001
     9500000: //RootNode
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: 9f130cc65f1e67848882133d83a7313b, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
