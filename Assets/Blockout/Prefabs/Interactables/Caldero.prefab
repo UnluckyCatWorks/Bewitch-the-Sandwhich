@@ -269,37 +269,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f2d1f2475d9bf04ab79a8b48e1b57f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlinedObjects:
+  markables:
   - {fileID: 33088206729923318}
-  mat: {fileID: 0}
+  timer: {fileID: 0}
   playerOwner: 1
-  cooktime: 10
-  burntime: 4
+  cookTime: 8
+  safeTime: 2
+  burnTime: 5
   currentMix: []
   icons:
   - {fileID: 212012697597414618}
   - {fileID: 212737200618333700}
   - {fileID: 212166139307839124}
   - {fileID: 212246922775347924}
-  mesh: {fileID: 23455789688744160}
-  colorCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
 --- !u!212 &212012697597414618
 SpriteRenderer:
   m_ObjectHideFlags: 1
