@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: tes
+  m_Name: CaveWater
   m_Shader: {fileID: 4800000, guid: 64da28de7930ddb45bd1975a2b392ea6, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -32,15 +32,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Amount: 0.146
-    - _Foam: 5
+    - _Foam: 0.59
     - _Glossiness: 0.5
-    - _Height: 0.016
+    - _Height: 0.037
     - _Metallic: 0
     - _Speed: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _FTint: {r: 0.1544118, g: 0.8600405, b: 1, a: 1}
+    - _FTint: {r: 0.653, g: 1, b: 1, a: 1}
     - _TileST: {r: 0.88, g: 0.62, b: 1, a: 1}
     - _TileSp: {r: 2.8, g: 6.25, b: 1, a: 1}
     - _Tint: {r: 1, g: 1, b: 1, a: 0.491}
-    - _WTint: {r: 1, g: 1, b: 1, a: 1}
+    - _WTint: {r: 1, g: 1, b: 1, a: 0.591}

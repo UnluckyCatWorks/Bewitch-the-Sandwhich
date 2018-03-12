@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+[SharedBetweenAnimators]
 public class MachineController : StateMachineBehaviour
 {
 	#region ANIMATOR IDs
