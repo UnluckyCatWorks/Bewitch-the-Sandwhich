@@ -244,8 +244,8 @@ public abstract class Character : MonoBehaviour
 	}
 
 	#region SPECIAL INPUT HELPERS
-	// Gets input based on player controller and
-	// taking into account if it's already been consumed
+	/* Gets input based on player controller and
+	taking into account if it's already been consumed*/
 
 	List<string> consumedInputs;
 	public bool GetButtonDown (string button, bool consume=true)
