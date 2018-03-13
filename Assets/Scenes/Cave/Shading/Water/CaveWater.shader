@@ -61,8 +61,8 @@
 			USE_DEPTH;
 			fixed4 tile = tex2D ( _TileTex, IN.uv_TileTex );
 
-			float foamLine = _Foam * (depth - IN.screenPos.w);
-			float foamFactor = saturate (1 - abs(foamLine / 3.0));
+			float foamLine = (depth - IN.screenPos.w);
+			float foamFactor = 1 - smoothstep(0.0, _Foam, foamLine);
 
 			s.Albedo = lerp (tile, _FTint, foamFactor).rgb;
 			s.Alpha = _WTint.a;
