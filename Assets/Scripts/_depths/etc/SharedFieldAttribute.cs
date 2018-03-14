@@ -23,4 +23,10 @@ public class SharedFieldDrawer : PropertyDrawer
 
 		EditorGUI.EndProperty ();
 	}
+
+	public override float GetPropertyHeight (SerializedProperty property, GUIContent label)
+	{
+		if (property.isInstantiatedPrefab) return 0f;
+		return base.GetPropertyHeight (property, label);
+	}
 }

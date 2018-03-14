@@ -49,6 +49,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4392956116451564}
+  - component: {fileID: 65534724477536730}
   m_Layer: 0
   m_Name: Top_Right
   m_TagString: Untagged
@@ -80,6 +81,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4870498817824624}
   - component: {fileID: 111472623618398206}
+  - component: {fileID: 114038717436512250}
   m_Layer: 0
   m_Name: Boat_Navigation
   m_TagString: Untagged
@@ -125,7 +127,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4870498817824624}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 143.658, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 94.30806, z: 0}
 --- !u!4 &4406204722383916
 Transform:
   m_ObjectHideFlags: 1
@@ -157,6 +159,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &65534724477536730
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1734989602813944}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 1.66, y: 1.7508168, z: 5.322562}
+  m_Center: {x: 4.8209237e-10, y: 0.3754084, z: -0.09547078}
 --- !u!111 &111472623618398206
 Animation:
   m_ObjectHideFlags: 1
@@ -165,9 +179,25 @@ Animation:
   m_GameObject: {fileID: 1926382510176226}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
+  m_Animation: {fileID: 7400000, guid: 3bd4da85126293f4fb90f18156632538, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 3bd4da85126293f4fb90f18156632538, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &114038717436512250
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1926382510176226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e27296b1b65ac924e978bc6a2872f405, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bridges:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

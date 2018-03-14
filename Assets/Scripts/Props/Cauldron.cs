@@ -123,8 +123,8 @@ public class Cauldron : Interactable
 		// Restart cooking process
 		if (process != null)
 		{
-			timer.ChangeTo (Theme.NotCooked);
 			StopCoroutine (process);
+			timer.ChangeTo (Theme.NotCooked);
 		}
 		process = StartCoroutine (Cooking ());
 
@@ -152,6 +152,7 @@ public class Cauldron : Interactable
 	private Coroutine process;
 	private IEnumerator Cooking () 
 	{
+		time = 0f;
 		// Wait until is cooked
 		while (time <= cookTime)
 		{
@@ -168,9 +169,9 @@ public class Cauldron : Interactable
 		yield return new WaitForSeconds (safeTime);
 
 		// Wait until it's burned
-		while (time <= cookTime + burnTime)
+		while (time <= cookTime + burnTime) 
 		{
-			if (!stopped)
+			if (!stopped) 
 			{
 				time += Time.deltaTime;
 				timer.SetSlider ((time - cookTime) / burnTime);
@@ -179,11 +180,10 @@ public class Cauldron : Interactable
 		}
 		// If it burns
 		timer.ChangeTo (Theme.Overcooked);
-		yield return new WaitForSeconds (1f);
 		Clear ();
 	}
 
-	protected override void Awake ()
+	protected override void Awake () 
 	{
 		base.Awake ();
 		currentMix = new List<IngredientInfo> (4);

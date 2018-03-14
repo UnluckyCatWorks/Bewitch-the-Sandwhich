@@ -32,9 +32,9 @@ public class Timer : MonoBehaviour
 		ogValue = slider.fillAmount;
 
 		// Start transition
+		time = 0;
 		inTransition = true;
 		SetSlider (value);
-		time = 0;
 	}
 
 	public void SetSlider (float value) 
@@ -56,9 +56,9 @@ public class Timer : MonoBehaviour
 	private void Update () 
 	{
 		if (!inTransition) return;
-		var duration = 0.6f * ogValue;
+		var duration = Mathf.Max (0.6f /*Max duration*/ * ogValue, 0.1f /*Min duration*/);
 
-		if (time <= duration)
+		if (time <= duration) 
 		{
 			var factor = time / duration;
 			bg.color = Color.Lerp (ogBG, targetTheme.basis, factor);
