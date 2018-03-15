@@ -43,4 +43,4 @@ Material:
     - _TileST: {r: 0.88, g: 0.62, b: 1, a: 1}
     - _TileSp: {r: 2.8, g: 6.25, b: 1, a: 1}
     - _Tint: {r: 1, g: 1, b: 1, a: 0.491}
-    - _WTint: {r: 1, g: 1, b: 1, a: 0.591}
+    - _WTint: {r: 1, g: 1, b: 1, a: 0.404}
