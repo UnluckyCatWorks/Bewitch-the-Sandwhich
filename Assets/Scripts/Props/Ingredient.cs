@@ -10,7 +10,7 @@ public class Ingredient : Grabbable
 	{
 		get { return new IngredientInfo { id = id, type = type }; }
 	}
-	public Sprite[] icons;
+	public Sprite icon;
 
 	public void Process ( IngredientType newType )
 	{

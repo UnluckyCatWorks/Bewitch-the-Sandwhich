@@ -49,7 +49,7 @@ public abstract class Character : MonoBehaviour
 		input.z = -Input.GetAxis(GetInputName("Vertical"));
 
 		// Get speed & calculate rotation
-		var dir = input.normalized;
+		var dir = Vector3.Min (input, input.normalized);
 		if (!locks.HasFlag(Locks.Movement)) movingSpeed = dir * speed;
 		if (input != Vector3.zero) targetRotation = Quaternion.LookRotation(dir);
 	}
@@ -73,14 +73,17 @@ public abstract class Character : MonoBehaviour
 	}
 
 	[NonSerialized]
-	public Grabbable gobj;
+	public Grabbable grab;
 	private void HoldGrabbed ()
 	{
-		if (gobj == null) return;
-		var newPos = Vector3.Lerp(gobj.body.position, grabHandle.position, Time.fixedDeltaTime * 7f);
-		gobj.body.MovePosition(newPos);
+		if (grab == null) return;
+		var newPos = Vector3.Lerp(grab.body.position, grabHandle.position, Time.fixedDeltaTime * 7f);
+		grab.body.MovePosition(newPos);
 	}
 	#endregion
+
+	// Actually sprint and spells are broken
+	// cause CD runs even if 'Game.paused' is true
 
 	#region SPRINT
 	private float lastSprintTime;
@@ -119,6 +122,26 @@ public abstract class Character : MonoBehaviour
 	}
 	#endregion
 
+	#region SPELL CASTING
+	private float lastSpellTime;
+	private bool spellIsUp
+	{
+		get { return Time.time > lastSpellTime + spellCooldown; }
+	}
+	Coroutine castingSpell;
+	private void CheckSpell ()
+	{
+		if (!spellIsUp) return;
+		if (locks.HasFlag (Locks.Spells)) return;
+		if (!GetButtonDown ("Special")) return;
+
+		// If everything's ok
+		castingSpell = StartCoroutine (CastSpell ());
+		lastSpellTime = Time.time;
+	}
+	protected abstract IEnumerator CastSpell (); 
+	#endregion
+
 	#region INTERACTION
 	private void CheckInteractions () 
 	{
@@ -154,29 +177,12 @@ public abstract class Character : MonoBehaviour
         if (GetButtonDown("Action", true))
         {
 			// Throw grabbed object, if any
-			if (gobj == null) return;
-			gobj.Throw (movingDir, throwForce);
-            gobj = null;
+			if (grab == null) return;
+			grab.Throw (movingDir, throwForce);
+            grab = null;
         }
 	}
 
-	private float lastSpellTime;
-	private bool spellIsUp 
-	{
-		get { return Time.time > lastSpellTime + spellCooldown; }
-	}
-	Coroutine castingSpell;
-	private void CheckSpell () 
-	{
-		if (!spellIsUp) return;
-		if (locks.HasFlag(Locks.Spells)) return;
-		if (!GetButtonDown("Special")) return;
-
-		// If everything's ok
-		castingSpell = StartCoroutine ( CastSpell () );
-		lastSpellTime = Time.time;
-	}
-	protected abstract IEnumerator CastSpell ();
 	#endregion
 
 	#region EFFECTS MANAGEMENT
@@ -214,8 +220,13 @@ public abstract class Character : MonoBehaviour
 	}
 	IEnumerator RemoveTemporalEffect (string name, float duration) 
 	{
-		var startTime = Time.time;
-		while (Time.time < startTime + duration) yield return null;
+		var timer = 0f;
+		while (timer < duration)
+		{
+			// Time doesn't run on effects if game is paused
+			if (!Game.paused) timer += Time.deltaTime;
+			yield return null;
+		}
 		effects.Remove (name);
 	}
 	#endregion
@@ -278,6 +289,9 @@ public abstract class Character : MonoBehaviour
 		// Initialization
 		ResetInputs ();
 		ReadEffects ();
+
+		// Stop player if game is paused
+		if (Game.paused) return;
 
 		// Locomotion
 		Movement();

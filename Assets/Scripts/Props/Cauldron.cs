@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,30 +18,24 @@ public class Cauldron : Interactable
 	public override void Action (Character player)
 	{
 		// If player is dropping
-		if (player.gobj != null)
+		if (player.grab != null)
 		{
 			// Get ingredient from player
-			var ingredient = player.gobj as Ingredient;
-			player.gobj = null;
+			var ingredient = player.grab as Ingredient;
+			player.grab = null;
 
-			// Add ingredient and restart time
+			// Add ingredient & restart time
 			StartCoroutine ( Add (ingredient) );
 			time = 0f;
 		}
 		else
 		{
-			// Grab potion
-			var potion = FindPotion();
-			player.gobj = Instantiate(potion, transform.position, Quaternion.identity);
-			// Clear cauldron
+			// Grab potion & clear
+			var potionId = FindPotion();
+			var obj = InstantiatePotion (potionId);
+			player.grab = obj;
 			Clear();
 		}
-	}
-
-	public override void Special (Character player) 
-	{
-		// Stop / Resume caludron
-		stopped = !stopped;
 	}
 
 	public override PlayerIsAbleTo CheckInteraction (Character player) 
@@ -51,10 +46,10 @@ public class Cauldron : Interactable
 		var action = true;
 		var special = true;
 		// If player is dropping
-		if (player.gobj != null)
+		if (player.grab != null)
 		{
 			// Check if it's an ingredient
-			if ((player.gobj as Ingredient) == null) action = false;
+			if ((player.grab as Ingredient) == null) action = false;
 			// Can't add more than 4 ingredients
 			if (currentMix.Count == 4) action = false;
 		}
@@ -63,34 +58,29 @@ public class Cauldron : Interactable
 		// and if time is good for picking
 		else if (currentMix.Count == 0 || time < cookTime) action = false;
 
+		/*
 		// Can't stop fire if nothing in,
 		if (currentMix.Count == 0) special = false;
+		*/
 
-		return Result (action, special);
+		return Result (action, false);
 	}
 	#endregion
 
 	#region UTILITIES
-	private enum Theme 
+	public int FindPotion () 
 	{
-		NotCooked,
-		Cooked,
-		Overcooked
-	}
+		var rs = OrderMaster.recipes;
 
-	public Potion FindPotion () 
-	{
-		var ps = Game.manager.potions;
-
-		// Check against all craftable potions (0 is reserverd)
-		for (var i = 1; i != ps.Length; i++)
+		// Check against all craftable potions
+		for (var i = 1; i != rs.Length; i++)
 		{
 			// Make a copy of current mix
 			var mix = new List<IngredientInfo> (currentMix);
-			for (var m = 0; m != ps[i].receipt.Length; m++)
+			for (var m = 0; m != rs[i].info.Length; m++)
 			{
 				// Check against every ingredient of the potion receipt
-				var ingredient = ps[i].receipt[m];
+				var ingredient = rs[i].info[m];
 				var match = mix.IndexOf (ingredient);
 
 				// If found a match remove it from copy
@@ -100,16 +90,30 @@ public class Cauldron : Interactable
 			}
 			// If original count matches, and all elements
 			// have been checked, means this potion is the good one
-			if (mix.Count == 0
-				&& currentMix.Count == ps[i].receipt.Length)
-				return ps[i];
+			if (mix.Count == 0 && currentMix.Count == rs[i].info.Length)
+				return i;
 		}
 
-		// If loops end, no potion is valid (return Potion-0)
-		return ps[0];
+		// If loops end, no potion is valid
+		return -1;
 	}
 
-	private void Clear () 
+	private Grabbable InstantiatePotion ( int recipe ) 
+	{
+		// TODO
+		throw new NotImplementedException ();
+	}
+	#endregion
+
+	#region COOKING
+	private enum Theme 
+	{
+		NotCooked,
+		Cooked,
+		Overcooked
+	}
+
+	private void Clear ()
 	{
 		timer.ChangeTo (Theme.NotCooked);
 		currentMix.Clear ();
@@ -118,7 +122,7 @@ public class Cauldron : Interactable
 		time = 0;
 	}
 
-	IEnumerator Add (Ingredient ig) 
+	IEnumerator Add (Ingredient ig)
 	{
 		// Restart cooking process
 		if (process != null)
@@ -156,7 +160,7 @@ public class Cauldron : Interactable
 		// Wait until is cooked
 		while (time <= cookTime)
 		{
-			if (!stopped)
+			if (!stopped && !Game.paused)
 			{
 				time += Time.deltaTime;
 				timer.SetSlider (time / cookTime);
@@ -171,7 +175,7 @@ public class Cauldron : Interactable
 		// Wait until it's burned
 		while (time <= cookTime + burnTime) 
 		{
-			if (!stopped) 
+			if (!stopped && !Game.paused) 
 			{
 				time += Time.deltaTime;
 				timer.SetSlider ((time - cookTime) / burnTime);

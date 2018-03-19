@@ -28,13 +28,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _TileTex:
         m_Texture: {fileID: 2800000, guid: b3e050aaf228885468e0cc8a08bdcc14, type: 3}
-        m_Scale: {x: 3.01, y: 2.35}
+        m_Scale: {x: 2.62, y: 1.53}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Amount: 0.146
     - _Foam: 0.59
     - _Glossiness: 0.5
-    - _Height: 0.037
+    - _Height: 0.03
     - _Metallic: 0
     - _Speed: 1
     m_Colors:

@@ -1,0 +1,176 @@
+fileFormatVersion: 2
+guid: f59725186d9636f4a8eb7c2613ab4bf4
+timeCreated: 1521213587
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: CATRigAnkleBone001
+    100002: CATRigAnkleBone001 1
+    100004: CATRigAnkleBone002
+    100006: CATRigAnkleBone002 1
+    100008: CATRigHub002Bone002Bone001
+    100010: CATRigHub002Bone002Bone001Bone001
+    100012: CATRigHub002Bone003
+    100014: CATRigLLeg2
+    100016: CATRigLLeg2 1
+    100018: CATRigLLegAnkle
+    100020: CATRigLLegAnkle 1
+    100022: CATRigRLeg2
+    100024: CATRigRLeg2 1
+    100026: CATRigRLegAnkle
+    100028: CATRigRLegAnkle 1
+    100030: CATRigSpine1
+    100032: CATRigSpine2
+    100034: CATRigSpine3
+    100036: //RootNode
+    100038: Hueso_lengua_final
+    100040: Hueso_lengua_medio
+    100042: Hueso_lengua_principio
+    100044: Mandibula_superior
+    100046: Pata_delantera_derecha
+    100048: Pata_delantera_derecha 1
+    100050: Pata_derecha_trasera
+    100052: Pata_izquierda_trasera
+    100054: Pelvis
+    100056: Pelvis2
+    400000: CATRigAnkleBone001
+    400002: CATRigAnkleBone001 1
+    400004: CATRigAnkleBone002
+    400006: CATRigAnkleBone002 1
+    400008: CATRigHub002Bone002Bone001
+    400010: CATRigHub002Bone002Bone001Bone001
+    400012: CATRigHub002Bone003
+    400014: CATRigLLeg2
+    400016: CATRigLLeg2 1
+    400018: CATRigLLegAnkle
+    400020: CATRigLLegAnkle 1
+    400022: CATRigRLeg2
+    400024: CATRigRLeg2 1
+    400026: CATRigRLegAnkle
+    400028: CATRigRLegAnkle 1
+    400030: CATRigSpine1
+    400032: CATRigSpine2
+    400034: CATRigSpine3
+    400036: //RootNode
+    400038: Hueso_lengua_final
+    400040: Hueso_lengua_medio
+    400042: Hueso_lengua_principio
+    400044: Mandibula_superior
+    400046: Pata_delantera_derecha
+    400048: Pata_delantera_derecha 1
+    400050: Pata_derecha_trasera
+    400052: Pata_izquierda_trasera
+    400054: Pelvis
+    400056: Pelvis2
+    7400000: Gargaras
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Gargaras
+      takeName: Assets03
+      firstFrame: 0
+      lastFrame: 90
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 0
+    importBlendShapes: 0
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 2
+    tangentImportMode: 2
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 1
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: Pelvis
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 281b18e52ababb14e932fb6da697851b,
+    type: 3}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

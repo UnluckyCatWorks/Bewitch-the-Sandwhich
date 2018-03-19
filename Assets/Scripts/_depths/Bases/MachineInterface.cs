@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class MachineInterface : Interactable
 {
-	[Header ("Basic parameters")]
+	[Header ("References")]
 	public Timer timer;						// The timer of the machine
-	public IngredientType resultType;		// How the ingredient is processed
 	public Transform holder;				// The Transform that holds the ingredient
 	protected Rigidbody obj;				// The object being processed
+	protected MachineController machine;    // State-Machine logic
 
+	[Header ("Basic parameters")]
+	public IngredientType resultType;		// How the ingredient is processed
 	public float duration;					// Time until work is completed
 	public float overheatTime;				// Time until start overheating
 	public float overloadTime;				// Time until full overload
-	protected MachineController machine;    // State-Machine logic
 
 	#region INTERACTION
 	public override void Action (Character player) 
@@ -22,8 +23,8 @@ public class MachineInterface : Interactable
 		if (machine.state == MachineState.Waiting)
 		{
 			// Cook ingredient
-			obj = player.gobj.body;
-			player.gobj = null;
+			obj = player.grab.body;
+			player.grab = null;
 			machine.anim.SetTrigger (MachineController.Start_Working);
 		}
 		else
@@ -31,23 +32,23 @@ public class MachineInterface : Interactable
 		if (machine.state == MachineState.Completed
 		|| machine.state == MachineState.Overheating)
 		{
-			player.gobj = obj.GetComponent<Grabbable> ();
+			player.grab = obj.GetComponent<Grabbable> ();
 			machine.anim.SetTrigger (MachineController.Pickup);
 			obj = null;
 		}
 	}
 
-	public override PlayerIsAbleTo CheckInteraction (Character player)
+	public sealed override PlayerIsAbleTo CheckInteraction (Character player) 
 	{
 		// If machine is waiting input
 		if (machine.state == MachineState.Waiting)
 		{
 			// Check that player is actually carrying something
-			if (player.gobj == null) return PlayerIsAbleTo.None;
+			if (player.grab == null) return PlayerIsAbleTo.None;
 
 			// Check that object is valid
-			var ingredient = player.gobj.GetComponent<Ingredient> ();
-			if (ingredient == null || ingredient.type != IngredientType.Raw)
+			var ingredient = player.grab.GetComponent<Ingredient> ();
+			if (ingredient == null || ingredient.type != IngredientType.RAW)
 				return PlayerIsAbleTo.None;
 
 			// If everything is okay
@@ -59,7 +60,7 @@ public class MachineInterface : Interactable
 		|| machine.state == MachineState.Overheating)
 		{
 			// Check that player isn't already carrying something
-			if (player.gobj != null) return PlayerIsAbleTo.None;
+			if (player.grab != null) return PlayerIsAbleTo.None;
 
 			// If everything is okay
 			return PlayerIsAbleTo.Action;
@@ -69,7 +70,7 @@ public class MachineInterface : Interactable
 	#endregion
 
 	// Triggered when the machine has finished its work
-	public virtual void ProcessObject ()
+	public virtual void ProcessObject () 
 	{
 		var ingredient = obj.GetComponent<Ingredient> ();
 		ingredient.Process(resultType);
@@ -95,6 +96,13 @@ public class MachineInterface : Interactable
 		base.Awake ();
 		// Get references
 		machine = GetComponent<Animator>().GetBehaviour<MachineController>();
+	}
+	#endregion
+
+	#region HELPERS
+	public void SetTrigger (int trigger) 
+	{
+		machine.anim.SetTrigger (trigger);
 	}
 	#endregion
 }

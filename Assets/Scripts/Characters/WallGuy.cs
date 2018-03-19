@@ -14,7 +14,7 @@ public class WallGuy : Character
 	protected override IEnumerator CastSpell () 
 	{
 		// Root player while casting
-		var selfStun = 0.5f;
+		var selfStun = 0.25f;
 		var locks = (Locks.Movement | Locks.Interaction | Locks.Spells);
 		AddCC ("Spell Casting", locks, selfStun);
 
@@ -48,6 +48,6 @@ public class WallGuy : Character
 			go.transform.position = closestCastPoint;
 			go.transform.rotation = transform.rotation;
 		}
-		else print ("lol");
+		else print ("las paredes van regu eh");
 	}
 }

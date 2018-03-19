@@ -16,18 +16,18 @@ public class Holder : Interactable
 	public override void Action (Character player) 
 	{
 		// If player is dropping
-		if (player.gobj != null)
+		if (player.grab != null)
 		{
 			// Drop object
-			obj = player.gobj.body;
-			player.gobj = null;
+			obj = player.grab.body;
+			player.grab = null;
 		}
 		// If player is grabbing
 		else
 		{
 			// Grab object
 			obj.isKinematic = true;
-			player.gobj = obj.GetComponent<Grabbable>();
+			player.grab = obj.GetComponent<Grabbable>();
 			obj = null;
 		}
 	}
@@ -37,10 +37,10 @@ public class Holder : Interactable
 		if (locked) return PlayerIsAbleTo.None;
 
 		// If player is dropping
-		if (player.gobj != null)
+		if (player.grab != null)
 		{
 			// Can't drop if another object is already in
-			if (obj != null || !IsValidObject(player.gobj))
+			if (obj != null || !IsValidObject(player.grab))
 				return PlayerIsAbleTo.None;
 
 			// If everything's fine
@@ -57,25 +57,27 @@ public class Holder : Interactable
 	}
 	#endregion
 
-	private void FixedUpdate () 
+	#region CALLBACKS
+	private void FixedUpdate ()
 	{
 		if (obj == null) return;
 		// Make object follow Holder
-		var newPos = Vector3.Lerp(obj.position, transform.position, Time.fixedDeltaTime * 7f);
+		var newPos = Vector3.Lerp (obj.position, transform.position, Time.fixedDeltaTime * 7f);
 		obj.MovePosition (newPos);
 	}
 	protected override void Awake ()
 	{
 		base.Awake ();
 		col = GetComponent<Collider> ();
-	}
+	} 
+	#endregion
 
 	#region HELPERS
 	public void Lock (){ locked = true; col.enabled = false; }
 	public void Unlock () { locked = false; col.enabled = true; }
 
 	[Flags]
-	public enum ObjectTypes
+	public enum ObjectTypes 
 	{
 		RawIngredient = 1 << 0,
 		ProcessedIngredient = 1 << 1,
@@ -84,22 +86,18 @@ public class Holder : Interactable
 
 	public bool IsValidObject (Grabbable obj) 
 	{
-		// If it's a potion
-		if (validObjects.HasFlag(ObjectTypes.Potion) && obj is Potion)
-			return true;
-
 		// If it's a raw ingredient
 		if (validObjects.HasFlag (ObjectTypes.RawIngredient))
 		{
 			var ingredient = obj as Ingredient;
-			if (ingredient != null && ingredient.type == IngredientType.Raw)
+			if (ingredient != null && ingredient.type == IngredientType.RAW)
 				return true;
 		}
 		// If it's NOT a raw ingredient
 		if (validObjects.HasFlag(ObjectTypes.ProcessedIngredient))
 		{
 			var ingredient = obj as Ingredient;
-			if (ingredient != null && ingredient.type != IngredientType.Raw)
+			if (ingredient != null && ingredient.type != IngredientType.RAW)
 				return true;
 		}
 		// If none of above is valid

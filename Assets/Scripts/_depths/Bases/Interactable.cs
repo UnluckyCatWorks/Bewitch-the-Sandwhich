@@ -17,10 +17,7 @@ public abstract class Interactable : MonoBehaviour
 
 	public void Mark ()
 	{
-		foreach (var o in markables)
-		{
-			Graphics.DrawMesh (o.sharedMesh, o.transform.localToWorldMatrix, markerMat, 0);
-		}
+		// Well, yeah
 	}
 
 	private void InitializeMarker () 
@@ -30,16 +27,6 @@ public abstract class Interactable : MonoBehaviour
 			markerMat = new Material (Shader.Find ("Hidden/Marker"));
 			markerMat.hideFlags = HideFlags.HideAndDontSave;
 			markerMat.SetColor ( "_Color", new Color32 (255, 169, 0, 255) );
-		} 
-
-		markables = new List<MeshFilter> ();
-		foreach (var m in GetComponentsInChildren<MeshFilter>())
-		{
-			if (!m.name.Contains("NoMark_"))
-			{
-				markables.Add (m);
-//				m.sharedMesh.SoftNormalsAsColors();
-			}
 		}
 	}
 	#endregion
