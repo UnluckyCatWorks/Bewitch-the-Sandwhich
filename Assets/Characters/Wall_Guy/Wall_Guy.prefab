@@ -1574,6 +1574,7 @@ MonoBehaviour:
   sprintForce: 20
   sprintCooldown: 1.5
   spellCooldown: 1.5
+  spellSelfStun: 0.25
   wall: {fileID: 1601212921992768, guid: b98bd2432eb897b4fb2d49ed643baf4d, type: 2}
   wallDuration: 2
   wallDistance: 2

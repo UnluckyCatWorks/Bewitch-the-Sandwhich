@@ -9,18 +9,8 @@ public class IceGuy : Character
 	public BoxCollider spellBox;
 	public float stunDuration;
 
-	protected override IEnumerator CastSpell () 
+	protected override void CastSpell () 
 	{
-		// Root player while casting
-		var selfStun = 0.5f;
-		var locks = (Locks.Movement | Locks.Interaction | Locks.Spells);
-		AddCC ("Spell Casting", locks, selfStun);
-
-		// Wait casting time
-		var startTime = Time.time;
-		while (Time.time < startTime + selfStun-0.01f)
-			yield return null;
-
 		// Find all players affected by the spell
 		var hits = Physics.OverlapBox (spellBox.center, spellBox.size / 2f);
 		var players = from cols in hits

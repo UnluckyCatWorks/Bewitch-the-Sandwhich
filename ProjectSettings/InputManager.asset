@@ -70,7 +70,7 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Half_Keyboard_1_Sprint
+    m_Name: Half_Keyboard_1_Dash
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
@@ -86,7 +86,7 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Half_Keyboard_2_Sprint
+    m_Name: Half_Keyboard_2_Dash
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
@@ -246,7 +246,7 @@ InputManager:
     axis: 1
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Full_Gamepad_Sprint
+    m_Name: Full_Gamepad_Dash
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 

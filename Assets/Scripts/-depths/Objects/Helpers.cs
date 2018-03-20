@@ -51,16 +51,16 @@ public enum Locks
 	// Locomotion
 	Movement = 1 << 0,
 	Rotation = 1 << 2,
-	Sprint = 1 << 3,
+	Dash = 1 << 3,
 
 	// Abilities
 	Interaction = 1 << 4,
 	Spells = 1 << 5,
 	
 	// Specials
-	Locomotion = (Sprint | Rotation | Movement),
+	Locomotion = (Dash | Movement),
 	Abilities = (Interaction | Spells),
-	All = (Locomotion | Abilities),
+	All = (Locomotion | Abilities | Rotation),
 	NONE = 0
 }
 

@@ -39,9 +39,36 @@ public abstract class Character : MonoBehaviour
 
 	#region ANIMATOR STUFF
 	private static bool animInit;
+	private static void InitAnimator ()
+	{
+		if (animInit) return;
 
+		CastSpellID = Animator.StringToHash ("CastSpell");
+		DashingID = Animator.StringToHash ("Dashing");
+		MovingID = Animator.StringToHash ("Moving");
+
+		animInit = true;
+	}
+
+	private static int CastSpellID;
+
+	public bool Dashing 
+	{
+		set { anim.SetBool (DashingID, value); }
+	}
+	private static int DashingID;
+
+	private bool _moving;
+	public bool Moving 
+	{
+		set
+		{
+			if (_moving == value) return;
+			anim.SetBool (MovingID, value);
+			_moving = value;
+		}
+	}
 	private static int MovingID;
-
 	#endregion
 
 	#region LOCOMOTION
@@ -58,12 +85,14 @@ public abstract class Character : MonoBehaviour
 
 		// Get speed & calculate rotation
 		var dir = Vector3.Min (input, input.normalized);
-		if (!locks.HasFlag(Locks.Movement)) movingSpeed = dir * speed;
-		if (input != Vector3.zero)
+		if (input != Vector3.zero) targetRotation = Quaternion.LookRotation (dir);
+		if (!locks.HasFlag (Locks.Movement))
 		{
-
-			targetRotation = Quaternion.LookRotation (dir);
+			movingSpeed = dir * speed;
+			if (input != Vector3.zero) Moving = true;
+			else Moving = false;
 		}
+		else Moving = false;
 	}
 
 	public Vector3 movingDir 
@@ -97,39 +126,44 @@ public abstract class Character : MonoBehaviour
 	// ACTUALLY,W sprint and spells are broken
 	// cause CD runs even if 'Game.paused' is true
 
-	#region SPRINT
-	private float lastSprintTime;
-	private bool sprintIsUp 
+	#region DASHING
+	private float lastDashTime;
+	private bool dashIsUp 
 	{
-		get { return Time.time > lastSprintTime + sprintCooldown; }
+		get { return Time.time > lastDashTime + sprintCooldown; }
 	}
 
-	private void Sprint () 
+	private void Dash () 
 	{
 		// If sprinting already
-		if (effects.ContainsKey("Sprint"))
+		if (effects.ContainsKey("Dashing"))
 		{
 			// If on sprint-time
 			var duration = 0.15f;   /*sprint duration*/
-			if (Time.time < lastSprintTime + duration)
+			if (Time.time < lastDashTime + duration)
 			{
 				var targetSpeed = movingDir * sprintForce;
-				var factor = (Time.time - lastSprintTime) / duration; // [0,1]
+				var factor = (Time.time - lastDashTime) / duration; // [0,1]
 				movingSpeed = targetSpeed * (factor + 1f);
 			}
 			// Otherwise
-			else effects.Remove("Sprint");
+			else
+			{
+				effects.Remove ("Dashing");
+				Dashing = false;
+			}
 		}
 
 		// If not sprinting
 		else
 		{
-            if (!sprintIsUp || locks.HasFlag(Locks.Sprint)) return;
-			if (!GetButtonDown("Sprint")) return;
+            if (!dashIsUp || locks.HasFlag(Locks.Dash)) return;
+			if (!GetButtonDown("Dash")) return;
 
 			// Start sprint & cooldoown
-			AddCC("Sprint", Locks.Locomotion);
-			lastSprintTime = Time.time;
+			Dashing = true;
+			AddCC("Dashing", Locks.Locomotion);
+			lastDashTime = Time.time;
 		}
 	}
 	#endregion
@@ -140,7 +174,8 @@ public abstract class Character : MonoBehaviour
 	{
 		get { return Time.time > lastSpellTime + spellCooldown; }
 	}
-	Coroutine castingSpell;
+	private const float spellSelfStun = 0.75f;
+
 	private void CheckSpell ()
 	{
 		if (!spellIsUp) return;
@@ -148,10 +183,12 @@ public abstract class Character : MonoBehaviour
 		if (!GetButtonDown ("Special")) return;
 
 		// If everything's ok
-		castingSpell = StartCoroutine (CastSpell ());
+		var block = (Locks.Locomotion | Locks.Abilities);
+		AddCC ("Spell Casting", block, spellSelfStun);
+		anim.SetTrigger (CastSpellID);
 		lastSpellTime = Time.time;
 	}
-	protected abstract IEnumerator CastSpell ();
+	protected abstract void CastSpell ();
 	#endregion
 
 	#region INTERACTION
@@ -230,10 +267,6 @@ public abstract class Character : MonoBehaviour
 
 		if (duration == 0) effects.Add (name, e);
 		else AddTemporalEffect (name, e, duration);
-
-		// Stop casting spell if CC'ed
-		if (cc.HasFlag(Locks.Spells) && castingSpell != null)
-			StopCoroutine (castingSpell);
 	}
 
 	public void AddTemporalEffect (string name, Effect effect, float duration ) 
@@ -271,6 +304,7 @@ public abstract class Character : MonoBehaviour
 		get { return (collision & CollisionFlags.Below) == CollisionFlags.Below; }
 	}
 
+	/// For when a object hits a player
 	public IEnumerator Knock (float duration, Vector3 force) 
 	{
 		// TODO
@@ -319,7 +353,7 @@ public abstract class Character : MonoBehaviour
 		// Locomotion
 		Movement();
 		Rotation();
-		Sprint();
+		Dash();
 		Move();
 
 		// Interaction
@@ -334,6 +368,8 @@ public abstract class Character : MonoBehaviour
 
 	protected virtual void Awake () 
     {
+		InitAnimator ();
+
 		effects = new Dictionary<string, Effect> ();
 		consumedInputs = new List<string> ();
 

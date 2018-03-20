@@ -11,18 +11,8 @@ public class WallGuy : Character
 	public float wallDistance;
 	public float maxWallDistance;
 
-	protected override IEnumerator CastSpell () 
+	protected override void CastSpell () 
 	{
-		// Root player while casting
-		var selfStun = 0.25f;
-		var locks = (Locks.Movement | Locks.Interaction | Locks.Spells);
-		AddCC ("Spell Casting", locks, selfStun);
-
-		// Wait casting time
-		var startTime = Time.time;
-		while (Time.time < startTime + selfStun-0.01f)
-			yield return null;
-
 		// Get all 'grounds'
 		var grounds = Physics.OverlapSphere ( Vector3.zero, 30f, 1<<9 );
 
