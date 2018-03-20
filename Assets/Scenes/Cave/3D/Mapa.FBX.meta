@@ -173,52 +173,52 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Barco_pirata
-    second: {instanceID: 0}
+    second: {fileID: 2100000, guid: 78ef51baf2d10fe4b931116871a01a64, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Barquito
-    second: {instanceID: 0}
+    second: {fileID: 2100000, guid: 1d1415282dd775d469d280db39785f0f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Caldero
-    second: {instanceID: 0}
+    second: {fileID: 2100000, guid: c48e9503b87aa2048bc1ce101ad4a7c9, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Cofre
-    second: {instanceID: 0}
+    second: {fileID: 2100000, guid: 10cafad4943555948b4c1a360054dc52, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Farola
-    second: {instanceID: 0}
+    second: {fileID: 2100000, guid: 5ff98ec2fa37c3e45bb55074845045c1, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Muelle
-    second: {instanceID: 0}
+    second: {fileID: 2100000, guid: ba1d337f88fc7e147a3da75ef3b0da54, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: No Name
-    second: {instanceID: 0}
+    second: {fileID: 2100000, guid: 3edf01825e57edd469e8ca9a5840c3da, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Puente
-    second: {instanceID: 0}
+    second: {fileID: 2100000, guid: c924702afb57182419fa7879a5088a1d, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Suelo
-    second: {instanceID: 0}
+    second: {fileID: 2100000, guid: 30125774cb4875e4cb7298ddd81f49d2, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Torre
-    second: {instanceID: 0}
+    second: {fileID: 2100000, guid: d59a27b58ec23d74ea35a2d7e67a172d, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -245,16 +245,16 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 0
+    meshCompression: 3
     addColliders: 1
-    importVisibility: 1
-    importBlendShapes: 1
-    importCameras: 1
-    importLights: 1
+    importVisibility: 0
+    importBlendShapes: 0
+    importCameras: 0
+    importLights: 0
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
