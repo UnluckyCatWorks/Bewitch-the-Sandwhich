@@ -12,7 +12,12 @@ ModelImporter:
     3300000: //RootNode
     4300000: Basic_potion
     9500000: //RootNode
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Basic_potion
+    second: {fileID: 2100000, guid: 5d2f230e4fb34084b80eb7108c2cb58d, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

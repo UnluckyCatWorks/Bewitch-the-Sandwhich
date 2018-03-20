@@ -12,7 +12,12 @@ ModelImporter:
     3300000: //RootNode
     4300000: Pincho_setas
     9500000: //RootNode
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pincho_setas
+    second: {fileID: 2100000, guid: 6200c0e796f8d9446ab5acdac9a1c09b, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
