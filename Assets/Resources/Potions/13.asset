@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Name: 13
   m_EditorClassIdentifier: 
   ingredient1:
-    id: 0
+    id: 3
     type: 0
   ingredient2:
-    id: 0
-    type: 0
+    id: 2
+    type: 3
   ingredient3:
-    id: 0
+    id: 1
     type: 0
   ingredient4:
     id: 0
