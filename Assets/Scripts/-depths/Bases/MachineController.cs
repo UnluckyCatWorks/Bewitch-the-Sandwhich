@@ -18,7 +18,14 @@ public class MachineController : StateMachineBehaviour
 
 	[NonSerialized] public MachineState state;		// The current status of the machine
 	[NonSerialized] public Animator anim;			// The machine animator
-	protected MachineInterface bridge;				// The link with the actual machine parameters
+	protected MachineInterface bridge;              // The link with the actual machine parameters
+
+	private enum Theme 
+	{
+		Waiting,
+		InSafeTime,
+		Overloading
+	}
 
 	#region CALLBACKS
 	public override void OnStateEnter (Animator animator, AnimatorStateInfo stateInfo, int layerIndex) 
@@ -109,7 +116,7 @@ public class MachineController : StateMachineBehaviour
 	public virtual void OnUpdateCompleted () 
 	{
 		if (anim.IsInTransition(0)) return;
-		if (Time.time >= completionTime + bridge.overheatTime)
+		if (Time.time >= completionTime + bridge.safeTime)
 		{
 			// If time runs out and player hasn't
 			// picked up yet, start overheating
@@ -129,7 +136,7 @@ public class MachineController : StateMachineBehaviour
 	public virtual void OnUpdateOverheat ()
 	{
 		if (anim.IsInTransition(0)) return;
-		if (Time.time >= overheatStartTime + bridge.overloadTime)
+		if (Time.time >= overheatStartTime + bridge.overheatTime)
 		{
 			// If time runs out and player hasn't
 			// picked up yet, go full overload
