@@ -39,6 +39,7 @@ public abstract class Character : MonoBehaviour
 
 	#region ANIMATOR STUFF
 	private static bool animInit;
+
 	private static int MovingID;
 
 	#endregion
