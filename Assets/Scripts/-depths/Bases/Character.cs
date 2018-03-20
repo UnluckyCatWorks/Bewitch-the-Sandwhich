@@ -43,9 +43,10 @@ public abstract class Character : MonoBehaviour
 	{
 		if (animInit) return;
 
-		CastSpellID = Animator.StringToHash ("CastSpell");
+		CastSpellID = Animator.StringToHash ("Cast_Spell");
 		DashingID = Animator.StringToHash ("Dashing");
 		MovingID = Animator.StringToHash ("Moving");
+		CarryingID = Animator.StringToHash ("Carrying_Stuff");
 
 		animInit = true;
 	}
@@ -61,7 +62,7 @@ public abstract class Character : MonoBehaviour
 	private bool _moving;
 	public bool Moving 
 	{
-		set
+		set 
 		{
 			if (_moving == value) return;
 			anim.SetBool (MovingID, value);
@@ -69,6 +70,18 @@ public abstract class Character : MonoBehaviour
 		}
 	}
 	private static int MovingID;
+
+	private bool _carrying;
+	public bool Carrying 
+	{
+		set 
+		{
+			if (_carrying == value) return;
+			anim.SetBool (CarryingID, value);
+			_carrying = value;
+		}
+	}
+	private static int CarryingID;
 	#endregion
 
 	#region LOCOMOTION
@@ -117,13 +130,19 @@ public abstract class Character : MonoBehaviour
 	public Grabbable grab;
 	private void HoldGrabbed ()
 	{
-		if (grab == null) return;
+		if (grab == null)
+		{
+			Carrying = false;
+			return;
+		}
+		else Carrying = true;
+
 		var newPos = Vector3.Lerp(grab.body.position, grabHandle.position, Time.fixedDeltaTime * 7f);
 		grab.body.MovePosition(newPos);
 	}
 	#endregion
 
-	// ACTUALLY,W sprint and spells are broken
+	// ACTUALLY, sprint and spells are broken
 	// cause CD runs even if 'Game.paused' is true
 
 	#region DASHING
