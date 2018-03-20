@@ -90,14 +90,14 @@ public class Holder : Interactable
 		if (validObjects.HasFlag (ObjectTypes.RawIngredient))
 		{
 			var ingredient = obj as Ingredient;
-			if (ingredient != null && ingredient.type == IngredientType.RAW)
+			if (ingredient != null && ingredient.type == IngredientType.TALCUAL)
 				return true;
 		}
 		// If it's NOT a raw ingredient
 		if (validObjects.HasFlag(ObjectTypes.ProcessedIngredient))
 		{
 			var ingredient = obj as Ingredient;
-			if (ingredient != null && ingredient.type != IngredientType.RAW)
+			if (ingredient != null && ingredient.type != IngredientType.TALCUAL)
 				return true;
 		}
 		// If none of above is valid

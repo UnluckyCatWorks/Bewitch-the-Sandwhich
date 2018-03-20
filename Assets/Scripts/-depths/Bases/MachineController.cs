@@ -73,7 +73,7 @@ public class MachineController : StateMachineBehaviour
 	}
 	#endregion
 
-	#region UNREADY
+	#region WAITING
 	public virtual void OnEnterWaiting () { state = MachineState.Waiting; }
 	public virtual void OnUpdateWaiting () { }
 	public virtual void OnExitUnready () { } 

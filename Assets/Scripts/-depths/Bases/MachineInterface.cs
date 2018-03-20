@@ -48,7 +48,7 @@ public class MachineInterface : Interactable
 
 			// Check that object is valid
 			var ingredient = player.grab.GetComponent<Ingredient> ();
-			if (ingredient == null || ingredient.type != IngredientType.RAW)
+			if (ingredient == null || ingredient.type != IngredientType.TALCUAL)
 				return PlayerIsAbleTo.None;
 
 			// If everything is okay

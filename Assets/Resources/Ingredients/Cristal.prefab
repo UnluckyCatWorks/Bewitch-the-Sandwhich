@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 54562571236965766}
   - component: {fileID: 114245962905804422}
   m_Layer: 0
-  m_Name: IG_Eye
+  m_Name: Cristal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -383,15 +383,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9346e5bc22a4fb45829ed2b9b7928b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  body: {fileID: 0}
-  beingThrown: 0
   id: 1
   type: 0
-  icons:
-  - {fileID: 21300000, guid: 5393a2eb59c8e0848a8453e563989aba, type: 3}
-  - {fileID: 21300000, guid: ac1fddaf70571464bbdb0bbbf93ef14e, type: 3}
-  - {fileID: 21300000, guid: dcd0702a7f952ec408470eb4a37bbaca, type: 3}
-  - {fileID: 21300000, guid: 1a813838892353d46a22fd5b7772caeb, type: 3}
+  icon: {fileID: 0}
 --- !u!135 &135611294613354918
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -74,7 +74,7 @@ public struct Effect
 // List of all (raw) ingredients
 public enum IngredientID 
 {
-	NONE,
+	NADA,
 	Cristal,
 	Seta,
 	EscamaDragon,
@@ -83,7 +83,7 @@ public enum IngredientID
 
 public enum IngredientType 
 {
-	RAW,
+	TALCUAL,
 	Molido,
 	Destilado,
 	Transmutado

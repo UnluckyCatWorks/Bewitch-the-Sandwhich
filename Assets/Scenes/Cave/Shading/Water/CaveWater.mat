@@ -32,7 +32,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Amount: 0.146
-    - _Foam: 0.59
+    - _Foam: 0.37
     - _Glossiness: 0.5
     - _Height: 0.03
     - _Metallic: 0
@@ -43,4 +43,4 @@ Material:
     - _TileST: {r: 0.88, g: 0.62, b: 1, a: 1}
     - _TileSp: {r: 2.8, g: 6.25, b: 1, a: 1}
     - _Tint: {r: 1, g: 1, b: 1, a: 0.491}
-    - _WTint: {r: 1, g: 1, b: 1, a: 0.404}
+    - _WTint: {r: 1, g: 1, b: 1, a: 0.391}
