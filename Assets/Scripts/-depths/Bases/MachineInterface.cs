@@ -9,8 +9,8 @@ public class MachineInterface : Interactable
 	public Transform holder;                // The Transform that holds the ingredient
 	public IngredientType resultType;       // How the ingredient is processed
 	public float duration;                  // Time until work is completed
-	public float overheatTime;              // Time until start overheating
-	public float overloadTime;              // Time until full overload
+	public float safeTime;					// Time until start overheating
+	public float overheatTime;              // Time until full overload
 
 	protected Rigidbody obj;                // The object being processed
 	protected MachineController machine;    // State-Machine logic
