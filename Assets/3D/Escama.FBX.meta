@@ -12,7 +12,12 @@ ModelImporter:
     3300000: //RootNode
     4300000: Escama
     9500000: //RootNode
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Escama
+    second: {fileID: 2100000, guid: 517b6d5d5aee7b34f8ba68e8193d7ec9, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
