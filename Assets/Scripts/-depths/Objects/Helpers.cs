@@ -77,7 +77,7 @@ public enum IngredientID
 	NADA,
 	Cristal,
 	Seta,
-	EscamaDragon,
+	Escama_Dragon,
 	Gusano
 }
 

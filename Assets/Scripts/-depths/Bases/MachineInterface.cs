@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class MachineInterface : Interactable
 {
-	[Header ("References")]
-	public Timer timer;						// The timer of the machine
-	public Transform holder;				// The Transform that holds the ingredient
-	protected Rigidbody obj;				// The object being processed
-	protected MachineController machine;    // State-Machine logic
-
+	#region DATA
 	[Header ("Basic parameters")]
-	public IngredientType resultType;		// How the ingredient is processed
-	public float duration;					// Time until work is completed
-	public float overheatTime;				// Time until start overheating
-	public float overloadTime;				// Time until full overload
+	public Transform holder;                // The Transform that holds the ingredient
+	public IngredientType resultType;       // How the ingredient is processed
+	public float duration;                  // Time until work is completed
+	public float overheatTime;              // Time until start overheating
+	public float overloadTime;              // Time until full overload
+
+	protected Rigidbody obj;                // The object being processed
+	protected MachineController machine;    // State-Machine logic
+	protected Timer timer;                  // The timer of the machine 
+	#endregion
 
 	#region INTERACTION
 	public override void Action (Character player) 
@@ -66,21 +67,23 @@ public class MachineInterface : Interactable
 			return PlayerIsAbleTo.Action;
 		}
 		else return PlayerIsAbleTo.None;
-	} 
+	}
 	#endregion
 
+	#region VIRTUALS
 	// Triggered when the machine has finished its work
-	public virtual void ProcessObject () 
+	public virtual void ProcessObject ()
 	{
 		var ingredient = obj.GetComponent<Ingredient> ();
-		ingredient.Process(resultType);
+		ingredient.Process (resultType);
 	}
 	// Triggered when machine overloads
-	public virtual void Overload () 
+	public virtual void Overload ()
 	{
-		Destroy(obj.gameObject);
+		Destroy (obj.gameObject);
 		obj = null;
-	}
+	} 
+	#endregion
 
 	#region CALLBACKS
 	protected virtual void FixedUpdate ()
@@ -96,6 +99,7 @@ public class MachineInterface : Interactable
 		base.Awake ();
 		// Get references
 		machine = GetComponent<Animator>().GetBehaviour<MachineController>();
+		timer = GetComponentInChildren<Timer> ();
 	}
 	#endregion
 

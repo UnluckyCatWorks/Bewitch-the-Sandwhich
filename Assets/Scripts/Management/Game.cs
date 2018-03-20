@@ -21,6 +21,7 @@ public class Game : MonoBehaviour
 	private void Awake () 
 	{
 		// Initialize game
+		Marker.Initialize ();
 		OrderMaster.Initialize ();
 		DialogMaster.Initialize ();
 		ui = GameObject.Find ("UI").transform as RectTransform;

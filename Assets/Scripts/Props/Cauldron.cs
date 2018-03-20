@@ -42,9 +42,8 @@ public class Cauldron : Interactable
 	{
 		// If not valid Player
 		if (player.id != playerOwner) return PlayerIsAbleTo.None;
-
 		var action = true;
-		var special = true;
+
 		// If player is dropping
 		if (player.grab != null)
 		{
@@ -56,12 +55,8 @@ public class Cauldron : Interactable
 
 		// Check if actual ingredients in,
 		// and if time is good for picking
-		else if (currentMix.Count == 0 || time < cookTime) action = false;
-
-		/*
-		// Can't stop fire if nothing in,
-		if (currentMix.Count == 0) special = false;
-		*/
+		else if (currentMix.Count == 0 || time < cookTime)
+			action = false;
 
 		return Result (action, false);
 	}
@@ -152,7 +147,6 @@ public class Cauldron : Interactable
 	#endregion
 
 	private float time;
-	private bool stopped;
 	private Coroutine process;
 	private IEnumerator Cooking () 
 	{
@@ -160,7 +154,7 @@ public class Cauldron : Interactable
 		// Wait until is cooked
 		while (time <= cookTime)
 		{
-			if (!stopped && !Game.paused)
+			if (!Game.paused)
 			{
 				time += Time.deltaTime;
 				timer.SetSlider (time / cookTime);
@@ -175,7 +169,7 @@ public class Cauldron : Interactable
 		// Wait until it's burned
 		while (time <= cookTime + burnTime) 
 		{
-			if (!stopped && !Game.paused) 
+			if (!Game.paused) 
 			{
 				time += Time.deltaTime;
 				timer.SetSlider ((time - cookTime) / burnTime);

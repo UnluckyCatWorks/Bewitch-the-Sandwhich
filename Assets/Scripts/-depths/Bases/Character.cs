@@ -37,7 +37,14 @@ public abstract class Character : MonoBehaviour
 	public float spellCooldown;
 	#endregion
 
+	#region ANIMATOR STUFF
+	private static bool animInit;
+	private static int MovingID;
+
+	#endregion
+
 	#region LOCOMOTION
+	Animator anim;
 	CharacterController me;
 
 	[NonSerialized]
@@ -51,7 +58,11 @@ public abstract class Character : MonoBehaviour
 		// Get speed & calculate rotation
 		var dir = Vector3.Min (input, input.normalized);
 		if (!locks.HasFlag(Locks.Movement)) movingSpeed = dir * speed;
-		if (input != Vector3.zero) targetRotation = Quaternion.LookRotation(dir);
+		if (input != Vector3.zero)
+		{
+
+			targetRotation = Quaternion.LookRotation (dir);
+		}
 	}
 
 	public Vector3 movingDir 
@@ -82,7 +93,7 @@ public abstract class Character : MonoBehaviour
 	}
 	#endregion
 
-	// Actually sprint and spells are broken
+	// ACTUALLY,W sprint and spells are broken
 	// cause CD runs even if 'Game.paused' is true
 
 	#region SPRINT
@@ -124,7 +135,7 @@ public abstract class Character : MonoBehaviour
 
 	#region SPELL CASTING
 	private float lastSpellTime;
-	private bool spellIsUp
+	private bool spellIsUp 
 	{
 		get { return Time.time > lastSpellTime + spellCooldown; }
 	}
@@ -139,10 +150,11 @@ public abstract class Character : MonoBehaviour
 		castingSpell = StartCoroutine (CastSpell ());
 		lastSpellTime = Time.time;
 	}
-	protected abstract IEnumerator CastSpell (); 
+	protected abstract IEnumerator CastSpell ();
 	#endregion
 
 	#region INTERACTION
+	Interactable lastMarked;
 	private void CheckInteractions () 
 	{
 		if (locks.HasFlag(Locks.Interaction)) return;
@@ -158,7 +170,10 @@ public abstract class Character : MonoBehaviour
 
 				// Highlight object
 				if (check != PlayerIsAbleTo.None)
-					interactable.Mark ( /*check*/ );
+				{
+					interactable.marker.On ( /*check*/ );
+					lastMarked = interactable;
+				}
 
 				// Interact
 				var action = (check == PlayerIsAbleTo.Action || check == PlayerIsAbleTo.Both);
@@ -170,6 +185,13 @@ public abstract class Character : MonoBehaviour
 				if (special && GetButtonDown("Special"))
 					interactable.Special (this);
 			}
+		}
+		else
+		{
+			// If not in front of any interactable
+			// de-mark last one seen, if any
+			if (lastMarked) lastMarked.marker.Off ();
+			lastMarked = null;
 		}
 
 		// If not in front of any interactable
@@ -314,6 +336,7 @@ public abstract class Character : MonoBehaviour
 		effects = new Dictionary<string, Effect> ();
 		consumedInputs = new List<string> ();
 
+		anim = GetComponent<Animator> ();
 		me = GetComponent<CharacterController> ();
 		targetRotation = Quaternion.identity;
     }

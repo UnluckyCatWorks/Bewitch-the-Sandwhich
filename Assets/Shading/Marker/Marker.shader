@@ -2,6 +2,8 @@
 {
 	Properties
 	{
+		[PerRendererData]
+		_Alpha ("Alpha value", Range(0, 1)) = 1.0
 		_Color ("Color", Color) = (1,1,1,1)
 	}
 	SubShader
@@ -30,6 +32,7 @@
 				// UNITY_FOG_COORDS(1)
 			};
 			fixed4 _Color;
+			float _Alpha;
 			
 			v2f vert (appdata v)
 			{
@@ -46,7 +49,7 @@
 				// UNITY_APPLY_FOG(i.fogCoord, col);
 
 				fixed4 color = _Color;
-				color.a *= 1 - smoothstep (0, 3, i.height);
+				color.a *= smoothstep (3, 0, i.height) * _Alpha;
 				return color;
 			}
 			ENDCG

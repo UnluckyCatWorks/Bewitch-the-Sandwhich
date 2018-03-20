@@ -123,7 +123,7 @@ public static class HExtensions
 	}
 	#endregion
 
-	#region GRAPHIC
+	#region UI
 	public static void CrossFadeAlphaFixed (this Graphic g, float alpha, float duration, bool ignoreTimeScale)
 	{
 		//Make the alpha 1
@@ -137,5 +137,12 @@ public static class HExtensions
 		//Finally perform CrossFadeAlpha
 		g.CrossFadeAlpha (alpha, duration, ignoreTimeScale);
 	} 
+
+	public static void SetAlpha (this SpriteRenderer r, float alpha) 
+	{
+		var c = r.color;
+		c.a = alpha;
+		r.color = c;
+	}
 	#endregion
 }

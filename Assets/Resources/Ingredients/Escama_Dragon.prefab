@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 54435806181804460}
   - component: {fileID: 114276756567449886}
   m_Layer: 0
-  m_Name: Escama Dragon
+  m_Name: Escama_Dragon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
