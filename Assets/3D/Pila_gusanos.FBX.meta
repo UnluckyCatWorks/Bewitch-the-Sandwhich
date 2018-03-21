@@ -1,23 +1,18 @@
 fileFormatVersion: 2
-guid: aedb43b946342dc4b830214b1c05b23e
-timeCreated: 1521545565
+guid: 9148f11a6b86e484193d1eb973dfeb16
+timeCreated: 1521589584
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: Gusano
+    2100000: Ingredientes
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Gusano
+    4300000: Pila_gusanos
     9500000: //RootNode
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Gusano
-    second: {fileID: 2100000, guid: 8fc36a96e7fb8e644b55f862fc6c036c, type: 2}
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
@@ -69,9 +64,9 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 1
+    normalImportMode: 0
     tangentImportMode: 3
-    normalCalculationMode: 0
+    normalCalculationMode: 4
   importAnimation: 0
   copyAvatar: 0
   humanDescription:

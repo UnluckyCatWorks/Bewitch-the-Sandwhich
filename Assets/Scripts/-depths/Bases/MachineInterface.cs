@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +15,6 @@ public class MachineInterface : Interactable
 
 	protected Rigidbody obj;                // The object being processed
 	protected MachineController machine;    // State-Machine logic
-	protected Timer timer;                  // The timer of the machine 
 	#endregion
 
 	#region INTERACTION
@@ -99,7 +99,6 @@ public class MachineInterface : Interactable
 		base.Awake ();
 		// Get references
 		machine = GetComponent<Animator>().GetBehaviour<MachineController>();
-		timer = GetComponentInChildren<Timer> ();
 	}
 	#endregion
 

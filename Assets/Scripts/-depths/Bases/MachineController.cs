@@ -17,8 +17,9 @@ public class MachineController : StateMachineBehaviour
 	#endregion
 
 	[NonSerialized] public MachineState state;		// The current status of the machine
-	[NonSerialized] public Animator anim;			// The machine animator
+	[NonSerialized] public Animator anim;           // The machine animator
 	protected MachineInterface bridge;              // The link with the actual machine parameters
+	protected Timer timer;                          // The timer of the machine 
 
 	private enum Theme 
 	{
@@ -26,6 +27,7 @@ public class MachineController : StateMachineBehaviour
 		InSafeTime,
 		Overloading
 	}
+	private float clock;
 
 	#region CALLBACKS
 	public override void OnStateEnter (Animator animator, AnimatorStateInfo stateInfo, int layerIndex) 
@@ -38,6 +40,7 @@ public class MachineController : StateMachineBehaviour
 			{
 				anim = animator;
 				bridge = anim.GetComponent<MachineInterface>();
+				timer = bridge.GetComponentInChildren<Timer> ();
 			}
 			if (!hashd)
 			{
@@ -81,69 +84,87 @@ public class MachineController : StateMachineBehaviour
 	#endregion
 
 	#region WAITING
-	public virtual void OnEnterWaiting () { state = MachineState.Waiting; }
+	public virtual void OnEnterWaiting () 
+	{
+		state = MachineState.Waiting;
+		timer.ChangeTo (Theme.Waiting);
+	}
 	public virtual void OnUpdateWaiting () { }
 	public virtual void OnExitUnready () { } 
 	#endregion
 
 	#region WORKING
-	private float workStartTime;
 	public virtual void OnEnterWorking ()
 	{
-		workStartTime = Time.time;
 		state = MachineState.Working;
+		clock = 0f;
 	}
-	public virtual void OnUpdateWorking ()
+	public virtual void OnUpdateWorking () 
 	{
 		if (anim.IsInTransition(0)) return;
-		if (Time.time >= workStartTime + bridge.duration)
+		if (clock > bridge.duration)
 		{
 			// Complete the work if time has finished
 			anim.SetTrigger(Work_Completed);
+		}
+		else
+		if (!Game.paused) 
+		{
+			var factor = clock / bridge.duration;
+			timer.SetSlider (factor);
+			clock += Time.deltaTime;
 		}
 	}
 	public virtual void OnExitWorking () { } 
 	#endregion
 
 	#region COMPLETION
-	private float completionTime;
 	public virtual void OnEnterCompleted ()
 	{
-		completionTime = Time.time;
 		state = MachineState.Completed;
+		timer.ChangeTo (Theme.InSafeTime);
 		bridge.ProcessObject();
+		clock = 0f;
 	}
 	public virtual void OnUpdateCompleted () 
 	{
 		if (anim.IsInTransition(0)) return;
-		if (Time.time >= completionTime + bridge.safeTime)
+		if (clock > bridge.safeTime) 
 		{
 			// If time runs out and player hasn't
 			// picked up yet, start overheating
 			anim.SetTrigger(Start_Overheat);
 		}
+		else
+		if (!Game.paused) clock += Time.deltaTime;
 	}
 	public virtual void OnExitCompleted () { }
 	#endregion
 
 	#region OVERHEAT
-	private float overheatStartTime;
 	public virtual void OnEnterOverheat ()
 	{
-		overheatStartTime = Time.time;
 		state = MachineState.Overheating;
+		clock = 0f;
 	}
 	public virtual void OnUpdateOverheat ()
 	{
 		if (anim.IsInTransition(0)) return;
-		if (Time.time >= overheatStartTime + bridge.overheatTime)
+		if (clock > bridge.overheatTime)
 		{
 			// If time runs out and player hasn't
 			// picked up yet, go full overload
 			anim.SetTrigger(Start_Overload);
 		}
+		else
+		if (!Game.paused)
+		{
+			var factor = clock / bridge.overheatTime;
+			timer.SetSlider (factor);
+			clock += Time.deltaTime;
+		}
 	}
-	public virtual void OnExitOverheat () { } 
+	public virtual void OnExitOverheat () { timer.ChangeTo (Theme.Overloading); } 
 	#endregion
 
 	#region OVERLOAD
