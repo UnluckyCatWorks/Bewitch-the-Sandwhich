@@ -25,6 +25,10 @@ ModelImporter:
     100034: Object009
     100036: Plane005
     100038: Plane006
+    100040: Aplause
+    100042: Box003
+    100044: Box004
+    100046: Box005
     400000: Box001
     400002: Box002
     400004: Character_low
@@ -45,6 +49,10 @@ ModelImporter:
     400034: Object009
     400036: Plane005
     400038: Plane006
+    400040: Aplause
+    400042: Box003
+    400044: Box004
+    400046: Box005
     2100000: default
     2100002: No Name
     2300000: Box001
@@ -66,6 +74,10 @@ ModelImporter:
     2300032: Object009
     2300034: Plane005
     2300036: Plane006
+    2300038: Aplause
+    2300040: Box003
+    2300042: Box004
+    2300044: Box005
     3300000: Box001
     3300002: Box002
     3300004: Character_low
@@ -85,6 +97,10 @@ ModelImporter:
     3300032: Object009
     3300034: Plane005
     3300036: Plane006
+    3300038: Aplause
+    3300040: Box003
+    3300042: Box004
+    3300044: Box005
     4300000: Character_low
     4300002: Box001
     4300004: Plane001
@@ -104,6 +120,10 @@ ModelImporter:
     4300032: Object007
     4300034: Object008
     4300036: Plane006
+    4300038: Box003
+    4300040: Box004
+    4300042: Aplause
+    4300044: Box005
     6400000: Box001
     6400002: Box002
     6400004: Character_low
@@ -123,6 +143,10 @@ ModelImporter:
     6400032: Object009
     6400034: Plane005
     6400036: Plane006
+    6400038: Aplause
+    6400040: Box003
+    6400042: Box004
+    6400044: Box005
     7400000: Take 001
     9500000: //RootNode
   externalObjects:

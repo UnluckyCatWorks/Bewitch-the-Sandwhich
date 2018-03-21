@@ -16,6 +16,10 @@ public class Game : MonoBehaviour
 	private void Update () 
 	{
 		OrderMaster.Update ();
+		if (Input.GetKeyDown (KeyCode.E))
+		{
+			DialogMaster.StartNew ("Test");
+		}
 	}
 
 	private void Awake () 

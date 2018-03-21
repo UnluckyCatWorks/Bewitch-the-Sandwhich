@@ -21,7 +21,9 @@ public static class DialogMaster
 	static IEnumerator DisplayDialog (Dialog[] dialogs) 
 	{
 		// Turn dialog UI
-		speaker.CrossFadeAlphaFixed (1f, 0.3f, true);
+		Time.timeScale = 0f;
+		Game.paused = true;
+		speaker.CrossFadeAlphaFixed (0.1f, 0.3f, true);
 		message.CrossFadeAlphaFixed (1f, 0.3f, true);
 		textBG.CrossFadeAlphaFixed  (1f, 0.3f, true);
 
@@ -40,7 +42,7 @@ public static class DialogMaster
 				message.text = message.text.Insert (cursor, "<color=#0000>");
 
 				yield return null;
-				fill += Time.deltaTime * speed;
+				fill += Time.unscaledDeltaTime * speed;
 				// Increase speed if pressing skip
 				if (Input.GetButtonDown ("Skip")) speed = Mathf.Pow (speed, 2);
 			}
@@ -54,6 +56,8 @@ public static class DialogMaster
 		speaker.CrossFadeAlphaFixed (0, 0.2f, true);
 		message.CrossFadeAlphaFixed (0, 0.2f, true);
 		textBG.CrossFadeAlphaFixed  (0, 0.2f, true);
+		Game.paused = false;
+		Time.timeScale = 1f;
 	}
 
 	public static void Initialize () 
