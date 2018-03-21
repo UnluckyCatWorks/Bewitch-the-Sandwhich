@@ -69,7 +69,12 @@ ModelImporter:
     4300000: Frog
     9500000: //RootNode
     13700000: Frog
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: default
+    second: {fileID: 2100000, guid: 1fc6401d1b4c735479aa397c27d0f7ff, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
