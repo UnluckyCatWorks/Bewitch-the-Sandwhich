@@ -125,7 +125,17 @@ ModelImporter:
     6400036: Plane006
     7400000: Take 001
     9500000: //RootNode
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: 87e7f2362381bcb48af98ca595c77910, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: default
+    second: {fileID: 2100000, guid: 9305af5e97660cc4b998941f0a469396, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
