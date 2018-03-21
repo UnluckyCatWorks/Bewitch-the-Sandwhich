@@ -85,8 +85,8 @@ public abstract class Character : MonoBehaviour
 	#endregion
 
 	#region LOCOMOTION
-	Animator anim;
-	CharacterController me;
+	protected Animator anim;
+	protected CharacterController me;
 
 	[NonSerialized]
 	public Vector3 movingSpeed;
@@ -280,7 +280,7 @@ public abstract class Character : MonoBehaviour
 	}
 
 	// Helper for only adding CCs
-	public void AddCC (string name, Locks cc, float duration=0) 
+	public void AddCC (string name, Locks cc, float duration=0, bool freezeAnim = false) 
 	{
 		var e = new Effect() { cc = cc };
 
