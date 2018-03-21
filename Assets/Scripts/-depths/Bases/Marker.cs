@@ -21,27 +21,39 @@ public class Marker : MonoBehaviour
 
 	// Static vars
 	private static MaterialPropertyBlock block;
+	private static int _ColorID;
 	private static int _AlphaID;
 	private static bool init;
 	#endregion
 
 	#region UTILS
-	public void On () 
+	private int simultaneousMarks;
+	public void On (int id) 
 	{
 		infoSign.SetAlpha (0.9f);
 		block.SetFloat (_AlphaID, 0.9f);
+
+		simultaneousMarks += id;
+		block.SetColor (_ColorID, Game.manager.teamColors[simultaneousMarks-1]);
 		marker.SetPropertyBlock (block);
 	}
-	public void Off () 
+	public void Off (int id) 
 	{
-		infoSign.SetAlpha (0.0f);
-		block.SetFloat (_AlphaID, 0.0f);
+		simultaneousMarks -= id;
+		if (simultaneousMarks == 0)
+		{
+			infoSign.SetAlpha (0.0f);
+			block.SetFloat (_AlphaID, 0.0f);
+		}
+		else block.SetColor (_ColorID, Game.manager.teamColors[simultaneousMarks-1]);
+
 		marker.SetPropertyBlock (block);
 	}
 
 	public static void Initialize () 
 	{
 		block = new MaterialPropertyBlock ();
+		_ColorID = Shader.PropertyToID ("_Color");
 		_AlphaID = Shader.PropertyToID ("_Alpha");
 		init = true;
 	}
@@ -70,7 +82,7 @@ public class Marker : MonoBehaviour
 		}
 	}
 
-	private void OnEnable ()
+	private void OnEnable () 
 	{
 		#if UNITY_EDITOR
 		if (!init)
@@ -85,10 +97,7 @@ public class Marker : MonoBehaviour
 		infoSign = GetComponentInChildren<SpriteRenderer> ();
 		infoSign.sprite = icon;
 
-		#if UNITY_EDITOR
-		if (EditorApplication.isPlaying)
-		#endif
-		Off ();
+		Off (0);
 	} 
 	#endregion
 }

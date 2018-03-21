@@ -2,9 +2,8 @@
 {
 	Properties
 	{
-		[PerRendererData]
-		_Alpha ("Alpha value", Range(0, 1)) = 1.0
-		_Color ("Color", Color) = (1,1,1,1)
+		[PerRendererData] _Color ("Color", Color) = (1,1,1,1)
+		[PerRendererData] _Alpha ("Alpha value", Range(0, 1)) = 0.0
 	}
 	SubShader
 	{
@@ -12,7 +11,6 @@
 		Pass
 		{
 			Cull Off
-			//Blend One OneMinusSrcAlpha
 			Blend SrcAlpha OneMinusSrcAlpha
 			ZWrite Off
 			CGPROGRAM

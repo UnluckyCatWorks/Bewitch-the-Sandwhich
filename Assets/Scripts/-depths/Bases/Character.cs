@@ -217,8 +217,8 @@ public abstract class Character : MonoBehaviour
 		if (locks.HasFlag(Locks.Interaction)) return;
 
 		var ray = NewRay();
-		var hit = new RaycastHit();
-		if (Physics.Raycast(ray, out hit, 1f, 1 << 8))
+		var hit = new RaycastHit ();
+		if (Physics.Raycast (ray, out hit, 2f, 1<<8))
 		{
             var interactable = hit.collider.GetComponent<Interactable>();
             if (interactable != null)
@@ -226,9 +226,9 @@ public abstract class Character : MonoBehaviour
 				var check = interactable.CheckInteraction (this);
 
 				// Highlight object
-				if (check != PlayerIsAbleTo.None)
+				if (check != PlayerIsAbleTo.None && !lastMarked)
 				{
-					interactable.marker.On ( /*check*/ );
+					interactable.marker.On ( id );
 					lastMarked = interactable;
 				}
 
@@ -247,7 +247,7 @@ public abstract class Character : MonoBehaviour
 		{
 			// If not in front of any interactable
 			// de-mark last one seen, if any
-			if (lastMarked) lastMarked.marker.Off ();
+			if (lastMarked) lastMarked.marker.Off (id);
 			lastMarked = null;
 		}
 
@@ -327,7 +327,8 @@ public abstract class Character : MonoBehaviour
 	public IEnumerator Knock (float duration, Vector3 force) 
 	{
 		// TODO
-		throw new NotImplementedException ();
+//		throw new NotImplementedException ();
+		yield break;
 	}
 
 	#region SPECIAL INPUT HELPERS
