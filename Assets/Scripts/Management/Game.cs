@@ -7,6 +7,7 @@ public class Game : MonoBehaviour
 {
 	#region DATA
 	public Color[] teamColors;
+	public SmartAnimator aManager;
 
 	public static bool paused;		// Whether the game paused
 	public static Game manager;		// Self-reference

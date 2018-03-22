@@ -16,6 +16,34 @@ using UnityEngine;
 
 public abstract class Character : MonoBehaviour
 {
+
+
+
+	SmartAnimator anim;
+	/* Paramaters are accessed as with a regular Animator,
+	 * but all values are stored in cache, using Inspector values as default.
+	 * Since Animator 'Get methods' are never called, value checks/modifications are faster
+	 * and overhead is reduced because parameters are internally treated by their hash names. */
+
+	// Combined with C# properties, it's way easier to
+	// work with animators by script in an optimized way
+	public bool Moving 
+	{
+		get { return anim.GetBool ("Moving"); }
+		set { anim.SetBool ("Moving", value); }
+	}
+	public bool Dashing 
+	{
+		get { return anim.GetBool ("Dashing"); }
+		set { anim.SetBool ("Dashing", value); }
+	}
+	public bool Carrying
+	{
+		get { return anim.GetBool ("Carrying_Stuff"); }
+		set { anim.SetBool ("Carrying_Stuff", value); }
+	}
+
+
 	#region DATA
 	[Header("Player info")]
 	public int id;
@@ -37,55 +65,7 @@ public abstract class Character : MonoBehaviour
 	public float spellCooldown;
 	#endregion
 
-	#region ANIMATOR STUFF
-	private static bool animInit;
-	private static void InitAnimator ()
-	{
-		if (animInit) return;
-
-		CastSpellID = Animator.StringToHash ("Cast_Spell");
-		DashingID = Animator.StringToHash ("Dashing");
-		MovingID = Animator.StringToHash ("Moving");
-		CarryingID = Animator.StringToHash ("Carrying_Stuff");
-
-		animInit = true;
-	}
-
-	private static int CastSpellID;
-
-	public bool Dashing 
-	{
-		set { anim.SetBool (DashingID, value); }
-	}
-	private static int DashingID;
-
-	private bool _moving;
-	public bool Moving 
-	{
-		set 
-		{
-			if (_moving == value) return;
-			anim.SetBool (MovingID, value);
-			_moving = value;
-		}
-	}
-	private static int MovingID;
-
-	private bool _carrying;
-	public bool Carrying 
-	{
-		set 
-		{
-			if (_carrying == value) return;
-			anim.SetBool (CarryingID, value);
-			_carrying = value;
-		}
-	}
-	private static int CarryingID;
-	#endregion
-
 	#region LOCOMOTION
-	protected Animator anim;
 	protected CharacterController me;
 
 	[NonSerialized]
@@ -204,7 +184,7 @@ public abstract class Character : MonoBehaviour
 		// If everything's ok
 		var block = (Locks.Locomotion | Locks.Abilities);
 		AddCC ("Spell Casting", block, spellSelfStun);
-		anim.SetTrigger (CastSpellID);
+		anim.SetTrigger ("Cast_Spell");
 		lastSpellTime = Time.time;
 	}
 	protected abstract void CastSpell ();
@@ -388,12 +368,10 @@ public abstract class Character : MonoBehaviour
 
 	protected virtual void Awake () 
     {
-		InitAnimator ();
-
 		effects = new Dictionary<string, Effect> ();
 		consumedInputs = new List<string> ();
 
-		anim = GetComponent<Animator> ();
+		anim = new SmartAnimator ( GetComponent<Animator> () );
 		me = GetComponent<CharacterController> ();
 		targetRotation = Quaternion.identity;
     }
