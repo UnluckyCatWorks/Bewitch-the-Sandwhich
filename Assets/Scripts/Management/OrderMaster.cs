@@ -80,21 +80,7 @@ public static class OrderMaster
 	#region CALLBACKS
 	public static void Update () 
 	{
-		if (Input.GetKeyDown (KeyCode.P))
-		{
-			SpawnOrder (1);
-		}
-		if (Input.GetKeyDown (KeyCode.L))
-		{
-			SpawnOrder (2);
-		}
-		if (Input.GetKeyDown (KeyCode.O))
-		{
-			var p = Random.Range (1, 3);
-			if (orders[p-1].Count == 0) return;
-			var i = Random.Range (0, orders[p-1].Count);
-			TryCompleteOrder (p, orders[p-1][i].recipe);
-		}
+
 	}
 
 	public static void Initialize () 

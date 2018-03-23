@@ -25,6 +25,18 @@ ModelImporter:
     100034: Object009
     100036: Plane005
     100038: Plane006
+    100040: Aplause
+    100042: Box003
+    100044: Box004
+    100046: Box005
+    100048: Aplause_Caja_Puerta
+    100050: Cortinas
+    100052: Focos_Columnas
+    100054: Olas
+    100056: Paredes
+    100058: Sandwich
+    100060: Sillas
+    100062: Suelo
     400000: Box001
     400002: Box002
     400004: Character_low
@@ -45,8 +57,27 @@ ModelImporter:
     400034: Object009
     400036: Plane005
     400038: Plane006
+    400040: Aplause
+    400042: Box003
+    400044: Box004
+    400046: Box005
+    400048: Aplause_Caja_Puerta
+    400050: Cortinas
+    400052: Focos_Columnas
+    400054: Olas
+    400056: Paredes
+    400058: Sandwich
+    400060: Sillas
+    400062: Suelo
     2100000: default
     2100002: No Name
+    2100004: Suelo
+    2100006: Cortinas
+    2100008: Focos_columnas
+    2100010: Sillas
+    2100012: Sandwich
+    2100014: Aplause_Caja_Puerta
+    2100016: Olas
     2300000: Box001
     2300002: Box002
     2300004: Character_low
@@ -66,6 +97,18 @@ ModelImporter:
     2300032: Object009
     2300034: Plane005
     2300036: Plane006
+    2300038: Aplause
+    2300040: Box003
+    2300042: Box004
+    2300044: Box005
+    2300046: Aplause_Caja_Puerta
+    2300048: Cortinas
+    2300050: Focos_Columnas
+    2300052: Olas
+    2300054: Paredes
+    2300056: Sandwich
+    2300058: Sillas
+    2300060: Suelo
     3300000: Box001
     3300002: Box002
     3300004: Character_low
@@ -85,6 +128,18 @@ ModelImporter:
     3300032: Object009
     3300034: Plane005
     3300036: Plane006
+    3300038: Aplause
+    3300040: Box003
+    3300042: Box004
+    3300044: Box005
+    3300046: Aplause_Caja_Puerta
+    3300048: Cortinas
+    3300050: Focos_Columnas
+    3300052: Olas
+    3300054: Paredes
+    3300056: Sandwich
+    3300058: Sillas
+    3300060: Suelo
     4300000: Character_low
     4300002: Box001
     4300004: Plane001
@@ -104,6 +159,18 @@ ModelImporter:
     4300032: Object007
     4300034: Object008
     4300036: Plane006
+    4300038: Box003
+    4300040: Box004
+    4300042: Aplause
+    4300044: Box005
+    4300046: Suelo
+    4300048: Cortinas
+    4300050: Paredes
+    4300052: Focos_Columnas
+    4300054: Sillas
+    4300056: Sandwich
+    4300058: Aplause_Caja_Puerta
+    4300060: Olas
     6400000: Box001
     6400002: Box002
     6400004: Character_low
@@ -123,6 +190,18 @@ ModelImporter:
     6400032: Object009
     6400034: Plane005
     6400036: Plane006
+    6400038: Aplause
+    6400040: Box003
+    6400042: Box004
+    6400044: Box005
+    6400046: Aplause_Caja_Puerta
+    6400048: Cortinas
+    6400050: Focos_Columnas
+    6400052: Olas
+    6400054: Paredes
+    6400056: Sandwich
+    6400058: Sillas
+    6400060: Suelo
     7400000: Take 001
     9500000: //RootNode
   externalObjects:

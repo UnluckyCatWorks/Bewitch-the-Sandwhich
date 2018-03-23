@@ -6,11 +6,11 @@ using System.Collections.Generic;
 public class Game : MonoBehaviour
 {
 	#region DATA
-	public static bool paused;		// Whether the game paused
 	public static Game manager;		// Self-reference
-	public static int[] scores;		// Score of both players
+	public static bool paused;      // Whether the game paused
+	public static RectTransform ui;
 
-	public static RectTransform ui; // Canvas (parent of all UI)
+	public Color[] teamColors;
 	#endregion
 
 	private void Update () 
@@ -24,8 +24,6 @@ public class Game : MonoBehaviour
 		Marker.Initialize ();
 		OrderMaster.Initialize ();
 		DialogMaster.Initialize ();
-		ui = GameObject.Find ("UI").transform as RectTransform;
-		scores = new int[3];
 		manager = this;
 	}
 }

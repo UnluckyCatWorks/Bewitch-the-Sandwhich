@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 114276756567449886}
   m_Layer: 0
   m_Name: Escama_Dragon
-  m_TagString: Untagged
+  m_TagString: Grabbable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

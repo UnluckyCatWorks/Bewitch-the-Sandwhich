@@ -16,6 +16,34 @@ using UnityEngine;
 
 public abstract class Character : MonoBehaviour
 {
+
+
+
+	SmartAnimator anim;
+	/* Paramaters are accessed as with a regular Animator,
+	 * but all values are stored in cache, using Inspector values as default.
+	 * Since Animator 'Get methods' are never called, value checks/modifications are faster
+	 * and overhead is reduced because parameters are internally treated by their hash names. */
+
+	// Combined with C# properties, it's way easier to
+	// work with animators by script in an optimized way
+	public bool Moving 
+	{
+		get { return anim.GetBool ("Moving"); }
+		set { anim.SetBool ("Moving", value); }
+	}
+	public bool Dashing 
+	{
+		get { return anim.GetBool ("Dashing"); }
+		set { anim.SetBool ("Dashing", value); }
+	}
+	public bool Carrying
+	{
+		get { return anim.GetBool ("Carrying_Stuff"); }
+		set { anim.SetBool ("Carrying_Stuff", value); }
+	}
+
+
 	#region DATA
 	[Header("Player info")]
 	public int id;
@@ -37,56 +65,8 @@ public abstract class Character : MonoBehaviour
 	public float spellCooldown;
 	#endregion
 
-	#region ANIMATOR STUFF
-	private static bool animInit;
-	private static void InitAnimator ()
-	{
-		if (animInit) return;
-
-		CastSpellID = Animator.StringToHash ("Cast_Spell");
-		DashingID = Animator.StringToHash ("Dashing");
-		MovingID = Animator.StringToHash ("Moving");
-		CarryingID = Animator.StringToHash ("Carrying_Stuff");
-
-		animInit = true;
-	}
-
-	private static int CastSpellID;
-
-	public bool Dashing 
-	{
-		set { anim.SetBool (DashingID, value); }
-	}
-	private static int DashingID;
-
-	private bool _moving;
-	public bool Moving 
-	{
-		set 
-		{
-			if (_moving == value) return;
-			anim.SetBool (MovingID, value);
-			_moving = value;
-		}
-	}
-	private static int MovingID;
-
-	private bool _carrying;
-	public bool Carrying 
-	{
-		set 
-		{
-			if (_carrying == value) return;
-			anim.SetBool (CarryingID, value);
-			_carrying = value;
-		}
-	}
-	private static int CarryingID;
-	#endregion
-
 	#region LOCOMOTION
-	Animator anim;
-	CharacterController me;
+	protected CharacterController me;
 
 	[NonSerialized]
 	public Vector3 movingSpeed;
@@ -204,7 +184,7 @@ public abstract class Character : MonoBehaviour
 		// If everything's ok
 		var block = (Locks.Locomotion | Locks.Abilities);
 		AddCC ("Spell Casting", block, spellSelfStun);
-		anim.SetTrigger (CastSpellID);
+		anim.SetTrigger ("Cast_Spell");
 		lastSpellTime = Time.time;
 	}
 	protected abstract void CastSpell ();
@@ -217,8 +197,8 @@ public abstract class Character : MonoBehaviour
 		if (locks.HasFlag(Locks.Interaction)) return;
 
 		var ray = NewRay();
-		var hit = new RaycastHit();
-		if (Physics.Raycast(ray, out hit, 1f, 1 << 8))
+		var hit = new RaycastHit ();
+		if (Physics.Raycast (ray, out hit, 2f, 1<<8))
 		{
             var interactable = hit.collider.GetComponent<Interactable>();
             if (interactable != null)
@@ -226,9 +206,9 @@ public abstract class Character : MonoBehaviour
 				var check = interactable.CheckInteraction (this);
 
 				// Highlight object
-				if (check != PlayerIsAbleTo.None)
+				if (check != PlayerIsAbleTo.None && !lastMarked)
 				{
-					interactable.marker.On ( /*check*/ );
+					interactable.marker.On ( id );
 					lastMarked = interactable;
 				}
 
@@ -247,7 +227,7 @@ public abstract class Character : MonoBehaviour
 		{
 			// If not in front of any interactable
 			// de-mark last one seen, if any
-			if (lastMarked) lastMarked.marker.Off ();
+			if (lastMarked) lastMarked.marker.Off (id);
 			lastMarked = null;
 		}
 
@@ -280,7 +260,7 @@ public abstract class Character : MonoBehaviour
 	}
 
 	// Helper for only adding CCs
-	public void AddCC (string name, Locks cc, float duration=0) 
+	public void AddCC (string name, Locks cc, float duration=0, bool freezeAnim = false) 
 	{
 		var e = new Effect() { cc = cc };
 
@@ -327,7 +307,8 @@ public abstract class Character : MonoBehaviour
 	public IEnumerator Knock (float duration, Vector3 force) 
 	{
 		// TODO
-		throw new NotImplementedException ();
+//		throw new NotImplementedException ();
+		yield break;
 	}
 
 	#region SPECIAL INPUT HELPERS
@@ -387,12 +368,10 @@ public abstract class Character : MonoBehaviour
 
 	protected virtual void Awake () 
     {
-		InitAnimator ();
-
 		effects = new Dictionary<string, Effect> ();
 		consumedInputs = new List<string> ();
 
-		anim = GetComponent<Animator> ();
+		anim = new SmartAnimator ( GetComponent<Animator> () );
 		me = GetComponent<CharacterController> ();
 		targetRotation = Quaternion.identity;
     }

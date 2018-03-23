@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7626145be1ada9c4fb621cd847b17bca, type: 3}
+  m_Name: 8
+  m_EditorClassIdentifier: 
+  dialog:
+  - message: Oh.
+    image: {fileID: 0}
+    speed: 8
+  - message: Se me olvidaba una cosa.
+    image: {fileID: 0}
+    speed: 8
+  - message: "En realidad me informa la direcci\xF3n de que a\xFAn no hemos terminado
+      la prodcci\xF3n completa del show...\n\nAs\xED que me temo que no vais a poder
+      continuar participando."
+    image: {fileID: 0}
+    speed: 6
+  - message: "Vaya...\nBueno, bueno, \xA1pero no todo son malas not\xEDcias!"
+    image: {fileID: 0}
+    speed: 13
+  - message: "\xA1Habeis pasado de sobreas el c\xE1sting!\nS\xED, s\xED, los dos.\nAs\xED
+      que nos veremos otra vez en la versi\xF3n, est\xE1 vez s\xED, completa del programa."
+    image: {fileID: 0}
+    speed: 6
+  - message: "Como consolaci\xF3n pod\xE9is pasear por el que ser\xE1 vuestro plat\xF3."
+    image: {fileID: 0}
+    speed: 8
+  - message: "O simplemente iros.\nComo quer\xE1is.\n                    \nY ahora
+      S\xCD, ya me callo."
+    image: {fileID: 0}
+    speed: 6

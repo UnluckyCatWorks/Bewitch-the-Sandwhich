@@ -26,14 +26,14 @@ public class Cauldron : Interactable
 
 			// Add ingredient & restart time
 			StartCoroutine ( Add (ingredient) );
-			time = 0f;
+			clock = 0f;
 		}
 		else
 		{
 			// Grab potion & clear
 			var potionId = FindPotion();
-			var obj = InstantiatePotion (potionId);
-			player.grab = obj;
+			//var obj = InstantiatePotion (potionId);
+			//player.grab = obj;
 			Clear();
 		}
 	}
@@ -55,7 +55,7 @@ public class Cauldron : Interactable
 
 		// Check if actual ingredients in,
 		// and if time is good for picking
-		else if (currentMix.Count == 0 || time < cookTime)
+		else if (currentMix.Count == 0 || clock < cookTime)
 			action = false;
 
 		return Result (action, false);
@@ -96,7 +96,8 @@ public class Cauldron : Interactable
 	private Grabbable InstantiatePotion ( int recipe ) 
 	{
 		// TODO
-		throw new NotImplementedException ();
+		//throw new NotImplementedException ();
+		return null;
 	}
 	#endregion
 
@@ -114,7 +115,7 @@ public class Cauldron : Interactable
 		currentMix.Clear ();
 		StopCoroutine (process);
 		process = null;
-		time = 0;
+		clock = 0;
 	}
 
 	IEnumerator Add (Ingredient ig)
@@ -146,18 +147,19 @@ public class Cauldron : Interactable
 	}
 	#endregion
 
-	private float time;
+	[NonSerialized]
+	public float clock;
 	private Coroutine process;
 	private IEnumerator Cooking () 
 	{
-		time = 0f;
+		clock = 0f;
 		// Wait until is cooked
-		while (time <= cookTime)
+		while (clock <= cookTime)
 		{
 			if (!Game.paused)
 			{
-				time += Time.deltaTime;
-				timer.SetSlider (time / cookTime);
+				clock += Time.deltaTime;
+				timer.SetSlider (clock / cookTime);
 			}
 			yield return null;
 		}
@@ -167,12 +169,12 @@ public class Cauldron : Interactable
 		yield return new WaitForSeconds (safeTime);
 
 		// Wait until it's burned
-		while (time <= cookTime + burnTime) 
+		while (clock <= cookTime + burnTime) 
 		{
 			if (!Game.paused) 
 			{
-				time += Time.deltaTime;
-				timer.SetSlider ((time - cookTime) / burnTime);
+				clock += Time.deltaTime;
+				timer.SetSlider ((clock - cookTime) / burnTime);
 			}
 			yield return null;
 		}
