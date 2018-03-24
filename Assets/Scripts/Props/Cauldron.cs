@@ -26,14 +26,14 @@ public class Cauldron : Interactable
 
 			// Add ingredient & restart time
 			StartCoroutine ( Add (ingredient) );
-			clock = 0f;
+			time = 0f;
 		}
 		else
 		{
 			// Grab potion & clear
 			var potionId = FindPotion();
-			//var obj = InstantiatePotion (potionId);
-			//player.grab = obj;
+			var obj = InstantiatePotion (potionId);
+			player.grab = obj;
 			Clear();
 		}
 	}
@@ -55,7 +55,7 @@ public class Cauldron : Interactable
 
 		// Check if actual ingredients in,
 		// and if time is good for picking
-		else if (currentMix.Count == 0 || clock < cookTime)
+		else if (currentMix.Count == 0 || time < cookTime)
 			action = false;
 
 		return Result (action, false);
@@ -96,8 +96,7 @@ public class Cauldron : Interactable
 	private Grabbable InstantiatePotion ( int recipe ) 
 	{
 		// TODO
-		//throw new NotImplementedException ();
-		return null;
+		throw new NotImplementedException ();
 	}
 	#endregion
 
@@ -115,7 +114,7 @@ public class Cauldron : Interactable
 		currentMix.Clear ();
 		StopCoroutine (process);
 		process = null;
-		clock = 0;
+		time = 0;
 	}
 
 	IEnumerator Add (Ingredient ig)
@@ -147,19 +146,18 @@ public class Cauldron : Interactable
 	}
 	#endregion
 
-	[NonSerialized]
-	public float clock;
+	private float time;
 	private Coroutine process;
 	private IEnumerator Cooking () 
 	{
-		clock = 0f;
+		time = 0f;
 		// Wait until is cooked
-		while (clock <= cookTime)
+		while (time <= cookTime)
 		{
 			if (!Game.paused)
 			{
-				clock += Time.deltaTime;
-				timer.SetSlider (clock / cookTime);
+				time += Time.deltaTime;
+				timer.SetSlider (time / cookTime);
 			}
 			yield return null;
 		}
@@ -169,12 +167,12 @@ public class Cauldron : Interactable
 		yield return new WaitForSeconds (safeTime);
 
 		// Wait until it's burned
-		while (clock <= cookTime + burnTime) 
+		while (time <= cookTime + burnTime) 
 		{
 			if (!Game.paused) 
 			{
-				clock += Time.deltaTime;
-				timer.SetSlider ((clock - cookTime) / burnTime);
+				time += Time.deltaTime;
+				timer.SetSlider ((time - cookTime) / burnTime);
 			}
 			yield return null;
 		}

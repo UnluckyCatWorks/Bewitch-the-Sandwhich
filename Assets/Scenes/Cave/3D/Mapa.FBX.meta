@@ -1,0 +1,300 @@
+fileFormatVersion: 2
+guid: 41fcec6f17425c240bfe26b62f5763b5
+timeCreated: 1520623924
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Caldero
+    100002: Caldero001
+    100004: Cofre
+    100006: Farola
+    100008: //RootNode
+    100010: Muelle
+    100012: Object020
+    100014: Object032
+    100016: Object033
+    100018: Object034
+    100020: Object035
+    100022: Object036
+    100024: Object038
+    100026: Object039
+    100028: Object044
+    100030: Object045
+    100032: Object046
+    100034: Object047
+    100036: Object048
+    100038: Object049
+    100040: Parte_puente_1
+    100042: Parte_puente_2
+    100044: Plataforma1
+    100046: Puente
+    100048: Roca
+    100050: Torre
+    400000: Caldero
+    400002: Caldero001
+    400004: Cofre
+    400006: Farola
+    400008: //RootNode
+    400010: Muelle
+    400012: Object020
+    400014: Object032
+    400016: Object033
+    400018: Object034
+    400020: Object035
+    400022: Object036
+    400024: Object038
+    400026: Object039
+    400028: Object044
+    400030: Object045
+    400032: Object046
+    400034: Object047
+    400036: Object048
+    400038: Object049
+    400040: Parte_puente_1
+    400042: Parte_puente_2
+    400044: Plataforma1
+    400046: Puente
+    400048: Roca
+    400050: Torre
+    2100000: Suelo
+    2100002: Caldero
+    2100004: Puente
+    2100006: No Name
+    2100008: Muelle
+    2100010: Barquito
+    2100012: Cofre
+    2100014: Torre
+    2100016: Farola
+    2100018: Barco_pirata
+    2300000: Caldero
+    2300002: Caldero001
+    2300004: Cofre
+    2300006: Farola
+    2300008: Muelle
+    2300010: Object020
+    2300012: Object032
+    2300014: Object033
+    2300016: Object034
+    2300018: Object035
+    2300020: Object036
+    2300022: Object038
+    2300024: Object039
+    2300026: Object044
+    2300028: Object045
+    2300030: Object046
+    2300032: Object047
+    2300034: Object048
+    2300036: Object049
+    2300038: Parte_puente_1
+    2300040: Parte_puente_2
+    2300042: Plataforma1
+    2300044: Puente
+    2300046: Roca
+    2300048: Torre
+    3300000: Caldero
+    3300002: Caldero001
+    3300004: Cofre
+    3300006: Farola
+    3300008: Muelle
+    3300010: Object020
+    3300012: Object032
+    3300014: Object033
+    3300016: Object034
+    3300018: Object035
+    3300020: Object036
+    3300022: Object038
+    3300024: Object039
+    3300026: Object044
+    3300028: Object045
+    3300030: Object046
+    3300032: Object047
+    3300034: Object048
+    3300036: Object049
+    3300038: Parte_puente_1
+    3300040: Parte_puente_2
+    3300042: Plataforma1
+    3300044: Puente
+    3300046: Roca
+    3300048: Torre
+    4300000: Plataforma1
+    4300002: Caldero
+    4300004: Object020
+    4300006: Roca
+    4300008: Muelle
+    4300010: Puente
+    4300012: Object032
+    4300014: Object033
+    4300016: Object034
+    4300018: Object035
+    4300020: Object036
+    4300022: Caldero001
+    4300024: Parte_puente_2
+    4300026: Parte_puente_1
+    4300028: Object038
+    4300030: Object039
+    4300032: Cofre
+    4300034: Torre
+    4300036: Object044
+    4300038: Object045
+    4300040: Object046
+    4300042: Object047
+    4300044: Object048
+    4300046: Farola
+    4300048: Object049
+    6400000: Caldero
+    6400002: Caldero001
+    6400004: Cofre
+    6400006: Farola
+    6400008: Muelle
+    6400010: Object020
+    6400012: Object032
+    6400014: Object033
+    6400016: Object034
+    6400018: Object035
+    6400020: Object036
+    6400022: Object038
+    6400024: Object039
+    6400026: Object044
+    6400028: Object045
+    6400030: Object046
+    6400032: Object047
+    6400034: Object048
+    6400036: Object049
+    6400038: Parte_puente_1
+    6400040: Parte_puente_2
+    6400042: Plataforma1
+    6400044: Puente
+    6400046: Roca
+    6400048: Torre
+    9500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Barco_pirata
+    second: {fileID: 2100000, guid: 78ef51baf2d10fe4b931116871a01a64, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Barquito
+    second: {fileID: 2100000, guid: 1d1415282dd775d469d280db39785f0f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Caldero
+    second: {fileID: 2100000, guid: c48e9503b87aa2048bc1ce101ad4a7c9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cofre
+    second: {fileID: 2100000, guid: 10cafad4943555948b4c1a360054dc52, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Farola
+    second: {fileID: 2100000, guid: 5ff98ec2fa37c3e45bb55074845045c1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Muelle
+    second: {fileID: 2100000, guid: ba1d337f88fc7e147a3da75ef3b0da54, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: 3edf01825e57edd469e8ca9a5840c3da, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Puente
+    second: {fileID: 2100000, guid: c924702afb57182419fa7879a5088a1d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Suelo
+    second: {fileID: 2100000, guid: 30125774cb4875e4cb7298ddd81f49d2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Torre
+    second: {fileID: 2100000, guid: d59a27b58ec23d74ea35a2d7e67a172d, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 3
+    addColliders: 1
+    importVisibility: 0
+    importBlendShapes: 0
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

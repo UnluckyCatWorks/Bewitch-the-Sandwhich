@@ -6,15 +6,13 @@ using UnityEngine;
 public class IceGuy : Character
 {
 	[Header("Spell Settings")]
+	public BoxCollider spellBox;
 	public float stunDuration;
 
 	protected override void CastSpell () 
 	{
-		var radius = 2.2f;
-		var pos = transform.position + transform.forward * (radius + 0.15f);
-
 		// Find all players affected by the spell
-		var hits = Physics.OverlapSphere (pos, radius);
+		var hits = Physics.OverlapBox (spellBox.center, spellBox.size / 2f);
 		var players = from cols in hits
 					  where cols.tag == "Player" && cols.name != name
 					  select cols.GetComponent<Character> ();

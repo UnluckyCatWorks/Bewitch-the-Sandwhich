@@ -1512,8 +1512,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1304399107086124}
-  m_LocalRotation: {x: -0, y: 0.010873005, z: -0, w: -0.99994093}
-  m_LocalPosition: {x: 3.62, y: 0.069, z: 2.97}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.39698184, y: 0.104767054, z: 4.096033}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4218556083496144}
@@ -1521,7 +1521,7 @@ Transform:
   - {fileID: 4937281900218502}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -361.246, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4993071084942748
 Transform:
   m_ObjectHideFlags: 1
@@ -1574,6 +1574,7 @@ MonoBehaviour:
   sprintForce: 20
   sprintCooldown: 1.5
   spellCooldown: 4
+  spellBox: {fileID: 0}
   stunDuration: 2
 --- !u!136 &136563401202934084
 CapsuleCollider:
@@ -1602,7 +1603,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 6e62b85e10468c04ca67944304f3bdee, type: 2}
+  - {fileID: 2100000, guid: c7995ccd01254e048a9ef0ed1ce63b11, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1690,7 +1691,7 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1.32
+  m_Height: 1.5
   m_Radius: 0.35
   m_SlopeLimit: 45
   m_StepOffset: 0.1

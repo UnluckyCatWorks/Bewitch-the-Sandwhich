@@ -9,30 +9,11 @@ public class Order : MonoBehaviour
 	[NonSerialized] public RectTransform t;
 	[NonSerialized] public Recipe recipe;
 
-	#region UTILS
-	public IEnumerator Complete () 
+	IEnumerator Start () 
 	{
+		t = transform as RectTransform;
 		var start = t.anchoredPosition;
-		var target = new Vector2 (start.x, 170f);
-
-		var factor = 0f;
-		var duration = 0.15f;
-		while (factor < 1f)
-		{
-			// Move Up
-			var newPos = Vector2.Lerp (start, target, factor);
-			t.anchoredPosition = newPos;
-
-			factor += Time.deltaTime / duration;
-			yield return null;
-		}
-		Destroy (gameObject);
-	}
-
-	public IEnumerator Move (float offset)
-	{
-		var start = t.anchoredPosition;
-		var target = new Vector2 (start.x + offset, start.y);
+		var target = new Vector2 (start.x, 0f);
 
 		var factor = 0f;
 		var duration = 0.3f;
@@ -45,14 +26,31 @@ public class Order : MonoBehaviour
 			factor += Time.deltaTime / duration;
 			yield return null;
 		}
-	} 
-	#endregion
+	}
 
-	IEnumerator Start () 
+	public IEnumerator Complete () 
 	{
-		t = transform as RectTransform;
 		var start = t.anchoredPosition;
-		var target = new Vector2 (start.x, 0f);
+		var target = new Vector2 (start.x, 170f);
+
+		var factor = 0f;
+		var duration = 0.15f;
+		while (factor < 1f)
+		{
+			// Move down
+			var newPos = Vector2.Lerp (start, target, factor);
+			t.anchoredPosition = newPos;
+
+			factor += Time.deltaTime / duration;
+			yield return null;
+		}
+		Destroy (gameObject);
+	}
+
+	public IEnumerator Move ( float offset ) 
+	{
+		var start = t.anchoredPosition;
+		var target = new Vector2 (start.x + offset, start.y);
 
 		var factor = 0f;
 		var duration = 0.3f;

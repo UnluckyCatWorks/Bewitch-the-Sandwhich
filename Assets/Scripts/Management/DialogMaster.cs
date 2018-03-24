@@ -10,19 +10,18 @@ public static class DialogMaster
 	public static Image textBG;
 	public static Text message;
 
-	public static Coroutine StartNew (string path) 
+	public static void StartNew (string path) 
 	{
 		var talk = Resources.Load<Talk> ("Dialogs/" + path);
 
-		if (talk) return Game.manager.StartCoroutine (DisplayDialog (talk.dialog));
+		if (talk) Game.manager.StartCoroutine (DisplayDialog (talk.dialog));
 		else throw new UnityException ("Can't find dialog asset");
 	}
 
 	static IEnumerator DisplayDialog (Dialog[] dialogs) 
 	{
 		// Turn dialog UI
-		if (!Game.paused) Time.timeScale = 0f;
-		speaker.CrossFadeAlphaFixed (0.1f, 0.3f, true);
+		speaker.CrossFadeAlphaFixed (1f, 0.3f, true);
 		message.CrossFadeAlphaFixed (1f, 0.3f, true);
 		textBG.CrossFadeAlphaFixed  (1f, 0.3f, true);
 
@@ -30,7 +29,7 @@ public static class DialogMaster
 		foreach (var d in dialogs)
 		{
 			var fill = 0f;
-			var speed = d.speed * 2f;
+			var speed = d.speed;
 			while (fill <= d.message.Length + 1)
 			{
 				// Get cursor position
@@ -41,11 +40,10 @@ public static class DialogMaster
 				message.text = message.text.Insert (cursor, "<color=#0000>");
 
 				yield return null;
-				fill += Time.unscaledDeltaTime * speed;
+				fill += Time.deltaTime * speed;
 				// Increase speed if pressing skip
 				if (Input.GetButtonDown ("Skip")) speed = Mathf.Pow (speed, 2);
 			}
-			message.text = d.message;
 
 			// Wait until dialog is skipped
 			while (!Input.GetButtonDown ("Skip"))
@@ -53,10 +51,9 @@ public static class DialogMaster
 		}
 
 		// Turn off dialog UI
-		speaker.CrossFadeAlpha (0, 0.2f, true);
-		message.CrossFadeAlpha (0, 0.2f, true);
-		textBG.CrossFadeAlpha  (0, 0.2f, true);
-		if (!Game.paused) Time.timeScale = 1f;
+		speaker.CrossFadeAlphaFixed (0, 0.2f, true);
+		message.CrossFadeAlphaFixed (0, 0.2f, true);
+		textBG.CrossFadeAlphaFixed  (0, 0.2f, true);
 	}
 
 	public static void Initialize () 
