@@ -26,7 +26,7 @@ public class MachineInterface : Interactable
 			// Cook ingredient
 			obj = player.grab.body;
 			player.grab = null;
-			machine.anim.SetTrigger (MachineController.Start_Working);
+			machine.anim.SetTrigger ("Start_Working");
 		}
 		else
 		// If machine has finished processing
@@ -34,26 +34,26 @@ public class MachineInterface : Interactable
 		|| machine.state == MachineState.Overheating)
 		{
 			player.grab = obj.GetComponent<Grabbable> ();
-			machine.anim.SetTrigger (MachineController.Pickup);
+			machine.anim.SetTrigger ("Pickup");
 			obj = null;
 		}
 	}
 
-	public sealed override PlayerIsAbleTo CheckInteraction (Character player) 
+	public sealed override bool CheckInteraction (Character player) 
 	{
 		// If machine is waiting input
 		if (machine.state == MachineState.Waiting)
 		{
 			// Check that player is actually carrying something
-			if (player.grab == null) return PlayerIsAbleTo.None;
+			if (player.grab == null) return false;
 
 			// Check that object is valid
 			var ingredient = player.grab.GetComponent<Ingredient> ();
 			if (ingredient == null || ingredient.type != IngredientType.TALCUAL)
-				return PlayerIsAbleTo.None;
+				return false;
 
 			// If everything is okay
-			return PlayerIsAbleTo.Action;
+			return true;
 		}
 		else
 		// If machine has finished processing
@@ -61,12 +61,12 @@ public class MachineInterface : Interactable
 		|| machine.state == MachineState.Overheating)
 		{
 			// Check that player isn't already carrying something
-			if (player.grab != null) return PlayerIsAbleTo.None;
+			if (player.grab != null) return false;
 
 			// If everything is okay
-			return PlayerIsAbleTo.Action;
+			return true;
 		}
-		else return PlayerIsAbleTo.None;
+		else return false;
 	}
 	#endregion
 
@@ -103,7 +103,7 @@ public class MachineInterface : Interactable
 	#endregion
 
 	#region HELPERS
-	public void SetTrigger (int trigger) 
+	public void SetTrigger (string trigger) 
 	{
 		machine.anim.SetTrigger (trigger);
 	}

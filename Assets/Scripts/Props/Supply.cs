@@ -8,19 +8,19 @@ public class Supply : Interactable
 
 	public override void Action (Character player)
 	{
-		// Instantiate prefab
+		/// Instantiate prefab
 		var prefab = Resources.Load<Grabbable> ("Ingredients/" + ingredient.ToString ());
 		var go = Instantiate(prefab, transform.position, Quaternion.identity);
 		player.grab = go.GetComponent<Grabbable> ();
 		player.grab.body.isKinematic = true;
 	}
 
-	public override PlayerIsAbleTo CheckInteraction (Character player) 
+	public override bool CheckInteraction (Character player) 
 	{
-		// Can only grab things if nothing on hand already
-		if (player.grab != null) return PlayerIsAbleTo.None;
+		/// Can only grab things if nothing on hand already
+		if (player.grab != null) return false;
 
-		// If everything's fine
-		return PlayerIsAbleTo.Action;
+		/// If everything's fine
+		return true;
 	}
 }

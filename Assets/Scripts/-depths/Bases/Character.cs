@@ -37,68 +37,45 @@ public abstract class Character : MonoBehaviour
 	public float spellCooldown;
 	#endregion
 
-	#region ANIMATOR STUFF
-	private static bool animInit;
-	private static void InitAnimator ()
-	{
-		if (animInit) return;
+	#region ANNIMATION
+	SmartAnimator anim;
 
-		CastSpellID = Animator.StringToHash ("Cast_Spell");
-		DashingID = Animator.StringToHash ("Dashing");
-		MovingID = Animator.StringToHash ("Moving");
-		CarryingID = Animator.StringToHash ("Carrying_Stuff");
-
-		animInit = true;
-	}
-
-	private static int CastSpellID;
-
-	public bool Dashing 
-	{
-		set { anim.SetBool (DashingID, value); }
-	}
-	private static int DashingID;
-
-	private bool _moving;
 	public bool Moving 
 	{
-		set 
-		{
-			if (_moving == value) return;
-			anim.SetBool (MovingID, value);
-			_moving = value;
-		}
+		get { return anim.GetBool ("Moving"); }
+		set { anim.SetBool ("Moving", value); }
 	}
-	private static int MovingID;
-
-	private bool _carrying;
+	public bool Dashing 
+	{
+		get { return anim.GetBool ("Dashing"); }
+		set { anim.SetBool ("Dashing", value); }
+	}
 	public bool Carrying 
 	{
-		set 
-		{
-			if (_carrying == value) return;
-			anim.SetBool (CarryingID, value);
-			_carrying = value;
-		}
+		get { return anim.GetBool ("Carrying_Stuff"); }
+		set { anim.SetBool ("Carrying_Stuff", value); }
 	}
-	private static int CarryingID;
 	#endregion
 
 	#region LOCOMOTION
-	Animator anim;
-	CharacterController me;
+	protected CharacterController me;
 
 	[NonSerialized]
 	public Vector3 movingSpeed;
 	private void Movement () 
     {
 		var input = movingSpeed = Vector3.zero;
-		input.x = -Input.GetAxis(GetInputName("Horizontal"));
-		input.z = -Input.GetAxis(GetInputName("Vertical"));
+		input.x = Input.GetAxis(GetInputName("Horizontal"));
+		input.z = Input.GetAxis(GetInputName("Vertical"));
 
-		// Get speed & calculate rotation
+		/// Get speed & calculate rotation
 		var dir = Vector3.Min (input, input.normalized);
-		if (input != Vector3.zero) targetRotation = Quaternion.LookRotation (dir);
+		if (input != Vector3.zero)
+		{
+			/// Transform direction to be camera-dependent
+			dir = TranformToCamera (dir);
+			targetRotation = Quaternion.LookRotation (dir);
+		}
 		if (!locks.HasFlag (Locks.Movement))
 		{
 			movingSpeed = dir * speed;
@@ -154,10 +131,10 @@ public abstract class Character : MonoBehaviour
 
 	private void Dash () 
 	{
-		// If sprinting already
+		/// If sprinting already
 		if (effects.ContainsKey("Dashing"))
 		{
-			// If on sprint-time
+			/// If on sprint-time
 			var duration = 0.15f;   /*sprint duration*/
 			if (Time.time < lastDashTime + duration)
 			{
@@ -165,7 +142,7 @@ public abstract class Character : MonoBehaviour
 				var factor = (Time.time - lastDashTime) / duration; // [0,1]
 				movingSpeed = targetSpeed * (factor + 1f);
 			}
-			// Otherwise
+			/// Otherwise
 			else
 			{
 				effects.Remove ("Dashing");
@@ -173,13 +150,13 @@ public abstract class Character : MonoBehaviour
 			}
 		}
 
-		// If not sprinting
+		/// If not sprinting
 		else
 		{
             if (!dashIsUp || locks.HasFlag(Locks.Dash)) return;
 			if (!GetButtonDown("Dash")) return;
 
-			// Start sprint & cooldoown
+			/// Start sprint & cooldoown
 			Dashing = true;
 			AddCC("Dashing", Locks.Locomotion);
 			lastDashTime = Time.time;
@@ -204,7 +181,7 @@ public abstract class Character : MonoBehaviour
 		// If everything's ok
 		var block = (Locks.Locomotion | Locks.Abilities);
 		AddCC ("Spell Casting", block, spellSelfStun);
-		anim.SetTrigger (CastSpellID);
+		anim.SetTrigger ("Cast_Spell");
 		lastSpellTime = Time.time;
 	}
 	protected abstract void CastSpell ();
@@ -217,45 +194,34 @@ public abstract class Character : MonoBehaviour
 		if (locks.HasFlag(Locks.Interaction)) return;
 
 		var ray = NewRay();
-		var hit = new RaycastHit();
-		if (Physics.Raycast(ray, out hit, 1f, 1 << 8))
+		var hit = new RaycastHit ();
+		if (Physics.Raycast (ray, out hit, 2f, 1<<8))
 		{
             var interactable = hit.collider.GetComponent<Interactable>();
-            if (interactable != null)
+            if (interactable && interactable.CheckInteraction (this))
             {
-				var check = interactable.CheckInteraction (this);
-
-				// Highlight object
-				if (check != PlayerIsAbleTo.None)
+				if (!lastMarked)
 				{
-					interactable.marker.On ( /*check*/ );
+					/// Hightlight object
+					interactable.marker.On (id);
 					lastMarked = interactable;
 				}
-
-				// Interact
-				var action = (check == PlayerIsAbleTo.Action || check == PlayerIsAbleTo.Both);
-				if (action && GetButtonDown("Action"))
-                    interactable.Action (this);
-
-				// Special action
-				var special = (check == PlayerIsAbleTo.Special || check == PlayerIsAbleTo.Both);
-				if (special && GetButtonDown("Special"))
-					interactable.Special (this);
+				if (GetButtonDown ("Action")) interactable.Action (this);
 			}
 		}
 		else
 		{
-			// If not in front of any interactable
-			// de-mark last one seen, if any
-			if (lastMarked) lastMarked.marker.Off ();
+			/// If not in front of any interactable
+			/// de-mark last one seen, if any
+			if (lastMarked) lastMarked.marker.Off (id);
 			lastMarked = null;
 		}
 
-		// If not in front of any interactable
-		// or not executed any interaction
+		/// If not in front of any interactable
+		/// or not executed any interaction
         if (GetButtonDown("Action", true))
         {
-			// Throw grabbed object, if any
+			/// Throw grabbed object, if any
 			if (grab == null) return;
 			grab.Throw (movingDir, throwForce);
             grab = null;
@@ -268,10 +234,10 @@ public abstract class Character : MonoBehaviour
 	Dictionary<string, Effect> effects;
 	[NonSerialized] public Locks locks;
 
-	// Applies the effects
+	/// Applies the effects
 	private void ReadEffects () 
 	{
-		// Reset CCs and then read them
+		/// Reset CCs and then read them
 		locks = Locks.NONE;
 		foreach (var e in effects)
 		{
@@ -279,8 +245,8 @@ public abstract class Character : MonoBehaviour
 		}
 	}
 
-	// Helper for only adding CCs
-	public void AddCC (string name, Locks cc, float duration=0) 
+	/// Helper for only adding CCs
+	public void AddCC (string name, Locks cc, float duration=0, bool freezeAnim = false) 
 	{
 		var e = new Effect() { cc = cc };
 
@@ -298,7 +264,7 @@ public abstract class Character : MonoBehaviour
 		var timer = 0f;
 		while (timer < duration)
 		{
-			// Time doesn't run on effects if game is paused
+			/// Time doesn't run on effects if game is paused
 			if (!Game.paused) timer += Time.deltaTime;
 			yield return null;
 		}
@@ -307,6 +273,17 @@ public abstract class Character : MonoBehaviour
 	#endregion
 
 	#region HELPERS
+	/// Get coorrect camera-dependent vector
+	private Vector3 TranformToCamera (Vector3 dir) 
+	{
+		var cam = Camera.main.transform;
+		/// Ignoring rotation (except Y) 
+		var rot = cam.eulerAngles;
+		rot.x = 0;
+		rot.z = 0;
+		return Matrix4x4.TRS (cam.position, Quaternion.Euler (rot), Vector3.one).MultiplyVector (dir);
+	}
+
 	/// Returns 'Ray' for checking interactions
 	private Ray NewRay () 
 	{
@@ -327,7 +304,8 @@ public abstract class Character : MonoBehaviour
 	public IEnumerator Knock (float duration, Vector3 force) 
 	{
 		// TODO
-		throw new NotImplementedException ();
+//		throw new NotImplementedException ();
+		yield break;
 	}
 
 	#region SPECIAL INPUT HELPERS
@@ -362,20 +340,20 @@ public abstract class Character : MonoBehaviour
 	#region UNITY CALLBACKS
 	protected virtual void Update () 
     {
-		// Initialization
+		/// Initialization
 		ResetInputs ();
 		ReadEffects ();
 
-		// Stop player if game is paused
+		/// Stop player if game is paused
 		if (Game.paused) return;
 
-		// Locomotion
+		/// Locomotion
 		Movement();
 		Rotation();
 		Dash();
 		Move();
 
-		// Interaction
+		/// Interaction
 		CheckInteractions ();
 		CheckSpell ();
 	}
@@ -387,14 +365,12 @@ public abstract class Character : MonoBehaviour
 
 	protected virtual void Awake () 
     {
-		InitAnimator ();
-
 		effects = new Dictionary<string, Effect> ();
 		consumedInputs = new List<string> ();
 
-		anim = GetComponent<Animator> ();
+		anim = new SmartAnimator ( GetComponent<Animator> () );
 		me = GetComponent<CharacterController> ();
-		targetRotation = Quaternion.identity;
+		targetRotation = transform.rotation;
     }
 	#endregion
 }

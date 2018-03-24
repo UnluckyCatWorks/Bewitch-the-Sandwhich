@@ -15,44 +15,39 @@ public class Holder : Interactable
 	#region INTERACTION
 	public override void Action (Character player) 
 	{
-		// If player is dropping
-		if (player.grab != null)
+		/// If player is dropping
+		if (player.grab)
 		{
-			// Drop object
+			/// Drop object
 			obj = player.grab.body;
 			player.grab = null;
 		}
-		// If player is grabbing
+		/// If player is grabbing
 		else
 		{
-			// Grab object
+			/// Grab object
 			obj.isKinematic = true;
 			player.grab = obj.GetComponent<Grabbable>();
 			obj = null;
 		}
 	}
 
-	public override PlayerIsAbleTo CheckInteraction (Character player) 
+	public override bool CheckInteraction (Character player) 
 	{
-		if (locked) return PlayerIsAbleTo.None;
-
-		// If player is dropping
-		if (player.grab != null)
+		/// If player is dropping
+		if (player.grab)
 		{
-			// Can't drop if another object is already in
-			if (obj != null || !IsValidObject(player.grab))
-				return PlayerIsAbleTo.None;
-
-			// If everything's fine
-			return PlayerIsAbleTo.Action;
+			/// Can't drop if another object is already in
+			if (obj != null || !IsValidObject(player.grab)) return false;
+			/// If everything's fine
+			return true;
 		}
 		else
 		{
-			// Can't grab air
-			if (obj == null) return PlayerIsAbleTo.None;
-
-			// If everything's fine
-			return PlayerIsAbleTo.Action;
+			/// Can't grab air
+			if (obj == null) return false;
+			/// If everything's ok
+			return true;
 		}
 	}
 	#endregion
@@ -86,21 +81,21 @@ public class Holder : Interactable
 
 	public bool IsValidObject (Grabbable obj) 
 	{
-		// If it's a raw ingredient
+		/// If it's a raw ingredient
 		if (validObjects.HasFlag (ObjectTypes.RawIngredient))
 		{
 			var ingredient = obj as Ingredient;
 			if (ingredient != null && ingredient.type == IngredientType.TALCUAL)
 				return true;
 		}
-		// If it's NOT a raw ingredient
+		/// If it's NOT a raw ingredient
 		if (validObjects.HasFlag(ObjectTypes.ProcessedIngredient))
 		{
 			var ingredient = obj as Ingredient;
 			if (ingredient != null && ingredient.type != IngredientType.TALCUAL)
 				return true;
 		}
-		// If none of above is valid
+		/// If none of above is valid
 		return false;
 	}
 	#endregion

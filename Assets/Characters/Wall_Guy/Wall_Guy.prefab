@@ -1526,8 +1526,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1649957674996132}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.88, y: 0.145, z: 1.61}
+  m_LocalRotation: {x: -0, y: 0.00000078976143, z: -0, w: -1}
+  m_LocalPosition: {x: -1.64, y: 0.145, z: 5.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4729531315758188}
@@ -1535,7 +1535,7 @@ Transform:
   - {fileID: 4208909212707740}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -360, z: 0}
 --- !u!95 &95276140698489340
 Animator:
   serializedVersion: 3
@@ -1564,8 +1564,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2144d00d7a4d64d93ae5eecd41209b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 2
-  controller: 0
+  id: 1
+  controller: 1
   speed: 8.5
   angularSpeed: 20
   gravityMul: 1
@@ -1577,7 +1577,6 @@ MonoBehaviour:
   wall: {fileID: 1601212921992768, guid: b98bd2432eb897b4fb2d49ed643baf4d, type: 2}
   wallDuration: 2
   wallDistance: 2
-  maxWallDistance: 3
 --- !u!136 &136688659108200620
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -1605,7 +1604,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 6e62b85e10468c04ca67944304f3bdee, type: 2}
+  - {fileID: 2100000, guid: a6625b96158b9564397c20ad688a5770, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1693,10 +1692,10 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1.5
+  m_Height: 1.32
   m_Radius: 0.35
   m_SlopeLimit: 45
-  m_StepOffset: 0.1
+  m_StepOffset: 0.2
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.752, z: 0}

@@ -7,19 +7,10 @@ using System.Collections.Generic;
 [SharedBetweenAnimators]
 public class MachineController : StateMachineBehaviour
 {
-	#region ANIMATOR IDs
-	public static bool hashd;
-	public static int Start_Working;
-	public static int Work_Completed;
-	public static int Start_Overheat;
-	public static int Start_Overload;
-	public static int Pickup;
-	#endregion
-
 	[NonSerialized] public MachineState state;		// The current status of the machine
-	[NonSerialized] public Animator anim;           // The machine animator
-	protected MachineInterface bridge;              // The link with the actual machine parameters
-	protected Timer timer;                          // The timer of the machine 
+	[NonSerialized] public SmartAnimator anim;		// The machine animator
+	protected MachineInterface bridge;				// The link with the actual machine parameters
+	protected Timer timer;							// The timer of the machine
 
 	private enum Theme 
 	{
@@ -38,19 +29,9 @@ public class MachineController : StateMachineBehaviour
 			// Initizalize references
 			if (bridge == null) 
 			{
-				anim = animator;
-				bridge = anim.GetComponent<MachineInterface>();
-				timer = bridge.GetComponentInChildren<Timer> ();
-			}
-			if (!hashd)
-			{
-				// Assign IDs
-				Start_Working = Animator.StringToHash("Start_Working");
-				Work_Completed = Animator.StringToHash("Work_Completed");
-				Start_Overheat = Animator.StringToHash("Start_Overheat");
-				Start_Overload = Animator.StringToHash("Start_Overload");
-				Pickup = Animator.StringToHash("Pickup");
-				hashd = true;
+				anim = new SmartAnimator (animator);
+				bridge = animator.GetComponent<MachineInterface>();
+				timer = bridge.transform.parent.GetComponentInChildren<Timer> ();
 			}
 			OnEnterWaiting();
 		}
@@ -101,11 +82,11 @@ public class MachineController : StateMachineBehaviour
 	}
 	public virtual void OnUpdateWorking () 
 	{
-		if (anim.IsInTransition(0)) return;
+		if (anim.Animator.IsInTransition(0)) return;
 		if (clock > bridge.duration)
 		{
 			// Complete the work if time has finished
-			anim.SetTrigger(Work_Completed);
+			anim.SetTrigger("Work_Completed");
 		}
 		else
 		if (!Game.paused) 
@@ -128,12 +109,12 @@ public class MachineController : StateMachineBehaviour
 	}
 	public virtual void OnUpdateCompleted () 
 	{
-		if (anim.IsInTransition(0)) return;
+		if (anim.Animator.IsInTransition(0)) return;
 		if (clock > bridge.safeTime) 
 		{
 			// If time runs out and player hasn't
 			// picked up yet, start overheating
-			anim.SetTrigger(Start_Overheat);
+			anim.SetTrigger("Start_Overheat");
 		}
 		else
 		if (!Game.paused) clock += Time.deltaTime;
@@ -149,12 +130,12 @@ public class MachineController : StateMachineBehaviour
 	}
 	public virtual void OnUpdateOverheat ()
 	{
-		if (anim.IsInTransition(0)) return;
+		if (anim.Animator.IsInTransition(0)) return;
 		if (clock > bridge.overheatTime)
 		{
 			// If time runs out and player hasn't
 			// picked up yet, go full overload
-			anim.SetTrigger(Start_Overload);
+			anim.SetTrigger("Start_Overload");
 		}
 		else
 		if (!Game.paused)

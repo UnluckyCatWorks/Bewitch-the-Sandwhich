@@ -5,30 +5,23 @@ using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
+	[NonSerialized]
+	public Marker marker;
+	public bool insideWrapper;
+
 	#region INTERACTION
-	public abstract PlayerIsAbleTo CheckInteraction (Character player);
-
-	public abstract void Action (Character player);                     // Pressing Action key
-	public virtual void Special (Character player) { /* optional */ }   // Pressing Special key 
-
-	// Helper
-	public static PlayerIsAbleTo Result (bool action, bool special) 
-	{
-		if (action && special) return PlayerIsAbleTo.Both;
-
-		else if (action) return PlayerIsAbleTo.Action;
-		else if (special) return PlayerIsAbleTo.Special;
-
-		else return PlayerIsAbleTo.None;
-	}
+	public abstract void Action (Character player);
+	public abstract bool CheckInteraction (Character player);
 	#endregion
 
 	#region CALLBACKS
-	[NonSerialized]
-	public Marker marker;
 	protected virtual void Awake () 
 	{
-		marker = GetComponentInChildren<Marker> ();
+		/// Find wrapper
+		Transform t;
+		if (insideWrapper) t = transform.parent;
+		else t = transform;
+		marker = t.GetComponentInChildren<Marker> ();
 	}
 	#endregion
 }
