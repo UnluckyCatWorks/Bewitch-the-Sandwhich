@@ -136,6 +136,7 @@ public class MachineController : StateMachineBehaviour
 			// If time runs out and player hasn't
 			// picked up yet, go full overload
 			anim.SetTrigger("Start_Overload");
+			timer.ChangeTo (Theme.Overloading);
 		}
 		else
 		if (!Game.paused)
@@ -145,7 +146,7 @@ public class MachineController : StateMachineBehaviour
 			clock += Time.deltaTime;
 		}
 	}
-	public virtual void OnExitOverheat () { timer.ChangeTo (Theme.Overloading); } 
+	public virtual void OnExitOverheat () { } 
 	#endregion
 
 	#region OVERLOAD

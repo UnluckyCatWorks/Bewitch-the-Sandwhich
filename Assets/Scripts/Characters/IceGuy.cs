@@ -8,8 +8,9 @@ public class IceGuy : Character
 	[Header("Spell Settings")]
 	public float stunDuration;
 
-	protected override void CastSpell () 
+	protected override IEnumerator CastSpell () 
 	{
+		yield return null;
 		var radius = 2.2f;
 		var pos = transform.position + transform.forward * (radius + 0.15f);
 

@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 33815604086681896}
   - component: {fileID: 23105485802180858}
   - component: {fileID: 65869284496228236}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Parte_puente_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 33581300742543244}
   - component: {fileID: 23815744038044284}
   - component: {fileID: 65705452755958120}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Parte_puente_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,9 +121,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4465763701963606}
   - component: {fileID: 111464638127719684}
+  - component: {fileID: 135011863694755884}
   m_Layer: 0
   m_Name: Bridge
-  m_TagString: Untagged
+  m_TagString: Bridge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -321,8 +322,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1382569020565874}
-  m_LocalRotation: {x: -0, y: 0.70710677, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.571, z: -0.285}
+  m_LocalRotation: {x: -0, y: 0.7071048, z: -0, w: 0.70710886}
+  m_LocalPosition: {x: -8.0364, y: 0.554, z: 2.3362536}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4966401170064068}
@@ -670,6 +671,18 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!135 &135011863694755884
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1382569020565874}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2.19
+  m_Center: {x: 0, y: 0, z: -1.07}
 --- !u!136 &136256809194450378
 CapsuleCollider:
   m_ObjectHideFlags: 1

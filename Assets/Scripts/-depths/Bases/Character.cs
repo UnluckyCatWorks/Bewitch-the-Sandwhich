@@ -14,6 +14,7 @@ using UnityEngine;
  * - Menú pausa: ESC
  */
 
+[SelectionBase]
 public abstract class Character : MonoBehaviour
 {
 	#region DATA
@@ -64,18 +65,22 @@ public abstract class Character : MonoBehaviour
 	public Vector3 movingSpeed;
 	private void Movement () 
     {
-		var input = movingSpeed = Vector3.zero;
+		var input = Vector3.zero;
 		input.x = Input.GetAxis(GetInputName("Horizontal"));
 		input.z = Input.GetAxis(GetInputName("Vertical"));
 
 		/// Get speed & calculate rotation
 		var dir = Vector3.Min (input, input.normalized);
+
+		/// Face player to movement direction
 		if (input != Vector3.zero)
 		{
 			/// Transform direction to be camera-dependent
 			dir = TranformToCamera (dir);
 			targetRotation = Quaternion.LookRotation (dir);
 		}
+
+		/// Modify speed to move player
 		if (!locks.HasFlag (Locks.Movement))
 		{
 			movingSpeed = dir * speed;
@@ -92,20 +97,23 @@ public abstract class Character : MonoBehaviour
     {
 		if (locks.HasFlag(Locks.Rotation)) return;
 
-		var factor = Time.deltaTime * angularSpeed;
+		var factor = angularSpeed * Time.deltaTime;
 		var newRot = Quaternion.Slerp(transform.rotation, targetRotation, factor);
 		transform.rotation = newRot;
     }
 
 	private void Move () 
 	{
-		var finalSpeed = movingSpeed + Physics.gravity;
+		/// Apply gravity
+		var gravity = Physics.gravity * gravityMul;
+		var finalSpeed = movingSpeed + gravity;
+		/// Move player
 		collision = me.Move (finalSpeed * Time.deltaTime);
 	}
 
 	[NonSerialized]
 	public Grabbable grab;
-	private void HoldGrabbed ()
+	private void HoldGrabbed () 
 	{
 		if (grab == null)
 		{
@@ -121,6 +129,7 @@ public abstract class Character : MonoBehaviour
 
 	// ACTUALLY, sprint and spells are broken
 	// cause CD runs even if 'Game.paused' is true
+	// (I'm guessing)
 
 	#region DASHING
 	private float lastDashTime;
@@ -131,36 +140,81 @@ public abstract class Character : MonoBehaviour
 
 	private void Dash () 
 	{
-		/// If sprinting already
-		if (effects.ContainsKey("Dashing"))
+        if (!dashIsUp || locks.HasFlag(Locks.Dash)) return;
+		else if (!GetButtonDown("Dash")) return;
+		else Dashing = true;
+
+		/// Start dash & cooldoown
+		AddCC("Dashing", Locks.Locomotion);
+		StartCoroutine (DashingTime ());
+		lastDashTime = Time.time;
+	}
+
+	protected const float dashDuration = 0.25f;
+	private IEnumerator DashingTime () 
+	{
+		/// Disable graivty
+		gravityMul = 0f;
+
+		var factor = 0f;
+		while (factor <= 1f)
 		{
-			/// If on sprint-time
-			var duration = 0.15f;   /*sprint duration*/
-			if (Time.time < lastDashTime + duration)
+			/// Move player at dash speed
+			movingSpeed = movingDir * sprintForce * (1f-factor);
+
+			/// Knock player back if needed
+			var dist = Vector3.Distance (transform.position, other.transform.position);
+			if (dist <= 0.8)
 			{
-				var targetSpeed = movingDir * sprintForce;
-				var factor = (Time.time - lastDashTime) / duration; // [0,1]
-				movingSpeed = targetSpeed * (factor + 1f);
-			}
-			/// Otherwise
-			else
-			{
+				/// If knock, stop dashing
+				other.Knock (movingDir);
 				effects.Remove ("Dashing");
-				Dashing = false;
+				factor = 1f;
 			}
-		}
 
-		/// If not sprinting
-		else
+			factor += Time.deltaTime / dashDuration;
+			yield return null;
+		}
+		effects.Remove ("Dashing");
+		Dashing = false;
+
+		/// Re-enable graivty
+		gravityMul = 1f;
+	}
+	#endregion
+
+	#region KNOCKING
+	private Character other;
+	public bool Knocked { get; private set; }
+
+	public void Knock (Vector3 dir)
+	{
+		if (Knocked) return;
+		else Knocked = true;
+
+		AddCC ("Knocked", Locks.All);
+		StartCoroutine (KnockingTo (dir));
+	}
+
+	protected const float knockDuration = 0.35f;
+	private IEnumerator KnockingTo (Vector3 dir) 
+	{
+		var factor = 0f;
+		while (factor <= 1f) 
 		{
-            if (!dashIsUp || locks.HasFlag(Locks.Dash)) return;
-			if (!GetButtonDown("Dash")) return;
+			/// Move player during knock
+			movingSpeed = dir * sprintForce * (1f-factor) * 1.5f;
 
-			/// Start sprint & cooldoown
-			Dashing = true;
-			AddCC("Dashing", Locks.Locomotion);
-			lastDashTime = Time.time;
+			/// Rotate player 'cause its cool
+			transform.Rotate (Vector3.up, 900f * Time.deltaTime);
+			targetRotation = transform.rotation;
+
+			factor += Time.deltaTime / knockDuration;
+			yield return null;
 		}
+		yield return new WaitForSeconds (0.1f);
+		effects.Remove ("Knocked");
+		Knocked = false;
 	}
 	#endregion
 
@@ -170,7 +224,7 @@ public abstract class Character : MonoBehaviour
 	{
 		get { return Time.time > lastSpellTime + spellCooldown; }
 	}
-	private const float spellSelfStun = 0.75f;
+	protected const float spellSelfStun = 0.75f;
 
 	private void CheckSpell ()
 	{
@@ -181,10 +235,12 @@ public abstract class Character : MonoBehaviour
 		// If everything's ok
 		var block = (Locks.Locomotion | Locks.Abilities);
 		AddCC ("Spell Casting", block, spellSelfStun);
+
 		anim.SetTrigger ("Cast_Spell");
+		StartCoroutine (CastSpell ());
 		lastSpellTime = Time.time;
 	}
-	protected abstract void CastSpell ();
+	protected abstract IEnumerator CastSpell ();
 	#endregion
 
 	#region INTERACTION
@@ -195,7 +251,7 @@ public abstract class Character : MonoBehaviour
 
 		var ray = NewRay();
 		var hit = new RaycastHit ();
-		if (Physics.Raycast (ray, out hit, 2f, 1<<8))
+		if (Physics.Raycast (ray, out hit, 2f, 1<<8 | 1<<10))
 		{
             var interactable = hit.collider.GetComponent<Interactable>();
             if (interactable && interactable.CheckInteraction (this))
@@ -205,15 +261,24 @@ public abstract class Character : MonoBehaviour
 					/// Hightlight object
 					interactable.marker.On (id);
 					lastMarked = interactable;
+					/// Register player if it's a machine
+					var m = interactable as MachineInterface;
+					if (m) m.PlayerIsNear (true);
 				}
 				if (GetButtonDown ("Action")) interactable.Action (this);
+				return;
 			}
 		}
-		else
+
+		/// If not in front of any interactable
+		/// de-mark last one seen, if any
+		if (lastMarked)
 		{
-			/// If not in front of any interactable
-			/// de-mark last one seen, if any
-			if (lastMarked) lastMarked.marker.Off (id);
+			/// Un-register player if it's a machine
+			var m = lastMarked as MachineInterface;
+			if (m) m.PlayerIsNear (false);
+			/// Un-highlight
+			lastMarked.marker.Off (id);
 			lastMarked = null;
 		}
 
@@ -246,20 +311,17 @@ public abstract class Character : MonoBehaviour
 	}
 
 	/// Helper for only adding CCs
-	public void AddCC (string name, Locks cc, float duration=0, bool freezeAnim = false) 
+	public void AddCC (string name, Locks cc, float duration=0) 
 	{
 		var e = new Effect() { cc = cc };
 
-		if (duration == 0) effects.Add (name, e);
-		else AddTemporalEffect (name, e, duration);
+		if (duration != 0) StartCoroutine (RemoveEffectAfter (name, duration));
+		effects.Add (name, e);
+
+		if (cc.HasFlag (Locks.Movement)) movingSpeed = Vector3.zero;
 	}
 
-	public void AddTemporalEffect (string name, Effect effect, float duration ) 
-	{
-		effects.Add (name, effect);
-		StartCoroutine (RemoveTemporalEffect (name, duration));
-	}
-	IEnumerator RemoveTemporalEffect (string name, float duration) 
+	IEnumerator RemoveEffectAfter (string name, float duration) 
 	{
 		var timer = 0f;
 		while (timer < duration)
@@ -298,14 +360,6 @@ public abstract class Character : MonoBehaviour
 	public bool grounded 
 	{
 		get { return (collision & CollisionFlags.Below) == CollisionFlags.Below; }
-	}
-
-	/// For when a object hits a player
-	public IEnumerator Knock (float duration, Vector3 force) 
-	{
-		// TODO
-//		throw new NotImplementedException ();
-		yield break;
 	}
 
 	#region SPECIAL INPUT HELPERS
@@ -351,7 +405,7 @@ public abstract class Character : MonoBehaviour
 		Movement();
 		Rotation();
 		Dash();
-		Move();
+		Move ();
 
 		/// Interaction
 		CheckInteractions ();
@@ -365,6 +419,9 @@ public abstract class Character : MonoBehaviour
 
 	protected virtual void Awake () 
     {
+		/// Find other player
+		other = FindObjectsOfType<Character> ().First (c=> c != this);
+
 		effects = new Dictionary<string, Effect> ();
 		consumedInputs = new List<string> ();
 

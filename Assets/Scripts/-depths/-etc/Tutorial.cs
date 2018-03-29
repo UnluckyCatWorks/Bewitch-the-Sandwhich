@@ -81,7 +81,7 @@ public class Tutorial : MonoBehaviour
 		yield return DialogMaster.StartNew ("TutoTest/7");
 		yield return new WaitForSeconds (5f);
 		yield return DialogMaster.StartNew ("TutoTest/8");
-		FindObjectOfType<BridgeController> ().GetComponent<Animation> ().Play ();
+//		FindObjectOfType<BridgeController> ().GetComponent<Animation> ().Play ();
 	}
 
 	private void Start () 

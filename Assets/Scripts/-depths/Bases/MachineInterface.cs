@@ -103,9 +103,12 @@ public class MachineInterface : Interactable
 	#endregion
 
 	#region HELPERS
-	public void SetTrigger (string trigger) 
+	private int playersNear;
+	public void PlayerIsNear (bool near) 
 	{
-		machine.anim.SetTrigger (trigger);
+		playersNear += near? +1 : -1;
+		if (playersNear == 0) machine.anim.SetBool ("PlayersNear", false);
+		else machine.anim.SetBool ("PlayersNear", true);
 	}
 	#endregion
 }

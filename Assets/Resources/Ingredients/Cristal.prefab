@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33602455006312766}
   - component: {fileID: 23647692474043282}
   - component: {fileID: 136006048403832624}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Raw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 33268457709432070}
   - component: {fileID: 136965511126309534}
   - component: {fileID: 23599290320538584}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Destiled
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 33911025741144128}
   - component: {fileID: 23334478689672052}
   - component: {fileID: 136499210323285316}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Transmuted
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 4368983612579306}
   - component: {fileID: 54562571236965766}
   - component: {fileID: 114245962905804422}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cristal
   m_TagString: Grabbable
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 33132218867552818}
   - component: {fileID: 65109365541746244}
   - component: {fileID: 23773510206879636}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}

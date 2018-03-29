@@ -13,16 +13,10 @@ public class Game : MonoBehaviour
 	public Color[] teamColors;
 	#endregion
 
-	private void Update () 
+	protected virtual void Awake () 
 	{
-		OrderMaster.Update ();
-	}
-
-	private void Awake () 
-	{
-		// Initialize game
+		/// Initialize game
 		Marker.Initialize ();
-		OrderMaster.Initialize ();
 //		DialogMaster.Initialize ();
 		manager = this;
 	}
