@@ -7,35 +7,39 @@ public class MachineInterface : Interactable
 {
 	#region DATA
 	[Header ("Basic parameters")]
-	public Transform holder;                // The Transform that holds the ingredient
-	public IngredientType resultType;       // How the ingredient is processed
-	public float duration;                  // Time until work is completed
-	public float safeTime;					// Time until start overheating
-	public float overheatTime;              // Time until full overload
+	public Transform holder;                /// The Transform that holds the ingredient
+	public IngredientType resultType;       /// How the ingredient is processed
+	public float duration;                  /// Time until work is completed
+	public float safeTime;					/// Time until start overheating
+	public float overheatTime;              /// Time until full overload
 
-	protected Rigidbody obj;                // The object being processed
-	protected MachineController machine;    // State-Machine logic
+	[NonSerialized]
+	public Grabbable obj;					/// The object being processed
+	protected MachineController machine;    /// State-Machine logic
 	#endregion
 
 	#region INTERACTION
 	public override void Action (Character player) 
 	{
-		// If machine is waiting input
+		/// If machine is waiting input
 		if (machine.state == MachineState.Waiting)
 		{
-			// Cook ingredient
-			obj = player.grab.body;
+			/// Cook ingredient
+			obj = player.grab;
 			player.grab = null;
 			machine.anim.SetTrigger ("Start_Working");
+			cooking = StartCoroutine (KeepWithHolder ());
 		}
 		else
-		// If machine has finished processing
+		/// If machine has finished processing
 		if (machine.state == MachineState.Completed
 		|| machine.state == MachineState.Overheating)
 		{
-			player.grab = obj.GetComponent<Grabbable> ();
+			player.grab = obj;
 			machine.anim.SetTrigger ("Pickup");
+			obj.transform.SetParent (null, true);
 			obj = null;
+			StopCoroutine (cooking);
 		}
 	}
 
@@ -70,39 +74,71 @@ public class MachineInterface : Interactable
 	}
 	#endregion
 
-	#region VIRTUALS
-	// Triggered when the machine has finished its work
+	#region UTILS
+	/// Triggered when the machine has finished its work
 	public virtual void ProcessObject ()
 	{
 		var ingredient = obj.GetComponent<Ingredient> ();
 		ingredient.Process (resultType);
 	}
-	// Triggered when machine overloads
-	public virtual void Overload ()
+
+	/// Triggered when machine overloads
+	public virtual void Overload (float UpForce) 
 	{
-		Destroy (obj.gameObject);
+		var force = transform.forward + Vector3.up*UpForce;
+		obj.Throw (force, 15f, null);
+		Destroy (obj.gameObject, 2f);
+		Destroy (obj.helper.gameObject);
 		obj = null;
 	} 
 	#endregion
 
 	#region CALLBACKS
-	protected virtual void FixedUpdate ()
-	{
-		if (obj == null) return;
-		// Make object follow Holder
-		var newPos = Vector3.Lerp(obj.position, holder.position, Time.fixedDeltaTime * 7f);
-		obj.MovePosition(newPos);
-	}
-
 	protected override void Awake () 
 	{
 		base.Awake ();
-		// Get references
+		/// Get reference
 		machine = GetComponent<Animator>().GetBehaviour<MachineController>();
 	}
 	#endregion
 
 	#region HELPERS
+	Coroutine cooking;
+	public IEnumerator KeepWithHolder () 
+	{
+		var factor = 0f;
+		var duration = 0.5f;
+		var ogPos = obj.transform.position;
+		while (factor <= 1f) 
+		{
+			/// Move to Holder position
+			var newPos = Vector3.Lerp (ogPos, holder.position, factor);
+			obj.transform.position = newPos;
+			/// Scale it down
+			obj.transform.localScale = Vector3.one * (1-factor);
+
+			factor += Time.deltaTime / duration;
+			yield return null;
+		}
+		/// Parent to Holder
+		obj.transform.SetParent (holder);
+		obj.transform.localPosition = Vector3.zero;
+		obj.transform.rotation = Quaternion.identity;
+
+		/// Wait until machine is done
+		factor = 0f;
+		while (machine.state != MachineState.Completed) yield return null;
+		while (factor <= 1f) 
+		{
+			/// Scale up again & recolocate
+			obj.transform.localScale = Vector3.one * factor;
+			obj.transform.localPosition = Vector3.zero;
+
+			factor += Time.deltaTime / duration;
+			yield return null;
+		}
+	}
+
 	private int playersNear;
 	public void PlayerIsNear (bool near) 
 	{

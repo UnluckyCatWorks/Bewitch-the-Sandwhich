@@ -176,6 +176,6 @@ public class Cauldron : Interactable
 	{
 		base.Awake ();
 		currentMix = new List<IngredientInfo> (4);
-		timer = transform.parent.GetComponentInChildren<Timer> ();
+		timer = transform.parent.GetComponentInChildren<Timer> (true);
 	}
 }

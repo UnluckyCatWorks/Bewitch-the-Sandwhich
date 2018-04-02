@@ -34,7 +34,7 @@ public class Marker : MonoBehaviour
 		block.SetFloat (_AlphaID, 0.9f);
 
 		simultaneousMarks += id;
-		block.SetColor (_ColorID, Game.manager.teamColors[simultaneousMarks-1]);
+		block.SetColor (_ColorID, Game.teamColors[simultaneousMarks-1]);
 		marker.SetPropertyBlock (block);
 	}
 	public void Off (int id) 
@@ -45,7 +45,7 @@ public class Marker : MonoBehaviour
 			infoSign.SetAlpha (0.0f);
 			block.SetFloat (_AlphaID, 0.0f);
 		}
-		else block.SetColor (_ColorID, Game.manager.teamColors[simultaneousMarks-1]);
+		else block.SetColor (_ColorID, Game.teamColors[simultaneousMarks-1]);
 
 		marker.SetPropertyBlock (block);
 	}

@@ -1527,7 +1527,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1649957674996132}
   m_LocalRotation: {x: -0, y: -0.15798162, z: -0, w: -0.9874421}
-  m_LocalPosition: {x: 0.67, y: 0.39, z: 7.08}
+  m_LocalPosition: {x: -3.42, y: 0.26, z: 6.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4729531315758188}
@@ -1571,8 +1571,8 @@ MonoBehaviour:
   gravityMul: 1
   grabHandle: {fileID: 4208909212707740}
   throwForce: 20
-  sprintForce: 20
-  sprintCooldown: 1.5
+  sprintForce: 40
+  sprintCooldown: 0.5
   spellCooldown: 1.5
   wall: {fileID: 114598111867304984, guid: b98bd2432eb897b4fb2d49ed643baf4d, type: 2}
   wallDuration: 4

@@ -1513,7 +1513,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1304399107086124}
   m_LocalRotation: {x: -0, y: 0.010873005, z: -0, w: -0.99994093}
-  m_LocalPosition: {x: 3.62, y: 0.069, z: 2.97}
+  m_LocalPosition: {x: -0.15, y: 2.169, z: 6.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4218556083496144}
@@ -1564,15 +1564,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca257bdb378f214198dc89beb66a5d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 1
-  controller: 2
+  id: 2
+  controller: 1
   speed: 8.5
   angularSpeed: 20
   gravityMul: 1
   grabHandle: {fileID: 4937281900218502}
   throwForce: 20
-  sprintForce: 20
-  sprintCooldown: 1.5
+  sprintForce: 40
+  sprintCooldown: 0.5
   spellCooldown: 4
   stunDuration: 2
 --- !u!136 &136563401202934084
@@ -1693,7 +1693,7 @@ CharacterController:
   m_Height: 1.32
   m_Radius: 0.35
   m_SlopeLimit: 45
-  m_StepOffset: 0.1
+  m_StepOffset: 0.2
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.752, z: 0}

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,8 +11,9 @@ public class Boat : MonoBehaviour
 	public MeshFilter pila;
 	public SpriteRenderer info;
 
+	[NonSerialized]
+	public Supply supply; 
 	private Animation[] bridges;
-	private Supply supply; 
 	#endregion
 
 	#region UTILS
@@ -25,7 +26,7 @@ public class Boat : MonoBehaviour
 		bridges[bridge - 1].Play ("BridgeDown");
 	}
 
-	private void UpdateBoatType ()
+	public void UpdateBoatType ()
 	{
 		var id = supply.ingredient.ToString ();
 		info.sprite = Resources.Load<Sprite> ("UI/" + id);

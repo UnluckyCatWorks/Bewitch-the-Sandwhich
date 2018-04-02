@@ -38,7 +38,7 @@ public class MachineController : StateMachineBehaviour
 		if (stateInfo.IsName("Base.Working"))		OnEnterWorking ();
 		if (stateInfo.IsName("Base.Completed"))		OnEnterCompleted ();
 		if (stateInfo.IsName("Base.Overheating"))	OnEnterOverheat ();
-		if (stateInfo.IsName("Base.Overloading"))	OnEnterOverload ();
+		if (stateInfo.IsName("Base.Overload"))		OnEnterOverload ();
 
 	}
 
@@ -49,7 +49,7 @@ public class MachineController : StateMachineBehaviour
 		if (stateInfo.IsName("Base.Working"))		OnUpdateWorking ();
 		if (stateInfo.IsName("Base.Completed"))		OnUpdateCompleted ();
 		if (stateInfo.IsName("Base.Overheating"))	OnUpdateOverheat ();
-		if (stateInfo.IsName("Base.Overloading"))	OnUpdateOverload ();
+		if (stateInfo.IsName("Base.Overload"))		OnUpdateOverload ();
 
 	}
 
@@ -60,7 +60,7 @@ public class MachineController : StateMachineBehaviour
 		if (stateInfo.IsName("Base.Working"))		OnExitWorking ();
 		if (stateInfo.IsName("Base.Completed"))		OnExitCompleted ();
 		if (stateInfo.IsName("Base.Overheating"))	OnExitOverheat ();
-		if (stateInfo.IsName("Base.Overloading"))	OnExitOverload ();
+		if (stateInfo.IsName("Base.Overload"))		OnExitOverload ();
 	}
 	#endregion
 
@@ -112,8 +112,8 @@ public class MachineController : StateMachineBehaviour
 		if (anim.Animator.IsInTransition(0)) return;
 		if (clock > bridge.safeTime) 
 		{
-			// If time runs out and player hasn't
-			// picked up yet, start overheating
+			/// If time runs out and player hasn't
+			/// picked up yet, start overheating
 			anim.SetTrigger("Start_Overheat");
 		}
 		else
@@ -133,10 +133,13 @@ public class MachineController : StateMachineBehaviour
 		if (anim.Animator.IsInTransition(0)) return;
 		if (clock > bridge.overheatTime)
 		{
-			// If time runs out and player hasn't
-			// picked up yet, go full overload
+			/// If time runs out and player hasn't
+			/// picked up yet, go full overload
 			anim.SetTrigger("Start_Overload");
 			timer.ChangeTo (Theme.Overloading);
+
+			/// De-parent ingredient
+			bridge.obj.transform.SetParent (null);
 		}
 		else
 		if (!Game.paused)
@@ -150,11 +153,9 @@ public class MachineController : StateMachineBehaviour
 	#endregion
 
 	#region OVERLOAD
-	public virtual void OnEnterOverload ()
+	public virtual void OnEnterOverload () 
 	{
-		// Lock outbox again
 		state = MachineState.Overloading;
-		bridge.Overload();
 	}
 	public virtual void OnUpdateOverload () { }
 	public virtual void OnExitOverload () { }  

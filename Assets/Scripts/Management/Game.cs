@@ -3,14 +3,19 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Game : MonoBehaviour
+public abstract class Game : MonoBehaviour
 {
 	#region DATA
-	public static Game manager;		// Self-reference
-	public static bool paused;      // Whether the game paused
-	public static RectTransform ui;
+	public static Game manager;			/// Self-reference
+	public static bool paused;			/// Whether the game paused
+	public static RectTransform ui;     /// Scene UI parent
+	public static Color[] teamColors =	/// The representative color of each player
+	{
+		new Color32 (247, 133, 19, 200),	/// Orange (Wall Guy)
+		new Color32 (59, 129, 249, 230),	/// Blue (Ice Guy)
+		new Color32 (248, 71, 255, 190)		/// Purple? (Both)
+	};
 
-	public Color[] teamColors;
 	#endregion
 
 	protected virtual void Awake () 
@@ -18,6 +23,9 @@ public class Game : MonoBehaviour
 		/// Initialize game
 		Marker.Initialize ();
 //		DialogMaster.Initialize ();
+		StartCoroutine (Logic ());
 		manager = this;
 	}
+
+	protected abstract IEnumerator Logic ();
 }

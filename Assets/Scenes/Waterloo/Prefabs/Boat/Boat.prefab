@@ -192,7 +192,7 @@ Transform:
   - {fileID: 4739891035520222}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 126.436005, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.99600005, y: 54.265633, z: 0.035}
 --- !u!4 &4630004439802884
 Transform:
   m_ObjectHideFlags: 1

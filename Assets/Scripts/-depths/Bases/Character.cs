@@ -194,6 +194,9 @@ public abstract class Character : MonoBehaviour
 
 		AddCC ("Knocked", Locks.All);
 		StartCoroutine (KnockingTo (dir));
+		/// Let go grabbed object, if any
+		if (grab) grab.Throw (-dir, 2f, null);
+		grab = null;
 	}
 
 	protected const float knockDuration = 0.35f;
@@ -203,10 +206,10 @@ public abstract class Character : MonoBehaviour
 		while (factor <= 1f) 
 		{
 			/// Move player during knock
-			movingSpeed = dir * sprintForce * (1f-factor) * 1.5f;
+			movingSpeed = dir * sprintForce * (1f-factor) * 0.8f;
 
 			/// Rotate player 'cause its cool
-			transform.Rotate (Vector3.up, 900f * Time.deltaTime);
+			transform.Rotate (Vector3.up, 771f * Time.deltaTime);
 			targetRotation = transform.rotation;
 
 			factor += Time.deltaTime / knockDuration;
@@ -228,6 +231,7 @@ public abstract class Character : MonoBehaviour
 
 	private void CheckSpell ()
 	{
+		if (grab) return;
 		if (!spellIsUp) return;
 		if (locks.HasFlag (Locks.Spells)) return;
 		if (!GetButtonDown ("Special")) return;
@@ -253,7 +257,14 @@ public abstract class Character : MonoBehaviour
 		var hit = new RaycastHit ();
 		if (Physics.Raycast (ray, out hit, 2f, 1<<8 | 1<<10))
 		{
-            var interactable = hit.collider.GetComponent<Interactable>();
+			Interactable interactable;
+			/// Collider is on a child in grabbable objects
+			if (hit.collider.tag == "Grabbable")
+				interactable = hit.collider.GetComponentInParent<Interactable> ();
+			else
+				interactable = hit.collider.GetComponent<Interactable>();
+
+			/// If valid target
             if (interactable && interactable.CheckInteraction (this))
             {
 				if (!lastMarked)
@@ -288,7 +299,7 @@ public abstract class Character : MonoBehaviour
         {
 			/// Throw grabbed object, if any
 			if (grab == null) return;
-			grab.Throw (movingDir, throwForce);
+			grab.Throw (movingDir, throwForce, this);
             grab = null;
         }
 	}

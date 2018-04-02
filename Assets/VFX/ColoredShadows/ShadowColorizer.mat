@@ -26,4 +26,4 @@ Material:
     - _Max: 1
     - _Min: 0
     m_Colors:
-    - _Color: {r: 0.091, g: 0.07957841, b: 0.041768998, a: 1}
+    - _Color: {r: 0, g: 0, b: 0, a: 0}
