@@ -1,0 +1,201 @@
+fileFormatVersion: 2
+guid: 29c789658393a8047bee9b49375d579e
+timeCreated: 1522681880
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: CATRigHub001
+    100002: CATRigLArm1
+    100004: CATRigLArm2
+    100006: CATRigLArm3
+    100008: CATRigLArm4
+    100010: CATRigLArm5
+    100012: CATRigLArmCollarbone
+    100014: CATRigLArmDigit11
+    100016: CATRigLArmDigit12
+    100018: CATRigLArmDigit13
+    100020: CATRigLArmDigit21
+    100022: CATRigLArmDigit22
+    100024: CATRigLArmDigit23
+    100026: CATRigLArmDigit31
+    100028: CATRigLArmDigit32
+    100030: CATRigLArmDigit33
+    100032: CATRigLArmDigit41
+    100034: CATRigLArmDigit42
+    100036: CATRigLArmDigit43
+    100038: CATRigLArmDigit51
+    100040: CATRigLArmDigit52
+    100042: CATRigLArmDigit53
+    100044: CATRigLArmPalm
+    100046: CATRigRArm1
+    100048: CATRigRArm2
+    100050: CATRigRArm3
+    100052: CATRigRArm4
+    100054: CATRigRArm5
+    100056: CATRigRArmCollarbone
+    100058: CATRigRArmDigit11
+    100060: CATRigRArmDigit12
+    100062: CATRigRArmDigit13
+    100064: CATRigRArmDigit21
+    100066: CATRigRArmDigit22
+    100068: CATRigRArmDigit23
+    100070: CATRigRArmDigit31
+    100072: CATRigRArmDigit32
+    100074: CATRigRArmDigit33
+    100076: CATRigRArmDigit41
+    100078: CATRigRArmDigit42
+    100080: CATRigRArmDigit43
+    100082: CATRigRArmDigit51
+    100084: CATRigRArmDigit52
+    100086: CATRigRArmDigit53
+    100088: CATRigRArmPalm
+    100090: Esponja
+    100092: //RootNode
+    100094: Muscle Strand001
+    100096: Muscle Strand001M_End
+    100098: Muscle Strand001M_EndHdl
+    100100: Muscle Strand001M_START
+    100102: Muscle Strand001M_StartHdl
+    400000: CATRigHub001
+    400002: CATRigLArm1
+    400004: CATRigLArm2
+    400006: CATRigLArm3
+    400008: CATRigLArm4
+    400010: CATRigLArm5
+    400012: CATRigLArmCollarbone
+    400014: CATRigLArmDigit11
+    400016: CATRigLArmDigit12
+    400018: CATRigLArmDigit13
+    400020: CATRigLArmDigit21
+    400022: CATRigLArmDigit22
+    400024: CATRigLArmDigit23
+    400026: CATRigLArmDigit31
+    400028: CATRigLArmDigit32
+    400030: CATRigLArmDigit33
+    400032: CATRigLArmDigit41
+    400034: CATRigLArmDigit42
+    400036: CATRigLArmDigit43
+    400038: CATRigLArmDigit51
+    400040: CATRigLArmDigit52
+    400042: CATRigLArmDigit53
+    400044: CATRigLArmPalm
+    400046: CATRigRArm1
+    400048: CATRigRArm2
+    400050: CATRigRArm3
+    400052: CATRigRArm4
+    400054: CATRigRArm5
+    400056: CATRigRArmCollarbone
+    400058: CATRigRArmDigit11
+    400060: CATRigRArmDigit12
+    400062: CATRigRArmDigit13
+    400064: CATRigRArmDigit21
+    400066: CATRigRArmDigit22
+    400068: CATRigRArmDigit23
+    400070: CATRigRArmDigit31
+    400072: CATRigRArmDigit32
+    400074: CATRigRArmDigit33
+    400076: CATRigRArmDigit41
+    400078: CATRigRArmDigit42
+    400080: CATRigRArmDigit43
+    400082: CATRigRArmDigit51
+    400084: CATRigRArmDigit52
+    400086: CATRigRArmDigit53
+    400088: CATRigRArmPalm
+    400090: //RootNode
+    400092: Esponja
+    400094: Muscle Strand001
+    400096: Muscle Strand001M_End
+    400098: Muscle Strand001M_EndHdl
+    400100: Muscle Strand001M_START
+    400102: Muscle Strand001M_StartHdl
+    2100000: Destiladora
+    4300000: Esponja
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Esponja
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Destiladora
+    second: {fileID: 2100000, guid: 58dc90a27761112419170c47330bfaab, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 3
+    addColliders: 0
+    importVisibility: 0
+    importBlendShapes: 0
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: CATRigHub001
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

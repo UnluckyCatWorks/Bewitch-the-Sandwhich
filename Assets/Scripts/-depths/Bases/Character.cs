@@ -202,6 +202,9 @@ public abstract class Character : MonoBehaviour
 	protected const float knockDuration = 0.35f;
 	private IEnumerator KnockingTo (Vector3 dir) 
 	{
+		/// Supress vertical knock
+		dir.y = 0f;
+
 		var factor = 0f;
 		while (factor <= 1f) 
 		{
@@ -259,7 +262,7 @@ public abstract class Character : MonoBehaviour
 		{
 			Interactable interactable;
 			/// Collider is on a child in grabbable objects
-			if (hit.collider.tag == "Grabbable")
+			if (hit.collider.tag == "Grab_Helper")
 				interactable = hit.collider.GetComponentInParent<Interactable> ();
 			else
 				interactable = hit.collider.GetComponent<Interactable>();

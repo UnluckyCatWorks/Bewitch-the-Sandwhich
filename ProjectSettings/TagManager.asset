@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Grabbable
   - Bridge
+  - Grab_Helper
   layers:
   - Default
   - TransparentFX

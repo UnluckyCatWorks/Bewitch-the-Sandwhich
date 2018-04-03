@@ -35,6 +35,23 @@ ModelImporter:
     100054: Pata_izquierda_trasera
     100056: Pelvis
     100058: Pelvis2
+    100060: Armature
+    100062: CATRigAnkleBone001.001
+    100064: CATRigAnkleBone002.001
+    100066: CATRigLLeg2.001
+    100068: CATRigLLegAnkle.001
+    100070: CATRigRLeg2.001
+    100072: CATRigRLegAnkle.001
+    100074: Frog001
+    100076: Pata_delantera_derecha.001
+    100078: CATRigAnkleBone001.001_end
+    100080: CATRigAnkleBone001_end
+    100082: CATRigAnkleBone002.001_end
+    100084: CATRigAnkleBone002_end
+    100086: CATRigHub002Bone002Bone001Bone001_end
+    100088: CATRigHub002Bone003_end
+    100090: Hueso_lengua_final_end
+    100092: Pelvis 1
     400000: //RootNode
     400002: CATRigAnkleBone001
     400004: CATRigAnkleBone001 1
@@ -65,12 +82,45 @@ ModelImporter:
     400054: Pata_izquierda_trasera
     400056: Pelvis
     400058: Pelvis2
+    400060: Armature
+    400062: CATRigAnkleBone001.001
+    400064: CATRigAnkleBone002.001
+    400066: CATRigLLeg2.001
+    400068: CATRigLLegAnkle.001
+    400070: CATRigRLeg2.001
+    400072: CATRigRLegAnkle.001
+    400074: Frog001
+    400076: Pata_delantera_derecha.001
+    400078: CATRigAnkleBone001.001_end
+    400080: CATRigAnkleBone001_end
+    400082: CATRigAnkleBone002.001_end
+    400084: CATRigAnkleBone002_end
+    400086: CATRigHub002Bone002Bone001Bone001_end
+    400088: CATRigHub002Bone003_end
+    400090: Hueso_lengua_final_end
+    400092: Pelvis 1
     2100000: default
     2100002: Rana
+    2100004: Rana.001
+    2300000: Frog001
+    2300002: Frog
+    3300000: Frog001
+    3300002: Frog
     4300000: Frog
+    4300002: Frog001
     9500000: //RootNode
     13700000: Frog
   externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rana
+    second: {fileID: 2100000, guid: 1fc6401d1b4c735479aa397c27d0f7ff, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rana.001
+    second: {fileID: 2100000, guid: 1fc6401d1b4c735479aa397c27d0f7ff, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -143,7 +193,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    rootMotionBoneName: Pelvis
+    rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 1

@@ -18,7 +18,7 @@ public abstract class Game : MonoBehaviour
 
 	#endregion
 
-	protected virtual void Awake () 
+	protected virtual void Start () 
 	{
 		/// Initialize game
 		Marker.Initialize ();

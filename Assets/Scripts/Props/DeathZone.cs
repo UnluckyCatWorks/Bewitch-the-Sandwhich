@@ -21,13 +21,17 @@ public class DeathZone : MonoBehaviour
 			/// Destroy his grabbed Object, if any
 			if (p.grab)
 			{
+				/// Object will be destroyed when it enters the zone
 				p.grab.Throw (Vector3.up, -8f, null);
-				Destroy (p.grab.helper.gameObject);
-				Destroy (p.grab.gameObject, 2f);
 				p.grab = null;
 			}
 		}
 		else
-		if (other.tag == "Grabbable") Destroy (other.gameObject);
+		if (other.tag == "Grabbable")
+		{	
+			var g = other.GetComponentInParent<Grabbable> ();
+			Destroy (g.gameObject, 1f);
+			Destroy (g.helper.gameObject);
+		}
 	}
 }

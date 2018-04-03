@@ -21,7 +21,7 @@ public class GrabHelper : Interactable
 	public override bool CheckInteraction (Character player) 
 	{
 		/// Can only grab object if nothing on hand already
-		return (player.grab == null && enabled);
+		return (player.grab == null && !parent.body.isKinematic && enabled);
 	}
 	#endregion
 

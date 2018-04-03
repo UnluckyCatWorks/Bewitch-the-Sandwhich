@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using UnityEditor;
-using System.Collections.Generic;
+﻿using UnityEditor;
+using UnityEngine;
 
 public class CollisionMatrixEditor : EditorWindow
 {
@@ -20,7 +19,7 @@ public class CollisionMatrixEditor : EditorWindow
 		window.Show ();
 	}
 
-	void OnGUI ()
+	void OnGUI () 
 	{
 		/// Actual GUI
 		scrollPos = GUILayout.BeginScrollView (scrollPos);
@@ -74,5 +73,14 @@ public class CollisionMatrixEditor : EditorWindow
 			GUILayout.Space (5);
 		}
 		GUILayout.EndScrollView ();
+	}
+
+	[MenuItem ("Maemia Jona")]
+	static void Aix ()
+	{
+		var sapoMal = AssetDatabase.LoadAssetAtPath<Mesh> ("Interactables/Sapo/Sapo_");
+		var sapoBien = AssetDatabase.LoadAssetAtPath<Mesh> ("Interactables/Sapo/Sapo_Bien");
+
+
 	}
 }
