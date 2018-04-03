@@ -140,8 +140,7 @@ GameObject:
   - component: {fileID: 4891728752981490}
   - component: {fileID: 33030228246595774}
   - component: {fileID: 23365921095564670}
-  - component: {fileID: 136726385817752826}
-  - component: {fileID: 136531290241604794}
+  - component: {fileID: 65823083518596416}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -451,6 +450,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.02, y: 1.0957856, z: 4.92}
   m_Center: {x: -0, y: 1.1827841, z: 0}
+--- !u!65 &65823083518596416
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1874401712805306}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.6228986, y: 2.2001066, z: 1.7057776}
+  m_Center: {x: -0.11591552, y: 1.1213958, z: 0.28650653}
 --- !u!111 &111138007800214222
 Animation:
   m_ObjectHideFlags: 1
@@ -506,32 +517,6 @@ MonoBehaviour:
   icon: {fileID: 0}
   updateIcon: 0
   alpha: 1
---- !u!136 &136531290241604794
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1874401712805306}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.71
-  m_Height: 2.4378028
-  m_Direction: 1
-  m_Center: {x: -1.4, y: 1.26, z: 0.28}
---- !u!136 &136726385817752826
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1874401712805306}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.81
-  m_Height: 5.0755653
-  m_Direction: 0
-  m_Center: {x: -0.049744572, y: 1.21, z: 0.25999993}
 --- !u!212 &212055669707712358
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -611,7 +596,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

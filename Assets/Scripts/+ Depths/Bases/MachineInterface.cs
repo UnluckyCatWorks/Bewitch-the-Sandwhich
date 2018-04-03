@@ -87,8 +87,7 @@ public class MachineInterface : Interactable
 	{
 		var force = transform.forward + Vector3.up*UpForce;
 		obj.Throw (force, 15f, null);
-		Destroy (obj.gameObject, 2f);
-		Destroy (obj.helper.gameObject);
+		obj.Destroy (1.5f);
 		obj = null;
 	} 
 	#endregion

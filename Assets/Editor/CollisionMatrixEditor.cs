@@ -74,13 +74,4 @@ public class CollisionMatrixEditor : EditorWindow
 		}
 		GUILayout.EndScrollView ();
 	}
-
-	[MenuItem ("Maemia Jona")]
-	static void Aix ()
-	{
-		var sapoMal = AssetDatabase.LoadAssetAtPath<Mesh> ("Interactables/Sapo/Sapo_");
-		var sapoBien = AssetDatabase.LoadAssetAtPath<Mesh> ("Interactables/Sapo/Sapo_Bien");
-
-
-	}
 }

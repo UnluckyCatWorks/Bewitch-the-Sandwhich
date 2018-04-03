@@ -6,6 +6,8 @@ using System.Collections.Generic;
 public abstract class Game : MonoBehaviour
 {
 	#region DATA
+	public bool initDialog;
+
 	public static Game manager;			/// Self-reference
 	public static bool paused;			/// Whether the game paused
 	public static RectTransform ui;     /// Scene UI parent
@@ -20,11 +22,12 @@ public abstract class Game : MonoBehaviour
 
 	protected virtual void Start () 
 	{
+		manager = this;
+
 		/// Initialize game
 		Marker.Initialize ();
-//		DialogMaster.Initialize ();
+		if (initDialog) DialogMaster.Initialize ();
 		StartCoroutine (Logic ());
-		manager = this;
 	}
 
 	protected abstract IEnumerator Logic ();

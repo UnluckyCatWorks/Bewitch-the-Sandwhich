@@ -140,7 +140,8 @@ public abstract class Character : MonoBehaviour
 
 	private void Dash () 
 	{
-        if (!dashIsUp || locks.HasFlag(Locks.Dash)) return;
+		if (grab) return;
+		if (!dashIsUp || locks.HasFlag(Locks.Dash)) return;
 		else if (!GetButtonDown("Dash")) return;
 		else Dashing = true;
 
@@ -154,7 +155,7 @@ public abstract class Character : MonoBehaviour
 	private IEnumerator DashingTime () 
 	{
 		/// Disable graivty
-		gravityMul = 0f;
+		gravityMul = 0.8f;
 
 		var factor = 0f;
 		while (factor <= 1f)
@@ -333,6 +334,13 @@ public abstract class Character : MonoBehaviour
 		effects.Add (name, e);
 
 		if (cc.HasFlag (Locks.Movement)) movingSpeed = Vector3.zero;
+	}
+
+	/// Manually remove a CC effect
+	public void RemoveCC (string name) 
+	{
+		if (effects.ContainsKey (name))
+			effects.Remove (name);
 	}
 
 	IEnumerator RemoveEffectAfter (string name, float duration) 

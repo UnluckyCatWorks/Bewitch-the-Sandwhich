@@ -30,8 +30,7 @@ public class DeathZone : MonoBehaviour
 		if (other.tag == "Grabbable")
 		{	
 			var g = other.GetComponentInParent<Grabbable> ();
-			Destroy (g.gameObject, 1f);
-			Destroy (g.helper.gameObject);
+			g.Destroy (1f);
 		}
 	}
 }

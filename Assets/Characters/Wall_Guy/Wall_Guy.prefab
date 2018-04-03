@@ -1526,8 +1526,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1649957674996132}
-  m_LocalRotation: {x: -0, y: -0.15798162, z: -0, w: -0.9874421}
-  m_LocalPosition: {x: -3.42, y: 0.26, z: 6.36}
+  m_LocalRotation: {x: -0, y: 0.03626786, z: -0, w: 0.99934214}
+  m_LocalPosition: {x: 8.44, y: -0.070680976, z: -2.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4729531315758188}
@@ -1535,7 +1535,7 @@ Transform:
   - {fileID: 4208909212707740}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -341.82, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -355.843, z: 0}
 --- !u!95 &95276140698489340
 Animator:
   serializedVersion: 3
@@ -1565,7 +1565,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 1
-  controller: 0
+  controller: 2
   speed: 8.5
   angularSpeed: 20
   gravityMul: 1
@@ -1573,10 +1573,10 @@ MonoBehaviour:
   throwForce: 20
   sprintForce: 40
   sprintCooldown: 0.5
-  spellCooldown: 1.5
+  spellCooldown: 3
   wall: {fileID: 114598111867304984, guid: b98bd2432eb897b4fb2d49ed643baf4d, type: 2}
-  wallDuration: 4
-  wallDistance: 3
+  wallDuration: 1.5
+  wallDistance: 2.5
 --- !u!136 &136688659108200620
 CapsuleCollider:
   m_ObjectHideFlags: 1

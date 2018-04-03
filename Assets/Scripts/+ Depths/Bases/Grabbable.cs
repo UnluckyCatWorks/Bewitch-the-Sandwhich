@@ -25,6 +25,13 @@ public class Grabbable : MonoBehaviour
 		/// Enable helper
 		helper.enabled = true;
 	}
+
+	public void Destroy (float delay = 0f) 
+	{
+		if (delay != 0) Destroy (gameObject, delay);
+		else Destroy (gameObject);
+		Destroy (helper.gameObject);
+	}
 	#endregion
 
 	#region CALLBACKS

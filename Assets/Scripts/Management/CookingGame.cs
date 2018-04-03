@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class CookingGame : Game
 {
+	/// madremia
+	public Mesh sapoMal;
+	public Mesh sapoBien;
+
 	public Boat boat;
 	public float boatSpawnTime;
 
@@ -28,12 +32,19 @@ public class CookingGame : Game
 			if ((int)ingredient == 4) next = IngredientID.Cristal;
 			else next = ingredient + 1;
 
-			// Spawn the boat
+			/// Spawn the new boat
 			boat = Instantiate (boat);
 			boat.supply.ingredient = next;
 			boat.UpdateBoatType ();
+
 			clock = 0f;
 			yield return null;
 		}
+	}
+
+	protected override void Start () 
+	{
+		base.Start ();
+		sapoMal.uv = sapoBien.uv;
 	}
 }

@@ -32,6 +32,9 @@ public class Boat : MonoBehaviour
 		info.sprite = Resources.Load<Sprite> ("UI/" + id);
 		pila.mesh = Resources.Load<Mesh> ("3D/Pila_" + id);
 	} 
+
+	public void AutoDestroy () 
+	{ Destroy (gameObject); }
 	#endregion
 
 	private void OnEnable ()

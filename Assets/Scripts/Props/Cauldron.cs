@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class Cauldron : Interactable
 {
+	/// For alpha
+	public static bool over;
+
 	[Header ("Cauldron Settings")]
 	public int playerOwner;
 	public float cookTime;
 	public float safeTime;
 	public float burnTime;
 
-	private Timer timer;
 	private List<IngredientInfo> currentMix;
 
 	#region INTERACTION
@@ -26,25 +28,19 @@ public class Cauldron : Interactable
 
 			/// Add ingredient & restart time
 			StartCoroutine ( Add (ingredient) );
-			clock = 0f;
 		}
 	}
 
 	public override bool CheckInteraction (Character player) 
 	{
-		/// If not valid Player
+		/// Is player valid?
 		if (player.id != playerOwner) return false;
 
-		/// If player is dropping
-		if (player.grab)
-		{
-			/// Check if it's an ingredient
-			if ((player.grab as Ingredient) == null) return false;
-			/// Can't add more than 4 ingredients
-			// ???
-			if (currentMix.Count == 4) return false;
-		}
-		else return false;
+		/// Is player dropping an ingredient?
+		if ((player.grab as Ingredient) == null) return false;
+
+		// For alpha => Only processed ingredients
+		if ((player.grab as Ingredient).type == IngredientType.TALCUAL) return false;
 
 		/// If everything's ok
 		return true;
@@ -91,38 +87,15 @@ public class Cauldron : Interactable
 	#endregion
 
 	#region COOKING
-	private enum Theme 
-	{
-		NotCooked,
-		Cooked,
-		Overcooked
-	}
-
-	private void Clear ()
-	{
-		timer.ChangeTo (Theme.NotCooked);
-		currentMix.Clear ();
-		StopCoroutine (process);
-		process = null;
-		clock = 0;
-	}
-
 	IEnumerator Add (Ingredient ig)
 	{
-		/// Restart cooking process
-		if (process != null)
-		{
-			StopCoroutine (process);
-			timer.ChangeTo (Theme.NotCooked);
-		}
-		process = StartCoroutine (Cooking ());
-
 		/// Drop inside cauldron
 		var factor = 0f;
 		while (factor <= 1f)
 		{
 			var newPos = Vector3.Lerp (ig.transform.position, transform.position, factor);
 			ig.transform.position = newPos;
+
 			factor += Time.deltaTime * 5f;
 			yield return null;
 		}
@@ -132,50 +105,20 @@ public class Cauldron : Interactable
 
 		/// Add to mix
 		currentMix.Add (ig.info);
-		Destroy (ig.gameObject);
+		ig.Destroy ();
+
+		// For alpha => PROCLAIM WINNER
+		if (!over)
+		{
+			GameObject.Find (playerOwner.ToString ()).GetComponent<UnityEngine.UI.Text> ().enabled = true;
+			over = true;
+		}
 	}
 	#endregion
-
-	[NonSerialized]
-	public float clock;
-	private Coroutine process;
-	private IEnumerator Cooking () 
-	{
-		clock = 0f;
-		// Wait until is cooked
-		while (clock <= cookTime)
-		{
-			if (!Game.paused)
-			{
-				clock += Time.deltaTime;
-				timer.SetSlider (clock / cookTime);
-			}
-			yield return null;
-		}
-
-		// Change phase && wait a bit
-		timer.ChangeTo (Theme.Cooked);
-		yield return new WaitForSeconds (safeTime);
-
-		// Wait until it's burned
-		while (clock <= cookTime + burnTime) 
-		{
-			if (!Game.paused) 
-			{
-				clock += Time.deltaTime;
-				timer.SetSlider ((clock - cookTime) / burnTime);
-			}
-			yield return null;
-		}
-		// If it burns
-		timer.ChangeTo (Theme.Overcooked);
-		Clear ();
-	}
 
 	protected override void Awake () 
 	{
 		base.Awake ();
 		currentMix = new List<IngredientInfo> (4);
-		timer = transform.parent.GetComponentInChildren<Timer> (true);
 	}
 }
