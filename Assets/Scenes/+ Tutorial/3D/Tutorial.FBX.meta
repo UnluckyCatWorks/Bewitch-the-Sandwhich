@@ -37,6 +37,41 @@ ModelImporter:
     100058: Sandwich
     100060: Sillas
     100062: Suelo
+    100064: Andamio
+    100066: Base_escenario
+    100068: Base_foco1
+    100070: Base_foco2
+    100072: Base_foco3
+    100074: Base_foco4
+    100076: Base_foco5
+    100078: Base_foco6
+    100080: Base_foco7
+    100082: Caja_abierta
+    100084: Caja_abierta001
+    100086: Caja_abierta002
+    100088: Caja_abierta003
+    100090: Caja_instrumentos_1
+    100092: Caja_instrumentos_2
+    100094: Caja_instrumentos_3
+    100096: Cortinas001
+    100098: Cristal001
+    100100: Escama009
+    100102: Foco
+    100104: Foco001
+    100106: Foco002
+    100108: Foco003
+    100110: Foco004
+    100112: Foco005
+    100114: Foco006
+    100116: Gusano005
+    100118: Plataforma_agua
+    100120: Puerta_1
+    100122: Puerta_exit
+    100124: Seta
+    100126: Telon1
+    100128: Telon2
+    100130: Telon3
+    100132: Telon4
     400000: Box001
     400002: Box002
     400004: Character_low
@@ -69,6 +104,41 @@ ModelImporter:
     400058: Sandwich
     400060: Sillas
     400062: Suelo
+    400064: Andamio
+    400066: Base_escenario
+    400068: Base_foco1
+    400070: Base_foco2
+    400072: Base_foco3
+    400074: Base_foco4
+    400076: Base_foco5
+    400078: Base_foco6
+    400080: Base_foco7
+    400082: Caja_abierta
+    400084: Caja_abierta001
+    400086: Caja_abierta002
+    400088: Caja_abierta003
+    400090: Caja_instrumentos_1
+    400092: Caja_instrumentos_2
+    400094: Caja_instrumentos_3
+    400096: Cortinas001
+    400098: Cristal001
+    400100: Escama009
+    400102: Foco
+    400104: Foco001
+    400106: Foco002
+    400108: Foco003
+    400110: Foco004
+    400112: Foco005
+    400114: Foco006
+    400116: Gusano005
+    400118: Plataforma_agua
+    400120: Puerta_1
+    400122: Puerta_exit
+    400124: Seta
+    400126: Telon1
+    400128: Telon2
+    400130: Telon3
+    400132: Telon4
     2100000: default
     2100002: No Name
     2100004: Suelo
@@ -78,6 +148,14 @@ ModelImporter:
     2100012: Sandwich
     2100014: Aplause_Caja_Puerta
     2100016: Olas
+    2100018: Paredes
+    2100020: Base_escenario
+    2100022: Caja_abierta
+    2100024: Puertas
+    2100026: Seta
+    2100028: Cristal
+    2100030: Gusano
+    2100032: Escama
     2300000: Box001
     2300002: Box002
     2300004: Character_low
@@ -109,6 +187,41 @@ ModelImporter:
     2300056: Sandwich
     2300058: Sillas
     2300060: Suelo
+    2300062: Andamio
+    2300064: Base_escenario
+    2300066: Base_foco1
+    2300068: Base_foco2
+    2300070: Base_foco3
+    2300072: Base_foco4
+    2300074: Base_foco5
+    2300076: Base_foco6
+    2300078: Base_foco7
+    2300080: Caja_abierta
+    2300082: Caja_abierta001
+    2300084: Caja_abierta002
+    2300086: Caja_abierta003
+    2300088: Caja_instrumentos_1
+    2300090: Caja_instrumentos_2
+    2300092: Caja_instrumentos_3
+    2300094: Cortinas001
+    2300096: Cristal001
+    2300098: Escama009
+    2300100: Foco
+    2300102: Foco001
+    2300104: Foco002
+    2300106: Foco003
+    2300108: Foco004
+    2300110: Foco005
+    2300112: Foco006
+    2300114: Gusano005
+    2300116: Plataforma_agua
+    2300118: Puerta_1
+    2300120: Puerta_exit
+    2300122: Seta
+    2300124: Telon1
+    2300126: Telon2
+    2300128: Telon3
+    2300130: Telon4
     3300000: Box001
     3300002: Box002
     3300004: Character_low
@@ -140,6 +253,41 @@ ModelImporter:
     3300056: Sandwich
     3300058: Sillas
     3300060: Suelo
+    3300062: Andamio
+    3300064: Base_escenario
+    3300066: Base_foco1
+    3300068: Base_foco2
+    3300070: Base_foco3
+    3300072: Base_foco4
+    3300074: Base_foco5
+    3300076: Base_foco6
+    3300078: Base_foco7
+    3300080: Caja_abierta
+    3300082: Caja_abierta001
+    3300084: Caja_abierta002
+    3300086: Caja_abierta003
+    3300088: Caja_instrumentos_1
+    3300090: Caja_instrumentos_2
+    3300092: Caja_instrumentos_3
+    3300094: Cortinas001
+    3300096: Cristal001
+    3300098: Escama009
+    3300100: Foco
+    3300102: Foco001
+    3300104: Foco002
+    3300106: Foco003
+    3300108: Foco004
+    3300110: Foco005
+    3300112: Foco006
+    3300114: Gusano005
+    3300116: Plataforma_agua
+    3300118: Puerta_1
+    3300120: Puerta_exit
+    3300122: Seta
+    3300124: Telon1
+    3300126: Telon2
+    3300128: Telon3
+    3300130: Telon4
     4300000: Character_low
     4300002: Box001
     4300004: Plane001
@@ -171,6 +319,41 @@ ModelImporter:
     4300056: Sandwich
     4300058: Aplause_Caja_Puerta
     4300060: Olas
+    4300062: Foco
+    4300064: Andamio
+    4300066: Caja_instrumentos_3
+    4300068: Caja_instrumentos_1
+    4300070: Puerta_exit
+    4300072: Cortinas001
+    4300074: Base_foco1
+    4300076: Foco001
+    4300078: Base_foco2
+    4300080: Foco002
+    4300082: Base_foco3
+    4300084: Foco003
+    4300086: Base_foco4
+    4300088: Foco004
+    4300090: Base_foco5
+    4300092: Foco005
+    4300094: Base_foco6
+    4300096: Foco006
+    4300098: Base_foco7
+    4300100: Caja_instrumentos_2
+    4300102: Base_escenario
+    4300104: Caja_abierta
+    4300106: Puerta_1
+    4300108: Seta
+    4300110: Caja_abierta001
+    4300112: Caja_abierta002
+    4300114: Caja_abierta003
+    4300116: Cristal001
+    4300118: Gusano005
+    4300120: Escama009
+    4300122: Plataforma_agua
+    4300124: Telon1
+    4300126: Telon2
+    4300128: Telon3
+    4300130: Telon4
     6400000: Box001
     6400002: Box002
     6400004: Character_low
@@ -202,6 +385,41 @@ ModelImporter:
     6400056: Sandwich
     6400058: Sillas
     6400060: Suelo
+    6400062: Andamio
+    6400064: Base_escenario
+    6400066: Base_foco1
+    6400068: Base_foco2
+    6400070: Base_foco3
+    6400072: Base_foco4
+    6400074: Base_foco5
+    6400076: Base_foco6
+    6400078: Base_foco7
+    6400080: Caja_abierta
+    6400082: Caja_abierta001
+    6400084: Caja_abierta002
+    6400086: Caja_abierta003
+    6400088: Caja_instrumentos_1
+    6400090: Caja_instrumentos_2
+    6400092: Caja_instrumentos_3
+    6400094: Cortinas001
+    6400096: Cristal001
+    6400098: Escama009
+    6400100: Foco
+    6400102: Foco001
+    6400104: Foco002
+    6400106: Foco003
+    6400108: Foco004
+    6400110: Foco005
+    6400112: Foco006
+    6400114: Gusano005
+    6400116: Plataforma_agua
+    6400118: Puerta_1
+    6400120: Puerta_exit
+    6400122: Seta
+    6400124: Telon1
+    6400126: Telon2
+    6400128: Telon3
+    6400130: Telon4
     7400000: Take 001
     9500000: //RootNode
   externalObjects:

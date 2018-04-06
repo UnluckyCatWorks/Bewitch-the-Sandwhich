@@ -9,7 +9,6 @@ Shader "Hidden/Cortinilla"
 		_MainTex ("Sprite Texture", 2D) = "white" {}
         _Color ("Tint", Color) = (1,1,1,1)
 		_Offset ("Center", Vector) = (0,0,0,0)
-		[PoweSlider (10.0)]
 		_Scale ("Scale", Range(0.0, 1.0)) = 1.0
 
         _StencilComp ("Stencil Comparison", Float) = 8
@@ -106,6 +105,7 @@ Shader "Hidden/Cortinilla"
 
             fixed4 frag(v2f IN) : SV_Target
             {
+				_Scale = pow ( _Scale, 3.0 );
 				// Modify UVs
 				IN.texcoord = IN.texcoord - 0.5;
 				IN.texcoord *= 10 * _Scale;
