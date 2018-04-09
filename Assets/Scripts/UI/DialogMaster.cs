@@ -64,7 +64,6 @@ public static class DialogMaster
 
 	public static void Initialize () 
 	{
-		if (initialized) return;
 		speaker = GameObject.Find ("Speaker").GetComponent<Image> ();
 		message = GameObject.Find ("Message").GetComponent<Text> ();
 		textBG = GameObject.Find ("Text_BG").GetComponent<Image> ();

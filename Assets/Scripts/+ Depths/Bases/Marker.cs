@@ -52,6 +52,7 @@ public class Marker : MonoBehaviour
 
 	public static void Initialize () 
 	{
+		if (init) return;
 		block = new MaterialPropertyBlock ();
 		_ColorID = Shader.PropertyToID ("_Color");
 		_AlphaID = Shader.PropertyToID ("_Alpha");

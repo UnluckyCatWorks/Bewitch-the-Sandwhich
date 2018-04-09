@@ -22,9 +22,8 @@ public abstract class Game : MonoBehaviour
 	{
 		manager = this;
 
-		/// Initialize game
+		/// Initialize game 
 		Marker.Initialize ();
-		DialogMaster.Initialize ();
 		StartCoroutine (Logic ());
 	}
 
