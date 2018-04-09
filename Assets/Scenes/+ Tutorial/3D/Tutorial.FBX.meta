@@ -426,8 +426,78 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Aplause_Caja_Puerta
+    second: {fileID: 2100000, guid: 334893b22ebd7c64ba8ad70265f58608, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Base_escenario
+    second: {fileID: 2100000, guid: 3ac911908e69f0d4f80cbb572ff06e64, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Caja_abierta
+    second: {fileID: 2100000, guid: 44c290d75c6ef5a45bfde15a4048a176, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cortinas
+    second: {fileID: 2100000, guid: b5c78637dac46f24bb7c31d93e8d3fa6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cristal
+    second: {fileID: 2100000, guid: 03cd7b432a047e140b94a6b940942ad1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Escama
+    second: {fileID: 2100000, guid: 51db9dbff47c8c4448339d766469fa35, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Focos_columnas
+    second: {fileID: 2100000, guid: b4c64bbe006c9874c8da1eb7566b1a6b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Gusano
+    second: {fileID: 2100000, guid: 72e5d59e280e1bf4b860906b015581d8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: No Name
     second: {fileID: 2100000, guid: 87e7f2362381bcb48af98ca595c77910, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Olas
+    second: {fileID: 2100000, guid: 1f1684d7b1c0af54098abc716260a51d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Paredes
+    second: {fileID: 2100000, guid: 29950e950103be044909b0de200ea052, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Puertas
+    second: {fileID: 2100000, guid: 7be9fbc70a65509489770cd59e3092f1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sandwich
+    second: {fileID: 2100000, guid: bd383f47539edc24eb7bed63827f3a3e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Seta
+    second: {fileID: 2100000, guid: d4f4b9f04348cbb45bc534289a26164b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sillas
+    second: {fileID: 2100000, guid: 894d5f4a263766546a84dccedaf5164c, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule

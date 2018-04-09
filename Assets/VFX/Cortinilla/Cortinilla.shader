@@ -106,12 +106,12 @@ Shader "Hidden/Cortinilla"
             fixed4 frag(v2f IN) : SV_Target
             {
 				_Scale = pow ( _Scale, 3.0 );
-				// Modify UVs
-				IN.texcoord = IN.texcoord - 0.5;
-				IN.texcoord *= 10 * _Scale;
-				IN.texcoord = IN.texcoord + 0.5;
 
-                half4 color = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.color;
+				// Modify UVs
+				IN.texcoord *= (10.0 * _Scale);
+				IN.texcoord += 0.5 - _Offset * (_Scale * 10.0);
+
+                half4 color = tex2D(_MainTex, IN.texcoord) * IN.color;
 
 				// Modify Alpha
 				float alphaAdd = smoothstep (0.7, 1.0, _Scale);
