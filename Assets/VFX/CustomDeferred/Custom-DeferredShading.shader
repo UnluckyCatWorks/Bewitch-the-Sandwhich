@@ -37,7 +37,7 @@ Shader "Hidden/Custom-DeferredShading"
 			#include "UnityPBSLighting.cginc"
 			#include "UnityStandardUtils.cginc"
 			#include "UnityGBuffer.cginc"
-			#include "UnityCustomBRDF.cginc"
+			#include "UnityStandardBRDF.cginc"
 
 			sampler2D _CameraGBufferTexture0;
 			sampler2D _CameraGBufferTexture1;
@@ -147,8 +147,7 @@ Shader "Hidden/Custom-DeferredShading"
 				UNITY_INITIALIZE_OUTPUT(UnityLight, light);
 				UnityDeferredCalculateLightParams (i, wpos, uv, light.dir, atten, fadeDist);
 
-				//float3 shadow
-				light.color = _LightColor * atten;
+				light.color = _LightColor0 * atten;
 
 				// unpack Gbuffer
 				half4 gbuffer0 = tex2D (_CameraGBufferTexture0, uv);
@@ -166,7 +165,6 @@ Shader "Hidden/Custom-DeferredShading"
 
 				half4 res = Custom_Unity_PBS (data.diffuseColor, data.specularColor, oneMinusReflectivity, data.smoothness, data.normalWorld, -eyeVec, light, ind);
 
-				return 0;
 				return res;
 			}
 

@@ -12,14 +12,12 @@ public class TutorialGame : Game
 	{
 		paused = false;
 		Cursor.visible = false;
-		DontDestroyOnLoad (GameObject.Find ("UI"));
-		SceneManager.LoadScene ("Waterloo");
 	}
 
 	public void PlayTuto () 
 	{
 		Cursor.visible = false;
-		enabled = true;
+//		enabled = true;
 	}
 
 	public void Exit () 

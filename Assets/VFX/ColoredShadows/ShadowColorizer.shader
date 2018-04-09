@@ -26,9 +26,9 @@
 			{
 				float4 screen = tex2D (_MainTex, i.uv);
 
-				float darkness = length (screen.rbg);
+				float darkness = length (screen.rbg) / 3;
 				float amount = 1.0 -  (_Max * darkness);
-				float3 color = lerp (screen, _Color, (1-screen) * amount * _Color.a * screen.a);
+				float3 color = lerp (screen, _Color, saturate((1-screen) * amount * _Color.a * screen.a) );
 
 				return float4 (color, 1);
 			}

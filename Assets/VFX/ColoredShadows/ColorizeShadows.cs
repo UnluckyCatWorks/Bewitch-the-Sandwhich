@@ -5,6 +5,7 @@ using System.Diagnostics;
 using UnityEngine;
 
 [ExecuteInEditMode]
+[ImageEffectOpaque]
 [ImageEffectAllowedInSceneView]
 public class ColorizeShadows : MonoBehaviour
 {
