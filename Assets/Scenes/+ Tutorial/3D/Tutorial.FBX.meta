@@ -72,6 +72,8 @@ ModelImporter:
     100128: Telon2
     100130: Telon3
     100132: Telon4
+    100134: Object003
+    100136: Plataforma_Escenario
     400000: Box001
     400002: Box002
     400004: Character_low
@@ -139,6 +141,8 @@ ModelImporter:
     400128: Telon2
     400130: Telon3
     400132: Telon4
+    400134: Object003
+    400136: Plataforma_Escenario
     2100000: default
     2100002: No Name
     2100004: Suelo
@@ -222,6 +226,8 @@ ModelImporter:
     2300126: Telon2
     2300128: Telon3
     2300130: Telon4
+    2300132: Object003
+    2300134: Plataforma_Escenario
     3300000: Box001
     3300002: Box002
     3300004: Character_low
@@ -288,6 +294,8 @@ ModelImporter:
     3300126: Telon2
     3300128: Telon3
     3300130: Telon4
+    3300132: Object003
+    3300134: Plataforma_Escenario
     4300000: Character_low
     4300002: Box001
     4300004: Plane001
@@ -354,6 +362,8 @@ ModelImporter:
     4300126: Telon2
     4300128: Telon3
     4300130: Telon4
+    4300132: Object003
+    4300134: Plataforma_Escenario
     6400000: Box001
     6400002: Box002
     6400004: Character_low
@@ -534,7 +544,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 3
-    addColliders: 1
+    addColliders: 0
     importVisibility: 0
     importBlendShapes: 0
     importCameras: 0
