@@ -6,9 +6,12 @@ using UnityEngine.UI;
 
 public static class DialogMaster
 {
+	private static bool initialized; // ?
+
 	public static Image speaker;
 	public static Image textBG;
 	public static Text message;
+
 
 	public static Coroutine StartNew (string path) 
 	{
@@ -61,8 +64,10 @@ public static class DialogMaster
 
 	public static void Initialize () 
 	{
+		if (initialized) return;
 		speaker = GameObject.Find ("Speaker").GetComponent<Image> ();
 		message = GameObject.Find ("Message").GetComponent<Text> ();
 		textBG = GameObject.Find ("Text_BG").GetComponent<Image> ();
+		initialized = true;
 	}
 }

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class CookingGame : Game
 {
-	/// madremia
-	public Mesh sapoMal;
-	public Mesh sapoBien;
-
 	public Boat boat;
 	public float boatSpawnTime;
+
+	[Header ("madremia")]
+	public Mesh sapoMal;
+	public Mesh sapoBien;
 
 	private float clock;
 	protected override IEnumerator Logic () 
