@@ -115,7 +115,7 @@ Shader "Hidden/Cortinilla"
 
 				// Modify Alpha
 				float alphaAdd = smoothstep (0.7, 1.0, _Scale);
-				color.a += alphaAdd;
+				color.a = saturate(color.a + alphaAdd);
 
                 #ifdef UNITY_UI_CLIP_RECT
                 color.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);

@@ -136,6 +136,11 @@ namespace UnityStandardAssets.Water
 
         void RenderReflectionFor(Camera cam, Camera reflectCamera)
         {
+			if (cam.orthographic)
+			{
+				return;
+			}
+
             if (!reflectCamera)
             {
                 return;
