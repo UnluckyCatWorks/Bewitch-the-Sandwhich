@@ -4,8 +4,23 @@ using System.Globalization;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public static class HExtensions
+public static class Extensions
 {
+	#region BEHAVIOUR
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="b"></param>
+	/// <param name="component"></param>
+	/// <returns></returns>
+	public static bool TryGetComponent<T> (this Behaviour b, out T component) 
+	{
+		component = b.GetComponentInChildren<T> ();
+		return (component != null);
+	}
+	#endregion
+
 	#region MESH
 	/// Credit to:
 	/// · https://stackoverflow.com/questions/45477806/general-method-for-calculating-smooth-vertex-normals-with-100-smoothness

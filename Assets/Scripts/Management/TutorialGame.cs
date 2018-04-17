@@ -7,17 +7,19 @@ using UnityEngine.UI;
 
 public class TutorialGame : Game 
 {
+	[Header ("Intro")]
+	public ParticleSystem puff;
+
 	#region UI UTILS
 	public void Play () 
 	{
-		paused = false;
-		Cursor.visible = false;
+		throw new System.NotImplementedException ();
 	}
 
 	public void PlayTuto () 
 	{
 		Cursor.visible = false;
-//		enabled = true;
+		enabled = true;
 	}
 
 	public void Exit () 
@@ -28,7 +30,21 @@ public class TutorialGame : Game
 
 	protected override IEnumerator Logic () 
 	{
-		DontDestroyOnLoad (GameObject.Find ("UI"));
+		#region INTRO CUTSCENE
+		var menu = GameObject.Find ("UI_Menu").GetComponent<Animator> ();
+		var focos = GameObject.Find ("Focos").GetComponent<Animator> ();
+		var rig = GameObject.Find ("Camera_Rig").GetComponent<Animator> ();
+
+		menu.SetTrigger ("Play");
+		yield return new WaitForSecondsRealtime (.2f);
+		rig.SetTrigger ("Play");
+		yield return new WaitForSecondsRealtime (4f);
+		focos.SetTrigger ("ToPresentador");
+		yield return new WaitForSecondsRealtime (2f);
+		puff.Play (true);
+		// appears presentador
+		#endregion
+
 
 		/// Players reference
 		var ps = FindObjectsOfType<Character> ().ToList ();
