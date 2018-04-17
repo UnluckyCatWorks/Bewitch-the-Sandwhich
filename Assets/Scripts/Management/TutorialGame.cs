@@ -8,7 +8,9 @@ using UnityEngine.UI;
 public class TutorialGame : Game 
 {
 	[Header ("Intro")]
+	public GameObject presentador;
 	public ParticleSystem puff;
+
 
 	#region UI UTILS
 	public void Play () 
@@ -38,13 +40,15 @@ public class TutorialGame : Game
 		menu.SetTrigger ("Play");
 		yield return new WaitForSecondsRealtime (.2f);
 		rig.SetTrigger ("Play");
-		yield return new WaitForSecondsRealtime (4f);
+		yield return new WaitForSecondsRealtime (2.9f);
+		focos.SetTrigger ("Play");
 		focos.SetTrigger ("ToPresentador");
 		yield return new WaitForSecondsRealtime (2f);
-		puff.Play (true);
-		// appears presentador
-		#endregion
 
+		/// Presentador
+		puff.Play (true);
+		presentador.SetActive (true);
+		#endregion
 
 		/// Players reference
 		var ps = FindObjectsOfType<Character> ().ToList ();
