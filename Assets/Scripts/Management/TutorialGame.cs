@@ -33,6 +33,7 @@ public class TutorialGame : Game
 	protected override IEnumerator Logic () 
 	{
 		#region INTRO CUTSCENE
+		var pAnim = presentador.GetComponent<Animator> ();
 		var menu = GameObject.Find ("UI_Menu").GetComponent<Animator> ();
 		var focos = GameObject.Find ("Focos").GetComponent<Animator> ();
 		var rig = GameObject.Find ("Camera_Rig").GetComponent<Animator> ();
@@ -49,6 +50,8 @@ public class TutorialGame : Game
 		puff.Play (true);
 		presentador.SetActive (true);
 		#endregion
+
+
 
 		/// Players reference
 		var ps = FindObjectsOfType<Character> ().ToList ();

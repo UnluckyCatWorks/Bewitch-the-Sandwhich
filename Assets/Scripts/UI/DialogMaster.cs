@@ -4,15 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+
 public static class DialogMaster
 {
-	private static bool initialized; // ?
-
-	public static Image speaker;
-	public static Image textBG;
-	public static Text message;
-
-
 	public static Coroutine StartNew (string path) 
 	{
 		var talk = Resources.Load<Talk> ("Dialogs/" + path);
@@ -24,7 +19,6 @@ public static class DialogMaster
 	static IEnumerator DisplayDialog (Dialog[] dialogs) 
 	{
 		// Turn dialog UI
-		if (!Game.paused) Time.timeScale = 0f;
 		speaker.CrossFadeAlphaFixed (0.1f, 0.3f, true);
 		message.CrossFadeAlphaFixed (1f, 0.3f, true);
 		textBG.CrossFadeAlphaFixed  (1f, 0.3f, true);
@@ -59,14 +53,7 @@ public static class DialogMaster
 		speaker.CrossFadeAlpha (0, 0.2f, true);
 		message.CrossFadeAlpha (0, 0.2f, true);
 		textBG.CrossFadeAlpha  (0, 0.2f, true);
-		if (!Game.paused) Time.timeScale = 1f;
-	}
-
-	public static void Initialize () 
-	{
-		speaker = GameObject.Find ("Speaker").GetComponent<Image> ();
-		message = GameObject.Find ("Message").GetComponent<Text> ();
-		textBG = GameObject.Find ("Text_BG").GetComponent<Image> ();
-		initialized = true;
 	}
 }
+
+*/
