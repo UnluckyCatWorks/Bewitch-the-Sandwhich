@@ -9,7 +9,7 @@ public class Supply : Interactable
 	public override void Action (Character player)
 	{
 		/// Instantiate prefab
-		var prefab = Resources.Load<Grabbable> ("Ingredients/" + ingredient.ToString ());
+		var prefab = Resources.Load<Grabbable> ("Prefabs/Ingredients/" + ingredient.ToString ());
 		var go = Instantiate(prefab, transform.position, Quaternion.identity);
 		player.grab = go.GetComponent<Grabbable> ();
 		player.grab.body.isKinematic = true;

@@ -45,6 +45,7 @@ public class TutorialGame : Game
 		focos.SetTrigger ("Play");
 		focos.SetTrigger ("ToPresentador");
 		yield return new WaitForSecondsRealtime (2f);
+		rig.SetBool ("Dialogging", true);
 
 		/// Presentador
 		puff.Play (true);

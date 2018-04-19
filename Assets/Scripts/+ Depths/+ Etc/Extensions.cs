@@ -139,7 +139,7 @@ public static class Extensions
 	#endregion
 
 	#region UI
-	public static void CrossFadeAlphaFixed (this Graphic g, float alpha, float duration, bool ignoreTimeScale)
+	public static void CrossShowAlpha (this Graphic g, float alpha, float duration, bool ignoreTimeScale)
 	{
 		//Make the alpha 1
 		Color fixedColor = g.color;
@@ -158,6 +158,13 @@ public static class Extensions
 		var c = r.color;
 		c.a = alpha;
 		r.color = c;
+	}
+
+	public static void SetAlpha (this Graphic g, float alpha)
+	{
+		var c = g.color;
+		c.a = alpha;
+		g.color = c;
 	}
 	#endregion
 }
