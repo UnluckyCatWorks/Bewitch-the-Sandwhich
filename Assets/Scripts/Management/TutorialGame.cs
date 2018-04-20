@@ -11,7 +11,6 @@ public class TutorialGame : Game
 	public GameObject presentador;
 	public ParticleSystem puff;
 
-
 	#region UI UTILS
 	public void Play () 
 	{
@@ -38,6 +37,8 @@ public class TutorialGame : Game
 		var focos = GameObject.Find ("Focos").GetComponent<Animator> ();
 		var rig = GameObject.Find ("Camera_Rig").GetComponent<Animator> ();
 
+		/// Make everything black
+		StartCoroutine (Extensions.FadeAmbient (0f, 3f, 0.8f));
 		/// Menu goes out
 		menu.SetTrigger ("Play");
 		yield return new WaitForSecondsRealtime (.2f);
@@ -62,7 +63,6 @@ public class TutorialGame : Game
 		/// Host dissapears
 		puff.Play (true);
 		presentador.SetActive (false);
-
 		/// Camera goes to scene
 		rig.SetTrigger ("ToScene");
 		/// Light up the scene
@@ -70,13 +70,14 @@ public class TutorialGame : Game
 		#endregion
 
 
-
 		/// Players reference
 		var ps = FindObjectsOfType<Character> ().ToList ();
-		/// Supress spells & dash for now
+		/// Limit players interaction
 		ps.ForEach (p=> p.AddCC ("Dash", Locks.Dash));
 		ps.ForEach (p=> p.AddCC ("Spells", Locks.Spells));
 		ps.ForEach (p=> p.AddCC ("Interaction", Locks.Interaction));
+		/// Make players visible
+		ps.ForEach (p => p.gameObject.SetActive (true));
 
 		// TODO 
 		yield return null;

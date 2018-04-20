@@ -23,6 +23,7 @@ Shader "VFX/Wonder Wall"
 	{
 		Tags { "Queue"="Transparent" "RenderType"="Transparent" }
 		ZWrite Off
+
 		CGPROGRAM
 		#define USE_DEPTH float depth = LinearEyeDepth (SAMPLE_DEPTH_TEXTURE_PROJ (_CameraDepthTexture, UNITY_PROJ_COORD (IN.screenPos)))
 		#pragma surface surf Standard alpha:fade

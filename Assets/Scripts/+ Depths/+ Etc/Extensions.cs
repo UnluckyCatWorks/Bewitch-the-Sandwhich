@@ -3,17 +3,29 @@ using System;
 using System.Globalization;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.Collections;
 
 public static class Extensions
 {
+	#region RENDER SETTINGS
+	public static IEnumerator FadeAmbient (float target, float duration, float smoothing=1f) 
+	{
+		float start = RenderSettings.ambientIntensity;
+
+		float factor = 0f;
+		while (factor <= 1f) 
+		{
+			float value = Mathf.Pow (factor, smoothing);
+			float lerp = Mathf.Lerp (start, target, value);
+			RenderSettings.ambientIntensity = lerp;
+
+			yield return null;
+			factor += Time.deltaTime / duration;
+		}
+	}
+	#endregion
+
 	#region BEHAVIOUR
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	/// <param name="b"></param>
-	/// <param name="component"></param>
-	/// <returns></returns>
 	public static bool TryGetComponent<T> (this Behaviour b, out T component) 
 	{
 		component = b.GetComponentInChildren<T> ();
@@ -139,7 +151,7 @@ public static class Extensions
 	#endregion
 
 	#region UI
-	public static void CrossShowAlpha (this Graphic g, float alpha, float duration, bool ignoreTimeScale)
+	public static void CrossShowAlpha (this Graphic g, float alpha, float duration, bool ignoreTimeScale) 
 	{
 		//Make the alpha 1
 		Color fixedColor = g.color;
@@ -160,7 +172,7 @@ public static class Extensions
 		r.color = c;
 	}
 
-	public static void SetAlpha (this Graphic g, float alpha)
+	public static void SetAlpha (this Graphic g, float alpha) 
 	{
 		var c = g.color;
 		c.a = alpha;

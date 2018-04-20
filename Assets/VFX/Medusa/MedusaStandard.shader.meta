@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: d9edee0ad5268f045ab02abb1e21fc72
+timeCreated: 1524227322
+licenseType: Free
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _MainTex: {instanceID: 0}
+  - _Normal: {instanceID: 0}
+  - _Metallic: {instanceID: 0}
+  - _Emission: {instanceID: 0}
+  - _StoneTex: {fileID: 2800000, guid: b3b8e74b454daa44b8000e19b8cff9e8, type: 3}
+  - _StoneNormal: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
