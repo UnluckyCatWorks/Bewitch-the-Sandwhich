@@ -65,6 +65,8 @@ public class TutorialGame : Game
 
 		/// Camera goes to scene
 		rig.SetTrigger ("ToScene");
+		/// Light up the scene
+		focos.SetTrigger ("ToScene");
 		#endregion
 
 
