@@ -32,24 +32,39 @@ public class TutorialGame : Game
 
 	protected override IEnumerator Logic () 
 	{
+		/// Starts when clicked "Play"
 		#region INTRO CUTSCENE
-		var pAnim = presentador.GetComponent<Animator> ();
 		var menu = GameObject.Find ("UI_Menu").GetComponent<Animator> ();
 		var focos = GameObject.Find ("Focos").GetComponent<Animator> ();
 		var rig = GameObject.Find ("Camera_Rig").GetComponent<Animator> ();
 
+		/// Menu goes out
 		menu.SetTrigger ("Play");
 		yield return new WaitForSecondsRealtime (.2f);
+		/// Camera goes to Host
 		rig.SetTrigger ("Play");
 		yield return new WaitForSecondsRealtime (2.9f);
+		/// Lights focus on Host
 		focos.SetTrigger ("Play");
 		focos.SetTrigger ("ToPresentador");
 		yield return new WaitForSecondsRealtime (2f);
-		rig.SetBool ("Dialogging", true);
 
-		/// Presentador
+		/// Host appears
 		puff.Play (true);
 		presentador.SetActive (true);
+		var pAnim = presentador.GetComponent<Animator> ();
+
+		/// Intro dialog
+		yield return new WaitForSecondsRealtime (2f);
+		yield return Dialog.StartNew ("Tutorial/Guion", pAnim);
+
+		/// When dialog is over,
+		/// Host dissapears
+		puff.Play (true);
+		presentador.SetActive (false);
+
+		/// Camera goes to scene
+		rig.SetTrigger ("ToScene");
 		#endregion
 
 

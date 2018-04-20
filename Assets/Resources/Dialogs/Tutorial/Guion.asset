@@ -13,20 +13,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialog:
   - message: '- pose inicial (aparece)'
-    image: {fileID: 0}
-    speed: 0
+    speed: 10
   - message: '- se incorpora
 
       -> welcome, ladies and getleman, once again to your fabvorite show'
-    image: {fileID: 0}
-    speed: 0
+    speed: 5
   - message: '- se viene a Riba
 
       -> BEWITCH THE SANDWHICH'
-    image: {fileID: 0}
-    speed: 0
+    speed: 10
   - message: '- se incorpora again
 
       -> follow me to the arenas while the xics se preparen'
-    image: {fileID: 0}
-    speed: 0
+    speed: 15

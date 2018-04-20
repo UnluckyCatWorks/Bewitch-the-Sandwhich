@@ -10,14 +10,17 @@ public class Dialog : MonoBehaviour
 	public Image border;
 	public Image arrow;
 	public Text content;
+
+	internal Animator anim;
 	#endregion
 
-	public IEnumerator Display (params Speech.Dialog[] dialog) 
+	public IEnumerator Display (params Speech.Dialog[] dialogs) 
 	{
 		/// Turn dialog UI on
-		speaker.CrossFadeAlphaFixed (0.1f, 0.3f, true);
-		message.CrossFadeAlphaFixed (1f, 0.3f, true);
-		textBG.CrossFadeAlphaFixed (1f, 0.3f, true);
+		bg.CrossShowAlpha (1f, 0.3f, true);
+		border.CrossShowAlpha (1f, 0.3f, true);
+		arrow.CrossShowAlpha (1f, 0.15f, true);
+		yield return new WaitForSecondsRealtime (0.4f);
 
 		// Go through the script
 		foreach (var d in dialogs)
@@ -26,30 +29,36 @@ public class Dialog : MonoBehaviour
 			var speed = d.speed * 2f;
 			while (fill <= d.message.Length + 1)
 			{
-				// Get cursor position
+				/// Get cursor position
 				var cursor = Mathf.FloorToInt (fill);
 
-				// Fill text
-				message.text = d.message + "</color>";
-				message.text = message.text.Insert (cursor, "<color=#0000>");
+				/// Fill text
+				content.text = d.message + "</color>";
+				content.text = content.text.Insert (cursor, "<color=#0000>");
 
 				yield return null;
 				fill += Time.unscaledDeltaTime * speed;
-				// Increase speed if pressing skip
-				if (Input.GetButtonDown ("Skip")) speed = Mathf.Pow (speed, 2);
-			}
-			message.text = d.message;
 
-			// Wait until dialog is skipped
+				/// Increase speed if pressing skip
+				if (Input.GetButtonDown ("Skip"))
+					speed = Mathf.Pow (speed, 2);
+			}
+			content.text = d.message;
+
+			/// Wait until dialog is skipped
 			while (!Input.GetButtonDown ("Skip"))
+			{
 				yield return null;
+				if (!string.IsNullOrEmpty (d.trigger) && anim != null)
+					anim.SetTrigger (d.trigger);
+			}
 		}
 
-		// Turn off dialog UI
-		speaker.CrossFadeAlpha (0, 0.2f, true);
-		message.CrossFadeAlpha (0, 0.2f, true);
-		textBG.CrossFadeAlpha (0, 0.2f, true);
-
+		/// Turn off dialog UI
+		bg.CrossFadeAlpha (0, 0.2f, true);
+		border.CrossFadeAlpha (0, 0.2f, true);
+		arrow.CrossFadeAlpha (0, 0.15f, true);
+		content.CrossFadeAlpha (0, 0.2f, true);
 	}
 
 	#region CALLBACKS
@@ -63,7 +72,7 @@ public class Dialog : MonoBehaviour
 	#endregion
 
 	#region HELPERS
-	public static Coroutine StartNew (string path)
+	public static Coroutine StartNew (string path, Animator anim=null)
 	{
 		var speech = Resources.Load<Speech> ("Dialogs/" + path);
 		if (speech)
@@ -72,6 +81,7 @@ public class Dialog : MonoBehaviour
 
 			var prefab = Resources.Load<Dialog> ("Prefabs/Dialog");
 			var dialog = Instantiate (prefab, ui.transform);
+			dialog.anim = anim;
 
 			return dialog.StartCoroutine (dialog.Display (speech.dialog));
 		}

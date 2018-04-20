@@ -14,7 +14,7 @@ public class Speech : ScriptableObject
 	{
 		[TextArea]
 		public string message;
-		public Sprite image;
 		public float speed;
+		public string trigger;
 	}
 }
