@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class OrderMaster
+#if FALSE
+public static class OrderMaster 
 {
 	public static Order orderPrefab;
 
@@ -94,3 +95,4 @@ public static class OrderMaster
 	}
 	#endregion
 }
+#endif

@@ -350,7 +350,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4990561780471950}
   - component: {fileID: 95519348973734686}
-  - component: {fileID: 136563401202934084}
   - component: {fileID: 143886106647201988}
   - component: {fileID: 114422286972904646}
   m_Layer: 0
@@ -1512,8 +1511,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1304399107086124}
-  m_LocalRotation: {x: -0, y: 0.010873005, z: -0, w: -0.99994093}
-  m_LocalPosition: {x: -0.15, y: 2.169, z: 6.1}
+  m_LocalRotation: {x: -0, y: -0.9574221, z: -0, w: -0.288692}
+  m_LocalPosition: {x: -1.7739905, y: 1.1966492e-16, z: -5.389229}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4218556083496144}
@@ -1521,7 +1520,7 @@ Transform:
   - {fileID: 4937281900218502}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -361.246, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -213.55899, z: 0}
 --- !u!4 &4993071084942748
 Transform:
   m_ObjectHideFlags: 1
@@ -1575,19 +1574,6 @@ MonoBehaviour:
   sprintCooldown: 0.5
   spellCooldown: 4
   stunDuration: 2
---- !u!136 &136563401202934084
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1304399107086124}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.4
-  m_Height: 1.5
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.752, z: 0}
 --- !u!137 &137957501633156190
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -1690,7 +1676,7 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1.32
+  m_Height: 1.37
   m_Radius: 0.35
   m_SlopeLimit: 45
   m_StepOffset: 0.2

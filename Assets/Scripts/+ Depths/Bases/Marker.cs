@@ -11,51 +11,47 @@ public class Marker : MonoBehaviour
 	#region DATA
 	public Sprite icon;
 	public bool updateIcon;
-	[Range (0f, 1f)]
-	public float alpha;
-	private float _alpha;
 
-	// Interal vars
+	/// Transition
+	private int watchers;
+	private bool inTransition;
+	private const float duration = 0.5f;
+	private float factor;
+	private Color iColor;
+	private float iAlpha;
+
+	/// References
 	private MeshRenderer marker;
 	private SpriteRenderer infoSign;
 
-	// Static vars
-	private static MaterialPropertyBlock block;
-	private static int _ColorID;
-	private static int _AlphaID;
+	/// Static
 	private static bool init;
+	private static MaterialPropertyBlock block;
+	private static int ColorID;
 	#endregion
 
 	#region UTILS
-	private int simultaneousMarks;
 	public void On (int id) 
 	{
-		infoSign.SetAlpha (0.9f);
-		block.SetFloat (_AlphaID, 0.9f);
-
-		simultaneousMarks += id;
-		block.SetColor (_ColorID, Game.teamColors[simultaneousMarks-1]);
-		marker.SetPropertyBlock (block);
+		watchers += id;
+		iColor = block.GetColor (ColorID);
+		iAlpha = infoSign.color.a;
+		inTransition = true;
 	}
 	public void Off (int id) 
 	{
-		simultaneousMarks -= id;
-		if (simultaneousMarks == 0)
-		{
-			infoSign.SetAlpha (0.0f);
-			block.SetFloat (_AlphaID, 0.0f);
-		}
-		else block.SetColor (_ColorID, Game.teamColors[simultaneousMarks-1]);
-
-		marker.SetPropertyBlock (block);
+		watchers -= id;
+		iColor = block.GetColor (ColorID);
+		iAlpha = infoSign.color.a;
+		inTransition = true;
 	}
 
-	public static void Initialize () 
+	private static void Initialize () 
 	{
 		if (init) return;
+		ColorID = Shader.PropertyToID ("_Color");
 		block = new MaterialPropertyBlock ();
-		_ColorID = Shader.PropertyToID ("_Color");
-		_AlphaID = Shader.PropertyToID ("_Alpha");
+		block.SetColor (ColorID, new Color (0, 0, 0, 0));
 		init = true;
 	}
 	#endregion
@@ -63,42 +59,64 @@ public class Marker : MonoBehaviour
 	#region CALLBACKS
 	private void Update ()
 	{
-		#if UNITY_EDITOR
-		/// Change alpha value in inspector
-		if (alpha != _alpha && !EditorApplication.isPlaying)
-		{
-			infoSign.SetAlpha (alpha);
-			block.SetFloat (_AlphaID, alpha);
-			marker.SetPropertyBlock (block);
-			_alpha = alpha;
-		} 
-		#endif
-
 		/// Make icon face camera
-		if (updateIcon)
+		if (updateIcon && icon != null)
 		{
 			var t = infoSign.transform;
 			var dir = Camera.main.transform.position - t.position;
 			t.rotation = Quaternion.LookRotation (dir.normalized);
 		}
+
+		if (inTransition) 
+		{
+			/// Break
+			if (factor > 1.1f)
+			{
+				inTransition = false;
+				factor = 0f;
+				return;
+			}
+
+			/// Do
+			float value = Mathf.Pow (factor, 0.6f);
+			var color = Color.Lerp (iColor, Game.teamColors[watchers], value);
+			var alpha = Mathf.Lerp (iAlpha, Mathf.Clamp01 (watchers), value);
+			block.SetColor (ColorID, color);
+			marker.SetPropertyBlock (block);
+			infoSign.SetAlpha (alpha);
+
+			/// Continue
+			factor += Time.smoothDeltaTime / duration;
+		}
 	}
 
 	private void OnEnable () 
 	{
-		#if UNITY_EDITOR
-		if (!init)
-		{
-			block = new MaterialPropertyBlock ();
-			_AlphaID = Shader.PropertyToID ("_Alpha");
-			init = true;
-		}
-		#endif
+		Initialize ();
 
+		/// Set up references
 		marker = GetComponentInChildren<MeshRenderer> ();
 		infoSign = GetComponentInChildren<SpriteRenderer> ();
-		infoSign.sprite = icon;
 
-		Off (0);
-	} 
+		/// Set up ready-state
+		marker.SetPropertyBlock (block);
+		infoSign.sprite = icon;
+		factor = 0f;
+	}
+	#endregion
+
+	#region EDITOR TESTING
+	[ContextMenu("Switch Player 1")]
+	public void SwitchPlayerOne () 
+	{
+		if (watchers == 0 || watchers == 2) On (1);
+		else Off (1);
+	}
+	[ContextMenu ("Switch Player 2")]
+	public void SwitchPlayerTwo () 
+	{
+		if (watchers == 0 || watchers == 1) On (2);
+		else Off (2);
+	}
 	#endregion
 }

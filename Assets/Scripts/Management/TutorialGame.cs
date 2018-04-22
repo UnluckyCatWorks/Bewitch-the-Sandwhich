@@ -29,16 +29,25 @@ public class TutorialGame : Game
 	}
 	#endregion
 
+	/// Starts when clicked "Play"
 	protected override IEnumerator Logic () 
 	{
-		/// Starts when clicked "Play"
+		/// Players reference
+		var ps = FindObjectsOfType<Character> ().ToList ();
+		/// Limit players interaction
+		ps.ForEach (p => p.AddCC ("Dash", Locks.Dash));
+		ps.ForEach (p => p.AddCC ("Spells", Locks.Spells));
+		ps.ForEach (p => p.AddCC ("Interaction", Locks.Interaction));
+		/// Make players invisible
+		ps.ForEach (p => p.gameObject.SetActive (false));
+
 		#region INTRO CUTSCENE
 		var menu = GameObject.Find ("UI_Menu").GetComponent<Animator> ();
 		var focos = GameObject.Find ("Focos").GetComponent<Animator> ();
 		var rig = GameObject.Find ("Camera_Rig").GetComponent<Animator> ();
 
 		/// Make everything black
-		StartCoroutine (Extensions.FadeAmbient (0f, 3f, 0.8f));
+		StartCoroutine (Extensions.FadeAmbient (0f, 2.5f, 0.8f));
 		/// Menu goes out
 		menu.SetTrigger ("Play");
 		yield return new WaitForSecondsRealtime (.2f);
@@ -50,42 +59,43 @@ public class TutorialGame : Game
 		focos.SetTrigger ("ToPresentador");
 		yield return new WaitForSecondsRealtime (2f);
 
-		/// Host appears
-		puff.Play (true);
-		presentador.SetActive (true);
-		var pAnim = presentador.GetComponent<Animator> ();
+        #region HOST
+        /// Host appears
+        puff.Play (true);
+        presentador.SetActive (true);
+        presentador.GetComponentInChildren <Renderer> ().sharedMaterial.SetColor ("_EmissionColor", Color.white * 0.288f);
+        var pAnim = presentador.GetComponent<Animator> ();
 
-		/// Intro dialog
-		yield return new WaitForSecondsRealtime (2f);
-		yield return Dialog.StartNew ("Tutorial/Guion", pAnim);
+        /// Intro dialog
+        yield return new WaitForSecondsRealtime (2f);
+        yield return Dialog.StartNew ("Tutorial/Text", pAnim);
+        pAnim.SetBool ("In", false);
 
-		/// When dialog is over,
-		/// Host dissapears
-		puff.Play (true);
-		presentador.SetActive (false);
-		/// Camera goes to scene
-		rig.SetTrigger ("ToScene");
+        /// When dialog is over,
+        /// Host dissapears
+        puff.Play (true);
+        yield return new WaitForSecondsRealtime (0.1f);
+        presentador.SetActive (false); 
+        #endregion
+
+        /// Camera goes to scene
+        rig.SetTrigger ("ToScene");
 		/// Light up the scene
 		focos.SetTrigger ("ToScene");
+        StartCoroutine (Extensions.FadeAmbient (2.9f, 2.5f, 1.4f));
 		#endregion
 
-
-		/// Players reference
-		var ps = FindObjectsOfType<Character> ().ToList ();
-		/// Limit players interaction
-		ps.ForEach (p=> p.AddCC ("Dash", Locks.Dash));
-		ps.ForEach (p=> p.AddCC ("Spells", Locks.Spells));
-		ps.ForEach (p=> p.AddCC ("Interaction", Locks.Interaction));
+		#region TUTORIAL
 		/// Make players visible
 		ps.ForEach (p => p.gameObject.SetActive (true));
-
-		// TODO 
-		yield return null;
+		paused = false;
+		#endregion
 	}
 
 	private void Awake () 
 	{
-		DontDestroyOnLoad (gameObject);
+        /// Set up game
+        RenderSettings.ambientIntensity = 2.9f;
 		paused = true;
 	}
 }

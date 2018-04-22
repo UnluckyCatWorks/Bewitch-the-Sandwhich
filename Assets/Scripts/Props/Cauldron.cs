@@ -50,7 +50,7 @@ public class Cauldron : Interactable
 	#region UTILITIES
 	public int FindPotion () 
 	{
-		var rs = OrderMaster.recipes;
+		Recipe[] rs = null; // OrderMaster.recipes;
 
 		// Check against all craftable potions
 		for (var i = 1; i != rs.Length; i++)

@@ -24,6 +24,10 @@ ModelImporter:
     100032: Object109
     100034: Parte_puente_003
     100036: Parte_puente_2
+    100038: Coliseo
+    100040: Columnas_Coliseo
+    100042: Plataforma_presentador
+    100044: Toldo_coliseo
     400000: Box009
     400002: Box010
     400004: Character002
@@ -43,9 +47,17 @@ ModelImporter:
     400032: Object109
     400034: Parte_puente_003
     400036: Parte_puente_2
+    400038: Coliseo
+    400040: Columnas_Coliseo
+    400042: Plataforma_presentador
+    400044: Toldo_coliseo
     2100000: default
     2100002: No Name
     2100004: Puente
+    2100006: Toldo_Coliseo
+    2100008: Coliseo
+    2100010: Columnas_coliseo
+    2100012: Plataforma_presentador
     2300000: Box009
     2300002: Box010
     2300004: Character002
@@ -64,6 +76,10 @@ ModelImporter:
     2300030: Object109
     2300032: Parte_puente_003
     2300034: Parte_puente_2
+    2300036: Coliseo
+    2300038: Columnas_Coliseo
+    2300040: Plataforma_presentador
+    2300042: Toldo_coliseo
     3300000: Box009
     3300002: Box010
     3300004: Character002
@@ -82,6 +98,10 @@ ModelImporter:
     3300030: Object109
     3300032: Parte_puente_003
     3300034: Parte_puente_2
+    3300036: Coliseo
+    3300038: Columnas_Coliseo
+    3300040: Plataforma_presentador
+    3300042: Toldo_coliseo
     4300000: Character002
     4300002: Object103
     4300004: Object104
@@ -100,6 +120,10 @@ ModelImporter:
     4300030: Cylinder011
     4300032: Object107
     4300034: Object109
+    4300036: Toldo_coliseo
+    4300038: Coliseo
+    4300040: Columnas_Coliseo
+    4300042: Plataforma_presentador
     7400000: Take 001
     9500000: //RootNode
   externalObjects: {}

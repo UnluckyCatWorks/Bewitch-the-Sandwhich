@@ -14,15 +14,19 @@ MonoBehaviour:
   dialog:
   - message: '- pose inicial (aparece)'
     speed: 10
+    trigger: 
   - message: '- se incorpora
 
       -> welcome, ladies and getleman, once again to your fabvorite show'
     speed: 5
+    trigger: Jump
   - message: '- se viene a Riba
 
       -> BEWITCH THE SANDWHICH'
     speed: 10
+    trigger: Normal
   - message: '- se incorpora again
 
       -> follow me to the arenas while the xics se preparen'
     speed: 15
+    trigger: Out

@@ -185,7 +185,7 @@ public abstract class Character : MonoBehaviour
 	#endregion
 
 	#region KNOCKING
-	private Character other;
+	protected Character other;
 	public bool Knocked { get; private set; }
 
 	public void Knock (Vector3 dir)
@@ -311,8 +311,8 @@ public abstract class Character : MonoBehaviour
 	#endregion
 
 	#region EFFECTS MANAGEMENT
-	Dictionary<string, Effect> effects;
-	[NonSerialized] public Locks locks;
+	protected Dictionary<string, Effect> effects;
+	internal Locks locks;
 
 	/// Applies the effects
 	private void ReadEffects () 

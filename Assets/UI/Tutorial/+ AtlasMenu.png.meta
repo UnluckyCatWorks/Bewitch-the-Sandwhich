@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 6d6f8c71c33aa9c44811f03a4cfb1b56
-timeCreated: 1522704301
+timeCreated: 1524332699
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -8,12 +8,16 @@ TextureImporter:
     21300002: AtlasMenu_DropDown_List
     21300004: AtlasMenu_Slider_BG
     21300006: AtlasMenu_Slider
-    21300008: AtlasMenu_Slider_Knob
+    21300008: AtlasMenu_Slider_BG_Border
     21300010: AtlasMenu_Chckbox
     21300012: AtlasMenu_Checkbox_Tick
     21300014: AtlasMenu_Button
     21300016: AtlasMenu_Gamepad
     21300018: AtlasMenu_Keyboard
+    21300020: AtlasMenu_Slider_Knob
+    21300022: AtlasMenu_DropDown_List_Border
+    21300024: AtlasMenu_Button_Border
+    21300026: AtlasMenu_DropDown_Border
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -115,10 +119,10 @@ TextureImporter:
         serializedVersion: 2
         x: 37
         y: 881
-        width: 411
+        width: 408
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -205.5, y: 47.5}
@@ -131,12 +135,12 @@ TextureImporter:
       name: AtlasMenu_DropDown_List
       rect:
         serializedVersion: 2
-        x: 475
+        x: 499
         y: 586
         width: 401
         height: 390
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -200.5, y: 195}
@@ -149,12 +153,12 @@ TextureImporter:
       name: AtlasMenu_Slider_BG
       rect:
         serializedVersion: 2
-        x: 12
+        x: 15
         y: 781
-        width: 454
+        width: 451
         height: 60
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -226, y: 30}
@@ -173,7 +177,7 @@ TextureImporter:
         width: 407
         height: 8
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -203.5, y: 4}
@@ -183,15 +187,15 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: AtlasMenu_Slider_Knob
+      name: AtlasMenu_Slider_BG_Border
       rect:
         serializedVersion: 2
-        x: 32
-        y: 660
-        width: 40
-        height: 40
+        x: 15
+        y: 648
+        width: 453
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -20, y: 20}
@@ -211,7 +215,7 @@ TextureImporter:
         width: 86
         height: 86
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -41, y: 43}
@@ -230,7 +234,7 @@ TextureImporter:
         width: 61
         height: 82
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: 10.5, y: 41}
@@ -247,12 +251,12 @@ TextureImporter:
       name: AtlasMenu_Button
       rect:
         serializedVersion: 2
-        x: 40
-        y: 372
-        width: 562
-        height: 104
+        x: 29
+        y: 382
+        width: 550
+        height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -226, y: 52}
@@ -282,7 +286,7 @@ TextureImporter:
         width: 253
         height: 161
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: 104.5, y: 80.5}
@@ -304,7 +308,7 @@ TextureImporter:
         width: 237
         height: 216
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: 5.5, y: 108}
@@ -312,6 +316,62 @@ TextureImporter:
         - {x: -118.5, y: -108}
         - {x: 118.5, y: -108}
         - {x: 118.5, y: 108}
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: AtlasMenu_Slider_Knob
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 554
+        width: 38
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: AtlasMenu_DropDown_List_Border
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 128
+        width: 401
+        height: 390
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: AtlasMenu_Button_Border
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 8
+        width: 562
+        height: 104
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: AtlasMenu_DropDown_Border
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 17
+        width: 412
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
       physicsShape: []
       tessellationDetail: 0
     outline: []

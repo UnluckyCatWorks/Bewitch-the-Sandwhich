@@ -8,24 +8,20 @@ public abstract class Game : MonoBehaviour
 	#region DATA
 	public static Game manager;			/// Self-reference
 	public static bool paused;			/// Whether the game paused
-	public static RectTransform ui;     /// Scene UI parent
 	public static Color[] teamColors =	/// The representative color of each player
 	{
-		new Color32 (247, 133, 19, 200),	/// Orange (Wall Guy)
-		new Color32 (59, 129, 249, 230),	/// Blue (Ice Guy)
-		new Color32 (248, 71, 255, 190)		/// Purple? (Both)
+		new Color32 (000, 000, 000, 000),	/// Nothing, just pure black
+		new Color32 (247, 133, 019, 200),	/// Orange (Wall Guy)
+		new Color32 (059, 129, 249, 230),	/// Blue (Ice Guy)
+		new Color32 (248, 071, 255, 190)	/// Purple? (Both)
 	};
-
 	#endregion
 
 	protected virtual void Start () 
 	{
-		manager = this;
-
 		/// Initialize game 
-		Marker.Initialize ();
+		manager = this;
 		StartCoroutine (Logic ());
 	}
-
 	protected abstract IEnumerator Logic ();
 }

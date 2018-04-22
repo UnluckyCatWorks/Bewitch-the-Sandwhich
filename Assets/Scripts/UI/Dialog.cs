@@ -25,7 +25,7 @@ public class Dialog : MonoBehaviour
 		// Go through the script
 		foreach (var d in dialogs)
 		{
-			var fill = 0f;
+            var fill = 0f;
 			var speed = d.speed * 2f;
 			while (fill <= d.message.Length + 1)
 			{
@@ -46,13 +46,12 @@ public class Dialog : MonoBehaviour
 			content.text = d.message;
 
 			/// Wait until dialog is skipped
-			while (!Input.GetButtonDown ("Skip"))
-			{
-				yield return null;
-				if (!string.IsNullOrEmpty (d.trigger) && anim != null)
-					anim.SetTrigger (d.trigger);
-			}
-		}
+			while (!Input.GetButtonDown ("Skip")) yield return null;
+
+            /// Play Animator trigger if given
+            if (!string.IsNullOrEmpty (d.trigger) && anim != null)
+                anim.SetTrigger (d.trigger);
+        }
 
 		/// Turn off dialog UI
 		bg.CrossFadeAlpha (0, 0.2f, true);
