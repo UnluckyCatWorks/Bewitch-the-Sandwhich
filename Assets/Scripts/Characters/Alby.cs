@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WallGuy : Character
+public class Alby : Character
 {
 	[Header ("Spell Settings")]
 	public float stunDuration;

@@ -36,6 +36,9 @@ public abstract class Character : MonoBehaviour
 	public float sprintCooldown;
 	[Space]
 	public float spellCooldown;
+
+	/// Death avoiding
+	internal Vector3 lastAlivePos;
 	#endregion
 
 	#region ANNIMATION
@@ -421,7 +424,11 @@ public abstract class Character : MonoBehaviour
 		ReadEffects ();
 
 		/// Stop player if game is paused
-		if (Game.paused) return;
+		if (Game.paused)
+		{
+			Moving = false;
+			return;
+		}
 
 		/// Locomotion
 		Movement();
@@ -432,11 +439,6 @@ public abstract class Character : MonoBehaviour
 		/// Interaction
 		CheckInteractions ();
 		CheckSpell ();
-	}
-
-	protected virtual void FixedUpdate () 
-	{
-		HoldGrabbed ();
 	}
 
 	protected virtual void Awake () 
@@ -451,5 +453,35 @@ public abstract class Character : MonoBehaviour
 		me = GetComponent<CharacterController> ();
 		targetRotation = transform.rotation;
     }
+
+	protected virtual void FixedUpdate () 
+	{
+		HoldGrabbed ();
+	}
+
+	private void OnEnable () 
+	{
+		/// Start avoiding death
+		StartCoroutine (DeathSaving ());
+	}
+	#endregion
+
+	#region DEATH
+	IEnumerator DeathSaving () 
+	{
+		float rate = 2f;
+		float clock = 0f;
+
+		while (true)
+		{
+			if (clock > rate && collision.HasFlag(CollisionFlags.Below))
+			{
+				lastAlivePos = transform.position;
+				clock = 0f;
+			}
+			yield return null;
+			clock += Time.deltaTime;
+		}
+	}
 	#endregion
 }

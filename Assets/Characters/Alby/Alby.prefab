@@ -564,7 +564,7 @@ GameObject:
   - component: {fileID: 143062387687790158}
   - component: {fileID: 114597854977333202}
   m_Layer: 0
-  m_Name: Wall_Guy
+  m_Name: Alby
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

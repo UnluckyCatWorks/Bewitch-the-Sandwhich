@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class DeathZone : MonoBehaviour
 {
-	public Transform respawn;
-	public float stun;
+	public ParticleSystem fx;
+	private const float stun = 1f;
 
 	private void OnTriggerEnter (Collider other) 
 	{
 		if (other.tag == "Player")
 		{
-			other.transform.position = respawn.position;
-			other.transform.rotation = respawn.rotation;
+			other.transform.position = other.GetComponent<Character> ().lastAlivePos + (Vector3.up * 0.8f);
+			var puff = Instantiate (fx, other.transform.position, Quaternion.identity);
+			puff.Play ();
 
 			/// Lock player until he hits floor
 			var p = other.GetComponent<Character> ();

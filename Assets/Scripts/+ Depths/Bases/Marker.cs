@@ -1,11 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor; 
-#endif
 
-[ExecuteInEditMode]
 public class Marker : MonoBehaviour
 {
 	#region DATA
@@ -31,22 +27,31 @@ public class Marker : MonoBehaviour
 	#endregion
 
 	#region UTILS
-	public void On (int id) 
+	public void On (int id, bool bypass=false) 
 	{
 		watchers += id;
+		if (bypass) watchers = id;
 		iColor = block.GetColor (ColorID);
 		iAlpha = infoSign.color.a;
 		inTransition = true;
 	}
-	public void Off (int id) 
+	public void Off (int id, bool bypass=false) 
 	{
 		watchers -= id;
+		if (bypass) watchers = id;
 		iColor = block.GetColor (ColorID);
 		iAlpha = infoSign.color.a;
 		inTransition = true;
 	}
 
-	private static void Initialize () 
+	public void Set (Color color, bool icon) 
+	{
+		infoSign.SetAlpha (icon? 1 : 0);
+		block.SetColor (ColorID, color);
+		marker.SetPropertyBlock (block);
+	}
+
+	public static void Initialize () 
 	{
 		if (init) return;
 		ColorID = Shader.PropertyToID ("_Color");
@@ -54,18 +59,20 @@ public class Marker : MonoBehaviour
 		block.SetColor (ColorID, new Color (0, 0, 0, 0));
 		init = true;
 	}
+
+	public void MakeIconFaceCamera () 
+	{
+		var t = infoSign.transform;
+		var dir = Camera.main.transform.position - t.position;
+		t.rotation = Quaternion.LookRotation (dir.normalized);
+	}
 	#endregion
 
 	#region CALLBACKS
 	private void Update ()
 	{
-		/// Make icon face camera
 		if (updateIcon && icon != null)
-		{
-			var t = infoSign.transform;
-			var dir = Camera.main.transform.position - t.position;
-			t.rotation = Quaternion.LookRotation (dir.normalized);
-		}
+			MakeIconFaceCamera ();
 
 		if (inTransition) 
 		{
@@ -90,7 +97,7 @@ public class Marker : MonoBehaviour
 		}
 	}
 
-	private void OnEnable () 
+	public void OnEnable () 
 	{
 		Initialize ();
 
@@ -101,22 +108,8 @@ public class Marker : MonoBehaviour
 		/// Set up ready-state
 		marker.SetPropertyBlock (block);
 		infoSign.sprite = icon;
+		infoSign.SetAlpha (0);
 		factor = 0f;
-	}
-	#endregion
-
-	#region EDITOR TESTING
-	[ContextMenu("Switch Player 1")]
-	public void SwitchPlayerOne () 
-	{
-		if (watchers == 0 || watchers == 2) On (1);
-		else Off (1);
-	}
-	[ContextMenu ("Switch Player 2")]
-	public void SwitchPlayerTwo () 
-	{
-		if (watchers == 0 || watchers == 1) On (2);
-		else Off (2);
 	}
 	#endregion
 }

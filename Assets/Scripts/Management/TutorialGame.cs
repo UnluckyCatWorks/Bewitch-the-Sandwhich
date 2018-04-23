@@ -7,9 +7,19 @@ using UnityEngine.UI;
 
 public class TutorialGame : Game 
 {
+	#region MyRegion
 	[Header ("Intro")]
 	public GameObject presentador;
 	public ParticleSystem puff;
+	public ParticleSystem confetti;
+
+	[Header("Tuto")]
+	public Material cartelMat;
+	public Text cartel;
+
+	// Validation
+	public static Dictionary<string, int> Checks;
+	#endregion
 
 	#region UI UTILS
 	public void Play () 
@@ -32,8 +42,9 @@ public class TutorialGame : Game
 	/// Starts when clicked "Play"
 	protected override IEnumerator Logic () 
 	{
-		/// Players reference
+		/// Players references
 		var ps = FindObjectsOfType<Character> ().ToList ();
+		var icons = ps.Select (p => p.GetComponentInChildren<HUDIcons> ()).ToList ();
 		/// Limit players interaction
 		ps.ForEach (p => p.AddCC ("Dash", Locks.Dash));
 		ps.ForEach (p => p.AddCC ("Spells", Locks.Spells));
@@ -88,14 +99,91 @@ public class TutorialGame : Game
 		#region TUTORIAL
 		/// Make players visible
 		ps.ForEach (p => p.gameObject.SetActive (true));
+		/// Wait a bit, & allow movement
+		yield return new WaitForSecondsRealtime (3f);
 		paused = false;
+
+		/// Show movement marks
+		GetTuto<Marker> ("Movement_").ForEach ( m=> m.On( m.name.Contains("Alby")? 1 : 2));
+		SwitchCartel ("MOVE");
+
+		/// Wait until all players are in place
+		Checks.Add ("Movement", 0);
+		while (Checks["Movement"] != 2) yield return null;
+		Checks.Remove ("Movement");
+
+		/// Turn off markers
+		GetTuto<Marker> ("Movement_").ForEach (m => m.Off(0, bypass: true));
+		SwitchCartel ("");
+		paused = true;
+
+		/// Show water pit
+		yield return new WaitForSecondsRealtime (1f);
+		GameObject.Find ("Plat_agua").GetComponent<Animation> ().Play ("Out");
+		GameObject.Find ("Plat_agua").GetComponentInChildren<Collider> ().enabled = false;
+		/// Wait a bit
+		yield return new WaitForSecondsRealtime (1f);
+		paused = false;
+		/// Allow dashing
+		ps.ForEach (p => p.RemoveCC ("Dash"));
+		/// Show Dash marks & icons
+		GetTuto<Marker> ("Dash_").ForEach (m => m.On (m.name.Contains ("Alby") ? 1 : 2));
+		icons.ForEach (i=> i.Show ("Dash"));
+		SwitchCartel ("DASH");
+
+		/// Wait until all players are in place
+		Checks.Add ("Dash", 0);
+		while (Checks["Dash"] != 2) yield return null;
+		Checks.Remove ("Dash");
+
+		/// Turn off markers
+		GetTuto<Marker> ("Dash_").ForEach (m => m.Off (0, bypass: true));
+		icons.ForEach (i => i.Hide ("Dash"));
+		SwitchCartel ("");
+
+		/// Hide water pit (play backwards)
+		GameObject.Find ("Plat_agua").GetComponent<Animation> ()["Out"].speed = -1;
+		GameObject.Find ("Plat_agua").GetComponent<Animation> ()["Out"].normalizedTime = 1;
+		GameObject.Find ("Plat_agua").GetComponent<Animation> ().Play ("Out");
+		GameObject.Find ("Plat_agua").GetComponentInChildren<Collider> ().enabled = true;
 		#endregion
 	}
 
 	private void Awake () 
 	{
-        /// Set up game
+		/// Set up game
+		Checks = new Dictionary<string, int> ();
         RenderSettings.ambientIntensity = 2.9f;
 		paused = true;
 	}
+
+	#region HERLPERS
+	private void SwitchCartel (string text) 
+	{
+		if (!string.IsNullOrEmpty(text))
+		{
+			cartel.text = text;
+			cartel.CrossShowAlpha (1f, 0.2f, true);
+			cartelMat.SetColor ("_EmissionColor", Color.white * 1.706f);
+			cartel.material.SetFloat ("_Intensity", 14.64f);
+		}
+		else
+		{
+			cartel.text = "";
+			cartel.CrossFadeAlpha (0f, 0.2f, true);
+			cartelMat.SetColor ("_EmissionColor", Color.black);
+			cartel.material.SetFloat ("_Intensity", 0f);
+		}
+	}
+
+	private List<T> GetTuto<T> (string name) 
+	{
+		var list = new List<T>
+		{
+			GameObject.Find (name + "Alby").GetComponent<T> (),
+			GameObject.Find (name + "Mary").GetComponent<T> ()
+		};
+		return list;
+	}
+	#endregion
 }
