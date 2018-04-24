@@ -11,9 +11,17 @@ public class CookingGame : Game
 	public Mesh sapoMal;
 	public Mesh sapoBien;
 
+	private void OnApplicationQuit () 
+	{
+		if (!Application.isEditor)
+			System.Diagnostics.Process.GetCurrentProcess ().Kill ();
+	}
+
 	private float clock;
 	protected override IEnumerator Logic () 
 	{
+		yield break;
+
 		/// Auto-initialize first boat (prefab)
 		boat.supply = boat.GetComponent<Supply> ();
 
@@ -42,9 +50,9 @@ public class CookingGame : Game
 		}
 	}
 
-	protected override void Start () 
+	protected override void Awake () 
 	{
-		base.Start ();
+		base.Awake ();
 		sapoMal.uv = sapoBien.uv;
 	}
 }

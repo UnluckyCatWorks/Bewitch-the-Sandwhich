@@ -11,14 +11,14 @@ public class DeathZone : MonoBehaviour
 	{
 		if (other.tag == "Player")
 		{
-			other.transform.position = other.GetComponent<Character> ().lastAlivePos + (Vector3.up * 0.8f);
-			var puff = Instantiate (fx, other.transform.position, Quaternion.identity);
-			Destroy (puff.gameObject, 2f);
-			puff.Play ();
-
 			/// Lock player until he hits floor
 			var p = other.GetComponent<Character> ();
 			p.AddCC ("Dead-stun", Locks.All, stun);
+
+			p.transform.position = p.valid.position + (Vector3.up * 0.8f);
+			var puff = Instantiate (fx, p.transform.position, Quaternion.identity);
+			Destroy (puff.gameObject, 2f);
+			puff.Play ();
 
 			/// Destroy his grabbed Object, if any
 			if (p.grab)

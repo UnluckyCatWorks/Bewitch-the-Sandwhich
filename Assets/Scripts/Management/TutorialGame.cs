@@ -36,6 +36,10 @@ public class TutorialGame : Game
 
 	public void Exit () 
 	{
+		#if UNITY_EDITOR
+		/// Atajito
+		Cortinilla.LoadScene ("Coliseum");
+		#endif
 		Application.Quit ();
 	}
 	#endregion
@@ -206,11 +210,12 @@ public class TutorialGame : Game
 		#endregion
 
 		/// Cortinilla y al coliseo
-		
+		Cortinilla.LoadScene ("Coliseum");
 	}
 
-	private void Awake () 
+	protected override void Awake () 
 	{
+		base.Awake ();
 		/// Set up game
 		Checks = new Dictionary<string, int> ();
         RenderSettings.ambientIntensity = 2.9f;

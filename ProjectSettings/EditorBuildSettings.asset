@@ -6,8 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/+ Tutorial/Tutorial.unity
+    path: Assets/Scenes/+ Lobby/Lobby.unity
     guid: 7bf6b5a9f2f6fee4a9d8569347bcb185
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Waterloo/Waterloo.unity
     guid: 1ac6baa42034dc144a9768a96fff38bc
+  - enabled: 1
+    path: Assets/Scenes/Waterloo/+ Coliseum/Coliseum.unity
+    guid: cd7c5d228aef54b4b94db665920e58fc

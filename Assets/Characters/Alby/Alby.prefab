@@ -1830,7 +1830,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 1
-  controller: 0
+  controller: 2
   speed: 8.5
   angularSpeed: 20
   gravityMul: 1

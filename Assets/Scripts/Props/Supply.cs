@@ -6,7 +6,7 @@ public class Supply : Interactable
 {
 	public IngredientID ingredient;
 
-	public override void Action (Character player)
+	public override void Action (Character player) 
 	{
 		/// Instantiate prefab
 		var prefab = Resources.Load<Grabbable> ("Prefabs/Ingredients/" + ingredient.ToString ());

@@ -21,10 +21,15 @@ public abstract class Game : MonoBehaviour
 	};
 	#endregion
 
+	protected virtual void Awake ()
+	{
+		/// Set up self reference
+		manager = this;
+	}
+
 	protected virtual void Start () 
 	{
 		/// Initialize game 
-		manager = this;
 		StartCoroutine (Logic ());
 	}
 	protected abstract IEnumerator Logic ();

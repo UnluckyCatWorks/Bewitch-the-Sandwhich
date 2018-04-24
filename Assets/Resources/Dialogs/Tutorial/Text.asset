@@ -12,18 +12,20 @@ MonoBehaviour:
   m_Name: Text
   m_EditorClassIdentifier: 
   dialog:
-  - message: Welcome, ladies and gentleman.
+  - message: Welcome, ladies and gentlemen.
     speed: 20
     trigger: 
-  - message: I'm your host, one night more in...
+  - message: 'One night more,
+
+      I''m your host in...'
     speed: 20
     trigger: Jump
   - message: BEWITCH THE SANDWHICH !!!
     speed: 30
     trigger: Normal
-  - message: Tonight, we have a battle between 2 twin brothers...
+  - message: Tonight, we have an interesting battle between 2 brothers...
     speed: 30
     trigger: 
-  - message: Follow me while they get ready for the action...
+  - message: I'll see you in the arena once they're ready!
     speed: 30
     trigger: 

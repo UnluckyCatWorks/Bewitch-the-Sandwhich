@@ -17,6 +17,9 @@ using UnityEngine;
 [SelectionBase]
 public abstract class Character : MonoBehaviour
 {
+	[Header ("lmao")]
+	public Transform valid;
+
 	#region DATA
 	[Header("Player info")]
 	public int id;
@@ -380,12 +383,8 @@ public abstract class Character : MonoBehaviour
 		return new Ray(origin, transform.forward);
 	}
 
-	/// Returns where character is colliding from below
+	/// ???
 	CollisionFlags collision;
-	public bool grounded 
-	{
-		get { return (collision & CollisionFlags.Below) == CollisionFlags.Below; }
-	}
 
 	#region SPECIAL INPUT HELPERS
 	/* Gets input based on player controller and
@@ -472,9 +471,9 @@ public abstract class Character : MonoBehaviour
 		float rate = 2f;
 		float clock = 0f;
 
-		while (true)
+		while (true) 
 		{
-			if (clock > rate && collision.HasFlag(CollisionFlags.Below))
+			if (clock > rate)
 			{
 				lastAlivePos = transform.position;
 				clock = 0f;
