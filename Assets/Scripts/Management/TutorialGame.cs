@@ -204,6 +204,9 @@ public class TutorialGame : Game
 		while (Checks["Portal"] != 2) yield return null;
 		Checks.Remove ("Portal");
 		#endregion
+
+		/// Cortinilla y al coliseo
+		
 	}
 
 	private void Awake () 
