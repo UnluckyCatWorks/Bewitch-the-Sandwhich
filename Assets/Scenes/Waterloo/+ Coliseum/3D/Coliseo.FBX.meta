@@ -126,7 +126,27 @@ ModelImporter:
     4300042: Plataforma_presentador
     7400000: Take 001
     9500000: //RootNode
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Coliseo
+    second: {fileID: 2100000, guid: c6606c6b932f29e499f1b046cf9dd6c2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Columnas_coliseo
+    second: {fileID: 2100000, guid: 3566f553072eb414fabeec0525eacf8e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Plataforma_presentador
+    second: {fileID: 2100000, guid: e0eb8f83292d1f64a871b2d81d7e775c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Toldo_Coliseo
+    second: {fileID: 2100000, guid: f90e6ab12bebed34b96e2e4748ce390f, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
