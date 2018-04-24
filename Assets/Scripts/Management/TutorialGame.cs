@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class TutorialGame : Game 
 {
-	#region MyRegion
+	#region DATA
 	[Header ("Intro")]
 	public GameObject presentador;
 	public ParticleSystem puff;
@@ -16,6 +16,7 @@ public class TutorialGame : Game
 	[Header("Tuto")]
 	public Material cartelMat;
 	public Text cartel;
+	public List<Supply> supplies;
 
 	// Validation
 	public static Dictionary<string, int> Checks;
@@ -70,22 +71,22 @@ public class TutorialGame : Game
 		focos.SetTrigger ("ToPresentador");
 		yield return new WaitForSecondsRealtime (2f);
 
-        #region HOST
-        /// Host appears
+		#region HOST
+		/// Host appears
         puff.Play (true);
         presentador.SetActive (true);
         presentador.GetComponentInChildren <Renderer> ().sharedMaterial.SetColor ("_EmissionColor", Color.white * 0.288f);
         var pAnim = presentador.GetComponent<Animator> ();
 
         /// Intro dialog
-        yield return new WaitForSecondsRealtime (2f);
+        yield return new WaitForSecondsRealtime (3f);
         yield return Dialog.StartNew ("Tutorial/Text", pAnim);
         pAnim.SetBool ("In", false);
 
         /// When dialog is over,
         /// Host dissapears
         puff.Play (true);
-        yield return new WaitForSecondsRealtime (0.1f);
+		yield return new WaitForSecondsRealtime (0.1f);
         presentador.SetActive (false); 
         #endregion
 
@@ -103,8 +104,9 @@ public class TutorialGame : Game
 		yield return new WaitForSecondsRealtime (3f);
 		paused = false;
 
+		#region MOVING
 		/// Show movement marks
-		GetTuto<Marker> ("Movement_").ForEach ( m=> m.On( m.name.Contains("Alby")? 1 : 2));
+		GetTuto<Marker> ("Movement_").ForEach (m => m.On (m.name.Contains ("Alby") ? 1 : 2));
 		SwitchCartel ("MOVE");
 
 		/// Wait until all players are in place
@@ -113,10 +115,12 @@ public class TutorialGame : Game
 		Checks.Remove ("Movement");
 
 		/// Turn off markers
-		GetTuto<Marker> ("Movement_").ForEach (m => m.Off(0, bypass: true));
+		GetTuto<Marker> ("Movement_").ForEach (m => m.Off (0, bypass: true));
 		SwitchCartel ("");
 		paused = true;
+		#endregion
 
+		#region DASHING
 		/// Show water pit
 		yield return new WaitForSecondsRealtime (1f);
 		GameObject.Find ("Plat_agua").GetComponent<Animation> ().Play ("Out");
@@ -128,7 +132,7 @@ public class TutorialGame : Game
 		ps.ForEach (p => p.RemoveCC ("Dash"));
 		/// Show Dash marks & icons
 		GetTuto<Marker> ("Dash_").ForEach (m => m.On (m.name.Contains ("Alby") ? 1 : 2));
-		icons.ForEach (i=> i.Show ("Dash"));
+		icons.ForEach (i => i.Show ("Dash"));
 		SwitchCartel ("DASH");
 
 		/// Wait until all players are in place
@@ -146,6 +150,60 @@ public class TutorialGame : Game
 		GameObject.Find ("Plat_agua").GetComponent<Animation> ()["Out"].normalizedTime = 1;
 		GameObject.Find ("Plat_agua").GetComponent<Animation> ().Play ("Out");
 		GameObject.Find ("Plat_agua").GetComponentInChildren<Collider> ().enabled = true;
+		#endregion
+
+		#region SPELL
+		/// Wait a bit
+		yield return new WaitForSecondsRealtime (3f);
+		/// Allow spells & show icons
+		ps.ForEach (p => p.RemoveCC ("Spells"));
+		icons.ForEach (i => i.Show ("Spell"));
+		SwitchCartel ("SPELLS");
+
+		/// Wait until all players have landed a spell
+		Checks.Add ("Spell", 0);
+		while (Checks["Spell"] != 3) yield return null;
+		Checks.Remove ("Spell");
+
+		/// Hide icons
+		icons.ForEach (i => i.Hide ("Spell"));
+		SwitchCartel ("");
+		#endregion
+
+		#region GRABBING / THROWING
+		/// Wait a bit
+		yield return new WaitForSecondsRealtime (1f);
+		SwitchCartel ("GRABBING");
+		yield return new WaitForSecondsRealtime (1f);
+		/// Show icons & allow interactions
+		ps.ForEach (p => p.RemoveCC ("Interaction"));
+		icons.ForEach (i => i.Show ("Interaction"));
+		/// Show supplies
+		supplies.ForEach (s =>
+			{
+				s.gameObject.SetActive (true);
+				/// Appear with a 'Puff'
+				var puff = Instantiate (this.puff);
+				puff.transform.position = s.transform.position + Vector3.up * 0.5f;
+				Destroy (puff.gameObject, 2f);
+				puff.Play ();
+			});
+
+		/// Wait until both players have something in hands
+		while (ps.Any (p => p.grab == null)) yield return null;
+		icons.ForEach (i => i.Hide ("Interaction"));
+		SwitchCartel ("");
+		#endregion
+
+		yield return new WaitForSecondsRealtime (1.5f);
+		GameObject.Find ("Puerta_Wrapper").GetComponent<Animation> ().Play ("DownToHell");
+		yield return new WaitForSecondsRealtime (5f);
+		SwitchCartel ("GO!");
+
+		/// Wait until all players have entered the portal
+		Checks.Add ("Portal", 0);
+		while (Checks["Portal"] != 2) yield return null;
+		Checks.Remove ("Portal");
 		#endregion
 	}
 

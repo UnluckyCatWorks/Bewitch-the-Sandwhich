@@ -11,6 +11,9 @@
 		[Header (Medusa)]
 		_StoneTex	("Stone texture", 2D) = "white" {}
 		[Normal][NoScaleOffset] _StoneNormal ("Stone normal", 2D) = "bump" {}
+		[NoScaleOffset] _StoneEmission ("Stone emissive", 2D) = "black" {}
+		_EmissionColor ("Emission color", Color) = (1,1,1,1)
+
 		_StoneLevel ("Stone Level", Range (0, 1)) = 0.0
 		_StoneExtrude ("Stone extrude amount", Float) = 1.0
 		_StoneMin ("Stone Min", Float) = 0.0
@@ -40,6 +43,9 @@
 
 		uniform sampler2D _StoneTex;
 		uniform sampler2D _StoneNormal;
+		uniform sampler2D _StoneEmission;
+		uniform fixed4 _EmissionColor;
+
 		uniform float _StoneLevel;
 		uniform float _StoneExtrude;
 		uniform float _StoneMin;
@@ -65,10 +71,10 @@
 			float3 nEmission = tex2D (_Emission, IN.uv_MainTex) * _Intensity;
 
 			// Petrified material
-			fixed3 pColor = tex2D (_StoneTex, IN.uv_StoneTex).rgb;
+			fixed3 pColor = tex2D (_StoneTex, IN.uv_StoneTex).grr * 2;
 			float3 pNormal = UnpackNormal(tex2D (_StoneNormal, IN.uv_StoneTex));
 			fixed4 pMetal = 0;
-			float3 pEmission = 0;
+			float3 pEmission = pow (tex2D (_StoneEmission, IN.uv_StoneTex).rgb, 2.2).r *_EmissionColor.rgb * 4000;
 
 			o.Albedo = xLerp (Color);
 			o.Normal = xLerp (Normal);

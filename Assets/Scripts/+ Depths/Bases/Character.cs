@@ -158,7 +158,7 @@ public abstract class Character : MonoBehaviour
 	private IEnumerator DashingTime () 
 	{
 		/// Disable graivty
-		gravityMul = 0.8f;
+		gravityMul = 0.6f;
 
 		var factor = 0f;
 		while (factor <= 1f)
@@ -234,7 +234,7 @@ public abstract class Character : MonoBehaviour
 	{
 		get { return Time.time > lastSpellTime + spellCooldown; }
 	}
-	protected const float spellSelfStun = 0.75f;
+	protected const float spellSelfStun = 0.50f;
 
 	private void CheckSpell ()
 	{

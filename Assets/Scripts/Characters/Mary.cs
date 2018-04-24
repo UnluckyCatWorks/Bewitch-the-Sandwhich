@@ -5,23 +5,53 @@ using UnityEngine;
 
 public class Mary : Character
 {
-	[Header("Spell Settings")]
+	[Header ("Spell Settings")]
+	public GameObject vfx;
+	public float forceMultiplier;
 	public float stunDuration;
+	public Marker areaOfEffect;
 
 	protected override IEnumerator CastSpell () 
 	{
-		yield return null;
-		var radius = 2.2f;
-		var pos = transform.position + transform.forward * (radius + 0.15f);
+		/// Show area
+		areaOfEffect.On (3, bypass: true);
 
-		// Find all players affected by the spell
-		var hits = Physics.OverlapSphere (pos, radius);
-		var players = from cols in hits
-					  where cols.tag == "Player" && cols.name != name
-					  select cols.GetComponent<Character> ();
+		/// Allow spell aiming while self-stunned
+		while (effects.ContainsKey ("Spell Casting"))
+			yield return null;
 
-		// Apply spell on them
-		foreach (var p in players.Distinct ())
-			p.AddCC ("Spell: Frozen", Locks.All, stunDuration);
+		/// Hide area
+		areaOfEffect.On (0, bypass: true);
+
+		/// Spawn VFX always
+		var vfx = Instantiate (this.vfx);
+		vfx.transform.position = transform.position + (Vector3.up * 0.2f);
+		Destroy (vfx.gameObject, 2f);
+
+		/// Find all players affected by the spell (except self)
+		bool hitPlayer = false;
+		var hits = Physics.OverlapSphere (transform.position, areaOfEffect.GetComponent<SphereCollider> ().radius);
+		foreach (var h in hits)
+		{
+			/// Find out if any hit was the other player
+			if (h.name == other.name)
+				hitPlayer = true;
+		}
+		/// In case there's no hit, abort spell casting
+		if (!hitPlayer) yield break;
+		else
+		{
+			/// If hit, and maybe in tutorial
+			if (TutorialGame.Checks != null &&
+				TutorialGame.Checks.ContainsKey ("Spell") &&
+				(TutorialGame.Checks["Spell"] == 0 || TutorialGame.Checks["Spell"] == 1))
+
+				TutorialGame.Checks["Spell"] += 2;
+		}
+
+		/// Knock hit player
+		var dir = other.transform.position - transform.position;
+		other.Knock (dir.normalized * forceMultiplier);
+		other.AddCC ("Spell: Bombed", Locks.All, stunDuration);
 	}
 }

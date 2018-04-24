@@ -15,7 +15,9 @@ public abstract class Game : MonoBehaviour
 		new Color32 (059, 129, 249, 230),	/// Blue (Ice Guy)
 		new Color32 (248, 071, 255, 190),	/// Purple? (Both)
 
-		new Color32 (034, 255, 148, 255)	/// Green (when on valid tuto point)
+		new Color32 (034, 255, 148, 255),	/// Green (when on valid tuto point)
+
+		new Color32 (255, 191, 105, 255),	/// Orange-ish (for Alby's spell)
 	};
 	#endregion
 

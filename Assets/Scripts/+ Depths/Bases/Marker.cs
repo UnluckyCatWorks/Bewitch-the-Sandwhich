@@ -11,7 +11,7 @@ public class Marker : MonoBehaviour
 	/// Transition
 	private int watchers;
 	private bool inTransition;
-	private const float duration = 0.5f;
+	private const float duration = 0.25f;
 	private float factor;
 	private Color iColor;
 	private float iAlpha;
@@ -34,6 +34,7 @@ public class Marker : MonoBehaviour
 		iColor = block.GetColor (ColorID);
 		iAlpha = infoSign.color.a;
 		inTransition = true;
+		factor = 0f;
 	}
 	public void Off (int id, bool bypass=false) 
 	{
@@ -42,6 +43,7 @@ public class Marker : MonoBehaviour
 		iColor = block.GetColor (ColorID);
 		iAlpha = infoSign.color.a;
 		inTransition = true;
+		factor = 0f;
 	}
 
 	public void Set (Color color, bool icon) 
@@ -106,6 +108,7 @@ public class Marker : MonoBehaviour
 		infoSign = GetComponentInChildren<SpriteRenderer> ();
 
 		/// Set up ready-state
+		block.SetColor (ColorID, new Color (0, 0, 0, 0));
 		marker.SetPropertyBlock (block);
 		infoSign.sprite = icon;
 		infoSign.SetAlpha (0);

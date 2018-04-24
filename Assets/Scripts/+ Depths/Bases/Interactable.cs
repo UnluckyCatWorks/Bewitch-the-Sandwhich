@@ -22,7 +22,7 @@ public abstract class Interactable : MonoBehaviour
 		Transform t;
 		if (insideWrapper) t = transform.parent;
 		else t = transform;
-		marker = t.GetComponentInChildren<Marker> ();
+		marker = t.GetComponentInChildren<Marker> (true);
 	}
 	#endregion
 }
