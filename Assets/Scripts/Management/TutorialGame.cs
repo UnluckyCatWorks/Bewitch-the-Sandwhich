@@ -75,7 +75,6 @@ public class TutorialGame : Game
 		/// Host appears
         puff.Play (true);
         presentador.SetActive (true);
-        presentador.GetComponentInChildren <Renderer> ().sharedMaterial.SetColor ("_EmissionColor", Color.white * 0.288f);
         var pAnim = presentador.GetComponent<Animator> ();
 
         /// Intro dialog
