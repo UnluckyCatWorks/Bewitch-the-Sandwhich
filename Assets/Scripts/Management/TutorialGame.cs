@@ -18,7 +18,7 @@ public class TutorialGame : Game
 	public Text cartel;
 	public List<Supply> supplies;
 
-	// Validation
+	/// Validation
 	public static Dictionary<string, TutorialCheck> Checks;
 	#endregion
 
@@ -193,10 +193,8 @@ public class TutorialGame : Game
 				puff.Play ();
 			});
 
-#error Aqui faltan cosas: mirar que se hayan pegado entre ellos + cambiar cartel
-
 		/// Wait until both players have something in hands
-		while (ps.Any (p => p.grab == null)) yield return null;
+		while (ps.Any (p => p.toy == null)) yield return null;
 		icons.ForEach (i => i.Hide ("Interaction"));
 		SwitchCartel ("");
 		#endregion
@@ -222,7 +220,6 @@ public class TutorialGame : Game
 		/// Set up game
 		Checks = new Dictionary<string, TutorialCheck> ();
         RenderSettings.ambientIntensity = 2.9f;
-		paused = true;
 	}
 
 	#region HERLPERS

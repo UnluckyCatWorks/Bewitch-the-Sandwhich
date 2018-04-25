@@ -227,7 +227,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
   updateIcon: 0
-  alpha: 1
 --- !u!114 &114825675115509004
 MonoBehaviour:
   m_ObjectHideFlags: 1

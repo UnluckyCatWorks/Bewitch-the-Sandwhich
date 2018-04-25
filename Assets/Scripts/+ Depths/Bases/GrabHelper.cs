@@ -5,30 +5,27 @@ using UnityEngine;
 
 public class GrabHelper : Interactable
 {
-	[NonSerialized]
-	public Grabbable parent;
+	internal Grabbable parent;
 
 	#region INTERACTION
 	public override void Action (Character player) 
 	{
-		/// Make player grab this object
-		parent.body.isKinematic = true;
-		player.grab = parent;
-		/// Disable to improve performance
-		enabled = false;
+		parent.GrabFor (player);
 	}
 
 	public override bool CheckInteraction (Character player) 
 	{
-		/// Can only grab object if nothing on hand already
-		return (player.grab == null && !parent.body.isKinematic && enabled);
+		// Can only grab object if nothing on hand already
+		// and this helper itself is active
+		return (player.toy == null && enabled);
 	}
 	#endregion
 
 	private void Update ()
 	{
-		/// Keep helper always with parent & un-rotated
-		transform.position = parent.body.worldCenterOfMass;
+		// Keep helper always at ~= parent's lowest point
+		transform.position = parent.body.worldCenterOfMass - (Vector3.up * 0.5f);
+		// Keep always unrotated
 		transform.rotation = Quaternion.identity;
 	}
 }

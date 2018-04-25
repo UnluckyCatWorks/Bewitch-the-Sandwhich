@@ -21,11 +21,11 @@ public class DeathZone : MonoBehaviour
 			puff.Play ();
 
 			/// Destroy his grabbed Object, if any
-			if (p.grab)
+			if (p.toy)
 			{
 				/// Object will be destroyed when it enters the zone
-				p.grab.Throw (Vector3.up, -8f, null);
-				p.grab = null;
+				p.toy.Throw (Vector3.up, -8f, null);
+				p.toy = null;
 			}
 		}
 		else

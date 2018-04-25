@@ -41,6 +41,7 @@ public class Puerta : MonoBehaviour
 
 	public void VortexOn () 
 	{
+		/// Play particle system
 		vortex.Play ();
 	}
 }

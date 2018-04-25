@@ -20,11 +20,11 @@ public class Cauldron : Interactable
 	public override void Action (Character player)
 	{
 		/// If player is dropping
-		if (player.grab != null)
+		if (player.toy != null)
 		{
 			/// Get ingredient from player
-			var ingredient = player.grab as Ingredient;
-			player.grab = null;
+			var ingredient = player.toy as Ingredient;
+			player.toy = null;
 
 			/// Add ingredient & restart time
 			StartCoroutine ( Add (ingredient) );
@@ -37,10 +37,10 @@ public class Cauldron : Interactable
 		if (player.id != playerOwner) return false;
 
 		/// Is player dropping an ingredient?
-		if ((player.grab as Ingredient) == null) return false;
+		if ((player.toy as Ingredient) == null) return false;
 
 		// For alpha => Only processed ingredients
-		if ((player.grab as Ingredient).type == IngredientType.TALCUAL) return false;
+		if ((player.toy as Ingredient).type == IngredientType.TALCUAL) return false;
 
 		/// If everything's ok
 		return true;

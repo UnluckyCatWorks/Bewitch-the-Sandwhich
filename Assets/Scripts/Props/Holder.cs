@@ -16,18 +16,18 @@ public class Holder : Interactable
 	public override void Action (Character player) 
 	{
 		/// If player is dropping
-		if (player.grab)
+		if (player.toy)
 		{
 			/// Drop object
-			obj = player.grab.body;
-			player.grab = null;
+			obj = player.toy.body;
+			player.toy = null;
 		}
 		/// If player is grabbing
 		else
 		{
 			/// Grab object
 			obj.isKinematic = true;
-			player.grab = obj.GetComponent<Grabbable>();
+			player.toy = obj.GetComponent<Grabbable>();
 			obj = null;
 		}
 	}
@@ -35,10 +35,10 @@ public class Holder : Interactable
 	public override bool CheckInteraction (Character player) 
 	{
 		/// If player is dropping
-		if (player.grab)
+		if (player.toy)
 		{
 			/// Can't drop if another object is already in
-			if (obj != null || !IsValidObject(player.grab)) return false;
+			if (obj != null || !IsValidObject(player.toy)) return false;
 			/// If everything's fine
 			return true;
 		}

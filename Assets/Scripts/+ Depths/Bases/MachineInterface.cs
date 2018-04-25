@@ -25,8 +25,8 @@ public class MachineInterface : Interactable
 		if (machine.state == MachineState.Waiting)
 		{
 			/// Cook ingredient
-			obj = player.grab;
-			player.grab = null;
+			obj = player.toy;
+			player.toy = null;
 			machine.anim.SetTrigger ("Start_Working");
 			cooking = StartCoroutine (KeepWithHolder ());
 		}
@@ -35,7 +35,7 @@ public class MachineInterface : Interactable
 		if (machine.state == MachineState.Completed
 		|| machine.state == MachineState.Overheating)
 		{
-			player.grab = obj;
+			player.toy = obj;
 			machine.anim.SetTrigger ("Pickup");
 			obj.transform.SetParent (null, true);
 			obj = null;
@@ -49,10 +49,10 @@ public class MachineInterface : Interactable
 		if (machine.state == MachineState.Waiting)
 		{
 			// Check that player is actually carrying something
-			if (player.grab == null) return false;
+			if (player.toy == null) return false;
 
 			// Check that object is valid
-			var ingredient = player.grab.GetComponent<Ingredient> ();
+			var ingredient = player.toy.GetComponent<Ingredient> ();
 			if (ingredient == null || ingredient.type != IngredientType.TALCUAL)
 				return false;
 
@@ -65,7 +65,7 @@ public class MachineInterface : Interactable
 		|| machine.state == MachineState.Overheating)
 		{
 			// Check that player isn't already carrying something
-			if (player.grab != null) return false;
+			if (player.toy != null) return false;
 
 			// If everything is okay
 			return true;
