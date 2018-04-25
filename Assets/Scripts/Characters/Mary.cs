@@ -42,11 +42,8 @@ public class Mary : Character
 		else
 		{
 			/// If hit, and maybe in tutorial
-			if (TutorialGame.Checks != null &&
-				TutorialGame.Checks.ContainsKey ("Spell") &&
-				(TutorialGame.Checks["Spell"] == 0 || TutorialGame.Checks["Spell"] == 1))
-
-				TutorialGame.Checks["Spell"] += 2;
+			if (TutorialGame.IsChecking("Spell"))
+				TutorialGame.Checks["Spell"].Set ("Mary", true);
 		}
 
 		/// Knock hit player

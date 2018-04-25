@@ -164,7 +164,7 @@ public abstract class Character : MonoBehaviour
 		gravityMul = 0.6f;
 
 		var factor = 0f;
-		while (factor <= 1f)
+		while (factor <= 1.1f)
 		{
 			/// Move player at dash speed
 			movingSpeed = movingDir * sprintForce * (1f-factor);
@@ -175,8 +175,7 @@ public abstract class Character : MonoBehaviour
 			{
 				/// If knock, stop dashing
 				other.Knock (movingDir);
-				effects.Remove ("Dashing");
-				factor = 1f;
+				factor = 0.7f;
 			}
 
 			factor += Time.deltaTime / dashDuration;

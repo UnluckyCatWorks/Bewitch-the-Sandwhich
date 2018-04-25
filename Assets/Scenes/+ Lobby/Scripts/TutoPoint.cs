@@ -10,19 +10,20 @@ public class TutoPoint : MonoBehaviour
 	private void OnTriggerEnter (Collider other) 
 	{
 		if (other.name != observedCharacter) return;
-		if (TutorialGame.Checks.ContainsKey (checkPoint))
+		if (TutorialGame.IsChecking(checkPoint))
 		{
 			GetComponent<Marker> ().On (4, bypass: true);
-			TutorialGame.Checks[checkPoint]++;
+			TutorialGame.Checks[checkPoint].Set (observedCharacter, true);
+
 		}
 	}
 	private void OnTriggerExit (Collider other) 
 	{
 		if (other.name != observedCharacter) return;
-		if (TutorialGame.Checks.ContainsKey (checkPoint))
+		if (TutorialGame.IsChecking (checkPoint))
 		{
 			GetComponent<Marker> ().Off (other.name.Contains ("Alby")? 1 : 2, bypass: true);
-			TutorialGame.Checks[checkPoint]--;
+			TutorialGame.Checks[checkPoint].Set (observedCharacter, false);
 		}
 	}
 }

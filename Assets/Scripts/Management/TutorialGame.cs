@@ -19,7 +19,7 @@ public class TutorialGame : Game
 	public List<Supply> supplies;
 
 	// Validation
-	public static Dictionary<string, int> Checks;
+	public static Dictionary<string, TutorialCheck> Checks;
 	#endregion
 
 	#region UI UTILS
@@ -58,6 +58,7 @@ public class TutorialGame : Game
 		ps.ForEach (p => p.gameObject.SetActive (false));
 
 		#region INTRO CUTSCENE
+		/// Get some scene references
 		var menu = GameObject.Find ("UI_Menu").GetComponent<Animator> ();
 		var focos = GameObject.Find ("Focos").GetComponent<Animator> ();
 		var rig = GameObject.Find ("Camera_Rig").GetComponent<Animator> ();
@@ -113,8 +114,8 @@ public class TutorialGame : Game
 		SwitchCartel ("MOVE");
 
 		/// Wait until all players are in place
-		Checks.Add ("Movement", 0);
-		while (Checks["Movement"] != 2) yield return null;
+		Checks.Add ("Movement", new TutorialCheck ());
+		while (Checks["Movement"].both) yield return null;
 		Checks.Remove ("Movement");
 
 		/// Turn off markers
@@ -139,8 +140,8 @@ public class TutorialGame : Game
 		SwitchCartel ("DASH");
 
 		/// Wait until all players are in place
-		Checks.Add ("Dash", 0);
-		while (Checks["Dash"] != 2) yield return null;
+		Checks.Add ("Dash", new TutorialCheck ());
+		while (Checks["Dash"].both) yield return null;
 		Checks.Remove ("Dash");
 
 		/// Turn off markers
@@ -164,8 +165,8 @@ public class TutorialGame : Game
 		SwitchCartel ("SPELLS");
 
 		/// Wait until all players have landed a spell
-		Checks.Add ("Spell", 0);
-		while (Checks["Spell"] != 3) yield return null;
+		Checks.Add ("Spell", new TutorialCheck ());
+		while (Checks["Spell"].both) yield return null;
 		Checks.Remove ("Spell");
 
 		/// Hide icons
@@ -176,7 +177,7 @@ public class TutorialGame : Game
 		#region GRABBING / THROWING
 		/// Wait a bit
 		yield return new WaitForSecondsRealtime (1f);
-		SwitchCartel ("GRABBING");
+		SwitchCartel ("GRAB & HIT");
 		yield return new WaitForSecondsRealtime (1f);
 		/// Show icons & allow interactions
 		ps.ForEach (p => p.RemoveCC ("Interaction"));
@@ -192,6 +193,8 @@ public class TutorialGame : Game
 				puff.Play ();
 			});
 
+#error Aqui faltan cosas: mirar que se hayan pegado entre ellos + cambiar cartel
+
 		/// Wait until both players have something in hands
 		while (ps.Any (p => p.grab == null)) yield return null;
 		icons.ForEach (i => i.Hide ("Interaction"));
@@ -204,8 +207,8 @@ public class TutorialGame : Game
 		SwitchCartel ("GO!");
 
 		/// Wait until all players have entered the portal
-		Checks.Add ("Portal", 0);
-		while (Checks["Portal"] != 2) yield return null;
+		Checks.Add ("Portal", new TutorialCheck ());
+		while (Checks["Portal"].both) yield return null;
 		Checks.Remove ("Portal");
 		#endregion
 
@@ -217,12 +220,34 @@ public class TutorialGame : Game
 	{
 		base.Awake ();
 		/// Set up game
-		Checks = new Dictionary<string, int> ();
+		Checks = new Dictionary<string, TutorialCheck> ();
         RenderSettings.ambientIntensity = 2.9f;
 		paused = true;
 	}
 
 	#region HERLPERS
+	public struct TutorialCheck 
+	{
+		public bool alby;
+		public bool mary;
+		public bool both { get { return alby && mary; } }
+
+		public void Set (string who, bool value) 
+		{
+			if (who == "Mary") mary = value;
+			else
+			if (who == "Alby") alby = value;
+		}
+	}
+
+	public static bool IsChecking (string check) 
+	{
+		if (manager is TutorialGame && Checks.ContainsKey (check))
+			return true;
+		else
+			return false;
+	}
+
 	private void SwitchCartel (string text) 
 	{
 		if (!string.IsNullOrEmpty(text))

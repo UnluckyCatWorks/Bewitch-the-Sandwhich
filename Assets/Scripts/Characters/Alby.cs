@@ -36,12 +36,9 @@ public class Alby : Character
 		if (!hitPlayer) yield break;
 		else
 		{
-			/// If hit, and maybe in tutorial
-			if (TutorialGame.Checks != null &&
-				TutorialGame.Checks.ContainsKey ("Spell") &&
-				(TutorialGame.Checks["Spell"] == 0 || TutorialGame.Checks["Spell"] == 2))
-
-				TutorialGame.Checks["Spell"] += 1;
+			/// If in the tutorial
+			if (TutorialGame.IsChecking ("Spell"))
+				TutorialGame.Checks["Spell"].Set ("Alby", true);
 
 			/// Spawn VFX
 			var vfx = Instantiate (this.vfx);
@@ -60,30 +57,30 @@ public class Alby : Character
 		float factor = 0f;
 		while (factor <= 1.1f)
 		{
-			float value = Mathf.Clamp01 (Mathf.Pow (factor, 2f));
+			float value = Mathf.Clamp01 (Mathf.Pow (factor, 1.2f));
 			mat.SetFloat (_StoneLevel, value);
 			anim.speed = 1 - value;
 
 			yield return null;
-			factor += Time.deltaTime / /*duration*/ 0.20f;
+			factor += Time.deltaTime / /*duration*/ 0.3f;
 		}
+		factor = 0f;
 
 		/// Wait until stun is over
 		yield return new WaitForSeconds (stunDuration);
 
 		/// Turn back to normal
-		factor = 0f;
 		while (factor <= 1.1f)
 		{
-			float value = Mathf.Clamp01 (Mathf.Pow (factor, 0.4f));
+			float value = Mathf.Clamp01 (Mathf.Pow (factor, 0.8f));
 			mat.SetFloat (_StoneLevel, 1 - value);
 			anim.speed = value;
 
 			yield return null;
-			factor += Time.deltaTime / /*duration*/ 0.20f;
+			factor += Time.deltaTime / /*duration*/ 0.3f;
 		}
 
-		// Remove CC
+		/// Remove CC
 		other.RemoveCC ("Spell: Stoned");
 	}
 }

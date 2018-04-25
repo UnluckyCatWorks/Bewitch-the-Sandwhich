@@ -409,18 +409,14 @@ ENDCG
 
 Subshader
 {
-	Tags {"RenderType"="Transparent" "Queue"="Transparent"}
-	
-	Lod 500
+	Tags {"RenderType"="Transparent" "Queue"="Transparent-3"}
 	ColorMask RGB
 	
 	GrabPass { "_RefractionTex" }
 	
 	Pass {
 			Blend SrcAlpha OneMinusSrcAlpha
-			ZTest LEqual
 			ZWrite Off
-			Cull Off
 		
 			CGPROGRAM
 		
@@ -440,16 +436,12 @@ Subshader
 
 Subshader
 {
-	Tags {"RenderType"="Transparent" "Queue"="Transparent"}
-	
-	Lod 300
+	Tags {"RenderType"="Transparent" "Queue"="Transparent-3"}
 	ColorMask RGB
 	
 	Pass {
 			Blend SrcAlpha OneMinusSrcAlpha
-			ZTest LEqual
 			ZWrite Off
-			Cull Off
 		
 			CGPROGRAM
 		
@@ -469,16 +461,12 @@ Subshader
 
 Subshader
 {
-	Tags {"RenderType"="Transparent" "Queue"="Transparent"}
-	
-	Lod 200
+	Tags {"RenderType"="Transparent" "Queue"="Transparent-3"}
 	ColorMask RGB
 	
 	Pass {
 			Blend SrcAlpha OneMinusSrcAlpha
-			ZTest LEqual
 			ZWrite Off
-			Cull Off
 		
 			CGPROGRAM
 		
