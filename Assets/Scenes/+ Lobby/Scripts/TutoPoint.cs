@@ -4,26 +4,26 @@ using UnityEngine;
 
 public class TutoPoint : MonoBehaviour
 {
-	public string checkPoint;
-	public string observedCharacter;
+	public Characters observedCharacter;
+	public TutorialGame.TutorialPhases phase;
+
+	// Some kind of green for when players enter the check-point
+	private readonly Color validColor = new Color32 (009, 242, 195, 255);
 
 	private void OnTriggerEnter (Collider other) 
 	{
-		if (other.name != observedCharacter) return;
-		if (TutorialGame.IsChecking(checkPoint))
-		{
-			GetComponent<Marker> ().On (4, bypass: true);
-			TutorialGame.Checks[checkPoint].Set (observedCharacter, true);
+		if (other.name != observedCharacter.ToString ()) return;
+		if (!TutorialGame.IsChecking (phase)) return;
 
-		}
+		GetComponent<Marker> ().On (validColor);
+		TutorialGame.Checks[phase].Set (observedCharacter, true);
 	}
 	private void OnTriggerExit (Collider other) 
 	{
-		if (other.name != observedCharacter) return;
-		if (TutorialGame.IsChecking (checkPoint))
-		{
-			GetComponent<Marker> ().Off (other.name.Contains ("Alby")? 1 : 2, bypass: true);
-			TutorialGame.Checks[checkPoint].Set (observedCharacter, false);
-		}
+		if (other.name != observedCharacter.ToString ()) return;
+		if (!TutorialGame.IsChecking (phase)) return;
+
+		GetComponent<Marker> ().Off ();
+		TutorialGame.Checks[phase].Set (observedCharacter, false);
 	}
 }

@@ -6,30 +6,19 @@ using System.Collections.Generic;
 public abstract class Game : MonoBehaviour
 {
 	#region DATA
-	public static Game manager;			/// Self-reference
-	public static bool paused;			/// Whether the game paused
-	public static Color[] teamColors =	/// The representative color of each player
-	{
-		new Color32 (000, 000, 000, 000),	/// Nothing, just pure black
-		new Color32 (247, 133, 019, 200),	/// Orange (Wall Guy)
-		new Color32 (059, 129, 249, 230),	/// Blue (Ice Guy)
-		new Color32 (248, 071, 255, 190),	/// Purple? (Both)
-
-		new Color32 (034, 255, 148, 255),	/// Green (when on valid tuto point)
-
-		new Color32 (255, 191, 105, 255),	/// Orange-ish (for Alby's spell)
-	};
+	public static Game manager;			// Self-reference
+	public static bool paused;			// Whether the game paused
 	#endregion
 
-	protected virtual void Awake ()
+	protected virtual void Awake () 
 	{
-		/// Set up self reference
+		// Self reference
 		manager = this;
 	}
 
 	protected virtual void Start () 
 	{
-		/// Initialize game 
+		// Initialize game 
 		StartCoroutine (Logic ());
 	}
 	protected abstract IEnumerator Logic ();

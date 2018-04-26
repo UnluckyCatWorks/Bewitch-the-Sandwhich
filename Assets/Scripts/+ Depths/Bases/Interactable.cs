@@ -6,9 +6,10 @@ using UnityEngine;
 [SelectionBase]
 public abstract class Interactable : MonoBehaviour
 {
-	[NonSerialized]
+	#region DATA
+	// Marker is always a separated object
 	public Marker marker;
-	public bool insideWrapper;
+	#endregion
 
 	#region INTERACTION
 	public abstract void Action (Character player);

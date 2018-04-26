@@ -9,11 +9,19 @@ public abstract class Character : MonoBehaviour
 {
 	#region DATA
 	// External
-	public Color focusColor;
 	public Transform grabHandle;
+	public Color focusColor;
+	public float spellCooldown;
 
 	// Basic character info
-	internal abstract int ID { get; }
+	internal int ID 
+	{
+		get
+		{
+			int id = (int) Enum.Parse (typeof(Characters), name);
+			return id;
+		}
+	}
 	internal ControllerType control;
 
 	protected Dictionary<string, Effect> effects;
@@ -51,8 +59,7 @@ public abstract class Character : MonoBehaviour
 	internal bool knocked;
 	internal Coroutine knockedCoroutine;
 
-	protected const float spellSelfStun = 0.50f;
-	protected abstract float SpellCooldown { get; }
+	protected const float spellSelfStun = 0.75f;
 	protected Coroutine spellCoroutine;
 
 	protected Interactable lastMarked;
@@ -178,7 +185,7 @@ public abstract class Character : MonoBehaviour
 				var force = MovingDir;
 				force.y = 0f;
 
-				other.Knock (force);
+				other.Knock (force, 0.25f);
 
 				// Hard-slow dash & avoid knocking again
 				knockOcurred = true;
@@ -242,9 +249,11 @@ public abstract class Character : MonoBehaviour
 		// If everything's ok
 		var block = (Locks.Locomotion | Locks.Interaction);
 		AddCC ("Spell Casting", block, spellSelfStun);
+
 		// Self CC used as cooldown
 		AddCC ("-> Spell", Locks.Spells);
 
+		// Cast spell & put it on CD
 		anim.SetTrigger ("Cast_Spell");
 		StartCoroutine (WaitSpellCD ());
 		spellCoroutine = StartCoroutine (CastSpell ());
@@ -254,7 +263,7 @@ public abstract class Character : MonoBehaviour
 	// Just wait until CD is over
 	private IEnumerator WaitSpellCD () 
 	{
-		yield return new WaitForSeconds (SpellCooldown);
+		yield return new WaitForSeconds (spellCooldown);
 		RemoveCC ("-> Spell");
 	}
 	#endregion
@@ -296,13 +305,13 @@ public abstract class Character : MonoBehaviour
 			// Un-register player if it's a machine
 			var m = lastMarked as MachineInterface;
 			if (m) m.PlayerIsNear (near: false);
+
 			// Un-focus
-			#warning mmh, how do i handle (with color inputs) when both players look
 			lastMarked.marker.Off ();
 			lastMarked = null;
 		}
 
-		// If not in front of any interactable
+		// If not in front of any interactable,
 		// or not executed any interaction
 		if (GetButtonDown ("Action", true) && toy)
 			toy.Throw (MovingDir * ThrowForce, owner: this);
@@ -376,6 +385,12 @@ public abstract class Character : MonoBehaviour
 		var origin = transform.position;
 		origin.y += 0.75f + 0.15f;
 		return new Ray (origin, transform.forward);
+	}
+
+	// Gets instance of 
+	public static Character Get () 
+	{
+
 	}
 
 	#region SPECIAL INPUT HELPERS

@@ -5,52 +5,52 @@ using UnityEngine;
 public class Marker : MonoBehaviour
 {
 	#region DATA
+	// External
 	public Sprite icon;
-	public bool updateIcon;
+	public bool isBillboard;
 
-	/// Transition
-	private int watchers;
+	// Transition
+	private const float Duration = 0.25f;
 	private bool inTransition;
-	private const float duration = 0.25f;
 	private float factor;
-	private Color iColor;
+
 	private float iAlpha;
+	private float fAlpha;
+	private Color iColor;
+	private Stack<Color> fColors;
 
-	/// References
-	private MeshRenderer marker;
-	private SpriteRenderer infoSign;
+	// References
+	private MeshRenderer mesh;
+	private SpriteRenderer sign;
 
-	/// Static
+	// Static
 	private static bool init;
 	private static MaterialPropertyBlock block;
 	private static int ColorID;
 	#endregion
 
 	#region UTILS
-	public void On (int id, bool bypass=false) 
+	public void On (Color color) 
 	{
-		watchers += id;
-		if (bypass) watchers = id;
 		iColor = block.GetColor (ColorID);
-		iAlpha = infoSign.color.a;
-		inTransition = true;
-		factor = 0f;
-	}
-	public void Off (int id, bool bypass=false) 
-	{
-		watchers -= id;
-		if (bypass) watchers = id;
-		iColor = block.GetColor (ColorID);
-		iAlpha = infoSign.color.a;
-		inTransition = true;
-		factor = 0f;
-	}
+		fColors.Push (color);
 
-	public void Set (Color color, bool icon) 
+		iAlpha = sign.color.a;
+		fAlpha = 1.0f;
+
+		factor = 0f;
+		inTransition = true;
+	}
+	public void Off () 
 	{
-		infoSign.SetAlpha (icon? 1 : 0);
-		block.SetColor (ColorID, color);
-		marker.SetPropertyBlock (block);
+		iColor = block.GetColor (ColorID);
+		fColors.Pop ();
+
+		iAlpha = sign.color.a;
+		fAlpha = 0f;
+
+		factor = 0f;
+		inTransition = true;
 	}
 
 	public static void Initialize () 
@@ -64,21 +64,42 @@ public class Marker : MonoBehaviour
 
 	public void MakeIconFaceCamera () 
 	{
-		var t = infoSign.transform;
+		var t = sign.transform;
 		var dir = Camera.main.transform.position - t.position;
 		t.rotation = Quaternion.LookRotation (dir.normalized);
+	}
+
+	// Helper for the custom editor
+	public void Set (Color color, float icon) 
+	{
+		sign.SetAlpha (icon);
+		block.SetColor (ColorID, color);
+		mesh.SetPropertyBlock (block);
+	}
+
+	// Helper for setting internal references
+	public void SetUp () 
+	{
+		// Set up references
+		if (!mesh) mesh = GetComponentInChildren<MeshRenderer> ();
+		if (!sign) sign = GetComponentInChildren<SpriteRenderer> ();
+		if (fColors == null)
+		{
+			fColors = new Stack<Color> (2);
+			fColors.Push (new Color (0, 0, 0, 0));
+		}
 	}
 	#endregion
 
 	#region CALLBACKS
 	private void Update ()
 	{
-		if (updateIcon && icon != null)
+		if (isBillboard && icon != null)
 			MakeIconFaceCamera ();
 
 		if (inTransition) 
 		{
-			/// Break
+			// Break
 			if (factor > 1.1f)
 			{
 				inTransition = false;
@@ -86,32 +107,28 @@ public class Marker : MonoBehaviour
 				return;
 			}
 
-			/// Do
+			// Do
 			float value = Mathf.Pow (factor, 0.6f);
-			var color = Color.Lerp (iColor, Game.teamColors[watchers], value);
-			var alpha = Mathf.Lerp (iAlpha, Mathf.Clamp01 (watchers), value);
+			var color = Color.Lerp (iColor, fColors.Peek (), value);
+			var alpha = Mathf.Lerp (iAlpha, fAlpha, value);
 			block.SetColor (ColorID, color);
-			marker.SetPropertyBlock (block);
-			infoSign.SetAlpha (alpha);
 
-			/// Continue
-			factor += Time.smoothDeltaTime / duration;
+			mesh.SetPropertyBlock (block);
+			sign.SetAlpha (alpha);
+
+			// Continue
+			factor += Time.deltaTime / Duration;
 		}
 	}
 
 	public void OnEnable () 
 	{
 		Initialize ();
+		SetUp ();
 
-		/// Set up references
-		marker = GetComponentInChildren<MeshRenderer> ();
-		infoSign = GetComponentInChildren<SpriteRenderer> ();
-
-		/// Set up ready-state
-		block.SetColor (ColorID, new Color (0, 0, 0, 0));
-		marker.SetPropertyBlock (block);
-		infoSign.sprite = icon;
-		infoSign.SetAlpha (0);
+		// Restore initial state
+		Set (new Color (0, 0, 0, 0), 0);
+		sign.sprite = icon;
 		factor = 0f;
 	}
 	#endregion

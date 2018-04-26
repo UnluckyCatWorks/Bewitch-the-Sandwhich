@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
+using TP = TutorialGame.TutorialPhases;
 
 public class TutorialGame : Game 
 {
@@ -18,8 +19,8 @@ public class TutorialGame : Game
 	public Text cartel;
 	public List<Supply> supplies;
 
-	/// Validation
-	public static Dictionary<string, TutorialCheck> Checks;
+	// Validation
+	public static Dictionary<TP, TutorialCheck> Checks;
 	#endregion
 
 	#region UI UTILS
@@ -44,67 +45,73 @@ public class TutorialGame : Game
 	}
 	#endregion
 
-	/// Starts when clicked "Play"
+	#region TUTORIAL PHASES
+	// Starts when clicked "Play"
 	protected override IEnumerator Logic () 
 	{
-		/// Players references
+		yield break;
+
+		// Players references
 		var ps = FindObjectsOfType<Character> ().ToList ();
+		#warning esto lo quiero hacer con un prfab y tal, mas comodo. ademas que tendre que poder cambiar los controles PFFF
 		var icons = ps.Select (p => p.GetComponentInChildren<HUDIcons> ()).ToList ();
-		/// Limit players interaction
+
+		// Limit players interaction
 		ps.ForEach (p => p.AddCC ("Dash", Locks.Dash));
 		ps.ForEach (p => p.AddCC ("Spells", Locks.Spells));
 		ps.ForEach (p => p.AddCC ("Interaction", Locks.Interaction));
-		/// Make players invisible
+
+		// Make players invisible
 		ps.ForEach (p => p.gameObject.SetActive (false));
 
 		#region INTRO CUTSCENE
-		/// Get some scene references
+		// Get some scene references
 		var menu = GameObject.Find ("UI_Menu").GetComponent<Animator> ();
 		var focos = GameObject.Find ("Focos").GetComponent<Animator> ();
 		var rig = GameObject.Find ("Camera_Rig").GetComponent<Animator> ();
 
-		/// Make everything black
+		// Make everything black
 		StartCoroutine (Extensions.FadeAmbient (0f, 2.5f, 0.8f));
-		/// Menu goes out
+		// Menu goes out
 		menu.SetTrigger ("Play");
 		yield return new WaitForSecondsRealtime (.2f);
-		/// Camera goes to Host
+		// Camera goes to Host
 		rig.SetTrigger ("Play");
 		yield return new WaitForSecondsRealtime (2.9f);
-		/// Lights focus on Host
+		// Lights focus on Host
 		focos.SetTrigger ("Play");
 		focos.SetTrigger ("ToPresentador");
 		yield return new WaitForSecondsRealtime (2f);
 
 		#region HOST
 		/// Host appears
-        puff.Play (true);
-        presentador.SetActive (true);
-        var pAnim = presentador.GetComponent<Animator> ();
+		puff.Play (true);
+		presentador.SetActive (true);
+		var pAnim = presentador.GetComponent<Animator> ();
 
-        /// Intro dialog
-        yield return new WaitForSecondsRealtime (3f);
-        yield return Dialog.StartNew ("Tutorial/Text", pAnim);
-        pAnim.SetBool ("In", false);
+		/// Intro dialog
+		yield return new WaitForSecondsRealtime (3f);
+		yield return Dialog.StartNew ("Tutorial/Text", pAnim);
+		pAnim.SetBool ("In", false);
 
-        /// When dialog is over,
-        /// Host dissapears
-        puff.Play (true);
+		/// When dialog is over,
+		/// Host dissapears
+		puff.Play (true);
 		yield return new WaitForSecondsRealtime (0.1f);
-        presentador.SetActive (false); 
-        #endregion
+		presentador.SetActive (false);
+		#endregion
 
-        /// Camera goes to scene
-        rig.SetTrigger ("ToScene");
-		/// Light up the scene
+		// Camera goes to scene
+		rig.SetTrigger ("ToScene");
+		// Light up the scene
 		focos.SetTrigger ("ToScene");
-        StartCoroutine (Extensions.FadeAmbient (2.9f, 2.5f, 1.4f));
+		StartCoroutine (Extensions.FadeAmbient (2.9f, 2.5f, 1.4f));
 		#endregion
 
 		#region TUTORIAL
-		/// Make players visible
+		// Make players visible
 		ps.ForEach (p => p.gameObject.SetActive (true));
-		/// Wait a bit, & allow movement
+		// Wait a bit, & allow movement
 		yield return new WaitForSecondsRealtime (3f);
 		paused = false;
 
@@ -114,42 +121,43 @@ public class TutorialGame : Game
 		SwitchCartel ("MOVE");
 
 		/// Wait until all players are in place
-		Checks.Add ("Movement", new TutorialCheck ());
-		while (Checks["Movement"].both) yield return null;
-		Checks.Remove ("Movement");
+		Checks.Add (TP.Moving, new TutorialCheck ());
+		while (Checks[TP.Moving].AllWhoPlay) yield return null;
+		Checks.Remove (TP.Moving);
 
 		/// Turn off markers
-		GetTuto<Marker> ("Movement_").ForEach (m => m.Off (0, bypass: true));
+		GetTuto<Marker> ("Movement_").ForEach (m => m.Off ());
 		SwitchCartel ("");
 		paused = true;
 		#endregion
 
 		#region DASHING
-		/// Show water pit
+		// Show water pit
 		yield return new WaitForSecondsRealtime (1f);
 		GameObject.Find ("Plat_agua").GetComponent<Animation> ().Play ("Out");
 		GameObject.Find ("Plat_agua").GetComponentInChildren<Collider> ().enabled = false;
-		/// Wait a bit
+		// Wait a bit
 		yield return new WaitForSecondsRealtime (1f);
 		paused = false;
-		/// Allow dashing
+		// Allow dashing
 		ps.ForEach (p => p.RemoveCC ("Dash"));
-		/// Show Dash marks & icons
+		// Show Dash marks & icons
 		GetTuto<Marker> ("Dash_").ForEach (m => m.On (m.name.Contains ("Alby") ? 1 : 2));
 		icons.ForEach (i => i.Show ("Dash"));
 		SwitchCartel ("DASH");
 
-		/// Wait until all players are in place
-		Checks.Add ("Dash", new TutorialCheck ());
-		while (Checks["Dash"].both) yield return null;
-		Checks.Remove ("Dash");
+		// Wait until all players are in place
+		Checks.Add (TP.Dashing, new TutorialCheck ());
+		while (Checks[TP.Dashing].AllWhoPlay) yield return null;
+		Checks.Remove (TP.Dashing);
 
-		/// Turn off markers
+		// Turn off markers
 		GetTuto<Marker> ("Dash_").ForEach (m => m.Off (0, bypass: true));
 		icons.ForEach (i => i.Hide ("Dash"));
 		SwitchCartel ("");
 
-		/// Hide water pit (play backwards)
+		// Hide water pit (play backwards)
+		#warning honestly just make this a extension method
 		GameObject.Find ("Plat_agua").GetComponent<Animation> ()["Out"].speed = -1;
 		GameObject.Find ("Plat_agua").GetComponent<Animation> ()["Out"].normalizedTime = 1;
 		GameObject.Find ("Plat_agua").GetComponent<Animation> ().Play ("Out");
@@ -165,9 +173,9 @@ public class TutorialGame : Game
 		SwitchCartel ("SPELLS");
 
 		/// Wait until all players have landed a spell
-		Checks.Add ("Spell", new TutorialCheck ());
-		while (Checks["Spell"].both) yield return null;
-		Checks.Remove ("Spell");
+		Checks.Add (TP.Casting_Spells, new TutorialCheck ());
+		while (Checks[TP.Casting_Spells].AllWhoPlay) yield return null;
+		Checks.Remove (TP.Casting_Spells);
 
 		/// Hide icons
 		icons.ForEach (i => i.Hide ("Spell"));
@@ -203,43 +211,62 @@ public class TutorialGame : Game
 		GameObject.Find ("Puerta_Wrapper").GetComponent<Animation> ().Play ("DownToHell");
 		yield return new WaitForSecondsRealtime (5f);
 		SwitchCartel ("GO!");
-
-		/// Wait until all players have entered the portal
-		Checks.Add ("Portal", new TutorialCheck ());
-		while (Checks["Portal"].both) yield return null;
-		Checks.Remove ("Portal");
 		#endregion
 
-		/// Cortinilla y al coliseo
+		// Cortinilla y al coliseo
 		Cortinilla.LoadScene ("Coliseum");
-	}
+	} 
+	#endregion
 
 	protected override void Awake () 
 	{
 		base.Awake ();
 		/// Set up game
-		Checks = new Dictionary<string, TutorialCheck> ();
+		Checks = new Dictionary<TP, TutorialCheck> ();
         RenderSettings.ambientIntensity = 2.9f;
 	}
 
 	#region HERLPERS
+	public enum TutorialPhases 
+	{
+		Moving,
+		Dashing,
+		Casting_Spells,
+		Throwing_Stuff,
+	}
+
 	public struct TutorialCheck 
 	{
-		public bool alby;
-		public bool mary;
-		public bool both { get { return alby && mary; } }
+		List<Characters> validatedCharacters;
 
-		public void Set (string who, bool value) 
+		// Only true if all players who
+		// are currently playing are done
+		public bool AllWhoPlay 
 		{
-			if (who == "Mary") mary = value;
+			// For now, only 2 players can play at once
+			get { return validatedCharacters.Count == 2; }
+		}
+
+		// Keeps track of who has validated this point
+		public void Set (Characters who, bool value) 
+		{
+			if (validatedCharacters == null)
+				validatedCharacters = new List<Characters> (4);
+
+			// Validate character
+			if (value && !validatedCharacters.Contains (who))
+				validatedCharacters.Add (who);
 			else
-			if (who == "Alby") alby = value;
+			// De-validate character
+			if (!value && validatedCharacters.Contains (who))
+				validatedCharacters.Remove (who);
 		}
 	}
 
-	public static bool IsChecking (string check) 
+	public static bool IsChecking (TP phase) 
 	{
-		if (manager is TutorialGame && Checks.ContainsKey (check))
+		if (manager is TutorialGame &&
+			Checks.ContainsKey (phase))
 			return true;
 		else
 			return false;
@@ -267,6 +294,7 @@ public class TutorialGame : Game
 	{
 		var list = new List<T>
 		{
+			#warning this wont work for characters m9
 			GameObject.Find (name + "Alby").GetComponent<T> (),
 			GameObject.Find (name + "Mary").GetComponent<T> ()
 		};

@@ -18,21 +18,20 @@ public class MarkerEditor : Editor
 		base.OnInspectorGUI ();
 		if (EditorApplication.isPlaying) return;
 
-		/// Helpers
+		// Helpers
 		EditorGUILayout.Space ();
-		EditorGUILayout.LabelField ("Helper control", EditorStyles.boldLabel);
+		EditorGUILayout.LabelField ("Helper controls", EditorStyles.boldLabel);
 
 		EditorGUI.BeginChangeCheck ();
 		color = EditorGUILayout.ColorField ("Color", color);
 		icon = EditorGUILayout.ToggleLeft ("Show icon", icon);
-		color.a = 1;
 
-		if (EditorGUI.EndChangeCheck ())
+		if (EditorGUI.EndChangeCheck ()) 
 		{
 			foreach (var m in markers)
 			{
 				Undo.RecordObject (m, "Marker changed");
-				m.Set (color, icon);
+				m.Set (color, icon? 1 : 0);
 			}
 		}
 
@@ -43,6 +42,7 @@ public class MarkerEditor : Editor
 	private void OnEnable () 
 	{
 		markers = targets.Select (x => x as Marker).ToList ();
-		markers.ForEach (m=> m.OnEnable ());
+		foreach (var m in markers) m.SetUp ();
+		Marker.Initialize ();
 	}
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // All the states a machine can be in
-public enum MachineState
+public enum MachineState 
 {
 	Waiting,		// Machine is resting
 	Working,		// The machine is locked, doing its process
@@ -29,6 +29,14 @@ public struct TimerColors
 #endregion
 
 #region PLAYER
+public enum Characters 
+{
+	NONE,
+	Alby,
+	Mary,
+
+}
+
 public enum PlayerIsAbleTo
 {
 	None,

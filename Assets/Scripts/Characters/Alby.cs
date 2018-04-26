@@ -5,30 +5,31 @@ using UnityEngine;
 
 public class Alby : Character
 {
-	[Header ("Spell Settings")]
-	public GameObject vfx;
-	public float stunDuration;
-	public Marker areaOfEffect;
+	#region DATA
+	// External
+	[Header ("Spell settings")]
+	public Color areaColor;
+	public GameObject spellVFX;
+
+	// Internal
+	private const float StunDuration = 2f;
+	private Marker areaOfEffect;
+	#endregion
 
 	protected override IEnumerator CastSpell () 
 	{
-		/// Show area
-		areaOfEffect.On (5, bypass: true);
+		areaOfEffect.On (5, bypass: true);              // Show area
+		yield return new WaitForSeconds (0.50f);        // Allow spell aiming while self-stunned
+		areaOfEffect.Off (0, bypass: true);             // Hide area
 
-		/// Allow spell aiming while self-stunned
-		while (effects.ContainsKey("Spell Casting"))
-			yield return null;
 
-		/// Hide area
-		areaOfEffect.Off (0, bypass: true);
-
-		/// Find all players affected by the spell (except self)
 		bool hitPlayer = false;
+		// Find all players affected by the spell
 		var col = areaOfEffect.GetComponent<SphereCollider> ();
 		var hits = Physics.OverlapSphere (areaOfEffect.transform.position, col.radius);
 		foreach (var h in hits)
 		{
-			/// Find out if any hit was the other player
+			// Find out if any hit was the other player
 			if (h.name == other.name)
 				hitPlayer = true;
 		}
@@ -41,7 +42,7 @@ public class Alby : Character
 				TutorialGame.Checks["Spell"].Set ("Alby", true);
 
 			/// Spawn VFX
-			var vfx = Instantiate (this.vfx);
+			var vfx = Instantiate (spellVFX);
 			vfx.transform.position = other.transform.position + (Vector3.up * 0.75f);
 			Destroy (vfx.gameObject, 2f);
 		}
@@ -67,7 +68,7 @@ public class Alby : Character
 		factor = 0f;
 
 		/// Wait until stun is over
-		yield return new WaitForSeconds (stunDuration);
+		yield return new WaitForSeconds (StunDuration);
 
 		/// Turn back to normal
 		while (factor <= 1.1f)
@@ -82,5 +83,13 @@ public class Alby : Character
 
 		/// Remove CC
 		other.RemoveCC ("Spell: Stoned");
+	}
+
+
+
+	protected override void Awake () 
+	{
+		base.Awake ();
+		areaOfEffect = GetComponentInChildren<Marker> ();
 	}
 }
