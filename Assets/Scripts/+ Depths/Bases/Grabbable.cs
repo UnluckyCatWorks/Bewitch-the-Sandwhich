@@ -70,16 +70,14 @@ public class Grabbable : MonoBehaviour
 		if (!beingThrown) return;
 
 		// If hit a player
-		var victim = col.gameObject.GetComponent<Character> ();
-		if (!victim) return;
+		var victim = col.gameObject.GetComponent<Character> (); if (!victim) return;
 		// Be sure it's not the same player who threw it!
 		if (victim.ID == throwerPlayer.ID) return;
 
 		// Get force from physic speed & supress Y-force
-		var knockForce = body.velocity.normalized;
-		knockForce.y = 0;
+		var knockForce = body.velocity.normalized; knockForce.y = 0;
 		// Knock player & stop being a flying weapon
-		victim.Knock (knockForce);
+		victim.Knock (knockForce, 0.20f);
 		beingThrown = false;
 	}
 

@@ -1817,7 +1817,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
-  updateIcon: 0
+  isBillboard: 0
 --- !u!114 &114597854977333202
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1829,20 +1829,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2144d00d7a4d64d93ae5eecd41209b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valid: {fileID: 0}
-  id: 1
-  controller: 2
-  speed: 8.5
-  angularSpeed: 20
-  gravityMul: 1
   grabHandle: {fileID: 4208909212707740}
-  throwForce: 20
-  sprintForce: 40
-  sprintCooldown: 0.5
+  control: 0
+  focusColor: {r: 0, g: 0, b: 0, a: 0}
   spellCooldown: 3
-  vfx: {fileID: 1538672081560342, guid: 1f2dc441de9bf9b409221b0b4f21ded1, type: 2}
-  stunDuration: 2
-  areaOfEffect: {fileID: 114218966351923004}
+  areaColor: {r: 1, g: 0.6320286, b: 0.3897059, a: 1}
+  spellVFX: {fileID: 1538672081560342, guid: 1f2dc441de9bf9b409221b0b4f21ded1, type: 2}
 --- !u!114 &114620054946084940
 MonoBehaviour:
   m_ObjectHideFlags: 1

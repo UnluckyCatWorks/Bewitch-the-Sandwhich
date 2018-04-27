@@ -33,9 +33,6 @@ public class Cauldron : Interactable
 
 	public override bool CheckInteraction (Character player) 
 	{
-		/// Is player valid?
-		if (player.id != playerOwner) return false;
-
 		/// Is player dropping an ingredient?
 		if ((player.toy as Ingredient) == null) return false;
 

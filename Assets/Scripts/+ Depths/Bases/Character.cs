@@ -9,8 +9,11 @@ public abstract class Character : MonoBehaviour
 {
 	#region DATA
 	// External
+	[Header ("Basic settings")]
 	public Transform grabHandle;
+	public ControllerType control;
 	public Color focusColor;
+	[Header ("Spell settings")]
 	public float spellCooldown;
 
 	// Basic character info
@@ -22,7 +25,6 @@ public abstract class Character : MonoBehaviour
 			return id;
 		}
 	}
-	internal ControllerType control;
 
 	protected Dictionary<string, Effect> effects;
 	internal Locks locks;
@@ -387,10 +389,11 @@ public abstract class Character : MonoBehaviour
 		return new Ray (origin, transform.forward);
 	}
 
-	// Gets instance of 
-	public static Character Get () 
+	// Gets instance of specific character
+	public static Character Get<T> () where T : Character
 	{
-
+		var c = GameObject.Find (typeof (T).Name);
+		return c.GetComponent<T> ();
 	}
 
 	#region SPECIAL INPUT HELPERS

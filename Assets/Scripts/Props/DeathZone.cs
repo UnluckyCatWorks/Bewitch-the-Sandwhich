@@ -5,30 +5,32 @@ using UnityEngine;
 public class DeathZone : MonoBehaviour
 {
 	public ParticleSystem fx;
-	private const float stun = 1f;
+	private const float Stun = 1f;
 
 	private void OnTriggerEnter (Collider other) 
 	{
 		if (other.tag == "Player")
 		{
-			/// Lock player until he hits floor
+			// Lock player until he hits floor
 			var p = other.GetComponent<Character> ();
-			p.AddCC ("Dead-stun", Locks.All, stun);
+			p.AddCC ("Dead-stun", Locks.All, Stun);
 
-			p.transform.position = p.valid.position + (Vector3.up * 0.8f);
+			#warning aqui pos deberia hacer spawn del character de alguna forma
+
 			var puff = Instantiate (fx, p.transform.position, Quaternion.identity);
 			Destroy (puff.gameObject, 2f);
 			puff.Play ();
 
-			/// Destroy his grabbed Object, if any
-			if (p.toy)
+			// Destroy his grabbed Object, if any
+			if (p.toy) 
 			{
-				/// Object will be destroyed when it enters the zone
-				p.toy.Throw (Vector3.up, -8f, null);
+				// Object will be destroyed when it enters the zone
+				p.toy.Throw (Vector3.up * -8f, null);
 				p.toy = null;
 			}
 		}
 		else
+		// If a grabbable object enters death-zone
 		if (other.tag == "Grabbable")
 		{	
 			var g = other.GetComponentInParent<Grabbable> ();

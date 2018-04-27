@@ -5,50 +5,50 @@ using UnityEngine;
 
 public class Mary : Character
 {
-	[Header ("Spell Settings")]
-	public GameObject vfx;
-	public float forceMultiplier;
-	public float stunDuration;
-	public Marker areaOfEffect;
+	#region DATA
+	// External
+	public Color areaColor;
+	public GameObject spellVFX;
+
+	// Internal
+	private const float ForceMultiplier = 1.50f;
+	private const float StunDuration = 1.25f;
+	private Marker areaOfEffect;
+	#endregion
 
 	protected override IEnumerator CastSpell () 
 	{
-		/// Show area
-		areaOfEffect.On (3, bypass: true);
-
-		/// Allow spell aiming while self-stunned
-		while (effects.ContainsKey ("Spell Casting"))
-			yield return null;
-
-		/// Hide area
-		areaOfEffect.On (0, bypass: true);
+		areaOfEffect.On (areaColor);				// Show area
+		yield return new WaitForSeconds (0.5f);		// Allow spell aiming while self-stunned
+		areaOfEffect.Off ();						// Hide area
 
 		/// Spawn VFX always
-		var vfx = Instantiate (this.vfx);
+		var vfx = Instantiate (spellVFX);
 		vfx.transform.position = transform.position + (Vector3.up * 0.2f);
 		Destroy (vfx.gameObject, 2f);
 
-		/// Find all players affected by the spell (except self)
-		bool hitPlayer = false;
+		// Find out if any hit was the other player
 		var hits = Physics.OverlapSphere (transform.position, areaOfEffect.GetComponent<SphereCollider> ().radius);
 		foreach (var h in hits)
-		{
-			/// Find out if any hit was the other player
+		{	
 			if (h.name == other.name)
-				hitPlayer = true;
-		}
-		/// In case there's no hit, abort spell casting
-		if (!hitPlayer) yield break;
-		else
-		{
-			/// If hit, and maybe in tutorial
-			if (TutorialGame.IsChecking("Spell"))
-				TutorialGame.Checks["Spell"].Set ("Mary", true);
-		}
+			{
+				// If inside tutorial
+				var check = TutorialGame.TutorialPhases.Casting_Spells;
+				if (TutorialGame.IsChecking (check))
+					TutorialGame.Checks[check].Set (Characters.Mary, true);
 
-		/// Knock hit player
-		var dir = other.transform.position - transform.position;
-		other.Knock (dir.normalized * forceMultiplier);
-		other.AddCC ("Spell: Bombed", Locks.All, stunDuration);
+				// Knock hit player
+				var dir = other.transform.position - transform.position;
+				other.AddCC ("Spell: Bombed", Locks.All, StunDuration);
+				other.Knock (dir.normalized * ForceMultiplier, 0.5f);
+			}
+		}
+	}
+
+	protected override void Awake () 
+	{
+		base.Awake ();
+		areaOfEffect = GetComponentInChildren<Marker> ();
 	}
 }

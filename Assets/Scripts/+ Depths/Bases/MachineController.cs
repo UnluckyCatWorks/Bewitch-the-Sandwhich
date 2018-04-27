@@ -7,10 +7,10 @@ using System.Collections.Generic;
 [SharedBetweenAnimators]
 public class MachineController : StateMachineBehaviour
 {
-	[NonSerialized] public MachineState state;		// The current status of the machine
-	[NonSerialized] public SmartAnimator anim;		// The machine animator
-	protected MachineInterface bridge;				// The link with the actual machine parameters
-	protected Timer timer;							// The timer of the machine
+	internal MachineState state;			// The current status of the machine
+	internal SmartAnimator anim;			// The machine animator
+	protected MachineInterface bridge;		// The link with the actual machine parameters
+	protected Timer timer;					// The timer of the machine
 
 	private enum Theme 
 	{

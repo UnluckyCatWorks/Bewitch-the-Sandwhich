@@ -1721,8 +1721,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1304399107086124}
-  m_LocalRotation: {x: -0, y: 0.23201497, z: -0, w: 0.9727122}
-  m_LocalPosition: {x: -5.6, y: -0.15, z: -1.9}
+  m_LocalRotation: {x: -0, y: -0.99994093, z: -0, w: -0.010872661}
+  m_LocalPosition: {x: 1.67, y: 1.186, z: -5.946}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4218556083496144}
@@ -1816,20 +1816,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca257bdb378f214198dc89beb66a5d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 2
-  controller: 0
-  speed: 8.5
-  angularSpeed: 20
-  gravityMul: 1
   grabHandle: {fileID: 4937281900218502}
-  throwForce: 20
-  sprintForce: 40
-  sprintCooldown: 0.5
+  control: 1
+  focusColor: {r: 0, g: 0, b: 0, a: 0}
   spellCooldown: 4
-  vfx: {fileID: 1206203692246924, guid: 9763c67fe7161b64a867536f0900ca99, type: 2}
-  forceMultiplier: 1.5
-  stunDuration: 1.3
-  areaOfEffect: {fileID: 114653372814588150}
+  areaColor: {r: 0.30882353, g: 0.32915226, b: 1, a: 1}
+  spellVFX: {fileID: 1206203692246924, guid: 9763c67fe7161b64a867536f0900ca99, type: 2}
 --- !u!114 &114653372814588150
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1842,7 +1834,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
-  updateIcon: 0
+  isBillboard: 0
 --- !u!114 &114920315807721404
 MonoBehaviour:
   m_ObjectHideFlags: 1

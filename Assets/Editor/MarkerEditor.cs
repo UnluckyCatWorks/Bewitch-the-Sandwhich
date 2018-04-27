@@ -5,11 +5,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CanEditMultipleObjects]
 [CustomEditor(typeof(Marker))]
 public class MarkerEditor : Editor
 {
-	List<Marker> markers;
+	Marker marker;
 	Color color;
 	bool icon;
 
@@ -28,21 +27,20 @@ public class MarkerEditor : Editor
 
 		if (EditorGUI.EndChangeCheck ()) 
 		{
-			foreach (var m in markers)
-			{
-				Undo.RecordObject (m, "Marker changed");
-				m.Set (color, icon? 1 : 0);
-			}
+			Undo.RecordObject (marker, "Marker changed");
+			marker.Set (color, icon? 1 : 0);
 		}
 
 		if (GUILayout.Button ("Orientate icon"))
-			markers.ForEach (m=> m.MakeIconFaceCamera ());
+			marker.MakeIconFaceCamera ();
 	}
 
 	private void OnEnable () 
 	{
-		markers = targets.Select (x => x as Marker).ToList ();
-		foreach (var m in markers) m.SetUp ();
+		marker = target as Marker;
+		marker.SetUp ();
 		Marker.Initialize ();
+
+		color = marker.GetCurrentColor ();
 	}
 }

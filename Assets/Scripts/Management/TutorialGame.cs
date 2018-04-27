@@ -117,7 +117,7 @@ public class TutorialGame : Game
 
 		#region MOVING
 		/// Show movement marks
-		GetTuto<Marker> ("Movement_").ForEach (m => m.On (m.name.Contains ("Alby") ? 1 : 2));
+		GetTuto<Marker> ("Movement_").ForEach (m => m.On (new Color(0,0,0,0)));
 		SwitchCartel ("MOVE");
 
 		/// Wait until all players are in place
@@ -142,7 +142,7 @@ public class TutorialGame : Game
 		// Allow dashing
 		ps.ForEach (p => p.RemoveCC ("Dash"));
 		// Show Dash marks & icons
-		GetTuto<Marker> ("Dash_").ForEach (m => m.On (m.name.Contains ("Alby") ? 1 : 2));
+		GetTuto<Marker> ("Dash_").ForEach (m => m.On (new Color (0, 0, 0, 0)));
 		icons.ForEach (i => i.Show ("Dash"));
 		SwitchCartel ("DASH");
 
@@ -152,7 +152,7 @@ public class TutorialGame : Game
 		Checks.Remove (TP.Dashing);
 
 		// Turn off markers
-		GetTuto<Marker> ("Dash_").ForEach (m => m.Off (0, bypass: true));
+		GetTuto<Marker> ("Dash_").ForEach (m => m.Off ());
 		icons.ForEach (i => i.Hide ("Dash"));
 		SwitchCartel ("");
 

@@ -20,13 +20,13 @@ public class Marker : MonoBehaviour
 	private Stack<Color> fColors;
 
 	// References
-	private MeshRenderer mesh;
-	private SpriteRenderer sign;
+	internal MeshRenderer mesh;
+	internal SpriteRenderer sign;
 
 	// Static
+	public static MaterialPropertyBlock block;
+	public static int ColorID;
 	private static bool init;
-	private static MaterialPropertyBlock block;
-	private static int ColorID;
 	#endregion
 
 	#region UTILS
@@ -89,10 +89,17 @@ public class Marker : MonoBehaviour
 			fColors.Push (new Color (0, 0, 0, 0));
 		}
 	}
+
+	// Helper that retrieves current color
+	public Color GetCurrentColor ()
+	{
+		mesh.GetPropertyBlock (block);
+		return block.GetColor (ColorID);
+	}
 	#endregion
 
 	#region CALLBACKS
-	private void Update ()
+	private void Update () 
 	{
 		if (isBillboard && icon != null)
 			MakeIconFaceCamera ();
