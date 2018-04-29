@@ -19,21 +19,19 @@ public class TutorialGame : Game
 	public Material cartelMat;
 	public Text cartel;
 	public List<Supply> supplies;
-
-	// Validation
 	public static Dictionary<TP, TutorialCheck> Checks;
+
+	// Modes
+	private bool firstTime;
+	private bool passedMainMenu;
 	#endregion
 
 	#region UI UTILS
 	public void Play () 
 	{
-		throw new System.NotImplementedException ();
-	}
-
-	public void PlayTuto () 
-	{
 		Cursor.visible = false;
-		enabled = true;
+		passedMainMenu = true;
+		passedMainMenu = PlayerPrefs.HasKey ("Already_Played");
 	}
 
 	public void Exit () 
@@ -60,7 +58,7 @@ public class TutorialGame : Game
 
 		// Fade-in image effects
 		float factor = 0f;
-		while (factor <= 1.1f)
+		while (factor <= 1.1f) 
 		{
 			float value = Mathf.Pow (factor, 2);
 			postfx.weight = value;
@@ -68,6 +66,13 @@ public class TutorialGame : Game
 			yield return null;
 			factor += Time.deltaTime / /*duration*/ 1f;
 		}
+		// Wait until player plays "Play" button
+		yield return new WaitUntil (()=> passedMainMenu);
+
+		print ("Hola");
+
+
+		// temporal
 		yield break;
 
 		// Players references
