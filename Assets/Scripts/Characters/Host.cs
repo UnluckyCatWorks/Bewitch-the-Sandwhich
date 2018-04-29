@@ -12,7 +12,7 @@ public class Host : MonoBehaviour
 	public bool startOnHand;
 	#endregion
 
-	#region CALLBACK
+	#region CALLBACKS
 	private void Awake () 
 	{
 		if (startOnHand)
@@ -22,12 +22,6 @@ public class Host : MonoBehaviour
 			hat.localPosition = Vector3.zero;
 			hat.localRotation = Quaternion.identity;
 		}
-	}
-
-	private void OnDestroy () 
-	{
-		/// Turn material back to normal
-		GetComponentInChildren<Renderer> ().sharedMaterial.SetColor ("_EmissionColor", Color.black);
 	}
 	#endregion
 

@@ -22,8 +22,8 @@ public class TutorialGame : Game
 	public static Dictionary<TP, TutorialCheck> Checks;
 
 	// Modes
-	private bool firstTime;
-	private bool passedMainMenu;
+	public static bool firstTime;
+	private static bool passedMainMenu;
 	#endregion
 
 	#region UI UTILS
@@ -31,7 +31,6 @@ public class TutorialGame : Game
 	{
 		Cursor.visible = false;
 		passedMainMenu = true;
-		passedMainMenu = PlayerPrefs.HasKey ("Already_Played");
 	}
 
 	public void Exit () 
@@ -48,17 +47,39 @@ public class TutorialGame : Game
 	// Starts when clicked "Play"
 	protected override IEnumerator Logic () 
 	{
+		#region PREPARATION
+		// Determinate if this is the first time playing the Game
+		firstTime = PlayerPrefs.HasKey ("Already_Played");
+
+		// Get some references references
+		var ps = FindObjectsOfType<Character> ().ToList ();
+
+		#warning esto lo quiero hacer con un prfab y tal, mas comodo. ademas que tendre que poder cambiar los controles PFFF
+		var icons = ps.Select (p => p.GetComponentInChildren<HUDIcons> ()).ToList ();
+		var menu = GameObject.Find ("UI_Menu").GetComponent<Animator> ();
+		var focos = GameObject.Find ("Focos").GetComponent<Animator> ();
+		var rig = GameObject.Find ("Camera_Rig").GetComponent<Animator> ();
+
+		// Limit players interaction
+		ps.ForEach (p => p.AddCC ("Dash", Locks.Dash));
+		ps.ForEach (p => p.AddCC ("Spells", Locks.Spells));
+		ps.ForEach (p => p.AddCC ("Interaction", Locks.Interaction));
+		// Make players invisible
+		ps.ForEach (p => p.gameObject.SetActive (false));
+		#endregion
+
+		#region MENU APPEARS
 		// Turn off image-effects
 		var postfx = FindObjectOfType<PostProcessVolume> ();
 		postfx.weight = 0f;
 
 		// Wait until logos are shown
 		yield return new WaitForSeconds (2.5f);
-		GameObject.Find ("UI_Menu").GetComponent<Animator> ().SetTrigger ("Show_Menu");
+		menu.SetTrigger ("Show_Menu");
 
 		// Fade-in image effects
 		float factor = 0f;
-		while (factor <= 1.1f) 
+		while (factor <= 1.1f)
 		{
 			float value = Mathf.Pow (factor, 2);
 			postfx.weight = value;
@@ -66,34 +87,51 @@ public class TutorialGame : Game
 			yield return null;
 			factor += Time.deltaTime / /*duration*/ 1f;
 		}
+		Cursor.visible = true; 
+		#endregion
+
 		// Wait until player plays "Play" button
-		yield return new WaitUntil (()=> passedMainMenu);
+		yield return new WaitUntil (()=> passedMainMenu == true);
+		// Hide Menu
+		menu.SetTrigger ("Hide_Menu");
 
-		print ("Hola");
+		// If first time playing BtW,
+		// the Host will appear & talk some shit
+		if (!firstTime) 
+		{
+			#region HOST
+			rig.SetTrigger ("ToHost");
+			yield return new WaitForSeconds (3f);
 
+			// Host appears
+			puff.Play (true);
+			presentador.SetActive (true);
+			var pAnim = presentador.GetComponent<Animator> ();
+
+			// Intro dialog
+			yield return new WaitForSeconds (3f);
+			yield return Dialog.StartNew ("Tutorial/Text", pAnim);
+			pAnim.SetBool ("In", false);
+
+			// When dialog is over,
+			// Host dissapears
+			puff.Play (true);
+			yield return new WaitForSeconds (0.1f);
+			presentador.SetActive (false);
+			#endregion
+
+		}
+		// Otherwise, just go directly
+		// to the character selection part
+		else
+		{
+
+		}
 
 		// temporal
 		yield break;
 
-		// Players references
-		var ps = FindObjectsOfType<Character> ().ToList ();
-		#warning esto lo quiero hacer con un prfab y tal, mas comodo. ademas que tendre que poder cambiar los controles PFFF
-		var icons = ps.Select (p => p.GetComponentInChildren<HUDIcons> ()).ToList ();
-
-		// Limit players interaction
-		ps.ForEach (p => p.AddCC ("Dash", Locks.Dash));
-		ps.ForEach (p => p.AddCC ("Spells", Locks.Spells));
-		ps.ForEach (p => p.AddCC ("Interaction", Locks.Interaction));
-
-		// Make players invisible
-		ps.ForEach (p => p.gameObject.SetActive (false));
-
 		#region INTRO CUTSCENE
-		// Get some scene references
-		var menu = GameObject.Find ("UI_Menu").GetComponent<Animator> ();
-		var focos = GameObject.Find ("Focos").GetComponent<Animator> ();
-		var rig = GameObject.Find ("Camera_Rig").GetComponent<Animator> ();
-
 		// Make everything black
 		StartCoroutine (Extensions.FadeAmbient (0f, 2.5f, 0.8f));
 		// Menu goes out
@@ -106,24 +144,6 @@ public class TutorialGame : Game
 		focos.SetTrigger ("Play");
 		focos.SetTrigger ("ToPresentador");
 		yield return new WaitForSecondsRealtime (2f);
-
-		#region HOST
-		/// Host appears
-		puff.Play (true);
-		presentador.SetActive (true);
-		var pAnim = presentador.GetComponent<Animator> ();
-
-		/// Intro dialog
-		yield return new WaitForSecondsRealtime (3f);
-		yield return Dialog.StartNew ("Tutorial/Text", pAnim);
-		pAnim.SetBool ("In", false);
-
-		/// When dialog is over,
-		/// Host dissapears
-		puff.Play (true);
-		yield return new WaitForSecondsRealtime (0.1f);
-		presentador.SetActive (false);
-		#endregion
 
 		// Camera goes to scene
 		rig.SetTrigger ("ToScene");
@@ -242,6 +262,7 @@ public class TutorialGame : Game
 	protected override void Awake () 
 	{
 		base.Awake ();
+		Cursor.visible = false;
 		Checks = new Dictionary<TP, TutorialCheck> ();
 	}
 
