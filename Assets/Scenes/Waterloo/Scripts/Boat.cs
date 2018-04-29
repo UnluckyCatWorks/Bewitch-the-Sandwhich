@@ -4,28 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [SelectionBase]
-[ExecuteInEditMode]
 public class Boat : MonoBehaviour
 {
 	#region DATA
+	// External
 	public MeshFilter pila;
 	public SpriteRenderer info;
 
-	[NonSerialized]
-	public Supply supply; 
-	private Animation[] bridges;
+	// Internal
+	internal Supply supply;
 	#endregion
 
 	#region UTILS
-	public void BridgeUp (int bridge) 
-	{
-		bridges[bridge - 1].Play ("BridgeUp");
-	}
-	public void BridgeDown (int bridge) 
-	{
-		bridges[bridge - 1].Play ("BridgeDown");
-	}
-
 	public void UpdateBoatType ()
 	{
 		var id = supply.ingredient.ToString ();
@@ -34,17 +24,13 @@ public class Boat : MonoBehaviour
 	} 
 
 	public void AutoDestroy () 
-	{ Destroy (gameObject); }
+	{
+		Destroy (transform.parent.gameObject);
+	}
 	#endregion
 
-	private void OnEnable ()
+	private void Awake () 
 	{
-		/// Get all scene bridges
-		bridges = new Animation[3];
-		bridges[0] = GameObject.Find ("Bridge_L").GetComponent<Animation> ();
-		bridges[1] = GameObject.Find ("Bridge_M").GetComponent<Animation> ();
-		bridges[2] = GameObject.Find ("Bridge_R").GetComponent<Animation> ();
-		/// Change boat type
 		supply = GetComponent<Supply> ();
 		UpdateBoatType ();
 	}

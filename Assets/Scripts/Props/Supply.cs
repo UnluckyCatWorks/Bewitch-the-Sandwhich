@@ -8,7 +8,7 @@ public class Supply : Interactable
 
 	public override void Action (Character player) 
 	{
-		/// Instantiate prefab
+		// Instantiate prefab
 		var prefab = Resources.Load<Grabbable> ("Prefabs/Ingredients/" + ingredient.ToString ());
 		var go = Instantiate(prefab, transform.position, Quaternion.identity);
 		player.toy = go.GetComponent<Grabbable> ();
@@ -17,10 +17,10 @@ public class Supply : Interactable
 
 	public override bool CheckInteraction (Character player) 
 	{
-		/// Can only grab things if nothing on hand already
+		// Can only grab things if nothing on hand already
 		if (player.toy != null) return false;
 
-		/// If everything's fine
+		// If everything's fine
 		return true;
 	}
 }

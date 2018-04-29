@@ -142,7 +142,12 @@ public abstract class Character : MonoBehaviour
 	// Keeps toy with the character
 	private void HoldToy () 
 	{
-		if (toy == null) return;
+		if (toy == null) 
+		{
+			Carrying = false;
+			return;
+		}
+		else Carrying = true;
 
 		// Make toy follow smoothly
 		var newPos = Vector3.Lerp (toy.body.position, grabHandle.position, Time.fixedDeltaTime * 7f);
@@ -163,7 +168,6 @@ public abstract class Character : MonoBehaviour
 		AddCC ("-> Dash", Locks.Dash);				// Self CC used as cooldown
 		AddCC ("Dashing", Locks.Locomotion);
 		dashCoroutine = StartCoroutine (InDash ());
-#warning test if coroutines exist after they end
 	}
 
 	private IEnumerator InDash () 
@@ -236,6 +240,8 @@ public abstract class Character : MonoBehaviour
 			yield return null;
 		}
 		yield return new WaitForSeconds (0.1f);
+
+		// Reset
 		effects.Remove ("Knocked");
 		knocked = false;
 	}
@@ -279,10 +285,8 @@ public abstract class Character : MonoBehaviour
 		var hit = new RaycastHit ();
 		if (Physics.Raycast (ray, out hit, 2f, 1 << 8 | 1 << 10))
 		{
-			#warning this doesnt work with grab helpers?
-			var interactable = hit.collider.GetComponent<Interactable> ();
-
 			// If valid target
+			var interactable = hit.collider.GetComponent<Interactable> ();
 			if (interactable && interactable.CheckInteraction (this))
 			{
 				if (!lastMarked)
@@ -333,7 +337,7 @@ public abstract class Character : MonoBehaviour
 	}
 
 	// Helper for only adding CCs
-	public void AddCC (string name, Locks cc, float duration = 0)
+	public void AddCC (string name, Locks cc, float duration = 0) 
 	{
 		var e = new Effect () { cc = cc };
 
@@ -341,15 +345,26 @@ public abstract class Character : MonoBehaviour
 		if (duration != 0) StartCoroutine (RemoveEffectAfter (name, duration));
 
 		// Interrupt capabilities
-		if (cc.HasFlag (Locks.Movement))
+		if (cc.HasFlag (Locks.Movement)) 
 		{
 			movingSpeed = Vector3.zero;
-			if (dashCoroutine != null) StopCoroutine (dashCoroutine);
-			if (knockedCoroutine != null) StopCoroutine (knockedCoroutine);
+			if (dashCoroutine != null)
+			{
+				StopCoroutine (dashCoroutine);
+				dashCoroutine = null;
+			}
+			if (knockedCoroutine != null)
+			{
+				StopCoroutine (knockedCoroutine);
+				knockedCoroutine = null;
+			}
 		}
 		else
-		if (cc.HasFlag (Locks.Spells) && spellCoroutine != null)
+		if (cc.HasFlag (Locks.Spells) && spellCoroutine != null) 
+		{
 			StopCoroutine (spellCoroutine);
+			spellCoroutine = null;
+		}
 	}
 
 	// Helper for manually removing a CC effect

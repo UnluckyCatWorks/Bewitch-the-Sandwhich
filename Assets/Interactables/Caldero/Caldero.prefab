@@ -55,7 +55,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4951334219204878}
   - component: {fileID: 65117501132114242}
-  - component: {fileID: 114367826973508788}
   m_Layer: 8
   m_Name: Caldero
   m_TagString: Untagged
@@ -70,7 +69,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1803511662720098}
   m_LocalRotation: {x: 0.00000008146034, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.579, z: 0}
+  m_LocalPosition: {x: 0, y: 0.532, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4951334219204878}
@@ -185,7 +184,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1803511662720098}
-  m_Mesh: {fileID: 4300000, guid: 08db71356c5f587498ec24fd4c74e46e, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 263e845314d91c040b3c55cb4ae7a019, type: 3}
 --- !u!65 &65117501132114242
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -197,7 +196,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.23, y: 1, z: 1}
-  m_Center: {x: 0, y: 1.19, z: 0}
+  m_Center: {x: 0, y: 0.87, z: 0}
 --- !u!65 &65896598954415020
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -210,19 +209,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.98, y: 1.0035872, z: 0.94}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114367826973508788
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1978992315658390}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f2d1f2475d9bf04ab79a8b48e1b57f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  insideWrapper: 0
-  playerOwner: 0
-  cookTime: 8
-  safeTime: 2
-  burnTime: 5

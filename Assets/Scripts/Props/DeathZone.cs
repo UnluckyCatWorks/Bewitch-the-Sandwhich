@@ -11,6 +11,7 @@ public class DeathZone : MonoBehaviour
 	{
 		if (other.tag == "Player")
 		{
+
 			// Lock player until he hits floor
 			var p = other.GetComponent<Character> ();
 			p.AddCC ("Dead-stun", Locks.All, Stun);

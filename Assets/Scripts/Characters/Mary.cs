@@ -19,7 +19,7 @@ public class Mary : Character
 	protected override IEnumerator CastSpell () 
 	{
 		areaOfEffect.On (areaColor);				// Show area
-		yield return new WaitForSeconds (0.5f);		// Allow spell aiming while self-stunned
+		yield return new WaitForSeconds (0.50f);		// Allow spell aiming while self-stunned
 		areaOfEffect.Off ();						// Hide area
 
 		/// Spawn VFX always

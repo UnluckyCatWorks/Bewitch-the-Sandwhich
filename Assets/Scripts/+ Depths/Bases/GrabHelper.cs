@@ -21,7 +21,7 @@ public class GrabHelper : Interactable
 	}
 	#endregion
 
-	private void Update ()
+	private void Update () 
 	{
 		// Keep helper always at ~= parent's lowest point
 		transform.position = parent.body.worldCenterOfMass - (Vector3.up * 0.5f);

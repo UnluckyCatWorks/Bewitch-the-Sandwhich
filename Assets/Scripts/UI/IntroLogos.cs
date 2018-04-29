@@ -5,34 +5,33 @@ using UnityEngine.UI;
 
 public class IntroLogos : MonoBehaviour 
 {
-	/// 0 is self
-	/// the rest are logos
+	// 0 is self
+	// the rest are logos
 	private Graphic[] images;
 	private const float duration = 2f;
 
 	private void Start () 
 	{
-		/// Get all references
+		// Get all references
 		images = GetComponentsInChildren<Graphic> ();
 
-		/// Make "cortinilla" full opaque
+		// Make "cortinilla" full opaque
 		images[0].materialForRendering.SetFloat ("_Scale", 1f);
-		/// Set alpha of all graphics (except self) to 0
+		// Set alpha of all graphics (except self) to 0
 		for (int i=1; i!=images.Length; i++) images[i].color = new Color(1,1,1, 0);
 
 		StartCoroutine (FadeAlpha ());
 		StartCoroutine (FadeScale ());
-		StartCoroutine (FadeFinal ());
 	}
 
 	#region FADING COROUTINES
 	IEnumerator FadeAlpha () 
 	{
-		/// Fade in
+		// Fade in
 		float factor = 0f;
 		while (factor <= 1f)
 		{
-			for (int i = 1; i != images.Length; i++)
+			for (int i=1; i!=images.Length; i++)
 			{
 				Color color = new Color (1, 1, 1, factor);
 				images[i].color = color;
@@ -42,14 +41,14 @@ public class IntroLogos : MonoBehaviour
 			factor += Time.deltaTime / (1f);
 		}
 
-		/// Wait a bit
+		// Wait a bit
 		yield return new WaitForSecondsRealtime (duration);
 
-		/// Fade out
+		// Fade out
 		factor = 0f;
 		while (factor <= 1f)
 		{
-			for (int i = 1; i != images.Length; i++)
+			for (int i=1; i!=images.Length; i++)
 			{
 				Color color = new Color (1, 1, 1, 1f - factor);
 				images[i].color = color;
@@ -69,7 +68,7 @@ public class IntroLogos : MonoBehaviour
 		float factor = 0f;
 		while (factor <= 1f)
 		{
-			for (int i = 1; i != images.Length; i++)
+			for (int i=1; i!=images.Length; i++)
 			{
 				var scale = Vector3.Lerp (minScale, maxScale, factor);
 				images[i].transform.localScale = scale;
@@ -78,25 +77,6 @@ public class IntroLogos : MonoBehaviour
 			yield return null;
 			factor += Time.deltaTime / (2f + duration);
 		}
-	}
-
-	IEnumerator FadeFinal () 
-	{
-		/// Wait a bit
-		yield return new WaitForSecondsRealtime (duration + 1f);
-
-		/// Fade intro aways with the "cortinilla"
-		float factor = 0f;
-		while (factor <= 1f)
-		{
-			images[0].materialForRendering.SetFloat ("_Scale", 1f-factor);
-
-			yield return null;
-			factor += Time.deltaTime / 2f;
-		}
-
-		/// Finally destroy this GameObject
-		Destroy (gameObject);
 	}
 	#endregion
 }

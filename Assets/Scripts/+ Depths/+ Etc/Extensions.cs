@@ -179,4 +179,13 @@ public static class Extensions
 		g.color = c;
 	}
 	#endregion
+
+	#region ANIMATION
+	public static void PlayInReverse (this Animation a, string clip) 
+	{
+		a[clip].normalizedTime = 1f;
+		a[clip].speed *= -1f;
+		a.Play (clip);
+	}
+	#endregion
 }

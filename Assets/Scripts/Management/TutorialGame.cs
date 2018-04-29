@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine;
 using UnityEngine.UI;
 using TP = TutorialGame.TutorialPhases;
@@ -49,6 +50,24 @@ public class TutorialGame : Game
 	// Starts when clicked "Play"
 	protected override IEnumerator Logic () 
 	{
+		// Turn off image-effects
+		var postfx = FindObjectOfType<PostProcessVolume> ();
+		postfx.weight = 0f;
+
+		// Wait until logos are shown
+		yield return new WaitForSeconds (2.5f);
+		GameObject.Find ("UI_Menu").GetComponent<Animator> ().SetTrigger ("Show_Menu");
+
+		// Fade-in image effects
+		float factor = 0f;
+		while (factor <= 1.1f)
+		{
+			float value = Mathf.Pow (factor, 2);
+			postfx.weight = value;
+
+			yield return null;
+			factor += Time.deltaTime / /*duration*/ 1f;
+		}
 		yield break;
 
 		// Players references
@@ -157,10 +176,7 @@ public class TutorialGame : Game
 		SwitchCartel ("");
 
 		// Hide water pit (play backwards)
-		#warning honestly just make this a extension method
-		GameObject.Find ("Plat_agua").GetComponent<Animation> ()["Out"].speed = -1;
-		GameObject.Find ("Plat_agua").GetComponent<Animation> ()["Out"].normalizedTime = 1;
-		GameObject.Find ("Plat_agua").GetComponent<Animation> ().Play ("Out");
+		GameObject.Find ("Plat_agua").GetComponent<Animation> ().PlayInReverse ("Out");
 		GameObject.Find ("Plat_agua").GetComponentInChildren<Collider> ().enabled = true;
 		#endregion
 
@@ -221,9 +237,7 @@ public class TutorialGame : Game
 	protected override void Awake () 
 	{
 		base.Awake ();
-		/// Set up game
 		Checks = new Dictionary<TP, TutorialCheck> ();
-        RenderSettings.ambientIntensity = 2.9f;
 	}
 
 	#region HERLPERS
@@ -294,9 +308,10 @@ public class TutorialGame : Game
 	{
 		var list = new List<T>
 		{
-			#warning this wont work for characters m9
 			GameObject.Find (name + "Alby").GetComponent<T> (),
-			GameObject.Find (name + "Mary").GetComponent<T> ()
+			GameObject.Find (name + "Mary").GetComponent<T> (),
+			GameObject.Find (name + "Mony").GetComponent<T> (),
+			GameObject.Find (name + "Davy").GetComponent<T> ()
 		};
 		return list;
 	}
