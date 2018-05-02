@@ -47,7 +47,6 @@ public class Alby : Character
 	private IEnumerator TurnIntoStone () 
 	{
 		var anim = other.GetComponent<Animator> ();
-		var mat = other.GetComponentInChildren<Renderer> ().sharedMaterial;
 		int _StoneLevel = Shader.PropertyToID ("_StoneLevel");
 
 		// Apply CC
@@ -58,7 +57,7 @@ public class Alby : Character
 		while (factor <= 1.1f)
 		{
 			float value = Mathf.Clamp01 (Mathf.Pow (factor, 2f));
-			mat.SetFloat (_StoneLevel, value);
+			other.mat.SetFloat (_StoneLevel, value);
 			// Slow down animator
 			anim.speed = 1 - value;
 
@@ -73,7 +72,7 @@ public class Alby : Character
 		while (factor >= -0.1f)
 		{
 			float value = Mathf.Clamp01 (Mathf.Pow (factor, 2f));
-			mat.SetFloat (_StoneLevel, value);
+			other.mat.SetFloat (_StoneLevel, value);
 			// Restore animator
 			anim.speed = 1 - value;
 

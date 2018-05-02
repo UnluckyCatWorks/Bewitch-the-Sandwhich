@@ -115,7 +115,12 @@ public static class Extensions
 	}
 	#endregion
 
-	#region FLAG ENUM
+	#region ENUM
+	public static T EnumParse<T> (this string s) where T : struct, IConvertible 
+	{
+		return (T)Enum.Parse (typeof (T), s);
+	}
+
 	/// <summary>
 	/// Usage: "if ( someEnum.HasFlag (someEnumFlag) ) {..}"
 	/// </summary>

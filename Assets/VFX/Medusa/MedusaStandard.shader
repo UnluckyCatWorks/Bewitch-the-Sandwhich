@@ -6,6 +6,7 @@
 		[Normal][NoScaleOffset] _Normal   ("Normal map", 2D) = "bump" {}
 		[NoScaleOffset] _Metallic ("Metalness", 2D) = "white" {}
 		[NoScaleOffset] _Emission ("Emission", 2D) = "black" {}
+		_EmissionColor ("Emission color", Color) = (1,1,1,1)
 		_Intensity ("Intensity", Float) = 1.0
 
 		[Header (Medusa)]
@@ -13,7 +14,6 @@
 		[NoScaleOffset] _StoneTex	("Stone texture", 2D) = "white" {}
 		_StoneNormalScale ("Stone normal scale", Float) = 1.0
 		[Normal][NoScaleOffset] _StoneNormal ("Stone normal", 2D) = "bump" {}
-		_EmissionColor ("Emission color", Color) = (1,1,1,1)
 		_StoneIntensity ("Stone emission Intensity", Float) = 1.0
 		[NoScaleOffset] _StoneEmission ("Stone emissive", 2D) = "black" {}
 
@@ -45,6 +45,7 @@
 		uniform sampler2D _Metallic;
 		uniform sampler2D _Normal;
 		uniform sampler2D _Emission;
+		uniform fixed3 _EmissionColor;
 		uniform float _Intensity;
 
 		uniform float4 _StoneScale;
@@ -52,7 +53,6 @@
 		uniform float _StoneNormalScale;
 		uniform sampler2D _StoneNormal;
 		uniform sampler2D _StoneEmission;
-		uniform fixed3 _EmissionColor;
 		uniform float _StoneIntensity;
 
 		uniform float _StoneLevel;
@@ -104,13 +104,13 @@
 			// Normal material
 			fixed3 nColor = tex2D (_MainTex, IN.uv_MainTex).rgb;
 			float3 nNormal = UnpackNormal(tex2D (_Normal, IN.uv_MainTex));
-			float3 nEmission = tex2D (_Emission, IN.uv_MainTex) * _Intensity;
+			float3 nEmission = tex2D (_Emission, IN.uv_MainTex) * _EmissionColor * _Intensity;
 			fixed4 nMetal = tex2D (_Metallic, IN.uv_MainTex);
 
 			// Petrified material
 			fixed3 pColor = TRI (_StoneTex).rgb;
 			float3 pNormal = UnpackScaleNormal(TRI (_StoneNormal), _StoneNormalScale);
-			float3 pEmission = (TRI (_StoneEmission).rgb + _EmissionColor) * _StoneIntensity;
+			float3 pEmission = TRI (_StoneEmission).rgb * _StoneIntensity;
 			fixed4 pMetal = 0;
 
 			o.Albedo = xLerp (Color);

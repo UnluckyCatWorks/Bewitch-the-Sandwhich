@@ -34,25 +34,19 @@ public enum Characters
 	NONE,
 	Alby,
 	Mary,
-
+	Mony,
+	Davy
 }
 
-public enum PlayerIsAbleTo
-{
-	None,
-	Action,
-	Special,
-	Both
-}
-
-public enum ControllerType
+public enum ControllerType 
 {
 	UNESPECIFIED,
 
-	Half_Keyboard_1,
-	Half_Keyboard_2,
+	Keyboard_Left,
+	Keyboard_Right,
 
-	Full_Gamepad
+	Gamepad_1,
+	Gamepad_2
 }
 
 [System.Flags]
@@ -74,7 +68,7 @@ public enum Locks
 	NONE = 0
 }
 
-public struct Effect
+public struct Effect 
 {
 	public Locks cc;
 }

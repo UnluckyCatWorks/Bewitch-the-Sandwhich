@@ -10,9 +10,10 @@ public abstract class Character : MonoBehaviour
 	#region DATA
 	// External
 	[Header ("Basic settings")]
-	public Player owner;
+	public bool overrideOwner;
 	public Transform grabHandle;
 	public Color focusColor;
+	public float crystalEmission;
 
 	[Header ("Spell settings")]
 	public float spellCooldown;
@@ -26,6 +27,19 @@ public abstract class Character : MonoBehaviour
 			return id;
 		}
 	}
+	internal Player Owner 
+	{
+		get
+		{
+			int owner;
+			if (overrideOwner) owner = ID % 2;
+			else owner = this.owner;
+
+			if (owner == -1) return null;
+			return Player.all[owner];
+		}
+	}
+	internal int owner = -1;
 
 	protected Dictionary<string, Effect> effects;
 	internal Locks locks;
@@ -33,6 +47,9 @@ public abstract class Character : MonoBehaviour
 	protected SmartAnimator anim;
 	protected CharacterController me;
 	protected Character other;
+
+	internal Material mat;
+	internal int _EmissionColor;
 
 	// Locomotion
 	internal float speed = 8.5f;
@@ -93,8 +110,8 @@ public abstract class Character : MonoBehaviour
 	{
 		// Get input
 		var input = Vector3.zero;
-		input.x = Input.GetAxis (GetInputName ("Horizontal"));
-		input.z = Input.GetAxis (GetInputName ("Vertical"));
+		input.x = Owner.GetAxis ("Horizontal");
+		input.z = Owner.GetAxis ("Vertical");
 
 		// Compute rotation equivalent to moving direction
 		var dir = Vector3.Min (input, input.normalized);
@@ -159,9 +176,9 @@ public abstract class Character : MonoBehaviour
 	#region DASHING
 	private void Dash () 
 	{
-		if (locks.HasFlag (Locks.Dash)) return;		// Is Dash up?
-		else if (!GetButtonDown ("Dash")) return;   // Has user pressed the button?
-		else if (toy) return;                       // Can't dash while holding stuff
+		if (locks.HasFlag (Locks.Dash)) return;			// Is Dash up?
+		else if (!Owner.GetButton ("Dash")) return;		// Has user pressed the button?
+		else if (toy) return;							// Can't dash while holding stuff
 		// If everything's ok
 		else Dashing = true;
 
@@ -252,7 +269,7 @@ public abstract class Character : MonoBehaviour
 	private void CheckSpell () 
 	{
 		if (locks.HasFlag (Locks.Spells)) return;
-		if (!GetButtonDown ("Special")) return;
+		if (!Owner.GetButton ("Spell")) return;
 		if (toy) return;
 
 		// If everything's ok
@@ -261,6 +278,7 @@ public abstract class Character : MonoBehaviour
 
 		// Self CC used as cooldown
 		AddCC ("-> Spell", Locks.Spells);
+		SwitchCrystal (value: false);
 
 		// Cast spell & put it on CD
 		anim.SetTrigger ("Cast_Spell");
@@ -272,15 +290,15 @@ public abstract class Character : MonoBehaviour
 	{
 		// Just wait until CD is over
 		yield return new WaitForSeconds (spellCooldown);
+		SwitchCrystal (value: true);
 		RemoveCC ("-> Spell");
 	}
 
-	#region MAGIC CRYSTAL
-	public void TurnOnCrystal ()
+	public void SwitchCrystal (bool value) 
 	{
-
+		var color = Color.white * (value ? crystalEmission : 0f);
+		mat.SetColor (_EmissionColor, color);
 	}
-	#endregion
 	#endregion
 
 	#region INTERACTION
@@ -306,7 +324,7 @@ public abstract class Character : MonoBehaviour
 					var m = interactable as MachineInterface;
 					if (m) m.PlayerIsNear (near: true);
 				}
-				if (GetButtonDown ("Action")) interactable.Action (this);
+				if (Owner.GetButton ("Action")) interactable.Action (this);
 				return;
 			}
 		}
@@ -326,7 +344,7 @@ public abstract class Character : MonoBehaviour
 
 		// If not in front of any interactable,
 		// or not executed any interaction
-		if (GetButtonDown ("Action", true) && toy)
+		if (Owner.GetButton ("Action", true) && toy)
 			toy.Throw (MovingDir * ThrowForce, owner: this);
 	}
 
@@ -422,14 +440,16 @@ public abstract class Character : MonoBehaviour
 	#region UNITY CALLBACKS
 	protected virtual void Update () 
 	{
+		if (Owner == null)
+			return;
+
 		// Initialization
+		Owner.ResetInputs ();
 		ReadEffects ();
 
 		if (Game.paused) 
 		{
-			// Stop player
 			Moving = false;
-			// Skip all other actions
 			return;
 		}
 
@@ -442,9 +462,6 @@ public abstract class Character : MonoBehaviour
 		// Interaction
 		CheckInteractions ();
 		CheckSpell ();
-
-		// Reset
-		owner.ResetInputs ();
 	}
 
 	protected virtual void Awake () 
@@ -455,7 +472,11 @@ public abstract class Character : MonoBehaviour
 		// Initialize stuff
 		anim = new SmartAnimator (GetComponent<Animator> ());
 		effects = new Dictionary<string, Effect> ();
-		consumedInputs = new List<string> ();
+
+		// Initialize crystal
+		mat = GetComponentInChildren<Renderer> ().sharedMaterial;
+		_EmissionColor = Shader.PropertyToID ("_EmissionColor");
+		SwitchCrystal (value: true);
 
 		// Get some references
 		me = GetComponent<CharacterController> ();
