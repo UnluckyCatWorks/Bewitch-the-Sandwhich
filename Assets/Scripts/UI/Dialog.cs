@@ -74,12 +74,10 @@ public class Dialog : MonoBehaviour
 	public static Coroutine StartNew (string path, Animator anim=null)
 	{
 		var speech = Resources.Load<Speech> ("Dialogs/" + path);
-		if (speech)
+		if (speech) 
 		{
-			var ui = GameObject.Find ("UI_Master");
-
 			var prefab = Resources.Load<Dialog> ("Prefabs/Dialog");
-			var dialog = Instantiate (prefab, ui.transform);
+			var dialog = Instantiate (prefab, UIMaster.manager.transform);
 			dialog.anim = anim;
 
 			return dialog.StartCoroutine (dialog.Display (speech.dialog));

@@ -170,7 +170,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.61883664
+      - time: 0.67413616
         functionName: HatToHead
         data: 
         objectReferenceParameter: {instanceID: 0}

@@ -28,15 +28,13 @@ public class Mary : Character
 		Destroy (vfx.gameObject, 2f);
 
 		// Find out if any hit was the other player
-		var hits = Physics.OverlapSphere (transform.position, areaOfEffect.GetComponent<SphereCollider> ().radius);
+		var hits = Physics.OverlapSphere (transform.position, areaOfEffect.GetComponent<SphereCollider> ().radius, 1<<14);
 		foreach (var h in hits)
 		{	
 			if (h.name == other.name)
 			{
 				// If inside tutorial
-				var check = TutorialGame.TutorialPhases.Casting_Spells;
-				if (TutorialGame.IsChecking (check))
-					TutorialGame.Checks[check].Set (Characters.Mary, true);
+				Tutorial.SetCheckFor (Characters.Mary, Tutorial.Phases.Casting_Spells, true);
 
 				// Knock hit player
 				var dir = other.transform.position - transform.position;

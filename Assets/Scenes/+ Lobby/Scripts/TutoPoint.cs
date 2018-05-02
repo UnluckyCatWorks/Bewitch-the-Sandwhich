@@ -4,26 +4,28 @@ using UnityEngine;
 
 public class TutoPoint : MonoBehaviour
 {
+	#region DATA
 	public Characters observedCharacter;
-	public TutorialGame.TutorialPhases phase;
+	public Tutorial.Phases phase;
 
 	// Some kind of green for when players enter the check-point
-	private readonly Color validColor = new Color32 (009, 242, 195, 255);
+	private readonly Color validColor = new Color32 (009, 242, 195, 255); 
+	#endregion
 
-	private void OnTriggerEnter (Collider other) 
+	#region CALLBACKS
+	private void OnTriggerEnter (Collider other)
 	{
 		if (other.name != observedCharacter.ToString ()) return;
-		if (!TutorialGame.IsChecking (phase)) return;
 
 		GetComponent<Marker> ().On (validColor);
-		TutorialGame.Checks[phase].Set (observedCharacter, true);
+		Tutorial.SetCheckFor (observedCharacter, phase, true);
 	}
-	private void OnTriggerExit (Collider other) 
+	private void OnTriggerExit (Collider other)
 	{
 		if (other.name != observedCharacter.ToString ()) return;
-		if (!TutorialGame.IsChecking (phase)) return;
 
 		GetComponent<Marker> ().Off ();
-		TutorialGame.Checks[phase].Set (observedCharacter, false);
-	}
+		Tutorial.SetCheckFor (observedCharacter, phase, false);
+	} 
+	#endregion
 }

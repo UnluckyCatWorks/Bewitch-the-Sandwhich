@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7626145be1ada9c4fb621cd847b17bca, type: 3}
+  m_Name: Intro
+  m_EditorClassIdentifier: 
+  dialog:
+  - message: Greetings!
+    speed: 20
+    trigger: 
+  - message: 'I see,
+
+      you''re the new contestants.'
+    speed: 20
+    trigger: 
+  - message: Let me welcome you to...
+    speed: 20
+    trigger: Jump
+  - message: BEWITCH THE SANDWICH !!!
+    speed: 30
+    trigger: Normal
+  - message: Present yourselves in the Arena when you're ready!
+    speed: 20
+    trigger: 

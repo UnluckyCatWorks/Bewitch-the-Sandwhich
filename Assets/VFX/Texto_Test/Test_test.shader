@@ -90,14 +90,14 @@ Shader "Hidden/Test"
                 UNITY_SETUP_INSTANCE_ID(v);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
 
-				v.vertex.y += sin(_Time.z*2 + saturate (v.position).x) * 50;
+				v.vertex.y += sin(_Time.z*2) * 10;
                 OUT.worldPosition = v.vertex;
 
                 OUT.vertex = UnityObjectToClipPos(OUT.worldPosition);
 
                 OUT.texcoord = v.texcoord;
 
-				OUT.color = v.vertex;// v.color * _Color;
+				OUT.color = v.color * _Color;
                 return OUT;
             }
 

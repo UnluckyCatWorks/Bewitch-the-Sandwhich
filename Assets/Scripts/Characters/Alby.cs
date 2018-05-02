@@ -23,7 +23,7 @@ public class Alby : Character
 
 		bool hitPlayer = false;
 		var col = areaOfEffect.GetComponent<SphereCollider> ();
-		var hits = Physics.OverlapSphere (areaOfEffect.transform.position, col.radius);
+		var hits = Physics.OverlapSphere (areaOfEffect.transform.position, col.radius, 1<<14);
 		foreach (var h in hits)
 		{
 			// Find out if any hit was the other player
@@ -32,10 +32,8 @@ public class Alby : Character
 		}
 		if (hitPlayer)
 		{
-			// If in the tutorial
-			var check = TutorialGame.TutorialPhases.Casting_Spells;
-			if (TutorialGame.IsChecking (check))
-				TutorialGame.Checks[check].Set (Characters.Alby, true);
+			// If inside tutorial 
+			Tutorial.SetCheckFor (Characters.Alby, Tutorial.Phases.Casting_Spells, true);
 
 			// Spawn VFX
 			var vfx = Instantiate (spellVFX);
