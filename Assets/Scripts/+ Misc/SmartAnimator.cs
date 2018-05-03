@@ -28,13 +28,13 @@ public class SmartAnimator : UnityEngine.Object
 	/// Creates a wrapper around given Animator and makes a cache of all
 	/// its parameters for faster checks and modifications.
 	/// </summary>
-	public SmartAnimator (Animator animator)
+	public SmartAnimator (Animator animator) 
 	{
 		// Null check
 		if (!animator)
 		{
 			Debug.LogError ("Provided Animator is null!", this);
-			return;
+			throw new Exception ();
 		}
 		// Initialize dictionaries
 		floats = new Dictionary<string, Param<float>> ();

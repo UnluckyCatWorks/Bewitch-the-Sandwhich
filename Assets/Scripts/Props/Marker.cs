@@ -94,7 +94,7 @@ public class Marker : MonoBehaviour
 		// Set up references
 		if (!mesh) mesh = GetComponentInChildren<MeshRenderer> ();
 		if (!sign) sign = GetComponentInChildren<SpriteRenderer> ();
-		if (fColors == null)
+		if (fColors == null) 
 		{
 			fColors = new List<Color> (2);
 			fColors.Add (new Color (0, 0, 0, 0));
@@ -139,7 +139,7 @@ public class Marker : MonoBehaviour
 		}
 	}
 
-	public void OnEnable () 
+	public void Awake () 
 	{
 		Initialize ();
 		SetUp ();

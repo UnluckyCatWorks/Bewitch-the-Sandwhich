@@ -38,10 +38,12 @@ public class Player
 	#endregion
 
 	#region HELPERS
-	public float GetAxis (string axis) 
+	public float GetAxis (string axis, bool raw = false) 
 	{
 		axis = scheme.GetAxisName (axis);
-		return Input.GetAxis (axis);
+
+		if (raw)	return Input.GetAxisRaw (axis);
+		else		return Input.GetAxis (axis);
 	}
 
 	public bool GetButton (string button, bool consume = true) 

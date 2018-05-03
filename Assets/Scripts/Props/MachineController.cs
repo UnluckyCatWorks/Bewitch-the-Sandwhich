@@ -4,8 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-[SharedBetweenAnimators]
-public class MachineController : StateMachineBehaviour
+public class MachineController : StateMachineBehaviour 
 {
 	internal MachineState state;			// The current status of the machine
 	internal SmartAnimator anim;			// The machine animator

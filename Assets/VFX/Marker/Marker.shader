@@ -3,7 +3,7 @@
 	Properties
 	{
 		[PerRendererData]
-		_Color ("Color", Color) = (1,1,1,1)
+		[HDR] _Color ("Color", Color) = (1,1,1,1)
 	}
 	SubShader
 	{
@@ -29,7 +29,7 @@
 				float height : TEXCOORD1;
 				// UNITY_FOG_COORDS(1)
 			};
-			fixed4 _Color;
+			float4 _Color;
 			
 			v2f vert (appdata v)
 			{

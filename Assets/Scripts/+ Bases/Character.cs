@@ -281,7 +281,7 @@ public abstract class Character : Pawn
 
 	public void SwitchCrystal (bool value) 
 	{
-		var color = Color.white * (value ? crystalEmission : 0f);
+		var color = Color.white * (value? crystalEmission : 0f);
 		mat.SetColor (_EmissionColor, color);
 	}
 	#endregion

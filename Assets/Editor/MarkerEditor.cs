@@ -22,7 +22,7 @@ public class MarkerEditor : Editor
 		EditorGUILayout.LabelField ("Helper controls", EditorStyles.boldLabel);
 
 		EditorGUI.BeginChangeCheck ();
-		color = EditorGUILayout.ColorField ("Color", color);
+		color = EditorGUILayout.ColorField (new GUIContent("Emission color"), color, true, true, true, new ColorPickerHDRConfig (0, 5, 0, 10));
 		icon = EditorGUILayout.ToggleLeft ("Show icon", icon);
 
 		if (EditorGUI.EndChangeCheck ()) 
@@ -35,12 +35,11 @@ public class MarkerEditor : Editor
 			marker.MakeIconFaceCamera ();
 	}
 
-	private void OnEnable () 
+	private void Awake () 
 	{
 		marker = target as Marker;
 		marker.SetUp ();
 		Marker.Initialize ();
-
 		color = marker.GetCurrentColor ();
 	}
 }

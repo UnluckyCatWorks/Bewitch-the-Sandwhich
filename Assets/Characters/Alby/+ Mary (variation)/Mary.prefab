@@ -1602,8 +1602,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1304399107086124}
-  m_LocalRotation: {x: -0, y: -0.020309975, z: -0, w: 0.99979377}
-  m_LocalPosition: {x: -5.3, y: -0.15, z: -1.47}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.194, y: -0.147, z: -5.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4218556083496144}
@@ -1612,7 +1612,7 @@ Transform:
   - {fileID: 4041776794894758}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -2.328, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4993071084942748
 Transform:
   m_ObjectHideFlags: 1
@@ -1696,9 +1696,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca257bdb378f214198dc89beb66a5d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ownerID: 0
+  overrideControl: 0
   grabHandle: {fileID: 4937281900218502}
-  control: 1
   focusColor: {r: 0.45588207, g: 0, b: 1, a: 1}
+  crystalEmission: 6.61
   spellCooldown: 4
   areaColor: {r: 0.30882353, g: 0.32915226, b: 1, a: 1}
   spellVFX: {fileID: 1206203692246924, guid: 9763c67fe7161b64a867536f0900ca99, type: 2}
