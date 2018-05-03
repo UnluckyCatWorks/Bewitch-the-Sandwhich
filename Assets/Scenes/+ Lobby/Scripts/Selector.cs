@@ -59,8 +59,6 @@ public class Selector : Pawn
 		// If value has changed
 		if (lastSelected != selected) 
 		{
-			// Move animator
-			anim.SetInt ("Selected", selected);
 			// Switch crystal states
 			showcase[selected].SwitchCrystal (value: true);
 			showcase[lastSelected].SwitchCrystal (value: false);
@@ -80,7 +78,7 @@ public class Selector : Pawn
 		float duration = 0.5f;
 		while (factor < 1.1f) 
 		{
-			float value = Mathf.Lerp (1-target, target, Mathf.Pow (factor, 0.5f));
+			float value = Mathf.Lerp (1-target, target, factor);
 
 			light.intensity = lightIntensity * value;
 			icons.ForEach (i => i.SetAlpha (value));
@@ -113,6 +111,11 @@ public class Selector : Pawn
 		// Check if close enough to selected to keep moving
 		closeEnough = Vector3.Distance (tPos, transform.position) <= 0.4f;
 
+		// Move animator towards selected value
+		float iValue = anim.GetFloat ("Blend");
+		float tValue = selected / 3f;
+		anim.SetFloat ("Blend", Mathf.Lerp (iValue, tValue, Time.deltaTime * Speed));
+
 		// Make info face camera
 		canvas.LookAt (cam);
 	}
@@ -124,10 +127,8 @@ public class Selector : Pawn
 		other = FindObjectsOfType<Selector> ().First (s=> s != this);
 		icons = canvas.GetComponentsInChildren<Graphic> ().ToList ();
 		lightIntensity = light.intensity;
-
 		// Initialize animator
 		anim = new SmartAnimator ( canvas.GetComponent<Animator> () );
-		anim.SetInt ("Selected", selected);
 
 		// Turn off by default
 		SwitchState (state: false);
