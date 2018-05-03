@@ -9,7 +9,6 @@ public class Player
 {
 	#region DATA
 	public static Player[] all;
-	public static int amountOfJoysticks;
 
 	public ControlScheme scheme;
 	public PlayerData data;
@@ -29,16 +28,16 @@ public class Player
 	(RuntimeInitializeLoadType.BeforeSceneLoad)]
 	private static void CreatePlayers () 
 	{
-		all = new Player[2];
-		amountOfJoysticks = Input.GetJoystickNames ().Length;
+		// Control configuration is loaded and then players are created
+		MasterControls.LoadControllers ();
 
-		// This is later modified by the controller options script
-		all[0] = new Player (ControllerType.Keyboard_Left);
-		all[1] = new Player (ControllerType.Keyboard_Right);
+		all = new Player[2];
+		all[0] = new Player (MasterControls.controllers[0]);
+		all[1] = new Player (MasterControls.controllers[1]);
 	} 
 	#endregion
 
-	#region SPECIAL INPUT HELPERS
+	#region HELPERS
 	public float GetAxis (string axis) 
 	{
 		axis = scheme.GetAxisName (axis);

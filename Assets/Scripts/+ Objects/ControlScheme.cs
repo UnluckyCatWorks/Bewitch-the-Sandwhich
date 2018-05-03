@@ -27,8 +27,8 @@ public class ControlScheme : ScriptableObject
 		else
 		if (button == "Dash") name = dash;
 
-		if (type == ControllerType.Gamepad_1) name.Insert (0, "joystick 1 ");
-		if (type == ControllerType.Gamepad_2) name.Insert (0, "joystick 2 ");
+		if (type == ControllerType.Gamepad_1) name = name.Insert (0, "joystick 1 ");
+		if (type == ControllerType.Gamepad_2) name = name.Insert (0, "joystick 2 ");
 
 		return name;
 	}

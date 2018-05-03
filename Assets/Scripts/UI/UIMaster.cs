@@ -35,22 +35,22 @@ public class UIMaster : MonoBehaviour
 			yield return null;
 		}
 
-		/// Load scene
+		// Load scene
 		yield return SceneManager.LoadSceneAsync (scene);
-		/// Wait extra time always
+		// Wait extra time always
 		yield return new WaitForSeconds (1f);
 
-		/// Open Cortinilla
+		// Open Cortinilla
 		while (factor >= 0f)
 		{
 			cortinilla.materialForRendering.SetFloat (id, factor);
 			factor -= Time.deltaTime / duration;
 			yield return null;
 		}
-		/// Get rid of it
+		// Get rid of it
 		Destroy (cortinilla.gameObject);
 
-		/// Enable game
+		// Enable game
 		Game.manager.enabled = true;
 	}
 	#endregion

@@ -67,7 +67,7 @@ namespace VortexStudios.PostProcessing {
                 material.SetFloat( "_Fringing", fringing );
                 material.SetFloat( "_Artifact", artifact );
                 material.SetFloatArray( "_Kernel", _polarity ? _polarityPositive : _polarityNegative );
-                Graphics.Blit( SOURCEBUFFER, DESTBUFFER, material );
+				UnityEngine.Graphics.Blit(SOURCEBUFFER, DESTBUFFER, material);
                 SWAPBUFFER();
             }
 
@@ -76,7 +76,7 @@ namespace VortexStudios.PostProcessing {
                 materialBleeding.SetFloat( "_ScreenWidth", screenSize.x );
                 materialBleeding.SetFloat( "_ScreenHeight", screenSize.y );
                 materialBleeding.SetFloat( "_Magnitude", bleeding );
-                Graphics.Blit( SOURCEBUFFER, DESTBUFFER, materialBleeding );
+				UnityEngine.Graphics.Blit(SOURCEBUFFER, DESTBUFFER, materialBleeding);
                 SWAPBUFFER();
             }
 

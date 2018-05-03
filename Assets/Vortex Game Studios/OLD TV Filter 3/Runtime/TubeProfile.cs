@@ -29,7 +29,7 @@ namespace VortexStudios.PostProcessing {
                 material.SetFloat( "_Distortion", distortionMagnitude );
                 material.SetFloat( "_Reflex", reflexMagnitude );
 
-                Graphics.Blit( SOURCEBUFFER, DESTBUFFER, material, 0 );
+				UnityEngine.Graphics.Blit(SOURCEBUFFER, DESTBUFFER, material, 0 );
                 SWAPBUFFER();
             }
 

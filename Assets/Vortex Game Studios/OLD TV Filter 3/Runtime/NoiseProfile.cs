@@ -36,7 +36,7 @@ namespace VortexStudios.PostProcessing {
                 //_PatternOffset
                 material.SetFloat( "_Magnitude", magnetude );
 
-                Graphics.Blit( SOURCEBUFFER, DESTBUFFER, material );
+				UnityEngine.Graphics.Blit(SOURCEBUFFER, DESTBUFFER, material);
                 SWAPBUFFER();
             }
 

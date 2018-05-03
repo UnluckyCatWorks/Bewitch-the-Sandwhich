@@ -37,6 +37,6 @@ public class OLDTVScreen : FilterBehavior {
         this.material.SetFloat( "_StaticVertical", staticVertical );
 		this.material.SetFloat( "_StaticMagnetude", staticMagnetude );
 
-        Graphics.Blit( source, destination, this.material );
+		UnityEngine.Graphics.Blit( source, destination, this.material );
     }
 }

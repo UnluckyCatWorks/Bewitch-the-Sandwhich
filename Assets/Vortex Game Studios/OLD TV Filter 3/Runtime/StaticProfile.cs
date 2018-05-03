@@ -48,7 +48,7 @@ namespace VortexStudios.PostProcessing {
                 material.SetTexture( "_DirtTex", dirtPattern );
                 material.SetFloat( "_DirtMagnitude", dirtMagnitude );
 
-                Graphics.Blit( SOURCEBUFFER, DESTBUFFER, material );
+				UnityEngine.Graphics.Blit(SOURCEBUFFER, DESTBUFFER, material);
                 SWAPBUFFER();
             }
             

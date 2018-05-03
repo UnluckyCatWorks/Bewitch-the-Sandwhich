@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace Data
 {
-	[CreateAssetMenu]
 	public class LocalStats : ScriptableObject 
 	{
 		public List<PlayerData> registeredPlayers;

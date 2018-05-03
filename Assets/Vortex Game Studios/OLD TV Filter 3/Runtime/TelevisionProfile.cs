@@ -42,7 +42,7 @@ namespace VortexStudios.PostProcessing {
                 material.SetFloat( "_Saturation", (saturation * 2.0f) );
                 material.SetFloat( "_Sharpness", sharpness );
 
-                Graphics.Blit( SOURCEBUFFER, DESTBUFFER, material );
+				UnityEngine.Graphics.Blit(SOURCEBUFFER, DESTBUFFER, material);
                 SWAPBUFFER();
             }
 

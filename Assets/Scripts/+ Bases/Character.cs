@@ -5,12 +5,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [SelectionBase]
-public abstract class Character : MonoBehaviour
+public abstract class Character : Pawn
 {
 	#region DATA
-	// External
 	[Header ("Basic settings")]
-	public bool overrideOwner;
 	public Transform grabHandle;
 	public Color focusColor;
 	public float crystalEmission;
@@ -19,27 +17,14 @@ public abstract class Character : MonoBehaviour
 	public float spellCooldown;
 
 	// Basic character info
-	internal int ID 
+	internal Characters ID 
 	{
 		get
 		{
-			int id = (int) Enum.Parse (typeof(Characters), name);
+			var id = name.EnumParse<Characters> ();
 			return id;
 		}
 	}
-	internal Player Owner 
-	{
-		get
-		{
-			int owner;
-			if (overrideOwner) owner = ID % 2;
-			else owner = this.owner;
-
-			if (owner == -1) return null;
-			return Player.all[owner];
-		}
-	}
-	internal int owner = -1;
 
 	protected Dictionary<string, Effect> effects;
 	internal Locks locks;
@@ -408,9 +393,9 @@ public abstract class Character : MonoBehaviour
 	#endregion
 
 	#region HELPERS
-	// Get coorrect camera-dependent vector
 	private Vector3 TranformToCamera (Vector3 dir) 
 	{
+		// Get coorrect camera-dependent vector
 		var cam = Camera.main.transform;
 		// Ignore rotation (except Y) 
 		var rot = cam.eulerAngles;
@@ -420,20 +405,25 @@ public abstract class Character : MonoBehaviour
 		return Matrix4x4.TRS (cam.position, Quaternion.Euler (rot), Vector3.one).MultiplyVector (dir);
 	}
 
-	// Returns 'Ray' for checking interactions
 	private Ray NewRay () 
 	{
-		// Generates ray for raycasting
+		// Returns 'Ray' for checking interactions
 		var origin = transform.position;
 		origin.y += 0.75f + 0.15f;
 		return new Ray (origin, transform.forward);
 	}
 
-	// Gets instance of specific character
 	public static Character Get<T> () where T : Character
 	{
+		// Gets instance of specific character
 		var c = GameObject.Find (typeof (T).Name);
 		return c.GetComponent<T> ();
+	}
+
+	public void FindOther () 
+	{
+		// Find other player
+		other = FindObjectsOfType<Character> ().First (c => c != this);
 	}
 	#endregion
 
@@ -466,9 +456,6 @@ public abstract class Character : MonoBehaviour
 
 	protected virtual void Awake () 
 	{
-		// Find other player
-		other = FindObjectsOfType<Character> ().First (c => c != this);
-
 		// Initialize stuff
 		anim = new SmartAnimator (GetComponent<Animator> ());
 		effects = new Dictionary<string, Effect> ();

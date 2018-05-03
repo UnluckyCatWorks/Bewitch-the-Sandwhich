@@ -73,7 +73,7 @@ public class OLDTVFilter3 : MonoBehaviour {
 
     void OnRenderImage( RenderTexture source, RenderTexture destination ) {
         if ( _preset == null ) {
-            Graphics.Blit( source, destination );
+			UnityEngine.Graphics.Blit( source, destination );
             return;
         }
 
@@ -105,7 +105,7 @@ public class OLDTVFilter3 : MonoBehaviour {
             PostProcessingProfile.DESTBUFFER.filterMode = FilterMode.Bilinear;
         }
 
-        Graphics.Blit( source, PostProcessingProfile.SOURCEBUFFER );
+		UnityEngine.Graphics.Blit( source, PostProcessingProfile.SOURCEBUFFER );
 
         //  ruido
         if ( _preset.noiseFilter.enabled ) {
@@ -136,7 +136,7 @@ public class OLDTVFilter3 : MonoBehaviour {
             _preset.tubeFilter.OnRenderImage( source );
         }
 
-        //Graphics.CopyTexture( source, destination );
-        Graphics.Blit( PostProcessingProfile.SOURCEBUFFER, destination );
+		//Graphics.CopyTexture( source, destination );
+		UnityEngine.Graphics.Blit(PostProcessingProfile.SOURCEBUFFER, destination );
     }
 }

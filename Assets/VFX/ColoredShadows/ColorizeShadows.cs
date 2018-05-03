@@ -15,7 +15,7 @@ public class ColorizeShadows : MonoBehaviour
 	private void OnRenderImage (RenderTexture source, RenderTexture destination)
 	{
 		if (!mat) return;
-		Graphics.Blit (source, destination, mat);
+		UnityEngine.Graphics.Blit (source, destination, mat);
 	}
 
 	private void OnEnable () 

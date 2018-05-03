@@ -108,7 +108,7 @@ public class Lobby : Game
 
 		// Otherwise, just go directly
 		// to the character selection part
-		StartCoroutine (Extensions.FadeAmbient (1f, 2f, 0.8f));
+		StartCoroutine (Extensions.FadeAmbient (0.35f, 2f, 0.8f));
 		rig.SetTrigger ("ToCharSelect");
 	}
 

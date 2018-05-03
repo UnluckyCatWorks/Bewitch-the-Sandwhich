@@ -21,7 +21,7 @@ namespace VortexStudios.PostProcessing {
                 material.SetTexture( "_MaskTex", pattern );
                 material.SetFloat( "_Magnitude", magnetude * magnetude );
 
-                Graphics.Blit( SOURCEBUFFER, DESTBUFFER, material, 0 );
+				UnityEngine.Graphics.Blit(SOURCEBUFFER, DESTBUFFER, material, 0 );
 
                 SWAPBUFFER();
             }
