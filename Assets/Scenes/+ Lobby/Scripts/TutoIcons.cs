@@ -46,7 +46,7 @@ public class TutoIcons : MonoBehaviour
 		current.rotation = Quaternion.LookRotation (-dir.normalized);
 	}
 
-	private void InitializeAs (ControllerType controller) 
+	public void InitializeAs (ControllerType controller) 
 	{
 		var child = transform.GetChild ((int) controller - 1);
 		int childCount = child.childCount;
@@ -56,7 +56,7 @@ public class TutoIcons : MonoBehaviour
 
 		icons = new Dictionary<string, SpriteRenderer> ();
 		// Register all child sprites
-		for (int i = 0; i !=childCount; i++)
+		for (int i = 0; i !=childCount; i++) 
 		{
 			var c = child.GetChild (i);
 			var s = c.GetComponent<SpriteRenderer> ();

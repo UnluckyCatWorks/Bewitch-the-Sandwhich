@@ -17,37 +17,93 @@ public class Tutorial : MonoBehaviour
 	#endregion
 
 	#region CALLBACKS
-	public static IEnumerator Logic () 
+	public void StartTutorial () 
 	{
+		StartCoroutine (Logic ());
+	}
+
+	private IEnumerator Logic () 
+	{
+		// Start tutorial
 		onTutorial = true;
-		// tutorial stuff
-		onTutorial = false;
-		yield break;
-		
-		#region TAL
-		/*
-		// Make players visible
-		//		ps.ForEach (p => p.gameObject.SetActive (true));
-		// Wait a bit, & allow movement
-		yield return new WaitForSecondsRealtime (3f);
-		paused = false;
+		Game.paused = false;
 
-		#region MOVING
-		/// Show movement marks
-		GetTuto<Marker> ("Movement_").ForEach (m => m.On (new Color (0, 0, 0, 0)));
-		SwitchCartel ("MOVE");
+		#region PREPARATION
+		// Get some references
+		var menu = GameObject.Find ("UI_MENU").GetComponent<Animator> ();
+		var focos = GameObject.Find ("Focos").GetComponent<Animator> ();
+		var rig = GameObject.Find ("Camera_Rig").GetComponent<Animator> ();
+		var modeMenu = GameObject.Find ("UI_MODE_SELECTION");
 
-		/// Wait until all players are in place
-		Checks.Add (TP.Moving, new TutorialCheck ());
-		while (Checks[TP.Moving].AllWhoPlay) yield return null;
-		Checks.Remove (TP.Moving);
+		// Spawn player characters
+		var ps = new List<Character> 
+		{
+			Instantiate(Resources.Load<Character>("Prefabs/Characters/" + Player.all[0].playingAs)),
+			Instantiate(Resources.Load<Character>("Prefabs/Characters/" + Player.all[1].playingAs)),
+		};
+		// Assign them their owners
+		ps[0].ownerID = 1;
+		ps[1].ownerID = 2;
+		// Position them
+		var positions = Lobby.Get<Transform> ("Start_", false);
+		ps[0].transform.position = positions[0].position;
+		ps[1].transform.position = positions[1].position;
+		// Restrict their capabilities
+		ps.ForEach (p => p.AddCC ("Movement", Locks.Movement));
+		ps.ForEach (p => p.AddCC ("Dash", Locks.Dash));
+		ps.ForEach (p => p.AddCC ("Spell", Locks.Spells));
+		ps.ForEach (p => p.AddCC ("Interactions", Locks.Interaction));
 
-		/// Turn off markers
-		GetTuto<Marker> ("Movement_").ForEach (m => m.Off ());
-		SwitchCartel ("");
-		paused = true;
+		// Spawn the Tuto_Icons on them
+		var iconsPrefab = Resources.Load<TutoIcons> ("Prefabs/Tuto_Icons");
+		var icons = new List<TutoIcons>
+		{
+			Instantiate (iconsPrefab, ps[0].transform),
+			Instantiate (iconsPrefab, ps[1].transform)
+		};
+		icons[0].InitializeAs (Player.all[0].scheme.type);
+		icons[1].InitializeAs (Player.all[1].scheme.type);
 		#endregion
 
+		// Go to the scene
+		rig.SetTrigger ("ToScene");
+		focos.SetTrigger ("Light_Scene");
+		StartCoroutine (Extensions.FadeAmbient (1.9f, 3f, 0.5f));
+		// Wait until mode menu is out of camera
+		yield return new WaitForSeconds (1.1f);
+		modeMenu.SetActive (false);
+
+		// Wait a bit
+		yield return new WaitForSeconds (3f);
+
+		#region MOVING
+		SwitchCartel ("MOVE");
+		// Show movement marks
+		var movMarkers = Lobby.Get<Marker> ("Movement_", false);
+		movMarkers[0].On (ps[0].focusColor);
+		movMarkers[1].On (ps[1].focusColor);
+		// Alow movement
+		ps.ForEach (p=> p.RemoveCC ("Movement"));
+
+		// Wait until all players are in place
+		Checks.Add (Phases.Moving, new Check ());
+		while (!Checks[Phases.Moving].Ready) yield return null;
+		Checks.Remove (Phases.Moving);
+
+		// Turn off markers
+		movMarkers[0].Off (TutoPoint.validColor);
+		movMarkers[0].Off (ps[0].focusColor);
+		movMarkers[1].Off (TutoPoint.validColor);
+		movMarkers[1].Off (ps[1].focusColor);
+
+		SwitchCartel ("");
+		Game.paused = true;
+		#endregion
+
+		// End tutorial
+		onTutorial = false;
+		#region TAL
+		/*
 		#region DASHING
 		// Show water pit
 		yield return new WaitForSecondsRealtime (1f);
@@ -132,7 +188,9 @@ public class Tutorial : MonoBehaviour
 	private void Awake () 
 	{
 		manager = this;
+		// Reset
 		Checks = new Dictionary<Phases, Check> ();
+		onTutorial = false;
 	}
 	#endregion
 
@@ -152,18 +210,21 @@ public class Tutorial : MonoBehaviour
 
 		// Only true if all players who
 		// are currently playing are done
-		public bool AllWhoPlay 
+		public bool Ready 
 		{
-			// For now, only 2 players can play at once
-			get { return validatedCharacters.Count == 2; }
+			get
+			{
+				if (validatedCharacters == null)
+					validatedCharacters = new List<Characters> ();
+
+				// For now, only 2 players can play at once
+				return (validatedCharacters.Count == 2);
+			}
 		}
 
 		// Keeps track of who has validated this point
 		public void Set (Characters who, bool value)
 		{
-			if (validatedCharacters == null)
-				validatedCharacters = new List<Characters> (4);
-
 			// Validate character
 			if (value && !validatedCharacters.Contains (who))
 				validatedCharacters.Add (who);
@@ -198,18 +259,6 @@ public class Tutorial : MonoBehaviour
 			cartelMat.SetColor ("_EmissionColor", Color.black);
 			cartel.material.SetFloat ("_Intensity", 0f);
 		}
-	}
-
-	private List<T> GetTuto<T> (string name) 
-	{
-		var list = new List<T>
-		{
-			GameObject.Find (name + "Alby").GetComponent<T> (),
-			GameObject.Find (name + "Mary").GetComponent<T> (),
-			GameObject.Find (name + "Mony").GetComponent<T> (),
-			GameObject.Find (name + "Davy").GetComponent<T> ()
-		};
-		return list;
 	}
 	#endregion
 }

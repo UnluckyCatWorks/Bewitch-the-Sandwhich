@@ -15,9 +15,7 @@ MonoBehaviour:
   - message: Greetings!
     speed: 20
     trigger: 
-  - message: 'I see,
-
-      you''re the new contestants.'
+  - message: You must be the new contestants.
     speed: 20
     trigger: 
   - message: Let me welcome you to...
@@ -26,6 +24,9 @@ MonoBehaviour:
   - message: BEWITCH THE SANDWICH !!!
     speed: 30
     trigger: Normal
+  - message: I hope you're ready for some action, and probably getting a bit wet.
+    speed: 20
+    trigger: 
   - message: Present yourselves in the Arena when you're ready!
     speed: 20
     trigger: 

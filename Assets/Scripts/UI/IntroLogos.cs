@@ -8,7 +8,7 @@ public class IntroLogos : MonoBehaviour
 	// 0 is self
 	// the rest are logos
 	private Graphic[] images;
-	private const float duration = 3f;
+	private const float duration = 4f;
 
 	private void Start () 
 	{

@@ -13,8 +13,10 @@ public class Selector : Pawn
 	[ColorUsage(true, true, 0, 5, 0, 5)] public Color selectionColor;
 	[ColorUsage(true, true, 0, 5, 0, 5)] public Color highlightColor;
 	public new Light light;
-	public Transform canvas;
 	public Marker marker;
+	public Transform canvas;
+	public InputField userName;
+	public Transform controllersParent;
 
 	private SmartAnimator anim;
 	private Transform cam;
@@ -59,6 +61,8 @@ public class Selector : Pawn
 		// If value has changed
 		if (lastSelected != selected) 
 		{
+			// Set as not-ready
+			anim.SetBool ("Ready", false);
 			// Switch crystal states
 			showcase[selected].SwitchCrystal (value: true);
 			showcase[lastSelected].SwitchCrystal (value: false);
@@ -90,21 +94,73 @@ public class Selector : Pawn
 
 	private void UpdateControllerInfo () 
 	{
-		for (int i=1; i!=canvas.childCount; i++) 
+		for (int i=1; i!=controllersParent.childCount; i++) 
 		{
-			bool active = (i == (int)Owner.scheme.type);
-			canvas.GetChild (i).gameObject.SetActive (active);
+			bool active = (i == (int) Owner.scheme.type);
+			controllersParent.GetChild (i-1).gameObject.SetActive (active);
 		}
 	}
+	#endregion
+
+	#region ANIMATOR UTILS
+	private void EndedEdit (string name) 
+	{
+		// Can only get ready if a name was provided
+		bool isEmpty = string.IsNullOrEmpty (name);
+		anim.SetBool ("NameSet", !isEmpty);
+		if (isEmpty) anim.SetBool ("Ready", false);
+
+		// De-frozen all
+		SetAllFrozen (frozen: false);
+	}
+
+	public static void SetAllFrozen (bool frozen) 
+	{
+		FindObjectsOfType<Selector> ().ToList ()
+			.ForEach (s =>
+			{
+				s.active = !frozen;
+				s.anim.SetBool ("Mask", frozen);
+			});
+	} 
 	#endregion
 
 	#region CALLBACKS
 	private void Update () 
 	{
-		// Move with horizontal axis
-		if (active && Owner != null)
-			Move ();
+		#region INPUT HANDLING
+		if (active)
+		{
+			// Move with horizontal axis
+			if (Owner != null) Move ();
 
+			// Get ready
+			if (closeEnough && anim.GetBool ("NameSet")) 
+			{
+				if (Owner.GetButton ("Dash", consume: false))
+				{
+					anim.SetBool ("Ready", true);
+
+					// If both are ready
+					if (other.anim.GetBool ("Ready"))
+					{
+						// Save player selection into their owners
+						Owner.playingAs = showcase[selected].ID;
+						other.Owner.playingAs = other.showcase[other.selected].ID;
+
+						// Notify that players are ready
+						Lobby.charactersSelected = true;
+
+						// De-activate both selectors
+						SwitchState (state: false);
+						other.SwitchState (state: false);
+					}
+				}
+			}
+		} 
+		#endregion
+
+		#region MOVING TO POSITION
 		// Move towards selected character
 		var tPos = showcase[selected].transform.position;
 		transform.position = Vector3.Lerp (transform.position, tPos, Time.deltaTime * Speed);
@@ -114,19 +170,21 @@ public class Selector : Pawn
 		// Move animator towards selected value
 		float iValue = anim.GetFloat ("Blend");
 		float tValue = selected / 3f;
-		anim.SetFloat ("Blend", Mathf.Lerp (iValue, tValue, Time.deltaTime * Speed));
+		anim.SetFloat ("Blend", Mathf.Lerp (iValue, tValue, Time.deltaTime * Speed)); 
+		#endregion
 
 		// Make info face camera
 		canvas.LookAt (cam);
 	}
 
-	private void Start () 
+	private void Start ()  
 	{
 		// Get references
 		cam = Camera.main.transform;
 		other = FindObjectsOfType<Selector> ().First (s=> s != this);
 		icons = canvas.GetComponentsInChildren<Graphic> ().ToList ();
 		lightIntensity = light.intensity;
+
 		// Initialize animator
 		anim = new SmartAnimator ( canvas.GetComponent<Animator> () );
 
@@ -135,6 +193,10 @@ public class Selector : Pawn
 
 		// Update UI
 		UpdateControllerInfo ();
+		userName.onEndEdit.AddListener (str=> EndedEdit (str));
+
+		// Turn off all crystals
+		showcase.ToList ().ForEach (c => c.SwitchCrystal (value: false));
 	}
 	#endregion
 }

@@ -10,22 +10,14 @@ public abstract class Character : Pawn
 	#region DATA
 	[Header ("Basic settings")]
 	public Transform grabHandle;
+	public Characters ID;
 	public Color focusColor;
 	public float crystalEmission;
 
 	[Header ("Spell settings")]
 	public float spellCooldown;
 
-	// Basic character info
-	internal Characters ID 
-	{
-		get
-		{
-			var id = name.EnumParse<Characters> ();
-			return id;
-		}
-	}
-
+	// Internal info
 	protected Dictionary<string, Effect> effects;
 	internal Locks locks;
 

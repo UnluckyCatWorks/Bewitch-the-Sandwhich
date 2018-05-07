@@ -9,7 +9,7 @@ public class TutoPoint : MonoBehaviour
 	public Tutorial.Phases phase;
 
 	// Some kind of green for when players enter the check-point
-	private readonly Color validColor = new Color32 (009, 242, 195, 255); 
+	public static Color validColor = new Color32 (009, 242, 195, 255); 
 	#endregion
 
 	#region CALLBACKS
@@ -20,7 +20,7 @@ public class TutoPoint : MonoBehaviour
 		GetComponent<Marker> ().On (validColor);
 		Tutorial.SetCheckFor (observedCharacter, phase, true);
 	}
-	private void OnTriggerExit (Collider other)
+	private void OnTriggerExit (Collider other) 
 	{
 		if (other.name != observedCharacter.ToString ()) return;
 

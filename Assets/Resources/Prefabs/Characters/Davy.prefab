@@ -1563,6 +1563,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33d298bd738d8a848879f2e44b7319fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ownerID: 0
+  overrideControl: 0
+  grabHandle: {fileID: 0}
+  ID: 4
+  focusColor: {r: 0, g: 0, b: 0, a: 0}
+  crystalEmission: 0
+  spellCooldown: 0
 --- !u!137 &137317042265440516
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

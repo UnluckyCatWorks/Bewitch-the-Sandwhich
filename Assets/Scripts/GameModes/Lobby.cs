@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class Lobby : Game 
 {
@@ -15,9 +16,10 @@ public class Lobby : Game
 	public ParticleSystem puff;
 	public ParticleSystem confetti;
 
-	// Modes
+	// Control
 	public static bool firstTime;
 	private static bool passedMainMenu;
+	public static bool charactersSelected;
 	#endregion
 
 	#region UI UTILS
@@ -41,13 +43,12 @@ public class Lobby : Game
 	protected override IEnumerator Logic ()
 	{
 		#region PREPARATION
-		// Determinate if this is the first time playing the Game
-		firstTime = PlayerPrefs.HasKey ("Already_Played");
-
 		// Get some references
 		var menu = GameObject.Find ("UI_MENU").GetComponent<Animator> ();
 		var focos = GameObject.Find ("Focos").GetComponent<Animator> ();
 		var rig = GameObject.Find ("Camera_Rig").GetComponent<Animator> ();
+		var modeMenu = GameObject.Find ("UI_MODE_SELECTION");
+		modeMenu.SetActive (false);
 		#endregion
 
 		#region MENU APPEARS
@@ -56,7 +57,7 @@ public class Lobby : Game
 		postfx.weight = 0f;
 
 		// Wait until logos are shown
-		yield return new WaitForSeconds (2.5f);
+		yield return new WaitForSeconds (3.5f);
 		menu.SetTrigger ("Show_Menu");
 
 		// Fade-in image effects
@@ -77,10 +78,12 @@ public class Lobby : Game
 		// Hide Menu
 		menu.SetTrigger ("Hide_Menu");
 
-		// If first time playing BtW,
-		// the Host will appear & talk some shit
-		if (!firstTime && !bypassHostIntro)
+		// Determinate if this is the first time playing the Game
+		firstTime = !PlayerPrefs.HasKey ("The_Sandwich_Has_Been_Bewitched");
+		if (firstTime && !bypassHostIntro)
 		{
+			// If first time playing BtW,
+			// the Host will appear & talk some shit
 			#region HOST INTRODUCION
 			focos.SetTrigger ("ToHost");
 			rig.SetTrigger ("ToHost");
@@ -102,22 +105,77 @@ public class Lobby : Game
 			yield return new WaitForSeconds (0.1f);
 			presentador.SetActive (false);
 			yield return new WaitForSeconds (0.2f);
-			focos.SetTrigger ("GoOff");
+			focos.SetTrigger ("Go_Off");
 			#endregion
 		}
 
-		// Otherwise, just go directly
-		// to the character selection part
+		// Otherwise, just go directly to
+		#region CHARACTER SELECTION
+		Cursor.visible = true;
 		rig.SetTrigger ("ToCharSelect");
-		StartCoroutine (Extensions.FadeAmbient (0.9f, 2f, 0.8f));
+		StartCoroutine (Extensions.FadeAmbient (0.7f, 2f, 0.8f));
 		// Enable Selectors
-		FindObjectsOfType<Selector> ().ToList ().ForEach (s=> s.SwitchState (state: true));
+		FindObjectsOfType<Selector> ().ToList ().ForEach (s => s.SwitchState (state: true));
+
+		// Wait until both players are ready
+		yield return new WaitUntil (() => charactersSelected);
+		#endregion
+
+		if (firstTime && !bypassHostIntro) 
+		{
+			// maybe show host again and talk
+			// some other shit
+		}
+
+		// Wait a bit
+		yield return new WaitForSeconds (0.5f);
+		// Go to mode selection
+		rig.SetTrigger ("ToModeSelect");
+		modeMenu.SetActive (true);
+		yield return Extensions.FadeAmbient (2.9f, 2.5f, 5f);
+		// Disable menu blocker
+		modeMenu.transform.GetChild (0).gameObject.SetActive (true);
+
+		// Disable showcase characters
+		Get<Transform> ("Showcase_", true, t=> t.gameObject.SetActive (false));
 	}
 
 	protected override void Awake () 
 	{
 		base.Awake ();
 		Cursor.visible = false;
-	} 
+		RenderSettings.ambientIntensity = 0f;
+		// Reset static vars
+		passedMainMenu = false;
+		charactersSelected = false;
+	}
+	#endregion
+
+	#region HELPERS
+	public static List<T> Get<T> (string name, bool forEachChar, Action<T> a = null) 
+	{
+		List<T> list;
+		if (forEachChar)
+		{
+			list = new List<T>
+			{
+				GameObject.Find (name + Characters.Alby).GetComponent<T> (),
+				GameObject.Find (name + Characters.Mary).GetComponent<T> (),
+				GameObject.Find (name + Characters.Mony).GetComponent<T> (),
+				GameObject.Find (name + Characters.Davy).GetComponent<T> ()
+			};
+		}
+		else
+		{
+			list = new List<T>
+			{
+				GameObject.Find (name + "1").GetComponent<T> (),
+				GameObject.Find (name + "2").GetComponent<T> ()
+			};
+		}
+
+		if (a!=null) list.ForEach (a);
+		return list;
+	}
 	#endregion
 }

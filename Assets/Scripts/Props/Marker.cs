@@ -41,7 +41,7 @@ public class Marker : MonoBehaviour
 		factor = 0f;
 		inTransition = true;
 	}
-	public void Off (Color color)
+	public void Off (Color color) 
 	{
 		iColor = block.GetColor (ColorID);
 		fColors.Remove (color);

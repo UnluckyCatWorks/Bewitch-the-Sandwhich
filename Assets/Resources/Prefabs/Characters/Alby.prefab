@@ -1712,6 +1712,7 @@ MonoBehaviour:
   ownerID: 0
   overrideControl: 0
   grabHandle: {fileID: 4208909212707740}
+  ID: 1
   focusColor: {r: 1, g: 0.45761248, b: 0.16176474, a: 1}
   crystalEmission: 4.265
   spellCooldown: 3

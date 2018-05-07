@@ -10,6 +10,7 @@ public class Player
 	#region DATA
 	public static Player[] all;
 
+	public Characters playingAs;
 	public ControlScheme scheme;
 	public PlayerData data;
 
