@@ -1565,9 +1565,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ownerID: 0
   overrideControl: 0
-  grabHandle: {fileID: 0}
+  grabHandle: {fileID: 4620425760156782}
   ID: 3
-  focusColor: {r: 0, g: 0, b: 0, a: 0}
+  focusColor: {r: 0.45588207, g: 0, b: 1, a: 1}
   crystalEmission: 0
   spellCooldown: 0
 --- !u!137 &137030628065045690

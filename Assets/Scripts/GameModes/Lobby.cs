@@ -132,7 +132,7 @@ public class Lobby : Game
 		// Go to mode selection
 		rig.SetTrigger ("ToModeSelect");
 		modeMenu.SetActive (true);
-		yield return Extensions.FadeAmbient (2.9f, 2.5f, 5f);
+		yield return Extensions.FadeAmbient (2.9f, 2f, 5f);
 		// Disable menu blocker
 		modeMenu.transform.GetChild (0).gameObject.SetActive (true);
 

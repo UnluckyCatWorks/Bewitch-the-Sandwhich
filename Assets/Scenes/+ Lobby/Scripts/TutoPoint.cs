@@ -7,6 +7,7 @@ public class TutoPoint : MonoBehaviour
 	#region DATA
 	public Characters observedCharacter;
 	public Tutorial.Phases phase;
+	internal Marker marker;
 
 	// Some kind of green for when players enter the check-point
 	public static Color validColor = new Color32 (009, 242, 195, 255); 
@@ -26,6 +27,11 @@ public class TutoPoint : MonoBehaviour
 
 		GetComponent<Marker> ().Off ();
 		Tutorial.SetCheckFor (observedCharacter, phase, false);
-	} 
+	}
+
+	private void Awake () 
+	{
+		marker = GetComponent<Marker> ();
+	}
 	#endregion
 }

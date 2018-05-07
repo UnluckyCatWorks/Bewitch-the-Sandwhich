@@ -44,6 +44,8 @@ public class Tutorial : MonoBehaviour
 		// Assign them their owners
 		ps[0].ownerID = 1;
 		ps[1].ownerID = 2;
+		// Correct names
+		ps.ForEach (p => p.name = p.name.Replace (" (1)", string.Empty));
 		// Position them
 		var positions = Lobby.Get<Transform> ("Start_", false);
 		ps[0].transform.position = positions[0].position;
@@ -79,9 +81,13 @@ public class Tutorial : MonoBehaviour
 		#region MOVING
 		SwitchCartel ("MOVE");
 		// Show movement marks
-		var movMarkers = Lobby.Get<Marker> ("Movement_", false);
-		movMarkers[0].On (ps[0].focusColor);
-		movMarkers[1].On (ps[1].focusColor);
+		var movMarkers = Lobby.Get<TutoPoint> ("Movement_", false);
+		// Assign observed characters
+		movMarkers[0].observedCharacter = ps[0].ID;
+		movMarkers[1].observedCharacter = ps[1].ID;
+		// Turn them on
+		movMarkers[0].marker.On (ps[0].focusColor);
+		movMarkers[1].marker.On (ps[1].focusColor);
 		// Alow movement
 		ps.ForEach (p=> p.RemoveCC ("Movement"));
 
@@ -91,10 +97,10 @@ public class Tutorial : MonoBehaviour
 		Checks.Remove (Phases.Moving);
 
 		// Turn off markers
-		movMarkers[0].Off (TutoPoint.validColor);
-		movMarkers[0].Off (ps[0].focusColor);
-		movMarkers[1].Off (TutoPoint.validColor);
-		movMarkers[1].Off (ps[1].focusColor);
+		movMarkers[0].marker.Off (TutoPoint.validColor);
+		movMarkers[0].marker.Off (ps[0].focusColor);
+		movMarkers[1].marker.Off (TutoPoint.validColor);
+		movMarkers[1].marker.Off (ps[1].focusColor);
 
 		SwitchCartel ("");
 		Game.paused = true;
@@ -207,6 +213,11 @@ public class Tutorial : MonoBehaviour
 	public struct Check 
 	{
 		List<Characters> validatedCharacters;
+		private void NullCheck () 
+		{
+			if (validatedCharacters == null)
+				validatedCharacters = new List<Characters> ();
+		}
 
 		// Only true if all players who
 		// are currently playing are done
@@ -214,9 +225,7 @@ public class Tutorial : MonoBehaviour
 		{
 			get
 			{
-				if (validatedCharacters == null)
-					validatedCharacters = new List<Characters> ();
-
+				NullCheck ();
 				// For now, only 2 players can play at once
 				return (validatedCharacters.Count == 2);
 			}
@@ -225,6 +234,7 @@ public class Tutorial : MonoBehaviour
 		// Keeps track of who has validated this point
 		public void Set (Characters who, bool value)
 		{
+			NullCheck ();
 			// Validate character
 			if (value && !validatedCharacters.Contains (who))
 				validatedCharacters.Add (who);

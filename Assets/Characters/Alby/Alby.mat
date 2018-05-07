@@ -8,7 +8,8 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: Alby
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _EMISSION _METALLICGLOSSMAP _NORMALMAP
+  m_ShaderKeywords: _EMISSION _GLOSSYREFLECTIONS_OFF _METALLICGLOSSMAP _NORMALMAP
+    _SPECULARHIGHLIGHTS_OFF
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -39,11 +40,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: 8954c10e7849c704f826b7373487f79c, type: 3}
+        m_Texture: {fileID: 2800000, guid: 10d1c234d6dfed645aa0b158faa1ccf9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 52d60ed28cf2ee04a81369c0b405a381, type: 3}
+        m_Texture: {fileID: 2800000, guid: c12c1bd7a7940e746948268827c24251, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Metallic:
@@ -85,14 +86,14 @@ Material:
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0
-    - _GlossyReflections: 1
+    - _GlossyReflections: 0
     - _Intensity: 56.6
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
-    - _SpecularHighlights: 1
+    - _SpecularHighlights: 0
     - _SrcBlend: 1
     - _StoneExtrude: 0.02
     - _StoneLevel: 1
@@ -102,4 +103,4 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 4.856, g: 4.856, b: 4.856, a: 1}
+    - _EmissionColor: {r: 5.374, g: 5.374, b: 5.374, a: 1}

@@ -35,7 +35,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Emission:
-        m_Texture: {fileID: 2800000, guid: 2631ae89541710c43b79c45599500131, type: 3}
+        m_Texture: {fileID: 2800000, guid: 09fca369a1f67b14d851497251ff630b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -43,7 +43,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: db735d7d3607d424f92552c937eef4ca, type: 3}
+        m_Texture: {fileID: 2800000, guid: 74b66161f3d7d4f49bb7ec37ce0d8ec5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Metallic:
@@ -104,6 +104,6 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 9.184, g: 9.184, b: 9.184, a: 0}
+    - _EmissionColor: {r: 1.8610001, g: 1.8610001, b: 1.8610001, a: 0}
     - _StoneIntensity: {r: 0, g: 0, b: 0, a: 0}
     - _StoneScale: {r: 1.21, g: 1.92, b: 1.25, a: 8.65}
