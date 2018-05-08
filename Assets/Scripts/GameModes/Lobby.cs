@@ -159,10 +159,10 @@ public class Lobby : Game
 		{
 			list = new List<T>
 			{
-				GameObject.Find (name + Characters.Alby).GetComponent<T> (),
-				GameObject.Find (name + Characters.Mary).GetComponent<T> (),
-				GameObject.Find (name + Characters.Mony).GetComponent<T> (),
-				GameObject.Find (name + Characters.Davy).GetComponent<T> ()
+				GameObject.Find (name + Characters.Bobby).GetComponent<T> (),
+				GameObject.Find (name + Characters.Lilith).GetComponent<T> (),
+				GameObject.Find (name + Characters.Amy).GetComponent<T> (),
+				GameObject.Find (name + Characters.Milton).GetComponent<T> ()
 			};
 		}
 		else

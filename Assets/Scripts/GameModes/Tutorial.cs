@@ -44,8 +44,8 @@ public class Tutorial : MonoBehaviour
 		// Restrict their capabilities
 		ps.ForEach (p => p.AddCC ("Movement", Locks.Movement));
 		ps.ForEach (p => p.AddCC ("Dash", Locks.Dash));
-		ps.ForEach (p => p.AddCC ("Spell", Locks.Spells));
-		ps.ForEach (p => p.AddCC ("Interactions", Locks.Interaction));
+		ps.ForEach (p => p.AddCC ("Spells", Locks.Spells));
+		ps.ForEach (p => p.AddCC ("Interaction", Locks.Interaction));
 
 		// Spawn the Tuto_Icons on them
 		var iconsPrefab = Resources.Load<TutoIcons> ("Prefabs/Tuto_Icons");
@@ -112,12 +112,12 @@ public class Tutorial : MonoBehaviour
 		#region DASHING
 		// Show water pit
 		Game.paused = true;
-		yield return new WaitForSecondsRealtime (1f);
+		yield return new WaitForSeconds (1f);
 		GameObject.Find ("Plat_agua").GetComponent<Animation> ().Play ("Out");
 		GameObject.Find ("Plat_agua").GetComponentInChildren<Collider> ().enabled = false;
 
 		// Wait a bit
-		yield return new WaitForSecondsRealtime (1f);
+		yield return new WaitForSeconds (1f);
 
 		// Allow dashing
 		ps.ForEach (p=> p.RemoveCC ("Dash"));
@@ -160,7 +160,7 @@ public class Tutorial : MonoBehaviour
 
 		#region SPELL
 		// Wait a bit
-		yield return new WaitForSecondsRealtime (3f);
+		yield return new WaitForSeconds (3f);
 		SwitchCartel ("SPELLS");
 
 		// Allow spells & show icons
@@ -173,44 +173,43 @@ public class Tutorial : MonoBehaviour
 		Checks.Remove (Phases.Casting_Spells);
 
 		// Hide icons
+		yield return new WaitForSeconds (1f);
 		icons.ForEach (i=> i.Hide ("Spell"));
+		SwitchCartel ("");
+		#endregion
+
+		#region GRABBING / THROWING
+		// Wait a bit
+		yield return new WaitForSeconds (1f);
+		SwitchCartel ("GRAB'N'HIT");
+		yield return new WaitForSeconds (1f);
+
+		// Show icons & allow interactions
+		ps.ForEach (p=> p.RemoveCC ("Interaction"));
+		icons.ForEach (i=> i.Show ("Interaction"));
+
+		// Show supplies
+		supplies.ForEach (s =>
+		{
+			// Appear with a 'Puff'
+			s.gameObject.SetActive (true);
+			var puff = Instantiate ((Game.manager as Lobby).puff);
+			puff.transform.position = s.transform.position + Vector3.up * 0.5f;
+			Destroy (puff.gameObject, 2f);
+			puff.Play ();
+		});
+
+		Checks.Add (Phases.Throwing_Stuff, new Check ());
+		while (!Checks[Phases.Throwing_Stuff].Ready) yield return null;
+		Checks.Remove (Phases.Throwing_Stuff);
+
+		yield return new WaitForSeconds (1f);
 		SwitchCartel ("");
 		#endregion
 
 		// End tutorial
 		onTutorial = false;
 		#region TAL
-		/*
-		#region GRABBING / THROWING
-		/// Wait a bit
-		yield return new WaitForSecondsRealtime (1f);
-		SwitchCartel ("GRAB & HIT");
-		yield return new WaitForSecondsRealtime (1f);
-		/// Show icons & allow interactions
-		//		ps.ForEach (p => p.RemoveCC ("Interaction"));
-		//		icons.ForEach (i => i.Show ("Interaction"));
-		/// Show supplies
-		supplies.ForEach (s =>
-		{
-			s.gameObject.SetActive (true);
-			/// Appear with a 'Puff'
-			var puff = Instantiate (this.puff);
-			puff.transform.position = s.transform.position + Vector3.up * 0.5f;
-			Destroy (puff.gameObject, 2f);
-			puff.Play ();
-		});
-
-		/// Wait until both players have something in hands
-		//		while (ps.Any (p => p.toy == null)) yield return null;
-		//		icons.ForEach (i => i.Hide ("Interaction"));
-		SwitchCartel ("");
-		#endregion
-
-		yield return new WaitForSecondsRealtime (1.5f);
-		GameObject.Find ("Puerta_Wrapper").GetComponent<Animation> ().Play ("DownToHell");
-		yield return new WaitForSecondsRealtime (5f);
-		SwitchCartel ("GO!");
-		*/
 		#endregion
 	}
 

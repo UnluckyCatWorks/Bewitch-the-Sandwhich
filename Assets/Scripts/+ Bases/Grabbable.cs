@@ -6,6 +6,9 @@ using UnityEngine;
 public class Grabbable : MonoBehaviour
 {
 	#region DATA
+	public const uint globalLimit = 10;
+	public static uint globalCount;
+
 	internal Rigidbody body;
 	internal GrabHelper helper;         // Helps keeping the marker correct
 
@@ -79,10 +82,14 @@ public class Grabbable : MonoBehaviour
 		// Knock player & stop being a flying weapon
 		victim.Knock (knockForce, 0.20f);
 		beingThrown = false;
+
+		// Mark tutorial check
+		Tutorial.SetCheckFor (throwerPlayer.ID, Tutorial.Phases.Throwing_Stuff, true);
 	}
 
 	protected virtual void Awake () 
 	{
+		globalCount++;
 		body = GetComponent<Rigidbody> ();
 
 		// Instantiate Grab Helper & set it up
@@ -93,6 +100,11 @@ public class Grabbable : MonoBehaviour
 		// Set up references
 		helper.parent = this;
 		this.helper = helper;
-	} 
+	}
+
+	private void OnDestroy () 
+	{
+		globalCount--;
+	}
 	#endregion
 }

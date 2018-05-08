@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.506002, g: 0.559292, b: 0.658, a: 1}
   m_AmbientEquatorColor: {r: 0.145152, g: 0.252, b: 0.22122777, a: 1}
   m_AmbientGroundColor: {r: 0.205632, g: 0.27049422, b: 0.459, a: 1}
-  m_AmbientIntensity: 0.97
+  m_AmbientIntensity: 3.66
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
@@ -1408,7 +1408,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cartelMat: {fileID: 2100000, guid: 334893b22ebd7c64ba8ad70265f58608, type: 2}
   cartel: {fileID: 1592241622}
-  supplies: []
+  supplies:
+  - {fileID: 38592925}
+  - {fileID: 918902888}
 --- !u!1 &295379042
 GameObject:
   m_ObjectHideFlags: 0
@@ -5834,7 +5836,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1304399107086124, guid: 1446697d23d44ce4686853e2e9b2d172, type: 2}
       propertyPath: m_Name
-      value: Showcase_Mary
+      value: Showcase_Lilith
       objectReference: {fileID: 0}
     - target: {fileID: 114422286972904646, guid: 1446697d23d44ce4686853e2e9b2d172,
         type: 2}
@@ -7452,8 +7454,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1036404631}
-  m_LocalRotation: {x: -0.009052524, y: 0.9643761, z: 0.26227567, w: 0.033290975}
-  m_LocalPosition: {x: -0.46695405, y: -5.5959635, z: 3.4558187}
+  m_LocalRotation: {x: 0.0015251512, y: 0.995269, z: 0.09584701, w: -0.015833562}
+  m_LocalPosition: {x: 3.3493345, y: -5.9567432, z: -2.6155872}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -8419,14 +8421,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 14
       objectReference: {fileID: 0}
-    - target: {fileID: 212959070966912354, guid: dd1327ed15696a94397bb7fa9d11da45,
-        type: 2}
-      propertyPath: m_Color.a
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1649957674996132, guid: dd1327ed15696a94397bb7fa9d11da45, type: 2}
       propertyPath: m_Name
-      value: Showcase_Alby
+      value: Showcase_Bobby
       objectReference: {fileID: 0}
     - target: {fileID: 114597854977333202, guid: dd1327ed15696a94397bb7fa9d11da45,
         type: 2}
@@ -11821,7 +11818,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 5.2}
-  m_SizeDelta: {x: 250.88, y: 124.96}
+  m_SizeDelta: {x: 288.4, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1592241622
 MonoBehaviour:
@@ -11843,12 +11840,12 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6648d422bc771974c824c7caa7bf0c84, type: 3}
+    m_Font: {fileID: 12800000, guid: 05ccc339c27eded4c902aac29ffa0ff2, type: 3}
     m_FontSize: 100
     m_FontStyle: 0
     m_BestFit: 1
-    m_MinSize: 10
-    m_MaxSize: 100
+    m_MinSize: 0
+    m_MaxSize: 150
     m_Alignment: 4
     m_AlignByGeometry: 1
     m_RichText: 1
@@ -12021,14 +12018,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 1785377886934906, guid: 143bf678644c99442b3a719fdb215a1e, type: 2}
+      propertyPath: m_Name
+      value: Showcase_Amy
+      objectReference: {fileID: 0}
     - target: {fileID: 114584950568361126, guid: 143bf678644c99442b3a719fdb215a1e,
         type: 2}
       propertyPath: m_Enabled
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1785377886934906, guid: 143bf678644c99442b3a719fdb215a1e, type: 2}
-      propertyPath: m_Name
-      value: Showcase_Mony
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 143bf678644c99442b3a719fdb215a1e, type: 2}
@@ -13322,34 +13319,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 17
       objectReference: {fileID: 0}
+    - target: {fileID: 1838364645206850, guid: 4dc4a65b8b1b7b64cad0d8542cd1ac55, type: 2}
+      propertyPath: m_Name
+      value: Showcase_Milton
+      objectReference: {fileID: 0}
     - target: {fileID: 114156391959282606, guid: 4dc4a65b8b1b7b64cad0d8542cd1ac55,
         type: 2}
       propertyPath: m_Enabled
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1838364645206850, guid: 4dc4a65b8b1b7b64cad0d8542cd1ac55, type: 2}
-      propertyPath: m_Name
-      value: Showcase_Davy
-      objectReference: {fileID: 0}
-    - target: {fileID: 114156391959282606, guid: 4dc4a65b8b1b7b64cad0d8542cd1ac55,
-        type: 2}
-      propertyPath: focusColor.r
-      value: 0.204608
-      objectReference: {fileID: 0}
-    - target: {fileID: 114156391959282606, guid: 4dc4a65b8b1b7b64cad0d8542cd1ac55,
-        type: 2}
-      propertyPath: focusColor.g
-      value: 0.736
-      objectReference: {fileID: 0}
-    - target: {fileID: 114156391959282606, guid: 4dc4a65b8b1b7b64cad0d8542cd1ac55,
-        type: 2}
-      propertyPath: focusColor.b
-      value: 0.3841818
-      objectReference: {fileID: 0}
-    - target: {fileID: 114156391959282606, guid: 4dc4a65b8b1b7b64cad0d8542cd1ac55,
-        type: 2}
-      propertyPath: focusColor.a
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4dc4a65b8b1b7b64cad0d8542cd1ac55, type: 2}

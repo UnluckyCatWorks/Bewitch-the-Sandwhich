@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mony : Character
+public class Amy : Character
 {
-	protected override IEnumerator CastSpell () 
+	protected override void SpellEffect () 
 	{
 		throw new System.NotImplementedException ();
 	}

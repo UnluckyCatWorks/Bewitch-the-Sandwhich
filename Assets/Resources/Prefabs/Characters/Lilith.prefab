@@ -369,7 +369,7 @@ GameObject:
   - component: {fileID: 143886106647201988}
   - component: {fileID: 114422286972904646}
   m_Layer: 14
-  m_Name: Mary
+  m_Name: Lilith
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -643,7 +643,7 @@ GameObject:
   - component: {fileID: 114653372814588150}
   - component: {fileID: 135499725144121330}
   m_Layer: 14
-  m_Name: AreaOfEffect
+  m_Name: Area-of-Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1702,8 +1702,8 @@ MonoBehaviour:
   ID: 2
   focusColor: {r: 0.20588237, g: 0.4413793, b: 1, a: 1}
   crystalEmission: 6.61
+  areaColor: {r: 0.46322, g: 0.5213018, b: 2.438, a: 1}
   spellCooldown: 4
-  areaColor: {r: 0.30882353, g: 0.32915226, b: 1, a: 1}
   spellVFX: {fileID: 1206203692246924, guid: 9763c67fe7161b64a867536f0900ca99, type: 2}
 --- !u!114 &114653372814588150
 MonoBehaviour:
@@ -1835,10 +1835,10 @@ CharacterController:
   m_Height: 1.37
   m_Radius: 0.35
   m_SlopeLimit: 45
-  m_StepOffset: 0.2
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.752, z: 0}
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.0001
+  m_MinMoveDistance: 0.0001
+  m_Center: {x: 0, y: 0.68, z: 0}
 --- !u!212 &212225987616398168
 SpriteRenderer:
   m_ObjectHideFlags: 1

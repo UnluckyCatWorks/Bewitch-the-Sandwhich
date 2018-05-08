@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Mony
+  m_Name: Milton
   m_Shader: {fileID: 4800000, guid: d9edee0ad5268f045ab02abb1e21fc72, type: 3}
   m_ShaderKeywords: _EMISSION _METALLICGLOSSMAP _NORMALMAP
   m_LightmapFlags: 0
@@ -35,7 +35,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Emission:
-        m_Texture: {fileID: 2800000, guid: 09fca369a1f67b14d851497251ff630b, type: 3}
+        m_Texture: {fileID: 2800000, guid: 9853ed0a6780ce74a8ae8c2a99ff7361, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -43,7 +43,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 74b66161f3d7d4f49bb7ec37ce0d8ec5, type: 3}
+        m_Texture: {fileID: 2800000, guid: 653701255c0848f4a8ce3fedf5cc6ed4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Metallic:
@@ -96,7 +96,7 @@ Material:
     - _SrcBlend: 1
     - _StoneExtrude: 0.01
     - _StoneIntensity: 1
-    - _StoneLevel: 0
+    - _StoneLevel: 0.007330217
     - _StoneMax: 1.68
     - _StoneMin: 0.51
     - _StoneNormalScale: -1.27

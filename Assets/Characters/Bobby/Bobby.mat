@@ -6,9 +6,10 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Davy
-  m_Shader: {fileID: 4800000, guid: d9edee0ad5268f045ab02abb1e21fc72, type: 3}
-  m_ShaderKeywords: _EMISSION _METALLICGLOSSMAP _NORMALMAP
+  m_Name: Bobby
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: _EMISSION _GLOSSYREFLECTIONS_OFF _METALLICGLOSSMAP _NORMALMAP
+    _SPECULARHIGHLIGHTS_OFF
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -35,15 +36,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Emission:
-        m_Texture: {fileID: 2800000, guid: 9853ed0a6780ce74a8ae8c2a99ff7361, type: 3}
+        m_Texture: {fileID: 2800000, guid: 48f1a66e4084ac245833aa26732a0fff, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: b867b0cc6be9ad042a58062932b54004, type: 3}
+        m_Texture: {fileID: 2800000, guid: 10d1c234d6dfed645aa0b158faa1ccf9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 653701255c0848f4a8ce3fedf5cc6ed4, type: 3}
+        m_Texture: {fileID: 2800000, guid: c12c1bd7a7940e746948268827c24251, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Metallic:
@@ -71,13 +72,13 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _StoneNormal:
-        m_Texture: {fileID: 2800000, guid: 95abceb704a1a904fa1c0249230230bd, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _StoneTex:
-        m_Texture: {fileID: 2800000, guid: f9c356cdf9a50244ba46d675c25b92ef, type: 3}
-        m_Scale: {x: 1.67, y: 1.2}
-        m_Offset: {x: 1.56, y: 1.07}
+        m_Texture: {fileID: 2800000, guid: b3b8e74b454daa44b8000e19b8cff9e8, type: 3}
+        m_Scale: {x: 3, y: 3}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
@@ -85,25 +86,21 @@ Material:
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0
-    - _GlossyReflections: 1
-    - _Intensity: 0
+    - _GlossyReflections: 0
+    - _Intensity: 56.6
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
-    - _SpecularHighlights: 1
+    - _SpecularHighlights: 0
     - _SrcBlend: 1
-    - _StoneExtrude: 0.01
-    - _StoneIntensity: 1
-    - _StoneLevel: 0
+    - _StoneExtrude: 0.02
+    - _StoneLevel: 1
     - _StoneMax: 1.68
     - _StoneMin: 0.51
-    - _StoneNormalScale: -1.27
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
-    - _StoneIntensity: {r: 0, g: 0, b: 0, a: 0}
-    - _StoneScale: {r: 1.21, g: 1.92, b: 1.25, a: 8.65}
+    - _EmissionColor: {r: 4.265, g: 4.265, b: 4.265, a: 4.265}

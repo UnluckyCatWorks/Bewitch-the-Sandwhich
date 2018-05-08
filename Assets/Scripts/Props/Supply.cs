@@ -19,6 +19,8 @@ public class Supply : Interactable
 	{
 		// Can only grab things if nothing on hand already
 		if (player.toy != null) return false;
+		// Can't grab infinite amount of stuff
+		if (Grabbable.globalCount >= Grabbable.globalLimit) return false;
 
 		// If everything's fine
 		return true;

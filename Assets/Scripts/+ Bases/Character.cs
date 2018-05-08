@@ -15,15 +15,20 @@ public abstract class Character : Pawn
 	public float crystalEmission;
 
 	[Header ("Spell settings")]
+	[ColorUsage(true, true, 0, 8, 0.125f, 3)]
+	public Color areaColor;
 	public float spellCooldown;
 
 	// Internal info
-	protected Dictionary<string, Effect> effects;
+	protected Dictionary<string, Locks> effects;
 	internal Locks locks;
 
 	protected SmartAnimator anim;
 	protected CharacterController me;
 	protected Character other;
+
+	protected Marker areaOfEffect;
+	protected SphereCollider areaCollider;
 
 	internal Material mat;
 	internal int _EmissionColor;
@@ -45,6 +50,9 @@ public abstract class Character : Pawn
 		}
 	}
 
+	internal CollisionFlags collision;
+	private Vector3 lastAlivePos;
+
 	// Capabilities
 	internal static float ThrowForce = 20f;
 
@@ -56,7 +64,7 @@ public abstract class Character : Pawn
 	internal bool knocked;
 	internal Coroutine knockedCoroutine;
 
-	protected const float spellSelfStun = 0.75f;
+	protected const float spellSelfStun = 0.50f;
 	protected Coroutine spellCoroutine;
 
 	protected Interactable lastMarked;
@@ -78,8 +86,6 @@ public abstract class Character : Pawn
 		get { return anim.GetBool ("Carrying_Stuff"); }
 		set { anim.SetBool ("Carrying_Stuff", value); }
 	}
-
-	#warning I SHOULD TOTALLY KEEP TRACK OF THROW HIT, SKILLS LANDED ETCCCC
 	#endregion
 
 	#region LOCOMOTION
@@ -123,13 +129,36 @@ public abstract class Character : Pawn
 	// Actual movement is held here
 	private void Move () 
 	{
-		/// Apply gravity
+		// Apply gravity
 		var gravity = Physics.gravity * gravityMul;
 		var finalSpeed = movingSpeed + gravity;
 
-		/// Move player
-		me.Move (finalSpeed * Time.deltaTime);
-#warning test if collision flags are useful or what
+		// If bewitched
+		if (locks.HasFlag (Locks.Crazy))
+		{
+			// Invert speed
+			finalSpeed.x *= -1;
+			finalSpeed.z *= -1;
+		}
+
+		// Move player
+		collision = me.Move (finalSpeed * Time.deltaTime);
+		TrackPosition ();
+	}
+	#endregion
+
+	#region DEATH TRACKING
+	private void TrackPosition () 
+	{
+		if (collision.HasFlag (CollisionFlags.Below))
+		{
+			lastAlivePos = transform.position;
+		}
+	}
+
+	public void Respawn () 
+	{
+		transform.position = lastAlivePos;
 	}
 	#endregion
 
@@ -259,17 +288,36 @@ public abstract class Character : Pawn
 
 		// Cast spell & put it on CD
 		anim.SetTrigger ("Cast_Spell");
-		StartCoroutine (WaitSpellCD ());
 		spellCoroutine = StartCoroutine (CastSpell ());
 	}
-	protected abstract IEnumerator CastSpell ();
-	private IEnumerator WaitSpellCD () 
+	private IEnumerator CastSpell ()
 	{
+		areaOfEffect.On (areaColor);                            // Show area
+		yield return new WaitForSeconds (spellSelfStun);        // Allow spell aiming while self-stunned
+		areaOfEffect.Off ();                                    // Hide area
+
+		// Always call this, even if there's no hit
+		BeforeSpell ();
+
+		// If other player was hit
+		var hits = Physics.OverlapSphere (areaOfEffect.transform.position, areaCollider.radius, 1<<14);
+		if (hits.Any (c=> c.name == other.name))
+		{
+			// If inside tutorial 
+			Tutorial.SetCheckFor (ID, Tutorial.Phases.Casting_Spells, true);
+
+			// Actually do stuff
+			SpellEffect ();
+		}
+
 		// Just wait until CD is over
 		yield return new WaitForSeconds (spellCooldown);
 		SwitchCrystal (value: true);
 		RemoveCC ("-> Spell");
 	}
+	protected abstract void SpellEffect ();
+
+	protected virtual void BeforeSpell () {/* This is always called */ }
 
 	public void SwitchCrystal (bool value) 
 	{
@@ -330,23 +378,28 @@ public abstract class Character : Pawn
 	#region EFFECTS MANAGEMENT
 	private void ReadEffects () 
 	{
+		// Check if spells were originally blocked
+		bool spellsWereBlocked = locks.HasFlag (Locks.Spells);
+
 		locks = Locks.NONE;
 		foreach (var e in effects)
 		{
 			// Resets CCs & then reads them every frame
-			locks = locks.SetFlag (e.Value.cc);
+			locks = locks.SetFlag (e.Value);
 		}
+		// Check if spells are NOW originally blocked
+		bool spellsAreBlocked = locks.HasFlag (Locks.Spells);
+		if (spellsWereBlocked && !spellsAreBlocked)
+			SwitchCrystal (value: true);
 	}
 
 	// Helper for only adding CCs
 	public void AddCC (string name, Locks cc, float duration = 0) 
 	{
-		var e = new Effect () { cc = cc };
-
-		effects.Add (name, e);
+		effects.Add (name, cc);
 		if (duration != 0) StartCoroutine (RemoveEffectAfter (name, duration));
 
-		// Interrupt capabilities
+		// Interrupt any kind of movement
 		if (cc.HasFlag (Locks.Movement)) 
 		{
 			movingSpeed = Vector3.zero;
@@ -362,25 +415,25 @@ public abstract class Character : Pawn
 			}
 		}
 		else
+		// Interrupt spell casting
 		if (cc.HasFlag (Locks.Spells) && spellCoroutine != null) 
 		{
+			SwitchCrystal (value: false);
 			StopCoroutine (spellCoroutine);
 			spellCoroutine = null;
 		}
 	}
 
-	// Helper for manually removing a CC effect
 	public void RemoveCC (string name) 
 	{
-		if (effects.ContainsKey (name))
-			effects.Remove (name);
+		effects.Remove (name);
 	}
 
 	// Internal helper for temporal CCs
-	IEnumerator RemoveEffectAfter (string name, float duration) 
+	IEnumerator RemoveEffectAfter (string name, float delay) 
 	{
-		yield return new WaitForSeconds (duration);
-		effects.Remove (name);
+		yield return new WaitForSeconds (delay);
+		RemoveCC (name);
 	}
 	#endregion
 
@@ -427,6 +480,14 @@ public abstract class Character : Pawn
 		return list;
 	}
 
+	public void FindOther () 
+	{
+		var list = FindObjectsOfType<Character> ().ToList ();
+		// Find first other character in the scene
+		if (list != null && list.Count > 1)
+			other = list.FirstOrDefault (c=> c != this);
+	}
+
 	public static Character Get<T> () where T : Character
 	{
 		// Gets instance of specific character
@@ -466,7 +527,7 @@ public abstract class Character : Pawn
 	{
 		// Initialize stuff
 		anim = new SmartAnimator (GetComponent<Animator> ());
-		effects = new Dictionary<string, Effect> ();
+		effects = new Dictionary<string, Locks> ();
 
 		// Initialize crystal
 		mat = GetComponentInChildren<Renderer> ().sharedMaterial;
@@ -475,7 +536,12 @@ public abstract class Character : Pawn
 
 		// Get some references
 		me = GetComponent<CharacterController> ();
+		areaOfEffect = GetComponentInChildren<Marker> ();
+		areaCollider = areaOfEffect.GetComponent<SphereCollider> ();
 		targetRotation = transform.rotation;
+
+		// Find other playera
+		FindOther ();
 	}
 
 	protected virtual void FixedUpdate () 

@@ -224,7 +224,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224198289528610426}
   m_Layer: 5
-  m_Name: Mary
+  m_Name: Lilith
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -645,7 +645,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224844669252393254}
   m_Layer: 5
-  m_Name: Mony
+  m_Name: Amy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -760,7 +760,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224371035640293630}
   m_Layer: 5
-  m_Name: Davy
+  m_Name: Milton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -858,7 +858,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224895149240996336}
   m_Layer: 5
-  m_Name: Alby
+  m_Name: Bobby
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2223,16 +2223,16 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 6648d422bc771974c824c7caa7bf0c84, type: 3}
     m_FontSize: 46
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 54
     m_Alignment: 5
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: as Mony
+  m_Text: as Amy
 --- !u!114 &114770827808959662
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2303,16 +2303,16 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 6648d422bc771974c824c7caa7bf0c84, type: 3}
     m_FontSize: 50
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 54
     m_Alignment: 5
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: as Davy
+  m_Text: as Milton
 --- !u!114 &114866326410970958
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2397,16 +2397,16 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 6648d422bc771974c824c7caa7bf0c84, type: 3}
     m_FontSize: 52
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 54
     m_Alignment: 5
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: as Alby
+  m_Text: as Bobby
 --- !u!114 &114931051857440824
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2430,16 +2430,16 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 6648d422bc771974c824c7caa7bf0c84, type: 3}
     m_FontSize: 52
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 300
     m_Alignment: 5
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: as Mary
+  m_Text: as Lilith
 --- !u!114 &114944445912741630
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2923,7 +2923,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1001836390832622}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.72414255, y: 0.72414255, z: 0.72414255}
   m_Children: []
   m_Father: {fileID: 224895149240996336}
@@ -2931,8 +2931,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 48.55, y: 135.29}
-  m_SizeDelta: {x: -65.98, y: -268.17}
+  m_AnchoredPosition: {x: 71.97, y: 135.29}
+  m_SizeDelta: {x: -130.68, y: -268.17}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224198289528610426
 RectTransform:
@@ -3114,7 +3114,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1466162551539860}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.72414255, y: 0.72414255, z: 0.72414255}
   m_Children: []
   m_Father: {fileID: 224844669252393254}
@@ -3122,8 +3122,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 48.55, y: 133.58}
-  m_SizeDelta: {x: -65.98, y: -263.47}
+  m_AnchoredPosition: {x: 71.97, y: 135.29}
+  m_SizeDelta: {x: -130.68, y: -268.17}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224355794673039516
 RectTransform:
@@ -3326,8 +3326,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 71.55, y: 135.4}
-  m_SizeDelta: {x: -129.5, y: -268.49}
+  m_AnchoredPosition: {x: 71.97, y: 135.29}
+  m_SizeDelta: {x: -130.68, y: -268.17}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224648612849975742
 RectTransform:
@@ -3348,7 +3348,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -883.5, y: 0}
   m_SizeDelta: {x: 288.3196, y: 334.9035}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224651305829057090
@@ -3565,7 +3565,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1251588623825606}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.72414255, y: 0.72414255, z: 0.72414255}
   m_Children: []
   m_Father: {fileID: 224371035640293630}
@@ -3573,8 +3573,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 48.55, y: 134.49}
-  m_SizeDelta: {x: -65.98, y: -265.96}
+  m_AnchoredPosition: {x: 71.97, y: 135.29}
+  m_SizeDelta: {x: -130.68, y: -268.17}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224891216849759698
 RectTransform:

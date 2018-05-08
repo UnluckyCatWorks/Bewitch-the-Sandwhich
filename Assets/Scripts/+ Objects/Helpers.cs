@@ -32,10 +32,10 @@ public struct TimerColors
 public enum Characters 
 {
 	NONE,
-	Alby,
-	Mary,
-	Mony,
-	Davy
+	Bobby,
+	Lilith,
+	Amy,
+	Milton
 }
 
 public enum ControllerType 
@@ -62,6 +62,9 @@ public enum Locks
 	Spells = 1 << 5,
 	
 	// Specials
+	Crazy = 1 << 6,
+
+	// Groups
 	Locomotion = (Dash | Movement),
 	Abilities = (Interaction | Spells),
 	All = (Locomotion | Abilities | Rotation),
