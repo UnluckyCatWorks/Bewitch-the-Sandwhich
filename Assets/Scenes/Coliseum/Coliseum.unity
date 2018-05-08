@@ -24,7 +24,7 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 0.035683393, g: 0.078428306, b: 0.24264705, a: 1}
   m_AmbientGroundColor: {r: 0.007028542, g: 0.015918415, b: 0.19117647, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 4
+  m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
@@ -43,7 +43,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 1
+  m_GIWorkflowMode: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -895,6 +895,11 @@ Prefab:
         type: 2}
       propertyPath: focusColor.g
       value: 0.6042388
+      objectReference: {fileID: 0}
+    - target: {fileID: 114422286972904646, guid: 1446697d23d44ce4686853e2e9b2d172,
+        type: 2}
+      propertyPath: overrideControl
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1446697d23d44ce4686853e2e9b2d172, type: 2}
@@ -1753,6 +1758,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114597854977333202, guid: dd1327ed15696a94397bb7fa9d11da45,
+        type: 2}
+      propertyPath: overrideControl
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd1327ed15696a94397bb7fa9d11da45, type: 2}
   m_IsPrefabParent: 0
@@ -1815,8 +1825,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1650751465}
-  m_LocalRotation: {x: -0.02029071, y: 0.9714405, z: 0.21622202, w: 0.09560225}
-  m_LocalPosition: {x: -1.8224602, y: -5.611521, z: 4.3115244}
+  m_LocalRotation: {x: -0.026902094, y: 0.9068499, z: 0.41649508, w: 0.05857829}
+  m_LocalPosition: {x: -1.069302, y: -7.4663773, z: -0.7050109}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

@@ -35,17 +35,8 @@ public class Tutorial : MonoBehaviour
 		var rig = GameObject.Find ("Camera_Rig").GetComponent<Animator> ();
 		var modeMenu = GameObject.Find ("UI_MODE_SELECTION");
 
-		// Spawn player characters
-		var ps = new List<Character> 
-		{
-			Instantiate(Resources.Load<Character>("Prefabs/Characters/" + Player.all[0].playingAs)),
-			Instantiate(Resources.Load<Character>("Prefabs/Characters/" + Player.all[1].playingAs)),
-		};
-		// Assign them their owners
-		ps[0].ownerID = 1;
-		ps[1].ownerID = 2;
-		// Correct names
-		ps.ForEach (p => p.name = p.name.Replace (" (1)", string.Empty));
+		// Create Players' Characters
+		var ps = Character.SpawnPack ();
 		// Position them
 		var positions = Lobby.Get<Transform> ("Start_", false);
 		ps[0].transform.position = positions[0].position;
@@ -80,14 +71,25 @@ public class Tutorial : MonoBehaviour
 
 		#region MOVING
 		SwitchCartel ("MOVE");
+
 		// Show movement marks
-		var movMarkers = Lobby.Get<TutoPoint> ("Movement_", false);
+		var markers = Lobby.Get<TutoPoint> ("Movement_", false);
+		// Show correct icon (depends on input scheme)
+		for (int i=0; i!=2; i++) 
+		{
+			int id = (int) Player.all[i].scheme.type;
+			var child = markers[i].transform.GetChild (id+1);
+
+			markers[i].marker.sign = child.GetComponent<SpriteRenderer> ();
+			child.gameObject.SetActive (true);
+		}
 		// Assign observed characters
-		movMarkers[0].observedCharacter = ps[0].ID;
-		movMarkers[1].observedCharacter = ps[1].ID;
+		markers[0].observedCharacter = ps[0].ID;
+		markers[1].observedCharacter = ps[1].ID;
 		// Turn them on
-		movMarkers[0].marker.On (ps[0].focusColor);
-		movMarkers[1].marker.On (ps[1].focusColor);
+		markers[0].marker.On (ps[0].focusColor);
+		markers[1].marker.On (ps[1].focusColor);
+
 		// Alow movement
 		ps.ForEach (p=> p.RemoveCC ("Movement"));
 
@@ -97,42 +99,58 @@ public class Tutorial : MonoBehaviour
 		Checks.Remove (Phases.Moving);
 
 		// Turn off markers
-		movMarkers[0].marker.Off (TutoPoint.validColor);
-		movMarkers[0].marker.Off (ps[0].focusColor);
-		movMarkers[1].marker.Off (TutoPoint.validColor);
-		movMarkers[1].marker.Off (ps[1].focusColor);
+		markers[0].marker.Off (TutoPoint.validColor);
+		markers[0].marker.Off (ps[0].focusColor);
+		Destroy (markers[0]);
+		markers[1].marker.Off (TutoPoint.validColor);
+		markers[1].marker.Off (ps[1].focusColor);
+		Destroy (markers[1]);
 
 		SwitchCartel ("");
-		Game.paused = true;
 		#endregion
 
-		// End tutorial
-		onTutorial = false;
-		#region TAL
-		/*
 		#region DASHING
 		// Show water pit
+		Game.paused = true;
 		yield return new WaitForSecondsRealtime (1f);
 		GameObject.Find ("Plat_agua").GetComponent<Animation> ().Play ("Out");
 		GameObject.Find ("Plat_agua").GetComponentInChildren<Collider> ().enabled = false;
+
 		// Wait a bit
 		yield return new WaitForSecondsRealtime (1f);
-		paused = false;
+
 		// Allow dashing
-		//		ps.ForEach (p => p.RemoveCC ("Dash"));
-		// Show Dash marks & icons
-		GetTuto<Marker> ("Dash_").ForEach (m => m.On (new Color (0, 0, 0, 0)));
-		//		icons.ForEach (i => i.Show ("Dash"));
+		ps.ForEach (p=> p.RemoveCC ("Dash"));
+		Game.paused = false;
+
+		// Show Dash marks
+		markers = Lobby.Get<TutoPoint> ("Dash_", false);
+		// Assign observed characters
+		markers[0].observedCharacter = ps[0].ID;
+		markers[1].observedCharacter = ps[1].ID;
+		// Turn them on
+		markers[0].marker.On (ps[0].focusColor);
+		markers[1].marker.On (ps[1].focusColor);
+
+		// Show icons
+		icons.ForEach (i=> i.Show ("Dash"));
 		SwitchCartel ("DASH");
 
 		// Wait until all players are in place
-		Checks.Add (TP.Dashing, new TutorialCheck ());
-		while (Checks[TP.Dashing].AllWhoPlay) yield return null;
-		Checks.Remove (TP.Dashing);
+		Checks.Add (Phases.Dashing, new Check ());
+		while (!Checks[Phases.Dashing].Ready) yield return null;
+		Checks.Remove (Phases.Dashing);
 
 		// Turn off markers
-		GetTuto<Marker> ("Dash_").ForEach (m => m.Off ());
-		//		icons.ForEach (i => i.Hide ("Dash"));
+		markers[0].marker.Off (TutoPoint.validColor);
+		markers[0].marker.Off (ps[0].focusColor);
+		Destroy (markers[0]);
+		markers[1].marker.Off (TutoPoint.validColor);
+		markers[1].marker.Off (ps[1].focusColor);
+		Destroy (markers[1]);
+
+		// Hide icons
+		icons.ForEach (i=> i.Hide ("Dash"));
 		SwitchCartel ("");
 
 		// Hide water pit (play backwards)
@@ -141,23 +159,28 @@ public class Tutorial : MonoBehaviour
 		#endregion
 
 		#region SPELL
-		/// Wait a bit
+		// Wait a bit
 		yield return new WaitForSecondsRealtime (3f);
-		/// Allow spells & show icons
-		//		ps.ForEach (p => p.RemoveCC ("Spells"));
-		//		icons.ForEach (i => i.Show ("Spell"));
 		SwitchCartel ("SPELLS");
 
-		/// Wait until all players have landed a spell
-		Checks.Add (TP.Casting_Spells, new TutorialCheck ());
-		while (Checks[TP.Casting_Spells].AllWhoPlay) yield return null;
-		Checks.Remove (TP.Casting_Spells);
+		// Allow spells & show icons
+		ps.ForEach (p=> p.RemoveCC ("Spells"));
+		icons.ForEach (i=> i.Show ("Spell"));
 
-		/// Hide icons
-		//		icons.ForEach (i => i.Hide ("Spell"));
+		// Wait until all players have landed a spell
+		Checks.Add (Phases.Casting_Spells, new Check ());
+		while (!Checks[Phases.Casting_Spells].Ready) yield return null;
+		Checks.Remove (Phases.Casting_Spells);
+
+		// Hide icons
+		icons.ForEach (i=> i.Hide ("Spell"));
 		SwitchCartel ("");
 		#endregion
 
+		// End tutorial
+		onTutorial = false;
+		#region TAL
+		/*
 		#region GRABBING / THROWING
 		/// Wait a bit
 		yield return new WaitForSecondsRealtime (1f);
@@ -210,14 +233,9 @@ public class Tutorial : MonoBehaviour
 		Throwing_Stuff,
 	}
 
-	public struct Check 
+	public class Check 
 	{
-		List<Characters> validatedCharacters;
-		private void NullCheck () 
-		{
-			if (validatedCharacters == null)
-				validatedCharacters = new List<Characters> ();
-		}
+		List<Characters> validatedCharacters = new List<Characters> (2);
 
 		// Only true if all players who
 		// are currently playing are done
@@ -225,7 +243,6 @@ public class Tutorial : MonoBehaviour
 		{
 			get
 			{
-				NullCheck ();
 				// For now, only 2 players can play at once
 				return (validatedCharacters.Count == 2);
 			}
@@ -234,7 +251,6 @@ public class Tutorial : MonoBehaviour
 		// Keeps track of who has validated this point
 		public void Set (Characters who, bool value)
 		{
-			NullCheck ();
 			// Validate character
 			if (value && !validatedCharacters.Contains (who))
 				validatedCharacters.Add (who);

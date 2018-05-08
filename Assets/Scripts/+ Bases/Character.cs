@@ -405,17 +405,33 @@ public abstract class Character : Pawn
 		return new Ray (origin, transform.forward);
 	}
 
+	public static List<Character> SpawnPack () 
+	{
+		// Spawn
+		var list = new List<Character>
+		{
+			Instantiate(Resources.Load<Character>("Prefabs/Characters/" + Player.all[0].playingAs)),
+			Instantiate(Resources.Load<Character>("Prefabs/Characters/" + Player.all[1].playingAs)),
+		};
+		// Correct names
+		list.ForEach (p => p.name = p.name.Replace ("(Clone)", string.Empty));
+
+		// Assign them their owners
+		list[0].ownerID = 1;
+		list[1].ownerID = 2;
+		// Assing other
+		list[0].other = list[1];
+		list[1].other = list[0];
+
+		// Return
+		return list;
+	}
+
 	public static Character Get<T> () where T : Character
 	{
 		// Gets instance of specific character
 		var c = GameObject.Find (typeof (T).Name);
 		return c.GetComponent<T> ();
-	}
-
-	public void FindOther () 
-	{
-		// Find other player
-		other = FindObjectsOfType<Character> ().First (c => c != this);
 	}
 	#endregion
 

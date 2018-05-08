@@ -15,7 +15,6 @@ public class Marker : MonoBehaviour
 	private float factor;
 
 	private float iAlpha;
-	private float fAlpha;
 	private Color iColor;
 	private List<Color> fColors;
 
@@ -32,33 +31,30 @@ public class Marker : MonoBehaviour
 	#region UTILS
 	public void On (Color color) 
 	{
+		iAlpha = sign.color.a;
+
 		iColor = block.GetColor (ColorID);
 		fColors.Add (color);
-
-		iAlpha = sign.color.a;
-		fAlpha = 1.0f;
 
 		factor = 0f;
 		inTransition = true;
 	}
 	public void Off (Color color) 
 	{
+		iAlpha = sign.color.a;
+
 		iColor = block.GetColor (ColorID);
 		fColors.Remove (color);
-
-		iAlpha = sign.color.a;
-		fAlpha = 0f;
 
 		factor = 0f;
 		inTransition = true;
 	}
 	public void Off () 
 	{
+		iAlpha = sign.color.a;
+
 		iColor = block.GetColor (ColorID);
 		fColors.RemoveAt (fColors.Count - 1);
-
-		iAlpha = sign.color.a;
-		fAlpha = 0f;
 
 		factor = 0f;
 		inTransition = true;
@@ -92,8 +88,8 @@ public class Marker : MonoBehaviour
 	public void SetUp () 
 	{
 		// Set up references
-		if (!mesh) mesh = GetComponentInChildren<MeshRenderer> ();
-		if (!sign) sign = GetComponentInChildren<SpriteRenderer> ();
+		if (!mesh) mesh = GetComponentInChildren<MeshRenderer> (true);
+		if (!sign) sign = GetComponentInChildren<SpriteRenderer> (true);
 		if (fColors == null) 
 		{
 			fColors = new List<Color> (2);
@@ -127,8 +123,8 @@ public class Marker : MonoBehaviour
 
 			// Do
 			float value = Mathf.Pow (factor, 0.6f);
-			var color = Color.Lerp (iColor, fColors[fColors.Count - 1], value);
-			var alpha = Mathf.Lerp (iAlpha, fAlpha, value);
+			var color = Color.Lerp (iColor, fColors[fColors.Count-1], value);
+			var alpha = Mathf.Lerp (iAlpha, fColors[fColors.Count-1].a, value);
 			block.SetColor (ColorID, color);
 
 			mesh.SetPropertyBlock (block);
@@ -145,7 +141,7 @@ public class Marker : MonoBehaviour
 		SetUp ();
 
 		// Restore initial state
-		Set (new Color (0, 0, 0, 0), 0);
+		Set (new Color (0,0,0,0), 0);
 		sign.sprite = icon;
 		factor = 0f;
 	}
