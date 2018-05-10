@@ -18,15 +18,15 @@ public class TutoPoint : MonoBehaviour
 	{
 		if (other.name != observedCharacter.ToString ()) return;
 
-		GetComponent<Marker> ().On (validColor);
-		Tutorial.SetCheckFor (observedCharacter, phase, true);
+		if (Tutorial.SetCheckFor (observedCharacter, phase, true))
+			GetComponent<Marker> ().On (validColor);
 	}
 	private void OnTriggerExit (Collider other) 
 	{
 		if (other.name != observedCharacter.ToString ()) return;
 
-		GetComponent<Marker> ().Off ();
-		Tutorial.SetCheckFor (observedCharacter, phase, false);
+		if (Tutorial.SetCheckFor (observedCharacter, phase, false))
+			GetComponent<Marker> ().Off ();
 	}
 
 	private void Awake () 

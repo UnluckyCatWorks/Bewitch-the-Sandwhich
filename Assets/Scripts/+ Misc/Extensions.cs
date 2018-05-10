@@ -186,6 +186,13 @@ public static class Extensions
 	#endregion
 
 	#region ANIMATION
+	public static void PlayRewind (this Animation a, string clip) 
+	{
+		a[clip].normalizedTime = 0f;
+		a[clip].speed = 1f;
+		a.Play (clip);
+	}
+
 	public static void PlayInReverse (this Animation a, string clip) 
 	{
 		a[clip].normalizedTime = 1f;

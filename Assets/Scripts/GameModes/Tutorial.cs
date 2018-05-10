@@ -100,17 +100,15 @@ public class Tutorial : MonoBehaviour
 		// Turn off markers
 		markers[0].marker.Off (TutoPoint.validColor);
 		markers[0].marker.Off (ps[0].focusColor);
-		Destroy (markers[0]);
 		markers[1].marker.Off (TutoPoint.validColor);
 		markers[1].marker.Off (ps[1].focusColor);
-		Destroy (markers[1]);
 		#endregion
 
 		#region DASHING
 		// Show water pit
 		Game.paused = true;
 		yield return new WaitForSeconds (1f);
-		GameObject.Find ("Plat_agua").GetComponent<Animation> ().Play ("Out");
+		GameObject.Find ("Plat_agua").GetComponent<Animation> ().PlayRewind ("Out");
 		GameObject.Find ("Plat_agua").GetComponentInChildren<Collider> ().enabled = false;
 
 		// Wait a bit
@@ -141,10 +139,8 @@ public class Tutorial : MonoBehaviour
 		// Turn off markers
 		markers[0].marker.Off (TutoPoint.validColor);
 		markers[0].marker.Off (ps[0].focusColor);
-		Destroy (markers[0]);
 		markers[1].marker.Off (TutoPoint.validColor);
 		markers[1].marker.Off (ps[1].focusColor);
-		Destroy (markers[1]);
 		// Hide icons
 		icons.ForEach (i=> i.Hide ("Dash"));
 
@@ -202,7 +198,7 @@ public class Tutorial : MonoBehaviour
 
 		Title.Show ("CONGRATULATIONS!", 2.5f);
 		(Game.manager as Lobby).confetti.Play ();
-		yield return new WaitForSeconds (3f);
+		yield return new WaitForSeconds (3.2f);
 		Title.Show ("YOU'RE READY FOR THE ARENA", 2f);
 		yield return new WaitForSeconds (3f);
 
@@ -307,12 +303,13 @@ public class Tutorial : MonoBehaviour
 		}
 	}
 
-	public static void SetCheckFor (Characters character, Phases phase, bool value) 
+	public static bool SetCheckFor (Characters character, Phases phase, bool value) 
 	{
 		// Will check only if tutorial is on given Phase
-		if (!onTutorial || !Checks.ContainsKey (phase)) return;
+		if (!onTutorial || !Checks.ContainsKey (phase)) return false;
 		// Set value
 		Checks[phase].Set (character, value);
+		return true;
 	}
 	#endregion
 }
