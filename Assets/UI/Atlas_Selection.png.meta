@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 92a58371dafe05f43a12d16337207b93
-timeCreated: 1525373959
+timeCreated: 1525947568
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -8,6 +8,7 @@ TextureImporter:
     21300002: Lobby_Slider
     21300004: Lobby_Tutorial_Icon
     21300006: Lobby_Button_Frame
+    21300008: Atlas_Selection_Arrow
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -92,7 +93,7 @@ TextureImporter:
         width: 986
         height: 554
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -101,12 +102,12 @@ TextureImporter:
       name: Lobby_Slider
       rect:
         serializedVersion: 2
-        x: 30
+        x: 84
         y: 235
-        width: 399
+        width: 295
         height: 166
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -120,7 +121,7 @@ TextureImporter:
         width: 191
         height: 135
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -133,6 +134,20 @@ TextureImporter:
         y: 31
         width: 296
         height: 166
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Atlas_Selection_Arrow
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 302
+        width: 34
+        height: 31
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

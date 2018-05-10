@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 6d6f8c71c33aa9c44811f03a4cfb1b56
-timeCreated: 1524332699
+timeCreated: 1525945827
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -135,10 +135,10 @@ TextureImporter:
       name: AtlasMenu_DropDown_List
       rect:
         serializedVersion: 2
-        x: 499
+        x: 500
         y: 586
-        width: 401
-        height: 390
+        width: 400
+        height: 388
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

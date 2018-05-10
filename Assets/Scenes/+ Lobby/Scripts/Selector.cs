@@ -20,7 +20,7 @@ public class Selector : Pawn
 
 	private SmartAnimator anim;
 	private Transform cam;
-	private List<Graphic> icons;
+	private Dictionary<Graphic, float> icons;
 	private float lightIntensity;
 	
 	private Selector other;
@@ -85,7 +85,7 @@ public class Selector : Pawn
 			float value = Mathf.Lerp (1-target, target, factor);
 
 			light.intensity = lightIntensity * value;
-			icons.ForEach (i => i.SetAlpha (value));
+			foreach (var i in icons) i.Key.SetAlpha (i.Value * value);
 
 			yield return null;
 			factor += Time.deltaTime / duration;
@@ -182,8 +182,11 @@ public class Selector : Pawn
 		// Get references
 		cam = Camera.main.transform;
 		other = FindObjectsOfType<Selector> ().First (s=> s != this);
-		icons = canvas.GetComponentsInChildren<Graphic> ().ToList ();
 		lightIntensity = light.intensity;
+
+		icons = new Dictionary<Graphic, float> ();
+		foreach (var g in canvas.GetComponentsInChildren<Graphic> ())
+			icons.Add (g, g.color.a);
 
 		// Initialize animator
 		anim = new SmartAnimator ( canvas.GetComponent<Animator> () );
