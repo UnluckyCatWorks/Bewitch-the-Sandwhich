@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,8 +8,6 @@ public class Tutorial : MonoBehaviour
 {
 	#region DATA
 	[Header ("Tuto")]
-	public Material cartelMat;
-	public Text cartel;
 	public List<Supply> supplies;
 
 	public static Tutorial manager;
@@ -48,7 +47,7 @@ public class Tutorial : MonoBehaviour
 		ps.ForEach (p => p.AddCC ("Interaction", Locks.Interaction));
 
 		// Spawn the Tuto_Icons on them
-		var iconsPrefab = Resources.Load<TutoIcons> ("Prefabs/Tuto_Icons");
+		var iconsPrefab = Resources.Load<TutoIcons> ("Prefabs/UI/Tuto_Icons");
 		var icons = new List<TutoIcons>
 		{
 			Instantiate (iconsPrefab, ps[0].transform),
@@ -61,7 +60,7 @@ public class Tutorial : MonoBehaviour
 		// Go to the scene
 		rig.SetTrigger ("ToScene");
 		focos.SetTrigger ("Light_Scene");
-		StartCoroutine (Extensions.FadeAmbient (1.9f, 3f, 0.5f));
+		StartCoroutine (Extensions.FadeAmbient (1.6f, 3f, 0.5f));
 		// Wait until mode menu is out of camera
 		yield return new WaitForSeconds (1.1f);
 		modeMenu.SetActive (false);
@@ -70,7 +69,7 @@ public class Tutorial : MonoBehaviour
 		yield return new WaitForSeconds (3f);
 
 		#region MOVING
-		SwitchCartel ("MOVE");
+		Title.Show ("MOVE", 2f);
 
 		// Show movement marks
 		var markers = Lobby.Get<TutoPoint> ("Movement_", false);
@@ -105,8 +104,6 @@ public class Tutorial : MonoBehaviour
 		markers[1].marker.Off (TutoPoint.validColor);
 		markers[1].marker.Off (ps[1].focusColor);
 		Destroy (markers[1]);
-
-		SwitchCartel ("");
 		#endregion
 
 		#region DASHING
@@ -134,7 +131,7 @@ public class Tutorial : MonoBehaviour
 
 		// Show icons
 		icons.ForEach (i=> i.Show ("Dash"));
-		SwitchCartel ("DASH");
+		Title.Show ("DASH", 2f);
 
 		// Wait until all players are in place
 		Checks.Add (Phases.Dashing, new Check ());
@@ -148,10 +145,8 @@ public class Tutorial : MonoBehaviour
 		markers[1].marker.Off (TutoPoint.validColor);
 		markers[1].marker.Off (ps[1].focusColor);
 		Destroy (markers[1]);
-
 		// Hide icons
 		icons.ForEach (i=> i.Hide ("Dash"));
-		SwitchCartel ("");
 
 		// Hide water pit (play backwards)
 		GameObject.Find ("Plat_agua").GetComponent<Animation> ().PlayInReverse ("Out");
@@ -161,7 +156,7 @@ public class Tutorial : MonoBehaviour
 		#region SPELL
 		// Wait a bit
 		yield return new WaitForSeconds (3f);
-		SwitchCartel ("SPELLS");
+		Title.Show ("SPELLS", 2f);
 
 		// Allow spells & show icons
 		ps.ForEach (p=> p.RemoveCC ("Spells"));
@@ -175,13 +170,12 @@ public class Tutorial : MonoBehaviour
 		// Hide icons
 		yield return new WaitForSeconds (1f);
 		icons.ForEach (i=> i.Hide ("Spell"));
-		SwitchCartel ("");
 		#endregion
 
 		#region GRABBING / THROWING
 		// Wait a bit
 		yield return new WaitForSeconds (1f);
-		SwitchCartel ("GRAB'N'HIT");
+		Title.Show ("GRAB'N'HIT", 2f);
 		yield return new WaitForSeconds (1f);
 
 		// Show icons & allow interactions
@@ -189,7 +183,7 @@ public class Tutorial : MonoBehaviour
 		icons.ForEach (i=> i.Show ("Interaction"));
 
 		// Show supplies
-		supplies.ForEach (s =>
+		supplies.ForEach (s => 
 		{
 			// Appear with a 'Puff'
 			s.gameObject.SetActive (true);
@@ -203,14 +197,67 @@ public class Tutorial : MonoBehaviour
 		while (!Checks[Phases.Throwing_Stuff].Ready) yield return null;
 		Checks.Remove (Phases.Throwing_Stuff);
 
+		yield return new WaitForSeconds (2f);
+		#endregion
+
+		Title.Show ("CONGRATULATIONS!", 2.5f);
+		(Game.manager as Lobby).confetti.Play ();
+		yield return new WaitForSeconds (3f);
+		Title.Show ("YOU'RE READY FOR THE ARENA", 2f);
+		yield return new WaitForSeconds (3f);
+
+		#region RETURN
+		// Return to Mode selection
+		focos.SetTrigger ("Go_Off");
+		rig.SetTrigger ("ToModeSelect");
+
+		// Make supplies dissappear
+		supplies.ForEach (s =>
+		{
+			// Dissappear with a 'Puff'
+			s.gameObject.SetActive (false);
+			var puff = Instantiate ((Game.manager as Lobby).puff);
+			puff.transform.position = s.transform.position + Vector3.up * 0.5f;
+			Destroy (puff.gameObject, 2f);
+			puff.Play ();
+		});
+		// Make all grabbables dissapear
+		FindObjectsOfType<Grabbable> ().ToList ().ForEach (g=>
+		{
+			// Destroy with a 'Puff'
+			g.Destroy ();
+
+			var puff = Instantiate ((Game.manager as Lobby).puff);
+			puff.transform.position = g.transform.position + Vector3.up * 0.2f;
+			Destroy (puff.gameObject, 2f);
+			puff.Play ();
+		});
+
+		Extensions.FadeAmbient (2.9f, 2f, 5f);
 		yield return new WaitForSeconds (1f);
-		SwitchCartel ("");
+
+		// Make players dissapear
+		ps.ForEach (p =>
+		{
+			// Destroy with a 'Puff'
+			Destroy (p.gameObject);
+
+			var puff = Instantiate ((Game.manager as Lobby).puff);
+			puff.transform.position = p.transform.position + Vector3.up * 0.5f;
+			Destroy (puff.gameObject, 2f);
+			puff.Play ();
+		});
+
+		// Show menu when out of camera
+		yield return new WaitForSeconds (1.5f);
+		modeMenu.SetActive (true);
+		// Disable menu blocker
+		yield return new WaitForSeconds (1f);
+		modeMenu.transform.GetChild (0).gameObject.SetActive (true); 
 		#endregion
 
 		// End tutorial
 		onTutorial = false;
-		#region TAL
-		#endregion
 	}
 
 	private void Awake () 
@@ -266,24 +313,6 @@ public class Tutorial : MonoBehaviour
 		if (!onTutorial || !Checks.ContainsKey (phase)) return;
 		// Set value
 		Checks[phase].Set (character, value);
-	}
-
-	private void SwitchCartel (string text) 
-	{
-		if (!string.IsNullOrEmpty (text))
-		{
-			cartel.text = text;
-			cartel.CrossShowAlpha (1f, 0.2f, true);
-			cartelMat.SetColor ("_EmissionColor", Color.white * 1.706f);
-			cartel.material.SetFloat ("_Intensity", 14.64f);
-		}
-		else
-		{
-			cartel.text = "";
-			cartel.CrossFadeAlpha (0f, 0.2f, true);
-			cartelMat.SetColor ("_EmissionColor", Color.black);
-			cartel.material.SetFloat ("_Intensity", 0f);
-		}
 	}
 	#endregion
 }

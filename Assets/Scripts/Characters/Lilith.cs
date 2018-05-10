@@ -15,7 +15,7 @@ public class Lilith : Character
 	{
 		// Knock hit player
 		var dir = other.transform.position - transform.position;
-		other.AddCC ("Spell: Bombed", Locks.All, StunDuration);
+		other.AddCC ("Spell: Bombed", Locks.All, Locks.All, StunDuration);
 		other.Knock (dir.normalized * ForceMultiplier, 0.5f);
 	}
 }

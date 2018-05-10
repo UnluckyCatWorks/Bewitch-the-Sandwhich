@@ -13,7 +13,7 @@ public class DeathZone : MonoBehaviour
 		{
 			// Lock player until he hits floor
 			var p = other.GetComponent<Character> ();
-			p.AddCC ("Dead-stun", Locks.All, Stun);
+			p.AddCC ("Dead-stun", Locks.All, Locks.All, Stun);
 			p.Respawn ();
 
 			var puff = Instantiate (fx, p.transform.position, Quaternion.identity);

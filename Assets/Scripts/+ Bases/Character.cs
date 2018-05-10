@@ -81,6 +81,11 @@ public abstract class Character : Pawn
 		get { return anim.GetBool ("Dashing"); }
 		set { anim.SetBool ("Dashing", value); }
 	}
+	public bool Casting 
+	{
+		get { return anim.GetBool ("Casting_Spell"); }
+		set { anim.SetBool ("Casting_Spell", value); }
+	}
 	public bool Carrying 
 	{
 		get { return anim.GetBool ("Carrying_Stuff"); }
@@ -151,9 +156,7 @@ public abstract class Character : Pawn
 	private void TrackPosition () 
 	{
 		if (collision.HasFlag (CollisionFlags.Below))
-		{
 			lastAlivePos = transform.position;
-		}
 	}
 
 	public void Respawn () 
@@ -182,14 +185,14 @@ public abstract class Character : Pawn
 	#region DASHING
 	private void Dash () 
 	{
-		if (locks.HasFlag (Locks.Dash)) return;			// Is Dash up?
-		else if (!Owner.GetButton ("Dash")) return;		// Has user pressed the button?
-		else if (toy) return;							// Can't dash while holding stuff
+		if (locks.HasFlag (Locks.Dash)) return;         // Is Dash up?
+		else if (!Owner.GetButton ("Dash")) return;     // Has user pressed the button?
+		else if (toy) return;                           // Can't dash while holding stuff
+		else if (Dashing) return;						// Can't dash if already dashing
 		// If everything's ok
 		else Dashing = true;
 
 		// Start dash & put in cooldoown
-		AddCC ("-> Dash", Locks.Dash);				// Self CC used as cooldown
 		AddCC ("Dashing", Locks.Locomotion);
 		dashCoroutine = StartCoroutine (InDash ());
 	}
@@ -212,14 +215,11 @@ public abstract class Character : Pawn
 			if (dist <= 0.8 && !knockOcurred)
 			{
 				// Get force from movement & supress Y-force
-				var force = MovingDir;
-				force.y = 0f;
-
-				other.Knock (force, 0.25f);
+				other.Knock (MovingDir, 0.25f);
 
 				// Hard-slow dash & avoid knocking again
 				knockOcurred = true;
-				factor = 0.7f;
+				factor = 0.6f;
 
 			}
 
@@ -228,7 +228,6 @@ public abstract class Character : Pawn
 		}
 		// Reset
 		RemoveCC ("Dashing");
-		RemoveCC ("-> Dash");
 		Dashing = false;
 
 		// Restore gravity
@@ -240,7 +239,9 @@ public abstract class Character : Pawn
 	public void Knock (Vector3 dir, float duration) 
 	{
 		// Only add CC if wasn't already knocked
-		if (!effects.ContainsKey ("Knocked")) AddCC ("Knocked", Locks.All);
+		if (!effects.ContainsKey ("Knocked")) AddCC ("Knocked", Locks.All, interrupt: Locks.Dash | Locks.Spells);
+		else if (knockedCoroutine != null) StopCoroutine (knockedCoroutine);
+
 		knockedCoroutine = StartCoroutine (KnockingTo (dir, duration));
 
 		// Let go grabbed object, if any,
@@ -250,13 +251,16 @@ public abstract class Character : Pawn
 
 	private IEnumerator KnockingTo (Vector3 dir, float duration) 
 	{
+		// Supress vertical force
+		dir.y = 0f;
+
 		var factor = 0f;
 		while (factor <= 1f)
 		{
-			/// Move player during knock
+			// Move player during knock
 			movingSpeed = dir * DashForce * (1f - factor);
 
-			/// Rotate player 'cause its cool
+			// Rotate player 'cause its cool
 			transform.Rotate (Vector3.up, 771f * Time.deltaTime);
 			targetRotation = transform.rotation;
 
@@ -277,25 +281,28 @@ public abstract class Character : Pawn
 		if (locks.HasFlag (Locks.Spells)) return;
 		if (!Owner.GetButton ("Spell")) return;
 		if (toy) return;
-
 		// If everything's ok
+		else Casting = true;
 		var block = (Locks.Locomotion | Locks.Interaction);
-		AddCC ("Spell Casting", block, spellSelfStun);
+		AddCC ("Spell Casting", block, Locks.NONE, spellSelfStun);
 
 		// Self CC used as cooldown
 		AddCC ("-> Spell", Locks.Spells);
 		SwitchCrystal (value: false);
+		StartCoroutine (WaitSpellCD ());
 
 		// Cast spell & put it on CD
-		anim.SetTrigger ("Cast_Spell");
 		spellCoroutine = StartCoroutine (CastSpell ());
 	}
+
 	private IEnumerator CastSpell ()
 	{
 		areaOfEffect.On (areaColor);                            // Show area
 		yield return new WaitForSeconds (spellSelfStun);        // Allow spell aiming while self-stunned
 		areaOfEffect.Off ();                                    // Hide area
 
+		// Set animator state
+		Casting = false;
 		// Always call this, even if there's no hit
 		BeforeSpell ();
 
@@ -309,15 +316,18 @@ public abstract class Character : Pawn
 			// Actually do stuff
 			SpellEffect ();
 		}
+	}
 
+	protected abstract void SpellEffect ();
+	protected virtual void BeforeSpell () {/* This is always called */ }
+
+	private IEnumerator WaitSpellCD () 
+	{
 		// Just wait until CD is over
 		yield return new WaitForSeconds (spellCooldown);
 		SwitchCrystal (value: true);
 		RemoveCC ("-> Spell");
 	}
-	protected abstract void SpellEffect ();
-
-	protected virtual void BeforeSpell () {/* This is always called */ }
 
 	public void SwitchCrystal (bool value) 
 	{
@@ -394,7 +404,7 @@ public abstract class Character : Pawn
 	}
 
 	// Helper for only adding CCs
-	public void AddCC (string name, Locks cc, float duration = 0) 
+	public void AddCC (string name, Locks cc, Locks interrupt = Locks.NONE, float duration = 0) 
 	{
 		effects.Add (name, cc);
 		if (duration != 0) StartCoroutine (RemoveEffectAfter (name, duration));
@@ -403,21 +413,23 @@ public abstract class Character : Pawn
 		if (cc.HasFlag (Locks.Movement)) 
 		{
 			movingSpeed = Vector3.zero;
-			if (dashCoroutine != null)
+			if (interrupt.HasFlag (Locks.Dash) &&
+				dashCoroutine != null)
 			{
+				// Reset dashing
+				RemoveCC ("Dashing");
+				Dashing = false;
+
 				StopCoroutine (dashCoroutine);
 				dashCoroutine = null;
-			}
-			if (knockedCoroutine != null)
-			{
-				StopCoroutine (knockedCoroutine);
-				knockedCoroutine = null;
 			}
 		}
 		else
 		// Interrupt spell casting
-		if (cc.HasFlag (Locks.Spells) && spellCoroutine != null) 
+		if (interrupt.HasFlag (Locks.Spells) &&
+			spellCoroutine != null) 
 		{
+			Casting = false;
 			SwitchCrystal (value: false);
 			StopCoroutine (spellCoroutine);
 			spellCoroutine = null;
@@ -488,11 +500,11 @@ public abstract class Character : Pawn
 			other = list.FirstOrDefault (c=> c != this);
 	}
 
-	public static Character Get<T> () where T : Character
+	public static Character Get (Characters character) 
 	{
 		// Gets instance of specific character
-		var c = GameObject.Find (typeof (T).Name);
-		return c.GetComponent<T> ();
+		var c = GameObject.Find (character.ToString ());
+		return c.GetComponent<Character> ();
 	}
 	#endregion
 

@@ -14,9 +14,10 @@ public class Dialog : MonoBehaviour
 	internal Animator anim;
 	#endregion
 
+	#region CALLBACKS
 	public IEnumerator Display (params Speech.Dialog[] dialogs) 
 	{
-		/// Turn dialog UI on
+		// Turn dialog UI on
 		bg.CrossShowAlpha (1f, 0.3f, true);
 		border.CrossShowAlpha (1f, 0.3f, true);
 		arrow.CrossShowAlpha (1f, 0.15f, true);
@@ -29,38 +30,39 @@ public class Dialog : MonoBehaviour
 			var speed = d.speed * 2f;
 			while (fill <= d.message.Length + 1)
 			{
-				/// Get cursor position
+				// Get cursor position
 				var cursor = Mathf.FloorToInt (fill);
 
-				/// Fill text
+				// Fill text
 				content.text = d.message + "</color>";
 				content.text = content.text.Insert (cursor, "<color=#0000>");
 
 				yield return null;
 				fill += Time.unscaledDeltaTime * speed;
 
-				/// Increase speed if pressing skip
+				// Increase speed if pressing skip
 				if (Input.GetButtonDown ("Skip"))
 					speed = Mathf.Pow (speed, 2);
 			}
 			content.text = d.message;
 
-			/// Wait until dialog is skipped
+			// Wait until dialog is skipped
 			while (!Input.GetButtonDown ("Skip")) yield return null;
 
-            /// Play Animator trigger if given
+            // Play Animator trigger if given
             if (!string.IsNullOrEmpty (d.trigger) && anim != null)
                 anim.SetTrigger (d.trigger);
         }
 
-		/// Turn off dialog UI
+		// Turn off dialog UI
 		bg.CrossFadeAlpha (0, 0.2f, true);
 		border.CrossFadeAlpha (0, 0.2f, true);
 		arrow.CrossFadeAlpha (0, 0.15f, true);
 		content.CrossFadeAlpha (0, 0.2f, true);
+		// Destroy it
+		Destroy (gameObject, 0.5f);
 	}
 
-	#region CALLBACKS
 	private void Awake () 
 	{
 		bg.SetAlpha (0f);
@@ -76,7 +78,7 @@ public class Dialog : MonoBehaviour
 		var speech = Resources.Load<Speech> ("Dialogs/" + path);
 		if (speech) 
 		{
-			var prefab = Resources.Load<Dialog> ("Prefabs/Dialog");
+			var prefab = Resources.Load<Dialog> ("Prefabs/UI/Dialog");
 			var dialog = Instantiate (prefab, UIMaster.manager.transform);
 			dialog.anim = anim;
 

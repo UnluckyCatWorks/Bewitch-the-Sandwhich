@@ -48,7 +48,8 @@ public class TutoIcons : MonoBehaviour
 
 	public void InitializeAs (ControllerType controller) 
 	{
-		var child = transform.GetChild ((int) controller - 1);
+		int id = Mathf.Clamp ((int)controller-1, 0, 2);
+		var child = transform.GetChild (id);
 		int childCount = child.childCount;
 
 		// Set active the wanted type

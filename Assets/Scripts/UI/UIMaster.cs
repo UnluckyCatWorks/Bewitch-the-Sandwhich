@@ -22,7 +22,7 @@ public class UIMaster : MonoBehaviour
 
 	IEnumerator CortinillaToScene (string scene) 
 	{
-		var cortinilla = Instantiate (Resources.Load<Image> ("Prefabs/Cortinilla"), transform);
+		var cortinilla = Instantiate (Resources.Load<Image> ("Prefabs/UI/Cortinilla"), transform);
 		int id = Shader.PropertyToID ("_Scale");
 
 		/// Close cortinilla
@@ -38,7 +38,7 @@ public class UIMaster : MonoBehaviour
 		// Load scene
 		yield return SceneManager.LoadSceneAsync (scene);
 		// Wait extra time always
-		yield return new WaitForSeconds (1f);
+		yield return new WaitForSeconds (0.5f);
 
 		// Open Cortinilla
 		while (factor >= 0f)

@@ -13,6 +13,6 @@ public class Milton : Character
 		// Spawn VFX
 
 		// Make other player go crazy
-		other.AddCC ("Spell: Crazy", Locks.Crazy, MadnessDuration);
+		other.AddCC ("Spell: Crazy", Locks.Crazy, Locks.Spells, MadnessDuration);
 	}
 }

@@ -77,10 +77,8 @@ public class Grabbable : MonoBehaviour
 		// Be sure it's not the same player who threw it!
 		if (victim.ID == throwerPlayer.ID) return;
 
-		// Get force from physic speed & supress Y-force
-		var knockForce = body.velocity.normalized; knockForce.y = 0;
 		// Knock player & stop being a flying weapon
-		victim.Knock (knockForce, 0.20f);
+		victim.Knock (body.velocity.normalized, 0.20f);
 		beingThrown = false;
 
 		// Mark tutorial check
