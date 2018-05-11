@@ -10,6 +10,7 @@ public class ModeCarrousel : MonoBehaviour
 	public const float FadeDuration = 1f;
 
 	public GameObject blocker;
+	[Range (0, )]
 
 	internal SmartAnimator anim;
 
@@ -17,7 +18,6 @@ public class ModeCarrousel : MonoBehaviour
 	#endregion
 
 	#region UTILS
-	// Turns it on/off
 	public static void Switch (bool state) 
 	{
 		if (!state) menu.blocker.SetActive (true);
@@ -43,6 +43,13 @@ public class ModeCarrousel : MonoBehaviour
 			factor += Time.deltaTime / FadeDuration;
 		}
 		if (state) blocker.SetActive (false);
+	}
+	#endregion
+
+	#region UI UTILS
+	public void MoveMode (int dir) 
+	{
+
 	}
 	#endregion
 

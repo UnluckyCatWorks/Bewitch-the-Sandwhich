@@ -28,7 +28,15 @@ public abstract class Game : MonoBehaviour
 
 	public enum Modes 
 	{
-		UNESPECIFIED,
-		// TODO
+		UNESPECIFIED, 
+		Tutorial, 
+
+		// Real Game Modes
+		TohLoQuePuedas,
+		AtrapaElCaldero,
+		CaenDelSielo,
+
+		// Special
+		Count = CaenDelSielo - 2
 	}
 }

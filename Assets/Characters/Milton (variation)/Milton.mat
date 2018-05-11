@@ -96,7 +96,7 @@ Material:
     - _SrcBlend: 1
     - _StoneExtrude: 0.01
     - _StoneIntensity: 1
-    - _StoneLevel: 0.009449967
+    - _StoneLevel: 0.009102324
     - _StoneMax: 1.68
     - _StoneMin: 0.51
     - _StoneNormalScale: -1.27
