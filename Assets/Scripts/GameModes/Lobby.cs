@@ -40,15 +40,14 @@ public class Lobby : Game
 	#endregion
 
 	#region CALLBACKS
-	protected override IEnumerator Logic ()
+	protected override IEnumerator Logic () 
 	{
 		#region PREPARATION
 		// Get some references
 		var menu = GameObject.Find ("UI_MENU").GetComponent<Animator> ();
 		var focos = GameObject.Find ("Focos").GetComponent<Animator> ();
 		var rig = GameObject.Find ("Camera_Rig").GetComponent<Animator> ();
-		var modeMenu = GameObject.Find ("UI_MODE_SELECTION");
-		modeMenu.SetActive (false);
+		ModeCarrousel.Switch (state: false);
 		#endregion
 
 		#region MENU APPEARS
@@ -129,12 +128,10 @@ public class Lobby : Game
 
 		// Wait a bit
 		yield return new WaitForSeconds (0.5f);
+
 		// Go to mode selection
 		rig.SetTrigger ("ToModeSelect");
-		modeMenu.SetActive (true);
-		yield return Extensions.FadeAmbient (2.9f, 2f, 5f);
-		// Disable menu blocker
-		modeMenu.transform.GetChild (0).gameObject.SetActive (true);
+		ModeCarrousel.Switch (state: true);
 
 		// Disable showcase characters
 		Get<Transform> ("Showcase_", true, t=> t.gameObject.SetActive (false));

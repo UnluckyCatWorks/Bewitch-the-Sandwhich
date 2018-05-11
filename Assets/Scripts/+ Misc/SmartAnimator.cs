@@ -31,11 +31,8 @@ public class SmartAnimator : UnityEngine.Object
 	public SmartAnimator (Animator animator) 
 	{
 		// Null check
-		if (!animator)
-		{
-			Debug.LogError ("Provided Animator is null!", this);
-			throw new Exception ();
-		}
+		if (!animator) Debug.LogWarning ("Smart Animator: Provided Animator is null!", this);
+
 		// Initialize dictionaries
 		floats = new Dictionary<string, Param<float>> ();
 		bools = new Dictionary<string, Param<bool>> ();

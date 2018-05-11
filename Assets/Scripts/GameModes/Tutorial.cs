@@ -32,7 +32,6 @@ public class Tutorial : MonoBehaviour
 		var menu = GameObject.Find ("UI_MENU").GetComponent<Animator> ();
 		var focos = GameObject.Find ("Focos").GetComponent<Animator> ();
 		var rig = GameObject.Find ("Camera_Rig").GetComponent<Animator> ();
-		var modeMenu = GameObject.Find ("UI_MODE_SELECTION");
 
 		// Create Players' Characters
 		var ps = Character.SpawnPack ();
@@ -61,12 +60,10 @@ public class Tutorial : MonoBehaviour
 		rig.SetTrigger ("ToScene");
 		focos.SetTrigger ("Light_Scene");
 		StartCoroutine (Extensions.FadeAmbient (1.6f, 3f, 0.5f));
-		// Wait until mode menu is out of camera
-		yield return new WaitForSeconds (1.1f);
-		modeMenu.SetActive (false);
+		ModeCarrousel.Switch (state: false);
 
 		// Wait a bit
-		yield return new WaitForSeconds (3f);
+		yield return new WaitForSeconds (1f);
 
 		#region MOVING
 		Title.Show ("MOVE", 2f);
@@ -229,9 +226,7 @@ public class Tutorial : MonoBehaviour
 			puff.Play ();
 		});
 
-		Extensions.FadeAmbient (2.9f, 2f, 5f);
 		yield return new WaitForSeconds (1f);
-
 		// Make players dissapear
 		ps.ForEach (p =>
 		{
@@ -244,12 +239,9 @@ public class Tutorial : MonoBehaviour
 			puff.Play ();
 		});
 
-		// Show menu when out of camera
-		yield return new WaitForSeconds (1.5f);
-		modeMenu.SetActive (true);
-		// Disable menu blocker
-		yield return new WaitForSeconds (1f);
-		modeMenu.transform.GetChild (0).gameObject.SetActive (true); 
+		// Make mode-selection appear
+		yield return new WaitForSeconds (0.5f);
+		ModeCarrousel.Switch (state: true);
 		#endregion
 
 		// End tutorial
