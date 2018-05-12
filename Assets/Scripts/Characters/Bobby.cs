@@ -3,61 +3,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bobby : Character 
+public class Bobby : Character
 {
 	#region DATA
 	public GameObject spellVFX;
-	private const float StunDuration = 2f;
+	public ParticleSystem fireVFX;
+
+	public const float BurnDurtion = 4f;
+	public const float SpeedMultiplier = 2f;
+
+	private ParticleSystem effect;
 	#endregion
 
-	protected override void SpellEffect () 
+	protected override IEnumerator SpellEffect () 
 	{
-		// Spawn VFX
-		var vfx = Instantiate (spellVFX);
-		vfx.transform.position = other.transform.position + (Vector3.up * 0.75f);
-		Destroy (vfx.gameObject, 2f);
+		// Wait until spell hits
+		while (!spellHit) yield return null;
 
-		// Turn other player into stone
-		StartCoroutine (TurnIntoStone ());
+		// Make other player go crazy
+		other.AddCC ("Spell: Burned", Locks.Burning | Locks.Abilities | Locks.Dash, Locks.Spells, BurnDurtion);
+
+		// Spawn Impact VFX
+		var spell = Instantiate (spellVFX);
+		spell.transform.position = other.transform.position + Vector3.up * 0.75f;
+		Destroy (spell, 2f);
+
+		// Spawn persistent VFX
+		effect = Instantiate (fireVFX, other.transform);
+		effect.transform.localPosition = new Vector3 (0f, 0.25f, -0.25f);
+
+		yield return new WaitForSeconds (BurnDurtion);
+		effect.Stop (true, ParticleSystemStopBehavior.StopEmitting);
 	}
 
-	private IEnumerator TurnIntoStone () 
+	private void OnDestroy () 
 	{
-		var anim = other.GetComponent<Animator> ();
-		int _StoneLevel = Shader.PropertyToID ("_StoneLevel");
-
-		// Apply CC
-		other.AddCC ("Spell: Stoned", Locks.All);
-
-		// Turn into stone
-		float factor = 0f;
-		while (factor <= 1.1f)
-		{
-			float value = Mathf.Clamp01 (Mathf.Pow (factor, 2f));
-			other.mat.SetFloat (_StoneLevel, value);
-			// Slow down animator
-			anim.speed = 1 - value;
-
-			yield return null;
-			factor += Time.deltaTime / /*duration*/ 0.30f;
-		}
-
-		// Wait until stun is over
-		yield return new WaitForSeconds (StunDuration);
-
-		// Turn back to normal
-		while (factor >= -0.1f)
-		{
-			float value = Mathf.Clamp01 (Mathf.Pow (factor, 2f));
-			other.mat.SetFloat (_StoneLevel, value);
-			// Restore animator
-			anim.speed = 1 - value;
-
-			yield return null;
-			factor -= Time.deltaTime / /*duration*/ 0.30f;
-		}
-
-		// Remove CC
-		other.RemoveCC ("Spell: Stoned");
+		if (effect)
+			effect.Stop (true, ParticleSystemStopBehavior.StopEmitting);
 	}
 }

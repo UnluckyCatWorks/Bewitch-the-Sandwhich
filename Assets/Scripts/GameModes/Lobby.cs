@@ -132,9 +132,6 @@ public class Lobby : Game
 		// Go to mode selection
 		rig.SetTrigger ("ToModeSelect");
 		ModeCarrousel.Switch (state: true);
-
-		// Disable showcase characters
-		Get<Transform> ("Showcase_", true, t=> t.gameObject.SetActive (false));
 	}
 
 	protected override void Awake () 

@@ -1134,7 +1134,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1838364645206850}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.47, y: -0.147, z: -5.47}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4001555674194868}
@@ -1701,9 +1701,20 @@ MonoBehaviour:
   grabHandle: {fileID: 4871902214769434}
   ID: 4
   focusColor: {r: 0.204608, g: 0.736, b: 0.3841818, a: 1}
-  crystalEmission: 0
+  crystalEmission: 3.109
   areaColor: {r: 0.29374, g: 1.5460001, b: 0.9524292, a: 0.638}
-  spellCooldown: 0
+  spellCooldown: 3
+  spellVFX: {fileID: 1838768151094766, guid: 7bcae87f9d343a14b873377a4abeca56, type: 2}
+  triplanarScale: {x: 1.04, y: 0.69, z: 1.14}
+  triplanarSharpness: 4.64
+  texture: {fileID: 2800000, guid: 78a375c213ffd424f9fed43997617c0b, type: 3}
+  normalTexture: {fileID: 2800000, guid: d193716a95db99e4d821382498cbc36e, type: 3}
+  normalScale: 1.11
+  emissionTexture: {fileID: 2800000, guid: 78a375c213ffd424f9fed43997617c0b, type: 3}
+  emissionColor: {r: 3.371296, g: 3.371296, b: 3.371296, a: 0}
+  level: 0
+  extrudeAmount: 0.02
+  minMaxHeight: {x: 0, y: 3}
 --- !u!114 &114312144716241990
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -7,19 +7,6 @@
 		[NoScaleOffset] _Metallic ("Metalness", 2D) = "white" {}
 		[NoScaleOffset] _Emission ("Emission", 2D) = "black" {}
 		[HDR] _EmissionColor ("Emission color", Color) = (0,0,0,0)
-
-		[Header (Medusa)]
-		_StoneScale ("Triplanar scale (XYZ) Blend shaperness (W)", Vector) = (1,1,1,1)
-		[NoScaleOffset] _StoneTex	("Stone texture", 2D) = "white" {}
-		_StoneNormalScale ("Stone normal scale", Float) = 1.0
-		[Normal][NoScaleOffset] _StoneNormal ("Stone normal", 2D) = "bump" {}
-		[NoScaleOffset] _StoneEmission ("Stone emissive", 2D) = "black" {}
-		[HDR] _StoneIntensity ("Stone emission Intensity", Color) = (0,0,0,0)
-
-		_StoneLevel ("Stone Level", Range (0, 1)) = 0.0
-		_StoneExtrude ("Stone extrude amount", Float) = 1.0
-		_StoneMin ("Stone Min", Float) = 0.0
-		_StoneMax ("Stone Max", Float) = 3.0
 	}
 
 	SubShader
@@ -46,13 +33,14 @@
 		uniform sampler2D _Emission;
 		uniform float3 _EmissionColor;
 
+		// Medusa settings
 		uniform float4 _StoneScale;
 		uniform sampler2D _StoneTex;
-		uniform float _StoneNormalScale;
 		uniform sampler2D _StoneNormal;
+		uniform float _StoneNormalScale;
 		uniform sampler2D _StoneEmission;
-		uniform float _StoneIntensity;
-
+		uniform float4 _StoneEmissionColor;
+		// Medusa-extrude settings
 		uniform float _StoneLevel;
 		uniform float _StoneExtrude;
 		uniform float _StoneMin;
@@ -108,7 +96,7 @@
 			// Petrified material
 			fixed3 pColor = TRI (_StoneTex).rgb;
 			float3 pNormal = UnpackScaleNormal(TRI (_StoneNormal), _StoneNormalScale);
-			float3 pEmission = TRI (_StoneEmission).rgb * _StoneIntensity;
+			float3 pEmission = TRI (_StoneEmission).rgb * _StoneEmissionColor;
 			fixed4 pMetal = 0;
 
 			o.Albedo = xLerp (Color);

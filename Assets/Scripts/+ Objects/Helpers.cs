@@ -49,7 +49,7 @@ public enum ControllerType
 	Gamepad_2
 }
 
-[System.Flags]
+[Flags]
 public enum Locks
 {
 	// Locomotion
@@ -61,8 +61,9 @@ public enum Locks
 	Interaction = 1 << 4,
 	Spells = 1 << 5,
 	
-	// Specials
+	// Curses
 	Crazy = 1 << 6,
+	Burning = 1 << 7,
 
 	// Groups
 	Locomotion = (Dash | Movement),

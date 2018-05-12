@@ -1392,7 +1392,7 @@ Transform:
   m_GameObject: {fileID: 1733561819860642}
   m_LocalRotation: {x: 0.004772978, y: -0, z: -5.9662847e-10, w: 0.9999886}
   m_LocalPosition: {x: 0, y: -0.15, z: -0}
-  m_LocalScale: {x: 2.994781, y: 0.27988383, z: 2.9947813}
+  m_LocalScale: {x: 3.4564302, y: 0.27988383, z: 3.45643}
   m_Children: []
   m_Father: {fileID: 4041776794894758}
   m_RootOrder: 1
@@ -1602,8 +1602,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1304399107086124}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.194, y: -0.147, z: -5.47}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4218556083496144}
@@ -1701,9 +1701,9 @@ MonoBehaviour:
   grabHandle: {fileID: 4937281900218502}
   ID: 2
   focusColor: {r: 0.20588237, g: 0.4413793, b: 1, a: 1}
-  crystalEmission: 6.61
+  crystalEmission: 3.677
   areaColor: {r: 0.46322, g: 0.5213018, b: 2.438, a: 1}
-  spellCooldown: 4
+  spellCooldown: 3
   spellVFX: {fileID: 1206203692246924, guid: 9763c67fe7161b64a867536f0900ca99, type: 2}
 --- !u!114 &114653372814588150
 MonoBehaviour:
@@ -1728,7 +1728,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 0
   serializedVersion: 2
-  m_Radius: 3
+  m_Radius: 3.38
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!137 &137957501633156190
 SkinnedMeshRenderer:

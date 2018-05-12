@@ -22,6 +22,7 @@ public abstract class Character : Pawn
 	// Internal info
 	protected Dictionary<string, Locks> effects;
 	internal Locks locks;
+	protected bool spellHit;
 
 	protected SmartAnimator anim;
 	protected CharacterController me;
@@ -44,10 +45,8 @@ public abstract class Character : Pawn
 	internal Vector3 MovingDir 
 	{
 		get
-		{
-			return (movingSpeed == Vector3.zero) ?
-				transform.forward : movingSpeed.normalized;
-		}
+		{ return (movingSpeed == Vector3.zero)?
+				transform.forward : movingSpeed.normalized; }
 	}
 
 	internal CollisionFlags collision;
@@ -110,6 +109,17 @@ public abstract class Character : Pawn
 			targetRotation = Quaternion.LookRotation (dir);
 		}
 
+		// If burning
+		if (locks.HasFlag (Locks.Burning))
+		{
+			// Can't stop moving
+			Moving = true;
+			float speedMul = Bobby.SpeedMultiplier * speed;
+
+			if (input != Vector3.zero)	movingSpeed = dir * speedMul;
+			else						movingSpeed = MovingDir * speedMul;
+		}
+		else
 		// Modify speed to move character
 		if (!locks.HasFlag (Locks.Movement))
 		{
@@ -199,8 +209,6 @@ public abstract class Character : Pawn
 
 	private IEnumerator InDash () 
 	{
-		// Cache gravity & reduce its
-		float oldGravity = gravityMul;
 		gravityMul = 0.6f;
 
 		float factor = 0f;
@@ -231,7 +239,7 @@ public abstract class Character : Pawn
 		Dashing = false;
 
 		// Restore gravity
-		gravityMul = oldGravity;
+		gravityMul = 1f;
 	}
 	#endregion
 
@@ -301,10 +309,9 @@ public abstract class Character : Pawn
 		yield return new WaitForSeconds (spellSelfStun);        // Allow spell aiming while self-stunned
 		areaOfEffect.Off ();                                    // Hide area
 
-		// Set animator state
+		// Start spell coroutine
+		StartCoroutine (SpellEffect ());
 		Casting = false;
-		// Always call this, even if there's no hit
-		BeforeSpell ();
 
 		// If other player was hit
 		var hits = Physics.OverlapSphere (areaOfEffect.transform.position, areaCollider.radius, 1<<14);
@@ -313,13 +320,11 @@ public abstract class Character : Pawn
 			// If inside tutorial 
 			Tutorial.SetCheckFor (ID, Tutorial.Phases.Casting_Spells, true);
 
-			// Actually do stuff
-			SpellEffect ();
+			// Notify character that spell was hit
+			spellHit = true;
 		}
 	}
-
-	protected abstract void SpellEffect ();
-	protected virtual void BeforeSpell () {/* This is always called */ }
+	protected abstract IEnumerator SpellEffect ();
 
 	private IEnumerator WaitSpellCD () 
 	{
@@ -327,6 +332,7 @@ public abstract class Character : Pawn
 		yield return new WaitForSeconds (spellCooldown);
 		SwitchCrystal (value: true);
 		RemoveCC ("-> Spell");
+		spellHit = false;
 	}
 
 	public void SwitchCrystal (bool value) 
@@ -382,7 +388,6 @@ public abstract class Character : Pawn
 		if (Owner.GetButton ("Action", true) && toy)
 			toy.Throw (MovingDir * ThrowForce, owner: this);
 	}
-
 	#endregion
 
 	#region EFFECTS MANAGEMENT
@@ -397,6 +402,7 @@ public abstract class Character : Pawn
 			// Resets CCs & then reads them every frame
 			locks = locks.SetFlag (e.Value);
 		}
+
 		// Check if spells are NOW originally blocked
 		bool spellsAreBlocked = locks.HasFlag (Locks.Spells);
 		if (spellsWereBlocked && !spellsAreBlocked)
@@ -406,7 +412,7 @@ public abstract class Character : Pawn
 	// Helper for only adding CCs
 	public void AddCC (string name, Locks cc, Locks interrupt = Locks.NONE, float duration = 0) 
 	{
-		effects.Add (name, cc);
+		if (!effects.ContainsKey(name)) effects.Add (name, cc);
 		if (duration != 0) StartCoroutine (RemoveEffectAfter (name, duration));
 
 		// Interrupt any kind of movement
@@ -419,6 +425,7 @@ public abstract class Character : Pawn
 				// Reset dashing
 				RemoveCC ("Dashing");
 				Dashing = false;
+				gravityMul = 1f;
 
 				StopCoroutine (dashCoroutine);
 				dashCoroutine = null;
@@ -438,7 +445,8 @@ public abstract class Character : Pawn
 
 	public void RemoveCC (string name) 
 	{
-		effects.Remove (name);
+		if (effects.ContainsKey (name))
+			effects.Remove (name);
 	}
 
 	// Internal helper for temporal CCs
@@ -470,7 +478,7 @@ public abstract class Character : Pawn
 		return new Ray (origin, transform.forward);
 	}
 
-	public static List<Character> SpawnPack () 
+	public static List<Character> SpawnPack ()
 	{
 		// Spawn
 		var list = new List<Character>
@@ -478,8 +486,12 @@ public abstract class Character : Pawn
 			Instantiate(Resources.Load<Character>("Prefabs/Characters/" + Player.all[0].playingAs)),
 			Instantiate(Resources.Load<Character>("Prefabs/Characters/" + Player.all[1].playingAs)),
 		};
-		// Correct names
-		list.ForEach (p => p.name = p.name.Replace ("(Clone)", string.Empty));
+		// Correct instances
+		list.ForEach (p=>
+		{
+			p.name = p.name.Replace ("(Clone)", string.Empty);
+			p.transform.rotation = Quaternion.identity;
+		});
 
 		// Assign them their owners
 		list[0].ownerID = 1;

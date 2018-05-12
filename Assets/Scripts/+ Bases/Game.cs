@@ -8,6 +8,9 @@ public abstract class Game : MonoBehaviour
 	#region DATA
 	public static Game manager;			// Self-reference
 	public static bool paused;          // Whether the game paused
+
+	public static Modes mode;
+	public static int rounds;
 	#endregion
 
 	#region CALLBACKS
@@ -31,12 +34,13 @@ public abstract class Game : MonoBehaviour
 		UNESPECIFIED, 
 		Tutorial, 
 
-		// Real Game Modes
-		TohLoQuePuedas,
-		AtrapaElCaldero,
-		CaenDelSielo,
+		// Game Modes
+		MeltingRace,
+		CauldronCapture,
+		EnchantedWeather,
 
-		// Special
-		Count = CaenDelSielo - 2
+		// Specials
+		Count = EnchantedWeather,
+		CountNoTutorial = Count-1
 	}
 }

@@ -26,6 +26,7 @@ public class Tutorial : MonoBehaviour
 		// Start tutorial
 		onTutorial = true;
 		Game.paused = false;
+		Cursor.visible = false;
 
 		#region PREPARATION
 		// Get some references
@@ -54,6 +55,10 @@ public class Tutorial : MonoBehaviour
 		};
 		icons[0].InitializeAs (Player.all[0].scheme.type);
 		icons[1].InitializeAs (Player.all[1].scheme.type);
+
+		// Disable showcase characters
+		var showcase = Lobby.Get<Transform> ("Showcase_", true);
+		showcase.ForEach (t=> t.gameObject.SetActive (false));
 		#endregion
 
 		// Go to the scene
@@ -245,6 +250,7 @@ public class Tutorial : MonoBehaviour
 		#endregion
 
 		// End tutorial
+		Cursor.visible = true;
 		onTutorial = false;
 	}
 
