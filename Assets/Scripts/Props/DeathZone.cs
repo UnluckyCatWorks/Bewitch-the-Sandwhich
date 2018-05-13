@@ -5,7 +5,7 @@ using UnityEngine;
 public class DeathZone : MonoBehaviour
 {
 	public ParticleSystem fx;
-	private const float Stun = 1f;
+	private const float Stun = 0.25f;
 
 	private void OnTriggerEnter (Collider other) 
 	{

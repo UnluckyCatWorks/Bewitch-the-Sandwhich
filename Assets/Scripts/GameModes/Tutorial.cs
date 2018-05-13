@@ -25,12 +25,11 @@ public class Tutorial : MonoBehaviour
 	{
 		// Start tutorial
 		onTutorial = true;
-		Game.paused = false;
+		Game.stopped = false;
 		Cursor.visible = false;
 
 		#region PREPARATION
 		// Get some references
-		var menu = GameObject.Find ("UI_MENU").GetComponent<Animator> ();
 		var focos = GameObject.Find ("Focos").GetComponent<Animator> ();
 		var rig = GameObject.Find ("Camera_Rig").GetComponent<Animator> ();
 
@@ -108,7 +107,7 @@ public class Tutorial : MonoBehaviour
 
 		#region DASHING
 		// Show water pit
-		Game.paused = true;
+		Game.stopped = true;
 		yield return new WaitForSeconds (1f);
 		GameObject.Find ("Plat_agua").GetComponent<Animation> ().PlayRewind ("Out");
 		GameObject.Find ("Plat_agua").GetComponentInChildren<Collider> ().enabled = false;
@@ -118,7 +117,7 @@ public class Tutorial : MonoBehaviour
 
 		// Allow dashing
 		ps.ForEach (p=> p.RemoveCC ("Dash"));
-		Game.paused = false;
+		Game.stopped = false;
 
 		// Show Dash marks
 		markers = Lobby.Get<TutoPoint> ("Dash_", false);

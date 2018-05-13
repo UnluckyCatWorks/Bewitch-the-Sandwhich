@@ -88,7 +88,7 @@ public class MachineController : StateMachineBehaviour
 			anim.SetTrigger("Work_Completed");
 		}
 		else
-		if (!Game.paused) 
+		if (!Game.stopped) 
 		{
 			var factor = clock / bridge.duration;
 			timer.SetSlider (factor);
@@ -116,7 +116,7 @@ public class MachineController : StateMachineBehaviour
 			anim.SetTrigger("Start_Overheat");
 		}
 		else
-		if (!Game.paused) clock += Time.deltaTime;
+		if (!Game.stopped) clock += Time.deltaTime;
 	}
 	public virtual void OnExitCompleted () { }
 	#endregion
@@ -141,7 +141,7 @@ public class MachineController : StateMachineBehaviour
 			bridge.obj.transform.SetParent (null);
 		}
 		else
-		if (!Game.paused)
+		if (!Game.stopped)
 		{
 			var factor = clock / bridge.overheatTime;
 			timer.SetSlider (factor);

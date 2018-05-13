@@ -31,10 +31,7 @@ public class Lobby : Game
 
 	public void Exit () 
 	{
-		#if UNITY_EDITOR
-		/// Atajito
-		UIMaster.LoadScene ("Coliseum");
-		#endif
+		PlayerPrefs.Save ();
 		Application.Quit ();
 	}
 	#endregion

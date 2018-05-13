@@ -15,43 +15,58 @@ public class UIMaster : MonoBehaviour
 	}
 
 	#region SCENE LOADING
-	public static void LoadScene (string scene) 
+	public static void LoadScene (Game.Modes scene) 
 	{
-		manager.StartCoroutine (manager.CortinillaToScene (scene));
+		string sceneToLoad = (scene == Game.Modes.Tutorial? "Lobby" : scene.ToString ());
+		manager.StartCoroutine (manager.CortinillaToScene (sceneToLoad));
 	}
 
-	IEnumerator CortinillaToScene (string scene) 
+	IEnumerator CortinillaToScene (string scene)  
 	{
 		var cortinilla = Instantiate (Resources.Load<Image> ("Prefabs/UI/Cortinilla"), transform);
 		int id = Shader.PropertyToID ("_Scale");
 
-		/// Close cortinilla
-		var factor = 0f;
-		var duration = 2f;
+		// Close cortinilla
+		float duration = 2f;
+		float factor = 0f;
 		while (factor <= 1.1f) 
 		{
 			cortinilla.materialForRendering.SetFloat (id, factor);
-			factor += Time.deltaTime / duration;
 			yield return null;
+			factor += Time.deltaTime / duration;
 		}
+		factor = 0f;
 
-		// Load scene
-		yield return SceneManager.LoadSceneAsync (scene);
-		// Wait extra time always
-		yield return new WaitForSeconds (0.5f);
+		// Start loading scene
+		var loading = SceneManager.LoadSceneAsync (scene);
+
+		#warning Mode help not implemented yet
+		// Show mode help
+//		var help = cortinilla.transform.GetChild ((int)Game.mode-2).GetComponent<Image> ();
+//		while (factor <= 1.1f)
+//		{
+//			help = 
+//			yield return null;
+//			factor += Time.deltaTime / /*duration*/ 0.25f;
+//		}
+//
+//		while
+
+		yield return loading;
 
 		// Open Cortinilla
-		while (factor >= 0f)
+		while (factor >= -0.1f) 
 		{
 			cortinilla.materialForRendering.SetFloat (id, factor);
 			factor -= Time.deltaTime / duration;
 			yield return null;
 		}
-		// Get rid of it
-		Destroy (cortinilla.gameObject);
 
-		// Enable game
+		// Enable game mode logic
 		Game.manager.enabled = true;
+
+		// Get rid of this
+		Destroy (cortinilla.gameObject);
 	}
 	#endregion
 }

@@ -82,7 +82,7 @@ public class ModeCarrousel : MonoBehaviour
 		if (Game.mode == Game.Modes.Tutorial)
 			Tutorial.manager.StartTutorial ();
 		else
-			UIMaster.LoadScene (Game.mode.ToString ());
+			UIMaster.LoadScene (Game.mode);
 	}
 	#endregion
 

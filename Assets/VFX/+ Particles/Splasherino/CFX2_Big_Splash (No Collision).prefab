@@ -125,7 +125,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1544247164344490}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -5.95, y: 0.1, z: 1.2603924}
+  m_LocalPosition: {x: -0.09, y: -0.74, z: -2.8874514}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4007455548572794}
@@ -143,7 +143,7 @@ ParticleSystem:
   serializedVersion: 5
   lengthInSec: 1
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   looping: 0
   prewarm: 0
   playOnAwake: 1
@@ -194,7 +194,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: -347400191
+  randomSeed: 2105164811
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -260,7 +260,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.6431373, g: 0.8818662, b: 1, a: 0.7058824}
+      maxColor: {r: 0.6431373, g: 0.8818662, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -3486,7 +3486,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: 1757348436
+  randomSeed: 641950739
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3552,7 +3552,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 0.74509805}
+      maxColor: {r: 1, g: 1, b: 1, a: 0.928}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -6718,7 +6718,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: 490849428
+  randomSeed: 1033697783
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -9968,7 +9968,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: -566306210
+  randomSeed: -210057754
   InitialModule:
     serializedVersion: 3
     enabled: 1

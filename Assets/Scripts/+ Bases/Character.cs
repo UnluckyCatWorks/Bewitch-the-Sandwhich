@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [SelectionBase]
 public abstract class Character : Pawn
@@ -171,7 +172,12 @@ public abstract class Character : Pawn
 
 	public void Respawn () 
 	{
-		transform.position = lastAlivePos;
+		NavMeshHit hit;
+		// Find a viable position on the Nav Mesh 
+		if (NavMesh.SamplePosition (lastAlivePos, out hit, 3f, NavMesh.AllAreas))
+		{
+			transform.position = hit.position;
+		}
 	}
 	#endregion
 
@@ -530,7 +536,7 @@ public abstract class Character : Pawn
 		Owner.ResetInputs ();
 		ReadEffects ();
 
-		if (Game.paused) 
+		if (Game.stopped) 
 		{
 			Moving = false;
 			return;
