@@ -3,16 +3,16 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Data;
 
 public class Player 
 {
 	#region DATA
-	public static Player[] all;
+	public static List<Player> all;
 
+	public string name;
 	public Characters playingAs;
 	public ControlScheme scheme;
-	public PlayerData data;
+	public GameStats currentStats;
 
 	private List<string> consumedInputs;
 	#endregion
@@ -32,9 +32,11 @@ public class Player
 		// Control configuration is loaded and then players are created
 		MasterControls.LoadControllers ();
 
-		all = new Player[2];
-		all[0] = new Player (MasterControls.controllers[0]);
-		all[1] = new Player (MasterControls.controllers[1]);
+		all = new List<Player> (2)
+		{
+			new Player (MasterControls.controllers[0]),
+			new Player (MasterControls.controllers[1])
+		};
 	} 
 	#endregion
 

@@ -144,6 +144,10 @@ public class Selector : Pawn
 					// If both are ready
 					if (other.anim.GetBool ("Ready"))
 					{
+						// Save names
+						Owner.name = userName.text;
+						other.Owner.name = other.userName.text;
+
 						// Save player selection into their owners
 						Owner.playingAs = showcase[selected].ID;
 						other.Owner.playingAs = other.showcase[other.selected].ID;

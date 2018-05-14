@@ -6,6 +6,6 @@ public class MeltingRace : Game
 {
 	protected override IEnumerator Logic () 
 	{
-
+		yield break;
 	}
 }

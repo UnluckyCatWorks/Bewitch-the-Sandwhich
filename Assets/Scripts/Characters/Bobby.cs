@@ -9,7 +9,7 @@ public class Bobby : Character
 	public GameObject spellVFX;
 	public ParticleSystem fireVFX;
 
-	public const float BurnDurtion = 4f;
+	public const float BurnDurtion = 3f;
 	public const float SpeedMultiplier = 2f;
 
 	private ParticleSystem effectInstance;
@@ -24,6 +24,7 @@ public class Bobby : Character
 		other.AddCC ("Spell: Burned", Locks.Burning | Locks.Abilities | Locks.Dash, Locks.Spells, BurnDurtion);
 
 		// Show Impact VFX
+		spellVFX.transform.parent = null;
 		spellVFX.transform.position = other.transform.position + Vector3.up * 0.75f;
 		spellVFX.SetActive (true);
 
@@ -34,6 +35,7 @@ public class Bobby : Character
 		// Wait until effect is over
 		yield return new WaitForSeconds (BurnDurtion);
 		effectInstance.Stop (true, ParticleSystemStopBehavior.StopEmitting);
+		spellVFX.transform.parent = transform;
 	}
 
 	private void OnDestroy () 

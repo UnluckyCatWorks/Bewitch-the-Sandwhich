@@ -35,10 +35,6 @@ public class Tutorial : MonoBehaviour
 
 		// Create Players' Characters
 		var ps = Character.SpawnPack ();
-		// Position them
-		var positions = Lobby.Get<Transform> ("Start_", false);
-		ps[0].transform.position = positions[0].position;
-		ps[1].transform.position = positions[1].position;
 		// Restrict their capabilities
 		ps.ForEach (p => p.AddCC ("Movement", Locks.Movement));
 		ps.ForEach (p => p.AddCC ("Dash", Locks.Dash));

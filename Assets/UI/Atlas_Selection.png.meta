@@ -1,14 +1,16 @@
 fileFormatVersion: 2
 guid: 92a58371dafe05f43a12d16337207b93
-timeCreated: 1525947568
+timeCreated: 1526318502
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Lobby_Frame
+    21300000: Round_Counter
     21300002: Lobby_Slider
     21300004: Lobby_Tutorial_Icon
-    21300006: Lobby_Button_Frame
-    21300008: Atlas_Selection_Arrow
+    21300006: Lobby_Slider_Frame
+    21300008: Lobby_Slider_Arrow
+    21300010: Round_Counter_Flag
+    21300012: Round_Counter_Flag_Border
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -85,13 +87,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Lobby_Frame
+      name: Round_Counter
       rect:
         serializedVersion: 2
-        x: 18
-        y: 443
-        width: 986
-        height: 554
+        x: 8
+        y: 430
+        width: 1009
+        height: 570
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -113,26 +115,12 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Lobby_Tutorial_Icon
+      name: Lobby_Slider_Frame
       rect:
         serializedVersion: 2
-        x: 519
-        y: 233
-        width: 191
-        height: 135
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Lobby_Button_Frame
-      rect:
-        serializedVersion: 2
-        x: 82
-        y: 31
-        width: 296
+        x: 84
+        y: 33
+        width: 295
         height: 166
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -141,13 +129,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Atlas_Selection_Arrow
+      name: Lobby_Slider_Arrow
       rect:
         serializedVersion: 2
-        x: 395
-        y: 302
-        width: 34
-        height: 31
+        x: 398
+        y: 29
+        width: 162
+        height: 146
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Round_Counter_Flag
+      rect:
+        serializedVersion: 2
+        x: 569
+        y: 116
+        width: 204
+        height: 287
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Round_Counter_Flag_Border
+      rect:
+        serializedVersion: 2
+        x: 785
+        y: 113
+        width: 209
+        height: 290
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

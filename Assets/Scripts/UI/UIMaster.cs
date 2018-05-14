@@ -19,6 +19,7 @@ public class UIMaster : MonoBehaviour
 	{
 		string sceneToLoad = (scene == Game.Modes.Tutorial? "Lobby" : scene.ToString ());
 		manager.StartCoroutine (manager.CortinillaToScene (sceneToLoad));
+		Game.stopped = true;
 	}
 
 	IEnumerator CortinillaToScene (string scene)  
@@ -35,7 +36,7 @@ public class UIMaster : MonoBehaviour
 			yield return null;
 			factor += Time.deltaTime / duration;
 		}
-		factor = 0f;
+//		factor = 0f;
 
 		// Start loading scene
 		var loading = SceneManager.LoadSceneAsync (scene);

@@ -7,6 +7,9 @@ using UnityEngine.UI;
 public abstract class Game : MonoBehaviour
 {
 	#region DATA
+	public bool justTesting;
+	public Characters roundWinner;
+
 	public static int rounds;
 	public static Modes mode;
 
@@ -15,25 +18,7 @@ public abstract class Game : MonoBehaviour
 	#endregion
 
 	#region UTILS
-	private IEnumerator StartRound (int round) 
-	{
-		var prefab = Resources.Load<Animation> ("Prefabs/UI/RoundCounter");
-		var indicator = Instantiate (prefab, UIMaster.manager.transform);
-
-		// For the first round, don't show background
-		if (round == 1) indicator.transform.GetChild (0).gameObject.SetActive (false);
-
-		// Change round number
-		indicator.GetComponentInChildren<Text> ().text = "Round " + round;
-
-		// Wait until fade-in is done
-		yield return new WaitForSeconds (indicator["In"].clip.averageDuration + 0.2f);
-		//=> Do stuff to restart the level...?
-
-		// Fade-out
-		indicator.Play ("Out");
-		yield return new WaitForSeconds (indicator["Out"].clip.averageDuration);
-	}
+	protected virtual void ResetStage () { /*Reset the scene for the next round*/ }
 	#endregion
 
 	#region CALLBACKS
@@ -41,42 +26,49 @@ public abstract class Game : MonoBehaviour
 	{
 		if (this is Lobby) 
 		{
-			// In the lobby just do the logic,
-			// it's not an actual game mode
 			StartCoroutine (Logic ());
 			yield break;
 		}
 
+		// Reset game stats for both players
+		Player.all.ForEach (p=> p.currentStats = new GameStats ());
+
+		// Start rounds
 		for (int round=1; round<=rounds; round++) 
 		{
-			stopped = true;
-			yield return StartRound (round);
+			// Display round info
+			yield return RoundDisplay.Show (round, roundWinner, ResetStage);
+			roundWinner = Characters.NONE;
 			stopped = false;
 
 			// Start actual game mode logic
-			yield return Logic ();
+			StartCoroutine (Logic ());
+
+			// Wait until winner is proclaimed
+			while (roundWinner == Characters.NONE)
+				yield return null;
 		}
 	}
 	protected abstract IEnumerator Logic ();
 
-	public void FinalizeGame () 
-	{
-
-	}
 
 	private void Awake () 
 	{
-		// Self reference
 		manager = this;
+
+		if (!(this is Lobby) && !justTesting)
+			Character.SpawnPack ();
+
 		OnAwake ();
 	}
 	protected virtual void OnAwake () { }
 	#endregion
 
+	#region HELPERS
 	public enum Modes 
 	{
-		UNESPECIFIED, 
-		Tutorial, 
+		UNESPECIFIED,
+		Tutorial,
 
 		// Game Modes
 		MeltingRace,
@@ -85,6 +77,33 @@ public abstract class Game : MonoBehaviour
 
 		// Specials
 		Count = EnchantedWeather,
-		CountNoTutorial = Count-1
+		CountNoTutorial = Count - 1
 	}
+
+	public static List<T> Get<T> (string name, bool forEachChar, Action<T> a = null) 
+	{
+		List<T> list;
+		if (forEachChar)
+		{
+			list = new List<T>
+			{
+				GameObject.Find (name + Characters.Bobby).GetComponent<T> (),
+				GameObject.Find (name + Characters.Lilith).GetComponent<T> (),
+				GameObject.Find (name + Characters.Amy).GetComponent<T> (),
+				GameObject.Find (name + Characters.Milton).GetComponent<T> ()
+			};
+		}
+		else
+		{
+			list = new List<T>
+			{
+				GameObject.Find (name + "1").GetComponent<T> (),
+				GameObject.Find (name + "2").GetComponent<T> ()
+			};
+		}
+
+		if (a != null) list.ForEach (a);
+		return list;
+	}
+	#endregion
 }

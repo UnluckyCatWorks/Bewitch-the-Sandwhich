@@ -124,10 +124,20 @@ public abstract class Character : Pawn
 		// Modify speed to move character
 		if (!locks.HasFlag (Locks.Movement))
 		{
-			movingSpeed = dir * speed;
-			// Activate moving animations
-			if (input != Vector3.zero) Moving = true;
-			else Moving = false;
+			if (input != Vector3.zero)
+			{
+				movingSpeed = dir * speed;
+				Moving = true;
+			}
+			else
+			{
+				// Ice is resbalizou
+				//if (Game.manager is MeltingRace) movingSpeed = Vector3.Lerp (movingSpeed, Vector3.zero, Time.deltaTime * 0.5f);
+				// :(((
+
+				movingSpeed = Vector3.zero;
+				Moving = false;
+			}
 		}
 		else Moving = false;
 	}
@@ -484,20 +494,23 @@ public abstract class Character : Pawn
 		return new Ray (origin, transform.forward);
 	}
 
-	public static List<Character> SpawnPack ()
+	public static List<Character> SpawnPack () 
 	{
-		// Spawn
+		// Spawn Players' Characters
 		var list = new List<Character>
 		{
 			Instantiate(Resources.Load<Character>("Prefabs/Characters/" + Player.all[0].playingAs)),
 			Instantiate(Resources.Load<Character>("Prefabs/Characters/" + Player.all[1].playingAs)),
 		};
+
 		// Correct instances
-		list.ForEach (p=>
+		var startPoints = Game.Get<Transform> ("Start_", false);
+		for (int p=0; p!=list.Count; p++)
 		{
-			p.name = p.name.Replace ("(Clone)", string.Empty);
-			p.transform.rotation = Quaternion.identity;
-		});
+			list[p].name = list[p].name.Replace ("(Clone)", string.Empty);
+			list[p].transform.position = startPoints[p].position;
+			list[p].transform.rotation = startPoints[p].rotation;
+		}
 
 		// Assign them their owners
 		list[0].ownerID = 1;

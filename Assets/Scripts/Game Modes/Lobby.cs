@@ -140,32 +140,4 @@ public class Lobby : Game
 		charactersSelected = false;
 	}
 	#endregion
-
-	#region HELPERS
-	public static List<T> Get<T> (string name, bool forEachChar, Action<T> a = null) 
-	{
-		List<T> list;
-		if (forEachChar)
-		{
-			list = new List<T>
-			{
-				GameObject.Find (name + Characters.Bobby).GetComponent<T> (),
-				GameObject.Find (name + Characters.Lilith).GetComponent<T> (),
-				GameObject.Find (name + Characters.Amy).GetComponent<T> (),
-				GameObject.Find (name + Characters.Milton).GetComponent<T> ()
-			};
-		}
-		else
-		{
-			list = new List<T>
-			{
-				GameObject.Find (name + "1").GetComponent<T> (),
-				GameObject.Find (name + "2").GetComponent<T> ()
-			};
-		}
-
-		if (a!=null) list.ForEach (a);
-		return list;
-	}
-	#endregion
 }

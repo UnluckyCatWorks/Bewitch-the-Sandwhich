@@ -1809,7 +1809,7 @@ MonoBehaviour:
   focusColor: {r: 1, g: 0.45761248, b: 0.16176474, a: 1}
   crystalEmission: 4.265
   areaColor: {r: 2.43, g: 0.16037996, b: 0.16037996, a: 0.728}
-  spellCooldown: 5
+  spellCooldown: 4
   spellVFX: {fileID: 1780993886353700}
   fireVFX: {fileID: 198029644563381088}
 --- !u!135 &135643693911127632
