@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public abstract class Game : MonoBehaviour
 {
 	#region DATA
-	public static Modes mode;
 	public static int rounds;
+	public static Modes mode;
 
 	public static Game manager;
 	public static bool stopped;
@@ -20,8 +20,9 @@ public abstract class Game : MonoBehaviour
 		var prefab = Resources.Load<Animation> ("Prefabs/UI/RoundCounter");
 		var indicator = Instantiate (prefab, UIMaster.manager.transform);
 
-		// For the first round, don't show backgroun
+		// For the first round, don't show background
 		if (round == 1) indicator.transform.GetChild (0).gameObject.SetActive (false);
+
 		// Change round number
 		indicator.GetComponentInChildren<Text> ().text = "Round " + round;
 
@@ -38,10 +39,10 @@ public abstract class Game : MonoBehaviour
 	#region CALLBACKS
 	protected IEnumerator Start () 
 	{
-		// In the lobby just do the logic,
-		// it's not an actual game mode
 		if (this is Lobby) 
 		{
+			// In the lobby just do the logic,
+			// it's not an actual game mode
 			StartCoroutine (Logic ());
 			yield break;
 		}
@@ -63,11 +64,13 @@ public abstract class Game : MonoBehaviour
 
 	}
 
-	protected virtual void Awake () 
+	private void Awake () 
 	{
 		// Self reference
 		manager = this;
+		OnAwake ();
 	}
+	protected virtual void OnAwake () { }
 	#endregion
 
 	public enum Modes 

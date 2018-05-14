@@ -13,10 +13,8 @@ public class Lilith : Character
 
 	protected override IEnumerator SpellEffect () 
 	{
-		// Spawn VFX anyways
-		var vfx = Instantiate (spellVFX);
-		vfx.transform.position = transform.position + Vector3.up*0.20f;
-		Destroy (vfx, 2f);
+		// Show VFX anyways
+		spellVFX.SetActive (true);
 
 		// Wait until spell hits
 		while (!spellHit) yield return null;

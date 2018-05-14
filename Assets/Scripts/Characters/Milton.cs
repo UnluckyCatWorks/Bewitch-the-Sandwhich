@@ -95,10 +95,9 @@ public class Milton : Character
 		// Wait until spell hits
 		while (!spellHit) yield return null;
 
-		// Spawn VFX
-		var vfx = Instantiate (spellVFX);
-		vfx.transform.position = other.transform.position + (Vector3.up * 0.3f);
-		Destroy (vfx.gameObject, 2f);
+		// Show impact VFX
+		spellVFX.transform.position = other.transform.position + (Vector3.up * 0.3f);
+		spellVFX.SetActive (true);
 
 		// Turn other player into stone
 		StartCoroutine (TurnIntoStone ());

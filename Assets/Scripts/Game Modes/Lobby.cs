@@ -131,9 +131,8 @@ public class Lobby : Game
 		ModeCarrousel.Switch (state: true);
 	}
 
-	protected override void Awake () 
+	protected override void OnAwake () 
 	{
-		base.Awake ();
 		Cursor.visible = false;
 		RenderSettings.ambientIntensity = 0f;
 		// Reset static vars

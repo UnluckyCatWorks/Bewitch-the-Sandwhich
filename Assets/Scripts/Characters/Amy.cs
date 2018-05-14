@@ -9,8 +9,6 @@ public class Amy : Character
 	public ParticleSystem madnessVFX;
 
 	public const float MadnessDuration = 3f;
-
-	private ParticleSystem effect;
 	#endregion
 
 	protected override IEnumerator SpellEffect () 
@@ -22,21 +20,23 @@ public class Amy : Character
 		other.AddCC ("Spell: Crazy", Locks.Crazy, Locks.Spells, MadnessDuration);
 
 		// Spawn Impact VFX
-		var spell = Instantiate (spellVFX);
-		spell.transform.position = other.transform.position + Vector3.up*0.75f;
-		Destroy (spell, 2f);
+		spellVFX.transform.position = other.transform.position + (Vector3.up * 0.75f);
+		spellVFX.SetActive (true);
 
 		// Spawn persistent VFX
-		effect = Instantiate (madnessVFX, other.transform);
-		effect.transform.localPosition = Vector3.up*1f;
+		madnessVFX.transform.SetParent (other.transform, false);
+		madnessVFX.gameObject.SetActive (true);
 
+		// Wait until effect is over
 		yield return new WaitForSeconds (MadnessDuration);
-		effect.Stop (true, ParticleSystemStopBehavior.StopEmitting);
+		madnessVFX.Stop (true, ParticleSystemStopBehavior.StopEmitting);
+		yield return new WaitForSeconds (0.7f);
+		madnessVFX.transform.SetParent (transform, false);
 	}
 
 	private void OnDestroy () 
 	{
-		if (effect)
-			effect.Stop (true, ParticleSystemStopBehavior.StopEmitting);
+		if (madnessVFX != null)
+			madnessVFX.Stop (true, ParticleSystemStopBehavior.StopEmitting);
 	}
 }
