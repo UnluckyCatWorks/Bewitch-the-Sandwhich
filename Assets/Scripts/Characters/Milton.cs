@@ -95,6 +95,10 @@ public class Milton : Character
 		// Wait until spell hits
 		while (!spellHit) yield return null;
 
+		// Make the other let go their object
+		if (other.toy)
+			other.toy.Throw (-MovingDir * 2f, owner: this);
+
 		// Show impact VFX
 		spellVFX.transform.position = other.transform.position + (Vector3.up * 0.3f);
 		spellVFX.SetActive (true);

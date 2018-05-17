@@ -14,6 +14,9 @@ public class Grabbable : MonoBehaviour
 
 	internal Character throwerPlayer;   // The character that threw it
 	internal bool beingThrown;          // Otherwise just falling, bruh 
+
+	private ParticleSystem puff;
+	private bool alreadyDead;
 	#endregion
 
 	#region UTILS
@@ -58,10 +61,25 @@ public class Grabbable : MonoBehaviour
 	// Destroy both object & its helper
 	public void Destroy (float delay = 0f) 
 	{
-		if (delay == 0) Destroy (gameObject);
-		else			Destroy (gameObject, delay);
+		if (alreadyDead) return;
+		if (delay == 0)
+		{
+			Destroy (gameObject);
+			Destroy (helper.gameObject);
+		}
+		else StartCoroutine (DestroyAfter (delay));
+		alreadyDead = true;
+	}
 
+	IEnumerator DestroyAfter (float delay) 
+	{
+		yield return new WaitForSeconds (delay);
+		puff.transform.SetParent (null, true);
+		puff.Play ();
+
+		// Actually destroy the object
 		Destroy (helper.gameObject);
+		Destroy (gameObject);
 	}
 	#endregion
 
@@ -89,6 +107,7 @@ public class Grabbable : MonoBehaviour
 	{
 		globalCount++;
 		body = GetComponent<Rigidbody> ();
+		puff = GetComponentInChildren<ParticleSystem> ();
 
 		// Instantiate Grab Helper & set it up
 		var helper = Resources.Load<GrabHelper> ("Prefabs/Grab_Helper");

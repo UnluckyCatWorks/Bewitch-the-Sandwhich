@@ -6,18 +6,13 @@ using System.Collections.Generic;
 
 public class MachineController : StateMachineBehaviour 
 {
-	internal MachineState state;			// The current status of the machine
-	internal SmartAnimator anim;			// The machine animator
-	protected MachineInterface bridge;		// The link with the actual machine parameters
-	protected Timer timer;					// The timer of the machine
+	#region DATA
+	internal MachineState state;            // The current status of the machine
+	internal SmartAnimator anim;            // The machine animator
+	protected MachineInterface bridge;      // The link with the actual machine parameters
 
-	private enum Theme 
-	{
-		Waiting,
-		InSafeTime,
-		Overloading
-	}
-	private float clock;
+	private float clock; 
+	#endregion
 
 	#region CALLBACKS
 	public override void OnStateEnter (Animator animator, AnimatorStateInfo stateInfo, int layerIndex) 
@@ -30,7 +25,6 @@ public class MachineController : StateMachineBehaviour
 			{
 				anim = new SmartAnimator (animator);
 				bridge = animator.GetComponent<MachineInterface>();
-				timer = bridge.transform.parent.GetComponentInChildren<Timer> ();
 			}
 			OnEnterWaiting();
 		}
@@ -67,7 +61,6 @@ public class MachineController : StateMachineBehaviour
 	public virtual void OnEnterWaiting () 
 	{
 		state = MachineState.Waiting;
-		timer.ChangeTo (Theme.Waiting);
 	}
 	public virtual void OnUpdateWaiting () { }
 	public virtual void OnExitUnready () { } 
@@ -91,7 +84,6 @@ public class MachineController : StateMachineBehaviour
 		if (!Game.stopped) 
 		{
 			var factor = clock / bridge.duration;
-			timer.SetSlider (factor);
 			clock += Time.deltaTime;
 		}
 	}
@@ -102,7 +94,6 @@ public class MachineController : StateMachineBehaviour
 	public virtual void OnEnterCompleted ()
 	{
 		state = MachineState.Completed;
-		timer.ChangeTo (Theme.InSafeTime);
 		bridge.ProcessObject();
 		clock = 0f;
 	}
@@ -132,10 +123,9 @@ public class MachineController : StateMachineBehaviour
 		if (anim.Animator.IsInTransition(0)) return;
 		if (clock > bridge.overheatTime)
 		{
-			/// If time runs out and player hasn't
-			/// picked up yet, go full overload
+			// If time runs out and player hasn't
+			// picked up yet, go full overload
 			anim.SetTrigger("Start_Overload");
-			timer.ChangeTo (Theme.Overloading);
 
 			/// De-parent ingredient
 			bridge.obj.transform.SetParent (null);
@@ -144,7 +134,6 @@ public class MachineController : StateMachineBehaviour
 		if (!Game.stopped)
 		{
 			var factor = clock / bridge.overheatTime;
-			timer.SetSlider (factor);
 			clock += Time.deltaTime;
 		}
 	}

@@ -18,16 +18,6 @@ internal class SoftNormal
 	public Vector4 normal;
 }
 
-#region TIMER
-[Serializable]
-public struct TimerColors 
-{
-	public Color basis;
-	public Color from;
-	public Color target;
-}
-#endregion
-
 #region PLAYER
 public enum Characters 
 {
@@ -86,7 +76,8 @@ public enum IngredientID
 	Cristal,
 	Seta,
 	Escama_Dragon,
-	Gusano
+	Gusano,
+	Count
 }
 
 public enum IngredientType 

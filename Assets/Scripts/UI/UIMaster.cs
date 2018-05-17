@@ -8,21 +8,30 @@ public class UIMaster : MonoBehaviour
 {
 	public static UIMaster manager;
 
-	private void Awake () 
+	#region CALLBACKS
+	[RuntimeInitializeOnLoadMethod]
+	private static void Initialize () 
+	{
+		if (manager == null)
+			Instantiate (Resources.Load<UIMaster> ("Prefabs/UI/UI-Master"));
+	}
+
+	private void Awake ()
 	{
 		DontDestroyOnLoad (gameObject);
 		manager = this;
-	}
+	} 
+	#endregion
 
 	#region SCENE LOADING
 	public static void LoadScene (Game.Modes scene) 
 	{
-		string sceneToLoad = (scene == Game.Modes.Tutorial? "Lobby" : scene.ToString ());
-		manager.StartCoroutine (manager.CortinillaToScene (sceneToLoad));
+//		string sceneToLoad = (scene == Game.Modes.Tutorial? "Lobby" : scene.ToString ());
+		manager.StartCoroutine (manager.CortinillaToScene ((int)scene - 1));
 		Game.stopped = true;
 	}
 
-	IEnumerator CortinillaToScene (string scene)  
+	IEnumerator CortinillaToScene (int scene) 
 	{
 		var cortinilla = Instantiate (Resources.Load<Image> ("Prefabs/UI/Cortinilla"), transform);
 		int id = Shader.PropertyToID ("_Scale");

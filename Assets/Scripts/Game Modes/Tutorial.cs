@@ -215,16 +215,7 @@ public class Tutorial : MonoBehaviour
 			puff.Play ();
 		});
 		// Make all grabbables dissapear
-		FindObjectsOfType<Grabbable> ().ToList ().ForEach (g=>
-		{
-			// Destroy with a 'Puff'
-			g.Destroy ();
-
-			var puff = Instantiate ((Game.manager as Lobby).puff);
-			puff.transform.position = g.transform.position + Vector3.up * 0.2f;
-			Destroy (puff.gameObject, 2f);
-			puff.Play ();
-		});
+		FindObjectsOfType<Grabbable> ().ToList ().ForEach (g=> g.Destroy (0.5f));
 
 		yield return new WaitForSeconds (1f);
 		// Make players dissapear

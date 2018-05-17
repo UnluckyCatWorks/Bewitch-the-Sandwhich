@@ -213,7 +213,7 @@ public abstract class Character : Pawn
 	{
 		if (locks.HasFlag (Locks.Dash)) return;         // Is Dash up?
 		else if (!Owner.GetButton ("Dash")) return;     // Has user pressed the button?
-		else if (toy) return;                           // Can't dash while holding stuff
+//		else if (toy) return;                           // Can't dash while holding stuff
 		else if (Dashing) return;						// Can't dash if already dashing
 		// If everything's ok
 		else Dashing = true;

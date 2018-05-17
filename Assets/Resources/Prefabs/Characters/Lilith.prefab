@@ -1603,7 +1603,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1304399107086124}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.7389011, y: -0.14856029, z: -3.143259}
+  m_LocalPosition: {x: -4.602824, y: 1.0906646, z: 4.9151554}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4218556083496144}
@@ -1667,7 +1667,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1733561819860642}
-  m_Mesh: {fileID: 4300000, guid: 372c40a380c09e8479806aa1b7f23e53, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 4290c4464652eff49ad30b7e22d2416b, type: 3}
 --- !u!95 &95519348973734686
 Animator:
   serializedVersion: 3
@@ -1703,7 +1703,7 @@ MonoBehaviour:
   focusColor: {r: 0.20588237, g: 0.4413793, b: 1, a: 1}
   crystalEmission: 3.677
   areaColor: {r: 0.46322, g: 0.5213018, b: 2.438, a: 1}
-  spellCooldown: 3
+  spellCooldown: 5
   spellVFX: {fileID: 1206203692246924, guid: 9763c67fe7161b64a867536f0900ca99, type: 2}
 --- !u!114 &114653372814588150
 MonoBehaviour:

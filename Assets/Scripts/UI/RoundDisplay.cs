@@ -19,7 +19,7 @@ public class RoundDisplay : MonoBehaviour
 
 	#region UTILS
 
-	public static IEnumerator Show (int round, Characters winner, Action stageReset) 
+	public static IEnumerator Show (int round, Characters winner) 
 	{
 		// Spawn new prefab
 		var prefab = Resources.Load<RoundDisplay> ("Prefabs/UI/Round_Display");
@@ -37,12 +37,14 @@ public class RoundDisplay : MonoBehaviour
 		display.p2Score.text = Player.all[1].currentStats.roundScore.ToString ();
 		display.p2Score.color = Character.Get (Player.all[1].playingAs).focusColor;
 
-		// Fade animations
+		// Fade-in animation
 		var anim = display.GetComponent<Animation> ();
-		yield return new WaitForSeconds (anim["In"].clip.averageDuration + 0.2f);
+		yield return new WaitForSeconds (anim["In"].clip.averageDuration + 1f);
 
-		stageReset ();
+		// Wait until stage is cleared
+		yield return Game.manager.ResetStage ();
 
+		// Fade-out animation
 		anim.Play ("Out");
 		yield return new WaitForSeconds (anim["Out"].clip.averageDuration);
 	}

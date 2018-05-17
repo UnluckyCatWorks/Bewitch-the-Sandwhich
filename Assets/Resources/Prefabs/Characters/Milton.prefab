@@ -1275,7 +1275,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1838364645206850}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.0081656, y: -0.14856035, z: -1.5422966}
+  m_LocalPosition: {x: -3.117394, y: 1.0906644, z: 4.996708}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4001555674194868}
@@ -1822,7 +1822,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1611864333009340}
-  m_Mesh: {fileID: 4300000, guid: 372c40a380c09e8479806aa1b7f23e53, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 4290c4464652eff49ad30b7e22d2416b, type: 3}
 --- !u!95 &95584834216678946
 Animator:
   serializedVersion: 3
@@ -1866,7 +1866,7 @@ MonoBehaviour:
   normalTexture: {fileID: 2800000, guid: d193716a95db99e4d821382498cbc36e, type: 3}
   normalScale: 1.11
   emissionTexture: {fileID: 2800000, guid: 78a375c213ffd424f9fed43997617c0b, type: 3}
-  emissionColor: {r: 3.371296, g: 3.371296, b: 3.371296, a: 0}
+  emissionColor: {r: 0, g: 0, b: 0, a: 0}
   level: 0
   extrudeAmount: 0.02
   minMaxHeight: {x: 0, y: 3}

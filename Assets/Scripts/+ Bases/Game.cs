@@ -8,7 +8,7 @@ public abstract class Game : MonoBehaviour
 {
 	#region DATA
 	public bool justTesting;
-	public Characters roundWinner;
+	private Characters roundWinner;
 
 	public static int rounds;
 	public static Modes mode;
@@ -18,7 +18,17 @@ public abstract class Game : MonoBehaviour
 	#endregion
 
 	#region UTILS
-	protected virtual void ResetStage () { /*Reset the scene for the next round*/ }
+	public static void TheWinnerIs (Characters winner) 
+	{
+		manager.roundWinner = winner;
+		Character.Get (winner).Owner.currentStats.roundScore++;
+	}
+
+	public virtual IEnumerator ResetStage () 
+	{
+		// Reset the scene for the next round
+		yield break;
+	}
 	#endregion
 
 	#region CALLBACKS
@@ -37,17 +47,23 @@ public abstract class Game : MonoBehaviour
 		for (int round=1; round<=rounds; round++) 
 		{
 			// Display round info
-			yield return RoundDisplay.Show (round, roundWinner, ResetStage);
+			yield return RoundDisplay.Show (round, roundWinner);
 			roundWinner = Characters.NONE;
 			stopped = false;
 
 			// Start actual game mode logic
-			StartCoroutine (Logic ());
+			var logic = StartCoroutine (Logic ());
 
 			// Wait until winner is proclaimed
-			while (roundWinner == Characters.NONE)
-				yield return null;
+			while (roundWinner == Characters.NONE) yield return null;
+			StopCoroutine (logic);
 		}
+
+		// On finalizing every round
+		stopped = true;
+		yield return RoundDisplay.Show (rounds, roundWinner);
+		#warning show rankings instead!!!
+		UIMaster.LoadScene (Modes.Tutorial);
 	}
 	protected abstract IEnumerator Logic ();
 
@@ -56,8 +72,8 @@ public abstract class Game : MonoBehaviour
 	{
 		manager = this;
 
-		if (!(this is Lobby) && !justTesting)
-			Character.SpawnPack ();
+		if (justTesting) rounds = 3;
+		if (!(this is Lobby)) Character.SpawnPack ();
 
 		OnAwake ();
 	}

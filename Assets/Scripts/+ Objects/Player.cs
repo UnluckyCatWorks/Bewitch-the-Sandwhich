@@ -37,6 +37,12 @@ public class Player
 			new Player (MasterControls.controllers[0]),
 			new Player (MasterControls.controllers[1])
 		};
+
+		// Default player characters
+		all[0].name = "Ciruelo";
+		all[0].playingAs = Characters.Bobby;
+		all[1].name = "Calamardo";
+		all[1].playingAs = Characters.Lilith;
 	} 
 	#endregion
 
