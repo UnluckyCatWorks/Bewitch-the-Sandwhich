@@ -1829,8 +1829,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bb52dd69ab4e704084ba686fe09156b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  justTesting: 0
-  roundWinner: 0
   bypassHostIntro: 1
   presentador: {fileID: 823969799}
   puff: {fileID: 1642302488}
@@ -7708,8 +7706,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1036404631}
-  m_LocalRotation: {x: 0.0038015721, y: 0.9533768, z: 0.3015191, w: -0.012019915}
-  m_LocalPosition: {x: -0.71254706, y: -12.103814, z: 5.731901}
+  m_LocalRotation: {x: 0.00000011354295, y: 0.982857, z: 0.18436952, w: -0.00000028883494}
+  m_LocalPosition: {x: 0, y: -4.663524, z: 5.204401}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -10768,7 +10766,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1325012529882892, guid: ca1a98ddab6f0f545b644bd5f1a68cef, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ca1a98ddab6f0f545b644bd5f1a68cef, type: 2}

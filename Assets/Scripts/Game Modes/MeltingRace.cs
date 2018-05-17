@@ -18,19 +18,21 @@ public class MeltingRace : Game
 	public float objectsDuration;
 
 	internal Span time;
+	internal List<Ingredient> spawnedIngredients;
 	#endregion
 
-	protected override IEnumerator Logic () 
+	#region CALLBACKS
+	protected override IEnumerator Logic ()
 	{
 		// Start cauldron
 		MRCauldron.GetStarted ();
 
 		float nextRainTime = 0f;
 		time = Span.FromSeconds (maxTime);
-		while (time.TotalSeconds > 0f) 
+		while (time.TotalSeconds > 0f)
 		{
 			// Hacer la islita pequeña
-			float value = (float) time.TotalSeconds / maxTime;
+			float value = (float)time.TotalSeconds / maxTime;
 			value = Mathf.Lerp (0.43f, 1f, value);
 			isle.localScale = new Vector3 (value, 1f, value);
 
@@ -38,9 +40,9 @@ public class MeltingRace : Game
 			// Make it rain baby
 			if (Time.time > nextRainTime)
 			{
-				// Raining inside isle only 75% of the time
-				var spawnPos =
-					Random.Range (0, 100f) <= 20f ?
+				// Raining inside isle only 20% of the time
+				bool spawnOptimal = Random.Range (0f, 100f) <= 20f;
+				var spawnPos = spawnOptimal ?
 					Random.insideUnitSphere * maxRadius * (value)
 					:
 					Random.insideUnitSphere * maxRadius;
@@ -48,9 +50,15 @@ public class MeltingRace : Game
 				spawnPos.z += isle.position.z;
 				spawnPos.y = 35;
 
-				// Rain a random ingredient
-				var prefabs = Resources.LoadAll<Ingredient> ("Prefabs/Ingredients");
-				var ig = Instantiate (prefabs[Random.Range (0, prefabs.Length)]);
+				// 50% additional change to get the correct ingredient if spawned on the isle
+				int ingredientToSpawn = spawnOptimal &&
+					Random.Range (0f, 100f) <= 50f ?
+					(int) MRCauldron.target - 1
+					:
+					Random.Range (0, ingredients.Length);
+
+				// Actually rain
+				var ig = Instantiate (ingredients[ingredientToSpawn]);
 				ig.transform.rotation = Random.rotation;
 				ig.transform.position = spawnPos;
 				ig.body.isKinematic = false;
@@ -59,7 +67,7 @@ public class MeltingRace : Game
 
 				// Get next rain time
 				NextRainTime (out nextRainTime);
-			} 
+			}
 			#endregion
 
 			yield return null;
@@ -68,9 +76,26 @@ public class MeltingRace : Game
 		}
 
 		// Declare winner
-		var winner = MRCauldron.DeclareWinner ();
-		TheWinnerIs (winner);
+		var winner = MRCauldron.GetWinner ();
+		DeclareWinner (winner);
 	}
+
+	public override IEnumerator ResetStage () 
+	{
+		MRCauldron.scores = new int[2];
+		spawnedIngredients.ForEach(i=> i.Destroy ());
+
+		// Turn isle to it's original size
+		float factor = 0f;
+		while (factor <= 1.1f) 
+		{
+
+		}
+
+		value = Mathf.Lerp (0.43f, 1f, value);
+		isle.localScale = new Vector3 (value, 1f, value);
+	}
+	#endregion
 
 	void NextRainTime (out float rainTime) 
 	{

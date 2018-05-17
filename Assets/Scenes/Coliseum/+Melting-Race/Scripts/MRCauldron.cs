@@ -3,26 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MRCauldron : Cauldron
+public class MRCauldron : Cauldron 
 {
 	#region DATA
-	public static MRCauldron instance;
-
 	[Header("Data")]
 	public float changeRate;
 
 	[Header ("References")]
 	public ParticleSystem puff;
-	public IngredientID target;
 	public Image targetImage;
 	public Timer timer;
 
 	public static int[] scores;
+	public static IngredientID target;
 	private static Coroutine targetLoop;
+
+	public static MRCauldron instance;
 	#endregion
 
 	#region UTILS
-	public static Characters DeclareWinner () 
+	public static Characters GetWinner () 
 	{
 		// Stop ingredient loop
 		instance.StopCoroutine (targetLoop);
@@ -32,6 +32,7 @@ public class MRCauldron : Cauldron
 		else
 		// Player 2 wins
 		if (scores[1] > scores[0]) return Player.all[1].playingAs;
+
 		// EMPATE!!!
 		 #warning LOCO EL EMPATE QUE?
 		else return Characters.NONE;
@@ -39,7 +40,8 @@ public class MRCauldron : Cauldron
 
 	public static void GetStarted () 
 	{
-		targetLoop = instance.StartCoroutine (instance.LoopTarget ());
+		var i = instance;
+		targetLoop = i.StartCoroutine (i.LoopTarget ());
 	}
 
 	private IEnumerator LoopTarget () 

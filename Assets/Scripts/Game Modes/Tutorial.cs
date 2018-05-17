@@ -52,7 +52,7 @@ public class Tutorial : MonoBehaviour
 		icons[1].InitializeAs (Player.all[1].scheme.type);
 
 		// Disable showcase characters
-		var showcase = Lobby.Get<Transform> ("Showcase_", true);
+		var showcase = Game.Get<Transform> ("Showcase_", true);
 		showcase.ForEach (t=> t.gameObject.SetActive (false));
 		#endregion
 
@@ -69,7 +69,7 @@ public class Tutorial : MonoBehaviour
 		Title.Show ("MOVE", 2f);
 
 		// Show movement marks
-		var markers = Lobby.Get<TutoPoint> ("Movement_", false);
+		var markers = Game.Get<TutoPoint> ("Movement_", false);
 		// Show correct icon (depends on input scheme)
 		for (int i=0; i!=2; i++) 
 		{
@@ -116,7 +116,7 @@ public class Tutorial : MonoBehaviour
 		Game.stopped = false;
 
 		// Show Dash marks
-		markers = Lobby.Get<TutoPoint> ("Dash_", false);
+		markers = Game.Get<TutoPoint> ("Dash_", false);
 		// Assign observed characters
 		markers[0].observedCharacter = ps[0].ID;
 		markers[1].observedCharacter = ps[1].ID;
@@ -180,7 +180,7 @@ public class Tutorial : MonoBehaviour
 		{
 			// Appear with a 'Puff'
 			s.gameObject.SetActive (true);
-			var puff = Instantiate ((Game.manager as Lobby).puff);
+			var puff = Instantiate (Lobby.manager.puff);
 			puff.transform.position = s.transform.position + Vector3.up * 0.5f;
 			Destroy (puff.gameObject, 2f);
 			puff.Play ();
@@ -194,7 +194,7 @@ public class Tutorial : MonoBehaviour
 		#endregion
 
 		Title.Show ("CONGRATULATIONS!", 2.5f);
-		(Game.manager as Lobby).confetti.Play ();
+		Lobby.manager.confetti.Play ();
 		yield return new WaitForSeconds (3.2f);
 		Title.Show ("YOU'RE READY FOR THE ARENA", 2f);
 		yield return new WaitForSeconds (3f);
@@ -209,13 +209,13 @@ public class Tutorial : MonoBehaviour
 		{
 			// Dissappear with a 'Puff'
 			s.gameObject.SetActive (false);
-			var puff = Instantiate ((Game.manager as Lobby).puff);
+			var puff = Instantiate (Lobby.manager.puff);
 			puff.transform.position = s.transform.position + Vector3.up * 0.5f;
 			Destroy (puff.gameObject, 2f);
 			puff.Play ();
 		});
 		// Make all grabbables dissapear
-		FindObjectsOfType<Grabbable> ().ToList ().ForEach (g=> g.Destroy (0.5f));
+		FindObjectsOfType<Grabbable> ().ToList ().ForEach (g=> g.Destroy ());
 
 		yield return new WaitForSeconds (1f);
 		// Make players dissapear
@@ -224,7 +224,7 @@ public class Tutorial : MonoBehaviour
 			// Destroy with a 'Puff'
 			Destroy (p.gameObject);
 
-			var puff = Instantiate ((Game.manager as Lobby).puff);
+			var puff = Instantiate (Lobby.manager.puff);
 			puff.transform.position = p.transform.position + Vector3.up * 0.5f;
 			Destroy (puff.gameObject, 2f);
 			puff.Play ();
@@ -243,6 +243,7 @@ public class Tutorial : MonoBehaviour
 	private void Awake () 
 	{
 		manager = this;
+
 		// Reset
 		Checks = new Dictionary<Phases, Check> ();
 		onTutorial = false;

@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class Lobby : Game 
+public class Lobby : MonoBehaviour 
 {
 	#region DATA
 	[Header ("Intro")]
@@ -17,9 +17,10 @@ public class Lobby : Game
 	public ParticleSystem confetti;
 
 	// Control
+	public static Lobby manager;
 	public static bool firstTime;
-	private static bool passedMainMenu;
 	public static bool charactersSelected;
+	private static bool passedMainMenu;
 	#endregion
 
 	#region UI UTILS
@@ -37,7 +38,7 @@ public class Lobby : Game
 	#endregion
 
 	#region CALLBACKS
-	protected override IEnumerator Logic () 
+	private IEnumerator Start () 
 	{
 		#region PREPARATION
 		// Get some references
@@ -121,6 +122,7 @@ public class Lobby : Game
 		{
 			// maybe show host again and talk
 			// some other shit
+
 		}
 
 		// Wait a bit
@@ -131,8 +133,10 @@ public class Lobby : Game
 		ModeCarrousel.Switch (state: true);
 	}
 
-	protected override void OnAwake () 
+	private void Awake () 
 	{
+		manager = this;
+
 		Cursor.visible = false;
 		RenderSettings.ambientIntensity = 0f;
 		// Reset static vars

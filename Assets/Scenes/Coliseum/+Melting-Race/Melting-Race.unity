@@ -1541,8 +1541,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1650751465}
-  m_LocalRotation: {x: 0.0006952534, y: 0.9727394, z: 0.2318816, w: -0.0029167705}
-  m_LocalPosition: {x: -0.33169717, y: -8.455214, z: 16.272057}
+  m_LocalRotation: {x: -0.17879425, y: 0.37166023, z: 0.0731801, w: 0.9080452}
+  m_LocalPosition: {x: -3.2227688, y: -1.94457, z: 0.85026646}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1913,7 +1913,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009b394889a5a7b4aa50413737182659, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  justTesting: 0
   maxTime: 120
   isle: {fileID: 326943972}
   timer: {fileID: 1739506632}

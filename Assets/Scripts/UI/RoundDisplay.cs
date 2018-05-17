@@ -25,6 +25,7 @@ public class RoundDisplay : MonoBehaviour
 		var prefab = Resources.Load<RoundDisplay> ("Prefabs/UI/Round_Display");
 		var display = Instantiate (prefab, UIMaster.manager.transform);
 
+		#region TARGET CONFIGURATION
 		// Configure the display
 		display.roundTitle.text = "Round " + round;
 		if (round != 1) display.flags.ForEach (f => f.color = Character.Get (winner).focusColor);
@@ -35,14 +36,15 @@ public class RoundDisplay : MonoBehaviour
 
 		display.p2Name.text = Player.all[1].name;
 		display.p2Score.text = Player.all[1].currentStats.roundScore.ToString ();
-		display.p2Score.color = Character.Get (Player.all[1].playingAs).focusColor;
+		display.p2Score.color = Character.Get (Player.all[1].playingAs).focusColor; 
+		#endregion
 
 		// Fade-in animation
 		var anim = display.GetComponent<Animation> ();
 		yield return new WaitForSeconds (anim["In"].clip.averageDuration + 1f);
 
 		// Wait until stage is cleared
-		yield return Game.manager.ResetStage ();
+		if (round != 1) yield return Game.manager.ResetStage ();
 
 		// Fade-out animation
 		anim.Play ("Out");

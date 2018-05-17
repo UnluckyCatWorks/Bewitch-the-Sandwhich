@@ -10,10 +10,11 @@ public class Grabbable : MonoBehaviour
 	public static uint globalCount;
 
 	internal Rigidbody body;
-	internal GrabHelper helper;         // Helps keeping the marker correct
+	internal GrabHelper helper;
+	internal List<Collider> colliders;
 
-	internal Character throwerPlayer;   // The character that threw it
-	internal bool beingThrown;          // Otherwise just falling, bruh 
+	internal Character throwerPlayer;
+	internal bool beingThrown;
 
 	private ParticleSystem puff;
 	private bool alreadyDead;
@@ -33,12 +34,16 @@ public class Grabbable : MonoBehaviour
 		// Reset values just-in-case
 		beingThrown = false;
 		throwerPlayer = null;
+
+		// Disable colliders so the player doesn't start fucking floating
+		colliders.ForEach (c=> enabled = false);
 	}
 
 	// Should be used to throw the object, ALWAYS
 	public void Throw (Vector3 force, Character owner) 
 	{
 		body.isKinematic = false;
+
 		// Apply forces
 		body.velocity = Vector3.zero;
 		body.AddForce (force - Vector3.up, ForceMode.Impulse);
@@ -54,26 +59,24 @@ public class Grabbable : MonoBehaviour
 		}
 		else beingThrown = false;
 
-		/// Enable helper
+		// Enable helper
 		helper.enabled = true;
+		// Re-enable colliders
+		colliders.ForEach (c=> enabled = true);
 	}
 
 	// Destroy both object & its helper
 	public void Destroy (float delay = 0f) 
 	{
 		if (alreadyDead) return;
-		if (delay == 0)
-		{
-			Destroy (gameObject);
-			Destroy (helper.gameObject);
-		}
-		else StartCoroutine (DestroyAfter (delay));
+		StartCoroutine (DestroyAfter (delay));
 		alreadyDead = true;
 	}
 
 	IEnumerator DestroyAfter (float delay) 
 	{
-		yield return new WaitForSeconds (delay);
+		if (delay!=0f) yield return new WaitForSeconds (delay);
+		// Unparent puff effect so it won't be destroyed
 		puff.transform.SetParent (null, true);
 		puff.Play ();
 
@@ -108,6 +111,7 @@ public class Grabbable : MonoBehaviour
 		globalCount++;
 		body = GetComponent<Rigidbody> ();
 		puff = GetComponentInChildren<ParticleSystem> ();
+		GetComponentsInChildren (true, colliders);
 
 		// Instantiate Grab Helper & set it up
 		var helper = Resources.Load<GrabHelper> ("Prefabs/Grab_Helper");
