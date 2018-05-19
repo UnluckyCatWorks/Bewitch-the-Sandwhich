@@ -83,6 +83,7 @@ public class UIMaster : MonoBehaviour
 			// Spawn player Characters on new scene
 			SceneManager.SetActiveScene (SceneManager.GetSceneByBuildIndex (scene));
 			Character.SpawnPack ();
+			Game.manager.OnAwake ();
 		}
 		// If returning to Lobby
 		else

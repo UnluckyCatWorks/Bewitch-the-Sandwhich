@@ -26,18 +26,20 @@ public class Grabbable : MonoBehaviour
 	{
 		grabber.toy = this;
 		body.isKinematic = true;
-		helper.enabled = false;
+		body.interpolation = RigidbodyInterpolation.Interpolate;
 
 		throwerPlayer = null;
 		beingThrown = false;
 
 		// Disable colliders so the player doesn't start fucking floating
 		colliders.ForEach (c=> c.enabled = false);
+		helper.enabled = false;
 	}
 
 	public void Throw (Vector3 force, Character owner, bool forceThrow = false) 
 	{
 		body.isKinematic = false;
+		body.interpolation = RigidbodyInterpolation.None;
 
 		// Apply forces
 		body.velocity = Vector3.zero;

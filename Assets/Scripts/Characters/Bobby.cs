@@ -34,8 +34,9 @@ public class Bobby : Character
 
 		// Wait until effect is over
 		yield return new WaitForSeconds (BurnDurtion);
-		effectInstance.Stop (true, ParticleSystemStopBehavior.StopEmitting);
 		spellVFX.transform.parent = transform;
+		if (effectInstance != null)
+			effectInstance.Stop (true, ParticleSystemStopBehavior.StopEmitting);
 	}
 
 	private void OnDestroy () 

@@ -19,10 +19,8 @@ public class EnchantedWeather : Game
 
 	[Header ("Rain Settings")]
 	public Vector4 rainRates;
-	public float objectsDuration;
 
 	internal Span time;
-	internal bool playersHaveCauldron;
 	private static List<Ingredient> spawnedStuff = new List<Ingredient> ();
 	#endregion
 
@@ -31,23 +29,6 @@ public class EnchantedWeather : Game
 	{
 		float nextRainTime = 0f;
 		time = Span.FromSeconds (roundDuration);
-
-		if (!playersHaveCauldron)
-		{
-			// Spawn Cauldrons for the players
-			var ps = FindObjectsOfType<Character> ();
-			foreach (var p in ps)
-			{
-				// Avoid any player interaction
-				p.AddCC ("EW", Locks.Interaction);
-				p.simulateCarrying = true;
-
-				// Add them their cauldron
-				var cauldron = Instantiate (cauldronPrefab);
-				cauldron.SetUpFor (p);
-			}
-			playersHaveCauldron = true;
-		}
 
 		while (time.TotalSeconds > 0f)
 		{
@@ -63,7 +44,8 @@ public class EnchantedWeather : Game
 
 			#region RAIN LOOP
 			// Make it rain baby
-			if (Time.time > nextRainTime)
+			if (Time.time > nextRainTime && 
+				Grabbable.globalCount < Grabbable.globalLimit) 
 			{
 				// Select rain point
 				var spawnPos = Random.insideUnitSphere * /*coliseum radius*/ 13f;
@@ -83,14 +65,16 @@ public class EnchantedWeather : Game
 				// Spawn ingredient
 				var ig = Instantiate (ingredients[ingredientToSpawn]);
 				ig.Process (ingredientState);
+				ig.gameObject.AddComponent<IngredientScaler> ();
 
 				// Randomize transform
 				ig.transform.rotation = Random.rotation;
 				ig.transform.position = spawnPos;
-				ig.body.isKinematic = false;
 
-				// Destroy after delay to avoid accumlation
-				ig.Destroy (objectsDuration);
+				// Set physics up
+				ig.body.drag = 1f;
+				ig.body.isKinematic = false;
+				ig.body.interpolation = RigidbodyInterpolation.None;
 
 				// Register for final clean-up
 				spawnedStuff.Add (ig);
@@ -104,6 +88,9 @@ public class EnchantedWeather : Game
 			time -= Span.FromSeconds (Time.deltaTime);
 			timer.text = string.Format ("{0:0}:{1:00}", time.Minutes, time.Seconds);
 		}
+
+		var winner = EWCauldron.GetWinner ();
+		DeclareWinner (winner);
 	}
 
 	public override IEnumerator ResetStage () 
@@ -111,6 +98,22 @@ public class EnchantedWeather : Game
 		EWCauldron.scores = new int[2];
 
 		throw new System.Exception ();
+	}
+
+	public override void OnAwake () 
+	{
+		// Spawn Cauldrons for the players
+		var ps = FindObjectsOfType<Character> ();
+		foreach (var p in ps)
+		{
+			// Avoid any player interaction
+			p.AddCC ("EW", Locks.Interaction);
+			p.simulateCarrying = true;
+
+			// Add them their cauldron
+			var cauldron = Instantiate (cauldronPrefab);
+			cauldron.SetUpFor (p);
+		}
 	}
 	#endregion
 

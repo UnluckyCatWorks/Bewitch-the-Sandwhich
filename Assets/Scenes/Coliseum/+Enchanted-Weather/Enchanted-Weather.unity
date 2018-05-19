@@ -420,8 +420,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 618673161}
-  m_LocalRotation: {x: -0.12825516, y: 0.8672553, z: 0.38418046, w: 0.28952438}
-  m_LocalPosition: {x: -4.7701764, y: -9.808416, z: 11.209154}
+  m_LocalRotation: {x: 0.00000024186184, y: 0.94475174, z: 0.3277868, w: -0.00000021930634}
+  m_LocalPosition: {x: 0, y: -14.44407, z: 18.647293}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -999,7 +999,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1333601615}
   m_LocalRotation: {x: -0, y: -0.1753423, z: -0, w: 0.98450756}
-  m_LocalPosition: {x: 7.6, y: 1.185997, z: -3.7000003}
+  m_LocalPosition: {x: 7.6, y: 1.01, z: -3.7000003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1093,8 +1093,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1650751465}
-  m_LocalRotation: {x: -0.14847113, y: 0.8096587, z: 0.23194444, w: 0.5182769}
-  m_LocalPosition: {x: -9.205565, y: -4.750297, z: 2.1338077}
+  m_LocalRotation: {x: 0.008770056, y: 0.76017845, z: 0.010262845, w: -0.6495741}
+  m_LocalPosition: {x: 2.3216364, y: -0.8260008, z: 7.4968243}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1343,7 +1343,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1822333065}
   m_LocalRotation: {x: -0, y: -0.0030611437, z: -0, w: 0.99999535}
-  m_LocalPosition: {x: -2.38, y: 1.185997, z: -3.7}
+  m_LocalPosition: {x: -2.38, y: 1.01, z: -3.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1382,10 +1382,9 @@ MonoBehaviour:
     type: 2}
   timer: {fileID: 1676404579}
   isleRotator: {fileID: 1634729268}
-  rotatorSpeed: {x: 10, y: 100}
-  isleSpeed: {x: 30, y: 190}
+  rotatorSpeed: {x: 5, y: 80}
+  isleSpeed: {x: 10, y: 150}
   rainRates: {x: 0.4, y: 0.25, z: 0.5, w: 0.35}
-  objectsDuration: 3
 --- !u!4 &1843253190
 Transform:
   m_ObjectHideFlags: 0

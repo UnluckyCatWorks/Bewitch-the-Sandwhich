@@ -80,10 +80,11 @@ public abstract class Game : MonoBehaviour
 			Character.SpawnPack ();
 			enabled = true;
 			rounds = 3;
+
+			OnAwake ();
 		}
-		OnAwake ();
 	}
-	protected virtual void OnAwake () { }
+	public virtual void OnAwake () { }
 	#endregion
 
 	#region HELPERS
