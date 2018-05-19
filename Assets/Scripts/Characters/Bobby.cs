@@ -12,7 +12,7 @@ public class Bobby : Character
 	public const float BurnDurtion = 3f;
 	public const float SpeedMultiplier = 2f;
 
-	private ParticleSystem effectInstance;
+	internal ParticleSystem effectInstance;
 	#endregion
 
 	protected override IEnumerator SpellEffect () 
@@ -21,7 +21,7 @@ public class Bobby : Character
 		while (!spellHit) yield return null;
 
 		// Make other player go crazy
-		other.AddCC ("Spell: Burned", Locks.Burning | Locks.Abilities | Locks.Dash, Locks.Spells, BurnDurtion);
+		other.AddCC ("Spell: Burnt", (Locks.Burning | Locks.Dash), (Locks.Spells | Locks.Dash), BurnDurtion);
 
 		// Show Impact VFX
 		spellVFX.transform.parent = null;

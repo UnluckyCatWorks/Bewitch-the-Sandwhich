@@ -22,20 +22,18 @@ public class MRCauldron : Cauldron
 	#endregion
 
 	#region UTILS
-	public static Characters GetWinner () 
+	public static int GetWinner () 
 	{
 		// Stop ingredient loop
 		instance.StopCoroutine (targetLoop);
 
 		// Player 1 wins
-		if (scores[0] > scores[1]) return Player.all[0].playingAs;
+		if (scores[0] > scores[1]) return 1;
 		else
 		// Player 2 wins
-		if (scores[1] > scores[0]) return Player.all[1].playingAs;
-
-		// EMPATE!!!
-		 #warning LOCO EL EMPATE QUE?
-		else return Characters.NONE;
+		if (scores[1] > scores[0]) return 2;
+		// Empate
+		else return 0;
 	}
 
 	public static void GetStarted () 
@@ -48,13 +46,14 @@ public class MRCauldron : Cauldron
 	{
 		while (true)
 		{
-			// Switch target with a puff
-			puff.Play (true);
-
 			// Select randomly next target
-			target = (IngredientID)Random.Range (1, (int) IngredientID.Count);
+			target = (IngredientID) Random.Range (1, (int) IngredientID.Count);
 			targetImage.sprite = Resources.Load<Sprite> ("UI/" + target);
 			targetImage.color = Color.white;
+			puff.Play (true);
+
+			// Switch Boat supplies
+			Boat.SwitchAll (target);
 
 			// Wait until next change
 			float clock = 0f;

@@ -27,6 +27,10 @@ public class DeathZone : MonoBehaviour
 				p.toy.Throw (Vector3.up * -8f, null);
 				p.toy = null;
 			}
+
+			// SPECIAL
+			if (Game.manager is WetDeath)
+				HPTracker.Kill (p.ownerID);
 		}
 		else
 		// If a grabbable object enters death-zone

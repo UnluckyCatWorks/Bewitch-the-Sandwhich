@@ -12,17 +12,18 @@ public abstract class Cauldron : Interactable
 	IEnumerator ThrowInto (Grabbable toy, Character owner) 
 	{
 		var iPos = toy.transform.position;
+		var tPos = transform.position + (Vector3.up);
 		bool splashed = false;
 
 		float factor = 0f;
 		while (factor <= 1.1f) 
 		{
-			var newPos = Vector3.Lerp (iPos, transform.position, factor);
+			var newPos = Vector3.Lerp (iPos, tPos, factor);
 			toy.body.MovePosition (newPos);
 
 			if (!splashed && factor < 0.5f)
 			{
-				var vfx = Instantiate (splash);
+				splash.Play ();
 				splashed = true;
 			}
 

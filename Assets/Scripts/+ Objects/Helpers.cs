@@ -85,7 +85,8 @@ public enum IngredientType
 	TALCUAL,
 	Molido,
 	Destilado,
-	Transmutado
+	Transmutado,
+	Count
 }
 
 [Serializable]

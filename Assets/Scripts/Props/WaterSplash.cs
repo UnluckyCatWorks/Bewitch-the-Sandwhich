@@ -10,5 +10,6 @@ public class WaterSplash : MonoBehaviour
 	{
 		var splash = Instantiate (VFX);
 		splash.transform.position = other.transform.position;
+		Destroy (splash, 1.5f);
 	}
 }

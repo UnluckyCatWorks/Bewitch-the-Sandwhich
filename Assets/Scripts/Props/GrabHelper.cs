@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GrabHelper : Interactable
 {
+	#region DATA
 	internal Grabbable parent;
+	#endregion
 
 	#region INTERACTION
 	public override void Action (Character player) 
@@ -21,6 +24,7 @@ public class GrabHelper : Interactable
 	}
 	#endregion
 
+	#region CALLBACKS
 	private void Update () 
 	{
 		// Keep helper always at ~= parent's lowest point
@@ -28,4 +32,5 @@ public class GrabHelper : Interactable
 		// Keep always unrotated
 		transform.rotation = Quaternion.identity;
 	}
+	#endregion
 }

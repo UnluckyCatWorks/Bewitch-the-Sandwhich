@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Grabbable : MonoBehaviour
@@ -13,77 +14,80 @@ public class Grabbable : MonoBehaviour
 	internal GrabHelper helper;
 	internal List<Collider> colliders;
 
-	internal Character throwerPlayer;
-	internal bool beingThrown;
+	private Character throwerPlayer;
+	private bool beingThrown;
+	private Vector3 throwDir;
 
 	private ParticleSystem puff;
-	private bool alreadyDead;
 	#endregion
 
 	#region UTILS
-	// Should be used to make a
-	// character grab an object, ALWAYS
 	public void GrabFor (Character grabber) 
 	{
 		grabber.toy = this;
-		// Disable helper as it can't be grabbed
-		helper.enabled = false;
-		// Make kinematic as it should have physics
 		body.isKinematic = true;
+		helper.enabled = false;
 
-		// Reset values just-in-case
-		beingThrown = false;
 		throwerPlayer = null;
+		beingThrown = false;
 
 		// Disable colliders so the player doesn't start fucking floating
-		colliders.ForEach (c=> enabled = false);
+		colliders.ForEach (c=> c.enabled = false);
 	}
 
-	// Should be used to throw the object, ALWAYS
-	public void Throw (Vector3 force, Character owner) 
+	public void Throw (Vector3 force, Character owner, bool forceThrow = false) 
 	{
 		body.isKinematic = false;
 
 		// Apply forces
 		body.velocity = Vector3.zero;
-		body.AddForce (force - Vector3.up, ForceMode.Impulse);
+		body.AddForce (force - (Vector3.up * 0.3f), ForceMode.Impulse);
 		body.AddTorque (force.magnitude * Vector3.up, ForceMode.Impulse);
 
 		// It's only throwed if someone intended to
-		if (owner)
+		if (owner || forceThrow) 
 		{
-			owner.toy = null;
-			beingThrown = true;
-			// Keep record of who threw it
+			if (owner) owner.toy = null;
+			throwDir = force.normalized;
 			throwerPlayer = owner;
+			beingThrown = true;
 		}
 		else beingThrown = false;
 
-		// Enable helper
+		colliders.ForEach (c=> c.enabled = true);
 		helper.enabled = true;
-		// Re-enable colliders
-		colliders.ForEach (c=> enabled = true);
+	}
+	#endregion
+
+	#region DEATH ITSELF
+	public void DestroySilenty () 
+	{
+		HolyShitJustDestroyThis ();
 	}
 
-	// Destroy both object & its helper
-	public void Destroy (float delay = 0f) 
+	public void Destroy (float delay = 0f)
 	{
-		if (alreadyDead) return;
 		StartCoroutine (DestroyAfter (delay));
-		alreadyDead = true;
 	}
 
-	IEnumerator DestroyAfter (float delay) 
+	IEnumerator DestroyAfter (float delay)
 	{
-		if (delay!=0f) yield return new WaitForSeconds (delay);
+		if (delay != 0f) yield return new WaitForSeconds (delay);
 		// Unparent puff effect so it won't be destroyed
+		Destroy (puff, 1.5f);
 		puff.transform.SetParent (null, true);
 		puff.Play ();
 
-		// Actually destroy the object
+		// -.-
+		HolyShitJustDestroyThis ();
+	}
+
+	private void HolyShitJustDestroyThis () 
+	{
+		StopAllCoroutines ();
 		Destroy (helper.gameObject);
 		Destroy (gameObject);
-	}
+	} 
 	#endregion
 
 	#region CALLBACKS
@@ -94,16 +98,17 @@ public class Grabbable : MonoBehaviour
 		if (!beingThrown) return;
 
 		// If hit a player
-		var victim = col.gameObject.GetComponent<Character> (); if (!victim) return;
+		var victim = col.gameObject.GetComponent<Character> ();
+		if (!victim) return;
 		// Be sure it's not the same player who threw it!
-		if (victim.ID == throwerPlayer.ID) return;
+		if (throwerPlayer && victim.ID == throwerPlayer.ID) return;
 
 		// Knock player & stop being a flying weapon
-		victim.Knock (body.velocity.normalized, 0.20f);
+		victim.Knock (throwDir * 1.2f, 1f);
 		beingThrown = false;
 
 		// Mark tutorial check
-		Tutorial.SetCheckFor (throwerPlayer.ID, Tutorial.Phases.Throwing_Stuff, true);
+		if (throwerPlayer) Tutorial.SetCheckFor (throwerPlayer.ID, Tutorial.Phases.Throwing_Stuff, true);
 	}
 
 	protected virtual void Awake () 
@@ -111,7 +116,7 @@ public class Grabbable : MonoBehaviour
 		globalCount++;
 		body = GetComponent<Rigidbody> ();
 		puff = GetComponentInChildren<ParticleSystem> ();
-		GetComponentsInChildren (true, colliders);
+		colliders = GetComponentsInChildren<Collider> (true).ToList ();
 
 		// Instantiate Grab Helper & set it up
 		var helper = Resources.Load<GrabHelper> ("Prefabs/Grab_Helper");

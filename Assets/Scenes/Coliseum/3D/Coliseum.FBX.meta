@@ -28,6 +28,7 @@ ModelImporter:
     100040: Columnas_Coliseo
     100042: Plataforma_presentador
     100044: Toldo_coliseo
+    100046: Coliseo_Walls
     400000: Box009
     400002: Box010
     400004: Character002
@@ -51,6 +52,7 @@ ModelImporter:
     400040: Columnas_Coliseo
     400042: Plataforma_presentador
     400044: Toldo_coliseo
+    400046: Coliseo_Walls
     2100000: default
     2100002: No Name
     2100004: Puente
@@ -80,6 +82,7 @@ ModelImporter:
     2300038: Columnas_Coliseo
     2300040: Plataforma_presentador
     2300042: Toldo_coliseo
+    2300044: Coliseo_Walls
     3300000: Box009
     3300002: Box010
     3300004: Character002
@@ -102,6 +105,7 @@ ModelImporter:
     3300038: Columnas_Coliseo
     3300040: Plataforma_presentador
     3300042: Toldo_coliseo
+    3300044: Coliseo_Walls
     4300000: Character002
     4300002: Object103
     4300004: Object104
@@ -124,6 +128,7 @@ ModelImporter:
     4300038: Coliseo
     4300040: Columnas_Coliseo
     4300042: Plataforma_presentador
+    4300044: Coliseo_Walls
     7400000: Take 001
     9500000: //RootNode
   externalObjects:

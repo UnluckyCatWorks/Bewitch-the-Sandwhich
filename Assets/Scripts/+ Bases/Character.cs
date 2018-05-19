@@ -35,6 +35,11 @@ public abstract class Character : Pawn
 	internal Material mat;
 	internal int _EmissionColor;
 
+	// SPECIALS (Enchanted Weather)
+	internal bool simulateCarrying;
+
+	private static Character[] cache = new Character[4];
+
 	// Locomotion
 	internal float speed = 8.5f;
 	internal float angularSpeed = 120f;
@@ -54,7 +59,7 @@ public abstract class Character : Pawn
 	private Vector3 lastAlivePos;
 
 	// Capabilities
-	internal static float ThrowForce = 20f;
+	internal static float ThrowForce = 30f;
 
 	internal static float DashForce = 40f;
 	internal static float DashCooldown = 0.50f;
@@ -184,9 +189,30 @@ public abstract class Character : Pawn
 	{
 		NavMeshHit hit;
 		// Find a viable position on the Nav Mesh 
-		if (NavMesh.SamplePosition (lastAlivePos, out hit, 3f, NavMesh.AllAreas))
+		if (NavMesh.SamplePosition (lastAlivePos, out hit, 2f, NavMesh.AllAreas))
 		{
+			// Teleport to place
 			transform.position = hit.position;
+
+			// Disable spells individually
+			if (effects.ContainsKey ("Spell: Stoned")) 
+			{
+				Get (Characters.Milton).StopCoroutine (Milton.stoneConversion);
+				other.mat.SetFloat ("_StoneLevel", 0f);
+				effects.Remove ("Spell: Stoned");
+			}
+			else
+			if (effects.ContainsKey ("Spell: Crazy")) 
+			{
+				(Get (Characters.Amy) as Amy).madnessVFX.Stop (true, ParticleSystemStopBehavior.StopEmitting);
+				effects.Remove ("Spell: Crazy");
+			}
+			else
+			if (effects.ContainsKey ("Spell: Burnt"))
+			{
+				(Get (Characters.Bobby) as Bobby).effectInstance.Stop (true, ParticleSystemStopBehavior.StopEmitting);
+				effects.Remove ("Spell: Burnt");
+			}
 		}
 	}
 	#endregion
@@ -195,6 +221,12 @@ public abstract class Character : Pawn
 	// Keeps toy with the character
 	private void HoldToy () 
 	{
+		if (simulateCarrying)
+		{
+			Carrying = true;
+			return;
+		}
+		else
 		if (toy == null) 
 		{
 			Carrying = false;
@@ -266,6 +298,7 @@ public abstract class Character : Pawn
 		if (!effects.ContainsKey ("Knocked")) AddCC ("Knocked", Locks.All, interrupt: Locks.Dash | Locks.Spells);
 		else if (knockedCoroutine != null) StopCoroutine (knockedCoroutine);
 
+		anim.SetTrigger ("Hit");
 		knockedCoroutine = StartCoroutine (KnockingTo (dir, duration));
 
 		// Let go grabbed object, if any,
@@ -402,7 +435,16 @@ public abstract class Character : Pawn
 		// If not in front of any interactable,
 		// or not executed any interaction
 		if (Owner.GetButton ("Action", true) && toy)
-			toy.Throw (MovingDir * ThrowForce, owner: this);
+		{
+			// If other is infront, throw right towards
+			var otherDir = (other.transform.position - transform.position).normalized;
+			float angle = Vector3.Angle (otherDir, MovingDir);
+
+			var throwDir = angle <= 50f?
+				otherDir : MovingDir;
+
+			toy.Throw (throwDir * ThrowForce, owner: this);
+		}
 	}
 	#endregion
 
@@ -426,15 +468,16 @@ public abstract class Character : Pawn
 	}
 
 	// Helper for only adding CCs
-	public void AddCC (string name, Locks cc, Locks interrupt = Locks.NONE, float duration = 0) 
+	public void AddCC (string name, Locks cc, Locks interrupt = Locks.NONE, float duration = 0)
 	{
-		if (!effects.ContainsKey(name)) effects.Add (name, cc);
+		if (!effects.ContainsKey (name)) effects.Add (name, cc);
 		if (duration != 0) StartCoroutine (RemoveEffectAfter (name, duration));
 
 		// Interrupt any kind of movement
-		if (cc.HasFlag (Locks.Movement)) 
+		if (cc.HasFlag (Locks.Movement))
 		{
 			movingSpeed = Vector3.zero;
+			// Interrupt dash
 			if (interrupt.HasFlag (Locks.Dash) &&
 				dashCoroutine != null)
 			{
@@ -447,15 +490,31 @@ public abstract class Character : Pawn
 				dashCoroutine = null;
 			}
 		}
-		else
-		// Interrupt spell casting
-		if (interrupt.HasFlag (Locks.Spells) &&
-			spellCoroutine != null) 
+
+		// If spells are prevented, turn off Crystal
+		if (cc.HasFlag(Locks.Spells)) 
 		{
-			Casting = false;
 			SwitchCrystal (value: false);
-			StopCoroutine (spellCoroutine);
-			spellCoroutine = null;
+			// Interrupt spell casting
+			if (interrupt.HasFlag (Locks.Spells) &&
+				spellCoroutine != null)
+			{
+				Casting = false;
+				StopCoroutine (spellCoroutine);
+				spellCoroutine = null;
+			}
+		}
+
+		// If interaction is prevented, de-mark last interactable
+		if (cc.HasFlag(Locks.Interaction) && lastMarked)
+		{
+			// Un-register player if it's a machine
+			var m = lastMarked as MachineInterface;
+			if (m) m.PlayerIsNear (near: false);
+
+			// Un-focus
+			lastMarked.marker.Off (focusColor);
+			lastMarked = null;
 		}
 	}
 
@@ -533,9 +592,13 @@ public abstract class Character : Pawn
 
 	public static Character Get (Characters character) 
 	{
-		// Gets instance of specific character
-		var c = GameObject.Find (character.ToString ());
-		return c.GetComponent<Character> ();
+		int id = (int) character - 1;
+		if (cache[id] == null) 
+		{
+			var p = GameObject.Find (character.ToString ());
+			cache[id] = p.GetComponent<Character> ();
+		}
+		return cache[id];
 	}
 	#endregion
 

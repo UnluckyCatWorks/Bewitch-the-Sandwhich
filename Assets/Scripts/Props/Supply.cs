@@ -13,6 +13,10 @@ public class Supply : Interactable
 		var go = Instantiate(prefab, transform.position, Quaternion.identity);
 		player.toy = go.GetComponent<Grabbable> ();
 		player.toy.body.isKinematic = true;
+
+		// Register spawned ingredient
+		if (Game.manager is MeltingRace)
+			MeltingRace.spawnedIngredients.Add (prefab);
 	}
 
 	public override bool CheckInteraction (Character player) 

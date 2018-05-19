@@ -41,7 +41,7 @@ public class Player
 		// Default player characters
 		all[0].name = "Ciruelo";
 		all[0].playingAs = Characters.Bobby;
-		all[1].name = "Calamardo";
+		all[1].name = "Lentejo";
 		all[1].playingAs = Characters.Lilith;
 	} 
 	#endregion

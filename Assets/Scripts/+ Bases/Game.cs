@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public abstract class Game : MonoBehaviour
 {
 	#region DATA
-	private Characters roundWinner;
+	// 0 (draw), 1 or 2
+	private int roundWinner;
 
 	public static Ingredient[] ingredients;
 
@@ -19,10 +20,15 @@ public abstract class Game : MonoBehaviour
 	#endregion
 
 	#region UTILS
-	public static void DeclareWinner (Characters winner) 
+	public static void DeclareWinner (int winner) 
 	{
-		manager.roundWinner = winner;
-		Character.Get (winner).Owner.currentStats.roundScore++;
+		if (winner != 0) 
+		{
+			manager.roundWinner = winner;
+			Player.all[winner - 1].currentStats.roundScore++;
+		}
+		// Empate (don't count points for anyone!)
+		else manager.roundWinner = 0;
 	}
 
 	public abstract IEnumerator ResetStage ();
@@ -37,16 +43,17 @@ public abstract class Game : MonoBehaviour
 		// Start rounds
 		for (int round=1; round<=rounds; round++) 
 		{
+			stopped = true;
 			// Display round info
 			yield return RoundDisplay.Show (round, roundWinner);
-			roundWinner = Characters.NONE;
+			roundWinner = -1;
 			stopped = false;
 
 			// Start actual game mode logic
 			var logic = StartCoroutine (Logic ());
 
 			// Wait until winner is proclaimed
-			while (roundWinner == Characters.NONE) yield return null;
+			while (roundWinner == -1) yield return null;
 			StopCoroutine (logic);
 		}
 
@@ -68,12 +75,12 @@ public abstract class Game : MonoBehaviour
 			ingredients = Resources.LoadAll<Ingredient> ("Prefabs/Ingredients");
 
 		// If not coming from the Lobby
-		if (mode == Modes.UNESPECIFIED)
+		if (mode == Modes.UNESPECIFIED) 
 		{
-			rounds = 3;
+			Character.SpawnPack ();
 			enabled = true;
+			rounds = 3;
 		}
-		Character.SpawnPack ();
 		OnAwake ();
 	}
 	protected virtual void OnAwake () { }
@@ -86,12 +93,13 @@ public abstract class Game : MonoBehaviour
 		Tutorial,
 
 		// Game Modes
+		WetDeath,
 		MeltingRace,
-		CauldronCapture,
 		EnchantedWeather,
+		CauldronCapture,
 
 		// Specials
-		Count = EnchantedWeather,
+		Count = CauldronCapture,
 		CountNoTutorial = Count - 1
 	}
 

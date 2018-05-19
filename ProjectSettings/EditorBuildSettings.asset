@@ -6,8 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/+ Lobby/Lobby.unity
+    path: Assets/Scenes/+Lobby/Lobby.unity
     guid: 7bf6b5a9f2f6fee4a9d8569347bcb185
   - enabled: 1
-    path: Assets/Scenes/Coliseum/+ Melting Race/MeltingRace.unity
+    path: Assets/Scenes/Coliseum/+Wet-Death/Wet-Death.unity
+    guid: b0bb882f317efe545859dbf5a956dd80
+  - enabled: 1
+    path: Assets/Scenes/Coliseum/+Melting-Race/Melting-Race.unity
     guid: 9280eeb9cae888f48b72bb988292073d
+  - enabled: 1
+    path: Assets/Scenes/Coliseum/+Enchanted-Weather/Enchanted-Weather.unity
+    guid: 977ca07e8cfc44a4e9406a8ddffb075d
+  - enabled: 1
+    path: Assets/Scenes/Coliseum/+Cauldron-Capture/Cauldron-Capture.unity
+    guid: b9bbb3bd0250b624aa4bf5e66dd71867

@@ -23,6 +23,7 @@ public class Milton : Character
 	public float extrudeAmount;
 	public Vector2 minMaxHeight;
 
+	public static Coroutine stoneConversion;
 	private const float StunDuration = 2f;
 	#endregion
 
@@ -30,9 +31,6 @@ public class Milton : Character
 	{
 		var anim = other.GetComponent<Animator> ();
 		int _StoneLevel = Shader.PropertyToID ("_StoneLevel");
-
-		// Apply CC
-		other.AddCC ("Spell: Stoned", Locks.All);
 
 		// Turn into stone
 		float factor = 0f;
@@ -90,24 +88,24 @@ public class Milton : Character
 	}
 
 	#region CALLBACKS
-	protected override IEnumerator SpellEffect ()
+	protected override IEnumerator SpellEffect () 
 	{
 		// Wait until spell hits
 		while (!spellHit) yield return null;
 
-		// Make the other let go their object
-		if (other.toy)
-			other.toy.Throw (-MovingDir * 2f, owner: this);
+		// Apply CC & make other let go their object
+		other.AddCC ("Spell: Stoned", Locks.All, Locks.Spells | Locks.Dash);
+		if (other.toy) other.toy.Throw (-MovingDir * 2f, owner: this);
 
 		// Show impact VFX
 		spellVFX.transform.position = other.transform.position + (Vector3.up * 0.3f);
 		spellVFX.SetActive (true);
 
 		// Turn other player into stone
-		StartCoroutine (TurnIntoStone ());
+		stoneConversion = StartCoroutine (TurnIntoStone ());
 	}
 
-	protected override void Awake ()
+	protected override void Awake () 
 	{
 		base.Awake ();
 		SetMedusaSettings ();
