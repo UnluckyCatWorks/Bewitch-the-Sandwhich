@@ -24,14 +24,14 @@ public class WetDeath : Game
 		{
 			// Rotate isle
 			isleRotator.Rotate (Vector3.up, rotatorSpeed * Time.deltaTime);
-
 			yield return null;
 		}
 	}
 
-	public override IEnumerator ResetStage ()
+	public override IEnumerator ResetStage () 
 	{
-		throw new System.NotImplementedException ();
+		HPTracker.trackers.ForEach (t=> t.StartCoroutine(t.Start ()));
+		yield break;
 	} 
 	#endregion
 }

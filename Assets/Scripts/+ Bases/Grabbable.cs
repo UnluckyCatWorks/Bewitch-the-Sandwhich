@@ -67,7 +67,7 @@ public class Grabbable : MonoBehaviour
 		HolyShitJustDestroyThis ();
 	}
 
-	public void Destroy (float delay = 0f)
+	public void Destroy (float delay = 0f) 
 	{
 		StartCoroutine (DestroyAfter (delay));
 	}

@@ -20,10 +20,11 @@ public class ModeCarrousel : MonoBehaviour
 	public static ModeCarrousel menu;
 	public const float Speed = 7f;
 	public const float FadeDuration = 1f;
-	public const int selectionMax = (int) Game.Modes.Count + 1;
+	public const int selectionMax = (int) Game.Modes.Count;
 
 	internal SmartAnimator anim;
 
+	private bool active;
 	private bool closeEnough;
 	private Dictionary<Graphic, float> graphics;
 	#endregion
@@ -51,7 +52,7 @@ public class ModeCarrousel : MonoBehaviour
 		 // Correct out of bounds selection
 		if (selected == 0 - 1) 
 		{
-			float lastModeValue = (float) Game.Modes.Count / selectionMax;
+			float lastModeValue = ((float) selectionMax - 1f) / selectionMax;
 			anim.SetFloat ("Blend", lastModeValue);
 			selected = selectionMax - 2;
 		}
@@ -89,7 +90,11 @@ public class ModeCarrousel : MonoBehaviour
 	#region UTILS
 	public static void Switch (bool state) 
 	{
-		if (!state) menu.blocker.SetActive (true);
+		if (!state)
+		{
+			menu.blocker.SetActive (true);
+			menu.active = false;
+		}
 		menu.StartCoroutine (menu.FadeAll (state));
 	}
 
@@ -111,7 +116,11 @@ public class ModeCarrousel : MonoBehaviour
 			yield return null;
 			factor += Time.deltaTime / FadeDuration;
 		}
-		if (state) blocker.SetActive (false);
+		if (state)
+		{
+			blocker.SetActive (false);
+			active = true;
+		}
 	}
 	#endregion
 
@@ -124,7 +133,18 @@ public class ModeCarrousel : MonoBehaviour
 		anim.SetFloat ("Blend", Mathf.Lerp (iValue, tValue, Time.smoothDeltaTime * Speed));
 
 		// Check if close enough to selected to keep moving
-		closeEnough = Mathf.Abs (tValue - iValue) <= 0.2f;
+		closeEnough = Mathf.Abs (tValue - iValue) <= 0.05f;
+
+		if (!active) return;
+
+		#region INPUT HANLDING
+		float input1 = Player.all[0].GetAxis ("Horizontal", true);
+		float input2 = Player.all[1].GetAxis ("Horizontal", true);
+
+		if (input1 != 0) MoveMode ((int)input1);
+		else
+		if (input2 != 0) MoveMode ((int)input2);
+		#endregion
 	}
 
 	private void Awake () 

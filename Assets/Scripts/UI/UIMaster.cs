@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class UIMaster : MonoBehaviour 
 {
+	public AudioSource menu;
+	public AudioSource sound;
 	public static UIMaster manager;
 
 	#region CALLBACKS
@@ -19,6 +21,7 @@ public class UIMaster : MonoBehaviour
 
 	private void Awake ()
 	{
+		menu.Play ();
 		DontDestroyOnLoad (gameObject);
 		manager = this;
 	} 
@@ -27,7 +30,6 @@ public class UIMaster : MonoBehaviour
 	#region SCENE LOADING
 	public static void LoadScene (Game.Modes scene) 
 	{
-//		string sceneToLoad = (scene == Game.Modes.Tutorial? "Lobby" : scene.ToString ());
 		manager.StartCoroutine (manager.CortinillaToScene ((int)scene - 1));
 		Game.stopped = true;
 	}
@@ -56,7 +58,7 @@ public class UIMaster : MonoBehaviour
 			yield return loading;
 
 			// De-activate WHOLE Lobby
-			foreach (var g in SceneManager.GetSceneByBuildIndex (0).GetRootGameObjects ())
+			foreach (var g in SceneManager.GetSceneByBuildIndex (0).GetRootGameObjects ()) 
 			{
 				if (g.name == "Camera_Rig")
 				{
@@ -70,11 +72,8 @@ public class UIMaster : MonoBehaviour
 					// Don't de-activate the Focos animator
 					g.GetComponentsInChildren <MeshRenderer> ().ToList ()
 						.ForEach (m=> m.enabled = false);
-
 					continue;
 				}
-				else
-				if (g.name == "Manager") continue;
 
 				// De-activate anything else
 				g.SetActive (false);
@@ -84,6 +83,10 @@ public class UIMaster : MonoBehaviour
 			SceneManager.SetActiveScene (SceneManager.GetSceneByBuildIndex (scene));
 			Character.SpawnPack ();
 			Game.manager.OnAwake ();
+
+			menu.Stop ();
+			sound.Play ();
+			Cursor.visible = false;
 		}
 		// If returning to Lobby
 		else
@@ -92,6 +95,10 @@ public class UIMaster : MonoBehaviour
 			var unloading = SceneManager.UnloadSceneAsync (SceneManager.GetActiveScene ());
 			SceneManager.SetActiveScene (SceneManager.GetSceneByBuildIndex (0));
 			yield return unloading;
+
+			menu.Play ();
+			sound.Stop ();
+			Cursor.visible = true;
 
 			// Activate Lobby
 			foreach (var g in SceneManager.GetSceneByBuildIndex (0).GetRootGameObjects ()) 
@@ -111,7 +118,6 @@ public class UIMaster : MonoBehaviour
 					continue;
 				}
 				// Skip some already-disabled objects
-				else if (g.name == "Manager") continue;
 				else if (g.name == "Host") continue;
 				else if (g.name == "Puerta_Wrapper") continue;
 				else if (g.name.Contains ("Supply")) continue;
@@ -129,7 +135,7 @@ public class UIMaster : MonoBehaviour
 			yield return null;
 		}
 		// Get rid of this
-		Destroy (cortinilla.gameObject); 
+		Destroy (cortinilla.gameObject);
 		#endregion
 
 		// Enable game mode logic

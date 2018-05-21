@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,6 +27,7 @@ public abstract class Character : Pawn
 	protected SmartAnimator anim;
 	protected CharacterController me;
 	protected Character other;
+	protected CharacterSFX sound;
 
 	protected Marker areaOfEffect;
 	protected SphereCollider areaCollider;
@@ -188,31 +188,35 @@ public abstract class Character : Pawn
 	public void Respawn () 
 	{
 		NavMeshHit hit;
-		// Find a viable position on the Nav Mesh 
-		if (NavMesh.SamplePosition (lastAlivePos, out hit, 2f, NavMesh.AllAreas))
+		float radius = 2f;
+		// Find a viable position on the Nav Mesh
+		while (!NavMesh.SamplePosition (lastAlivePos, out hit, radius, NavMesh.AllAreas)) 
 		{
-			// Teleport to place
-			transform.position = hit.position;
+			radius += 0.5f;
+			if (radius > 4f) throw new System.Exception ("wtf nav mesh");
+		}
 
-			// Disable spells individually
-			if (effects.ContainsKey ("Spell: Stoned")) 
-			{
-				Get (Characters.Milton).StopCoroutine (Milton.stoneConversion);
-				other.mat.SetFloat ("_StoneLevel", 0f);
-				effects.Remove ("Spell: Stoned");
-			}
-			else
-			if (effects.ContainsKey ("Spell: Crazy")) 
-			{
-				(Get (Characters.Amy) as Amy).madnessVFX.Stop (true, ParticleSystemStopBehavior.StopEmitting);
-				effects.Remove ("Spell: Crazy");
-			}
-			else
-			if (effects.ContainsKey ("Spell: Burnt"))
-			{
-				(Get (Characters.Bobby) as Bobby).effectInstance.Stop (true, ParticleSystemStopBehavior.StopEmitting);
-				effects.Remove ("Spell: Burnt");
-			}
+		// Teleport to place
+		transform.position = hit.position;
+
+		// Disable spells individually
+		if (effects.ContainsKey ("Spell: Stoned")) 
+		{
+			Get (Characters.Milton).StopCoroutine (Milton.stoneConversion);
+			other.mat.SetFloat ("_StoneLevel", 0f);
+			effects.Remove ("Spell: Stoned");
+		}
+		else
+		if (effects.ContainsKey ("Spell: Crazy")) 
+		{
+			(Get (Characters.Amy) as Amy).madnessVFX.Stop (true, ParticleSystemStopBehavior.StopEmitting);
+			effects.Remove ("Spell: Crazy");
+		}
+		else
+		if (effects.ContainsKey ("Spell: Burnt"))
+		{
+			(Get (Characters.Bobby) as Bobby).effectInstance.Stop (true, ParticleSystemStopBehavior.StopEmitting);
+			effects.Remove ("Spell: Burnt");
 		}
 	}
 	#endregion
@@ -648,6 +652,10 @@ public abstract class Character : Pawn
 
 		// Find other playera
 		FindOther ();
+
+		// Spawn Audio prefab
+		var prefab = Resources.Load<CharacterSFX> ("Prefabs/Audio/Character_SFX");
+		sound = Instantiate (prefab, transform);
 	}
 
 	protected virtual void FixedUpdate () 

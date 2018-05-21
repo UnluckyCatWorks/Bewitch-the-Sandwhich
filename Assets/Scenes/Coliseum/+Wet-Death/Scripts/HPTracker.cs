@@ -1,15 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class HPTracker : MonoBehaviour 
 {
 	#region DATA
 	public int playerID;
-	public int hp;
+	public List<SpriteRenderer> hearts;
 
-	public List<Image> hearts;
+	internal int hp;
+	private bool init;
+
 	internal static List<HPTracker> trackers = new List<HPTracker> (2);
 	#endregion
 
@@ -20,14 +21,11 @@ public class HPTracker : MonoBehaviour
 		var tracker = trackers.Find (t => t.playerID == id);
 
 		// Remove a heart from player
-		tracker.hp--;
-		tracker.hearts[tracker.hp].CrossFadeAlpha (0f, 0.5f, false);
+		tracker.hp--; 
+		tracker.hearts[tracker.hp].SetAlpha (0f);
 
 		if (tracker.hp == 0)
-		{
-			// Declare winner if someone lost all hearts
-			print ("LOL, perdio " + Player.all[id].playingAs);
-		}
+			Game.DeclareWinner (player==1? 2 : 1);
 
 		// Accelerate rotator
 		WetDeath.rotatorSpeed += (Game.manager as WetDeath).rotationIncrement;
@@ -35,21 +33,45 @@ public class HPTracker : MonoBehaviour
 	#endregion
 
 	#region CALLBACKS
-	private IEnumerator Start () 
+	public IEnumerator Start () 
 	{
-		// Hide hearts
-		hearts.ForEach (i => i.SetAlpha (0f));
+		// Reset tracker
+		Initialization ();
+		hp = hearts.Count;
 
 		// Wait until ~= round display is over
-		yield return new WaitForSeconds (2f);
-
-		// Make hearts appear in cannon
-		foreach (var i in hearts)
+		if (!init)
 		{
-			i.color = Character.Get (Player.all[playerID].playingAs).focusColor;
-			i.CrossShowAlpha (1f, 0.5f, false);
-			yield return new WaitForSeconds (0.3f);
+			yield return new WaitForSeconds (2.5f);
+			init = true;
 		}
+
+		float factor = 0f;
+		float duration = 1f;
+		while (factor <= 1f + (hp * 0.3f) + 0.1f) 
+		{
+			// Fade in in cannon
+			for (int i=0; i!=hp; i++)
+			{
+				if (hearts[i].color.a >= 1f) continue;
+				hearts[i].SetAlpha (factor - (i * 0.3f));
+			}
+
+			yield return null;
+			factor += Time.deltaTime / duration;
+		}
+	}
+
+	private void Initialization () 
+	{
+		if (init) return;
+		// Initialize hearts
+		hearts.ForEach (s =>
+		{
+			s.color = Player.all[playerID].character.focusColor;
+			s.SetAlpha (0f);
+		});
+
 		// Register tracker
 		trackers.Add (this);
 	}

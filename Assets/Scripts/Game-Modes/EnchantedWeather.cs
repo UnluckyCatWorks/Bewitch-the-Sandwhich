@@ -96,8 +96,8 @@ public class EnchantedWeather : Game
 	public override IEnumerator ResetStage () 
 	{
 		EWCauldron.scores = new int[2];
-
-		throw new System.Exception ();
+		spawnedStuff.ForEach (i=> { if (i) i.Destroy (); });
+		yield return new WaitForSeconds (1f);
 	}
 
 	public override void OnAwake () 

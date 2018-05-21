@@ -30,7 +30,7 @@ public abstract class Cauldron : Interactable
 			yield return new WaitForFixedUpdate ();
 			factor += Time.fixedDeltaTime / /*duration*/ 0.15f;
 		}
-		Destroy (toy.gameObject);
+		toy.DestroySilenty ();
 		OnDrop (owner);
 	}
 

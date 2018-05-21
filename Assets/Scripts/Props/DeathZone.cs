@@ -9,7 +9,7 @@ public class DeathZone : MonoBehaviour
 
 	private void OnTriggerEnter (Collider other) 
 	{
-		if (other.tag == "Player")
+		if (other.tag == "Player") 
 		{
 			// Lock player until he hits floor
 			var p = other.GetComponent<Character> ();

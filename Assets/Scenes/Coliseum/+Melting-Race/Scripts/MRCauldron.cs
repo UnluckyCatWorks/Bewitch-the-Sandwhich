@@ -44,7 +44,7 @@ public class MRCauldron : Cauldron
 
 	private IEnumerator LoopTarget () 
 	{
-		while (true)
+		while (true) 
 		{
 			// Select randomly next target
 			target = (IngredientID) Random.Range (1, (int) IngredientID.Count);

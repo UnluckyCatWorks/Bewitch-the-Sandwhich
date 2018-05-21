@@ -8,6 +8,10 @@ public class Player
 {
 	#region DATA
 	public static List<Player> all;
+	public Character character 
+	{
+		get { return Character.Get (playingAs); }
+	}
 
 	public string name;
 	public Characters playingAs;

@@ -27,14 +27,14 @@ public class Boat : MonoBehaviour
 			if (i != chosen) 
 			{
 				// Select a random ingredient
-				IngredientID random;
-				do
+				IngredientID random = target;
+				for (int a=0; a!=i+1; a++) 
 				{
-					int id = Random.Range (1, (int) IngredientID.Count);
-					random = (IngredientID) id;
+					random++;
+					if (random == IngredientID.Count) 
+						random = IngredientID.Seta;
 				}
-				// Make sure boats don't repeat
-				while (random == target || boats.Any (b=> random == b.supply.ingredient));
+				boats[i].supply.ingredient = random;
 
 				// Save selection
 				boats[i].supply.ingredient = random;

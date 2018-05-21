@@ -8,8 +8,9 @@ OcclusionCullingSettings:
     smallestOccluder: 5
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: 00000000000000000000000000000000
-  m_OcclusionCullingData: {fileID: 0}
+  m_SceneGUID: 9280eeb9cae888f48b72bb988292073d
+  m_OcclusionCullingData: {fileID: 36300000, guid: 1541d51078d280942ba9e556cf0fb6ca,
+    type: 2}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -319,8 +320,8 @@ GameObject:
   - component: {fileID: 326943972}
   - component: {fileID: 326943975}
   - component: {fileID: 326943974}
-  - component: {fileID: 326943971}
   - component: {fileID: 326943973}
+  - component: {fileID: 326943971}
   m_Layer: 9
   m_Name: Isla_redonda
   m_TagString: Untagged
@@ -604,7 +605,6 @@ GameObject:
   m_Component:
   - component: {fileID: 618673163}
   - component: {fileID: 618673162}
-  - component: {fileID: 618673164}
   m_Layer: 0
   m_Name: WaterReflectionMain Camera
   m_TagString: Untagged
@@ -629,7 +629,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 58.54
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -641,8 +641,8 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
+  m_HDR: 0
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -654,21 +654,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 618673161}
-  m_LocalRotation: {x: 0.00000024186184, y: 0.94475174, z: 0.3277868, w: -0.00000021930634}
-  m_LocalPosition: {x: 0, y: -14.44407, z: 18.647293}
+  m_LocalRotation: {x: 0.0032348034, y: 0.9512053, z: 0.30838022, w: -0.009981976}
+  m_LocalPosition: {x: 0.17508197, y: -9.368289, z: 13.601759}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!45 &618673164
-Skybox:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 618673161}
-  m_Enabled: 1
-  m_CustomSkybox: {fileID: 0}
 --- !u!1001 &622730716
 Prefab:
   m_ObjectHideFlags: 0
@@ -713,24 +705,6 @@ Prefab:
       propertyPath: specularLight
       value: 
       objectReference: {fileID: 959627478}
-    - target: {fileID: 65953762482503788, guid: bc4f23d04e42f4b559542ad840db6530,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 0.6708565
-      objectReference: {fileID: 0}
-    - target: {fileID: 65953762482503788, guid: bc4f23d04e42f4b559542ad840db6530,
-        type: 2}
-      propertyPath: m_Center.y
-      value: -0.85
-      objectReference: {fileID: 0}
-    - target: {fileID: 4738923781260352, guid: bc4f23d04e42f4b559542ad840db6530, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4738923781260352, guid: bc4f23d04e42f4b559542ad840db6530, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bc4f23d04e42f4b559542ad840db6530, type: 2}
   m_IsPrefabParent: 0
@@ -1729,6 +1703,34 @@ Prefab:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 100038, guid: 5dd1b2a50fa839e4d8b17955d6cb86fc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 100040, guid: 5dd1b2a50fa839e4d8b17955d6cb86fc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 100044, guid: 5dd1b2a50fa839e4d8b17955d6cb86fc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 5dd1b2a50fa839e4d8b17955d6cb86fc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 100046, guid: 5dd1b2a50fa839e4d8b17955d6cb86fc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 100032, guid: 5dd1b2a50fa839e4d8b17955d6cb86fc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 100042, guid: 5dd1b2a50fa839e4d8b17955d6cb86fc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5dd1b2a50fa839e4d8b17955d6cb86fc, type: 3}
   m_IsPrefabParent: 0
@@ -2001,7 +2003,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 58.54
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -2013,8 +2015,8 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
+  m_HDR: 0
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -2026,8 +2028,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1650751465}
-  m_LocalRotation: {x: -0.0013297986, y: 0.96914494, z: 0.24643254, w: 0.0052309386}
-  m_LocalPosition: {x: 1.0546796, y: -9.462892, z: 15.137071}
+  m_LocalRotation: {x: -0.0064322315, y: 0.98188704, z: 0.1863, w: 0.033893924}
+  m_LocalPosition: {x: 0.23441291, y: -8.358921, z: 14.907131}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

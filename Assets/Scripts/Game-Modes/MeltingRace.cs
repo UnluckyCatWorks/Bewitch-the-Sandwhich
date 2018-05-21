@@ -54,7 +54,11 @@ public class MeltingRace : Game
 	public override IEnumerator ResetStage () 
 	{
 		MRCauldron.scores = new int[2];
-		spawnedIngredients.ForEach(i=> { if (i) i.Destroy (); });
+		foreach (var i in spawnedIngredients)
+		{
+			if (i.isActiveAndEnabled) 
+				i.Destroy ();
+		}
 
 		// Turn isle to it's original size
 		float factor = 0f;
