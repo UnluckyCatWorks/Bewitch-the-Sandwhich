@@ -14,18 +14,17 @@ public class MRCauldron : Cauldron
 	public Image targetImage;
 	public Timer timer;
 
-	public static int[] scores;
-	public static IngredientID target;
-	private static Coroutine targetLoop;
+	internal static int[] scores;
+	internal IngredientID target;
 
-	public static MRCauldron instance;
+	public static MRCauldron current;
 	#endregion
 
 	#region UTILS
 	public static int GetWinner () 
 	{
 		// Stop ingredient loop
-		instance.StopCoroutine (targetLoop);
+		current.StopAllCoroutines ();
 
 		// Player 1 wins
 		if (scores[0] > scores[1]) return 1;
@@ -36,10 +35,9 @@ public class MRCauldron : Cauldron
 		else return 0;
 	}
 
-	public static void GetStarted () 
+	public void GetStarted () 
 	{
-		var i = instance;
-		targetLoop = i.StartCoroutine (i.LoopTarget ());
+		StartCoroutine (LoopTarget ());
 	}
 
 	private IEnumerator LoopTarget () 
@@ -84,7 +82,7 @@ public class MRCauldron : Cauldron
 	protected override void Awake () 
 	{
 		base.Awake ();
-		instance = this;
+		current = this;
 		scores = new int[2];
 	}
 	#endregion

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class WetDeath : Game
@@ -19,7 +20,6 @@ public class WetDeath : Game
 	protected override IEnumerator Logic () 
 	{
 		rotatorSpeed = startRotation;
-
 		while (true) 
 		{
 			// Rotate isle
@@ -32,6 +32,11 @@ public class WetDeath : Game
 	{
 		HPTracker.trackers.ForEach (t=> t.StartCoroutine(t.Start ()));
 		yield break;
-	} 
+	}
+
+	public override void OnAwake () 
+	{
+		HPTracker.trackers = FindObjectsOfType<HPTracker> ().ToList ();
+	}
 	#endregion
 }

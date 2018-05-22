@@ -44,7 +44,7 @@ public class UIMaster : MonoBehaviour
 		float factor = 0f;
 		while (factor <= 1.1f)
 		{
-			cortinilla.materialForRendering.SetFloat (id, factor);
+			cortinilla.materialForRendering.SetFloat (id, Mathf.Clamp01 (factor));
 			yield return null;
 			factor += Time.deltaTime / duration;
 		} 
@@ -128,9 +128,9 @@ public class UIMaster : MonoBehaviour
 		}
 
 		#region OPEN CORTINILLA
-		while (factor >= -0.1f)
+		while (factor >= -0.2f)
 		{
-			cortinilla.materialForRendering.SetFloat (id, factor);
+			cortinilla.materialForRendering.SetFloat (id, Mathf.Clamp01(factor));
 			factor -= Time.deltaTime / duration;
 			yield return null;
 		}

@@ -76,7 +76,7 @@ public class Grabbable : MonoBehaviour
 	{
 		if (delay != 0f) yield return new WaitForSeconds (delay);
 		// Unparent puff effect so it won't be destroyed
-		Destroy (puff, 1.5f);
+		Destroy (puff.gameObject, 1.5f);
 		puff.transform.SetParent (null, true);
 		puff.Play ();
 

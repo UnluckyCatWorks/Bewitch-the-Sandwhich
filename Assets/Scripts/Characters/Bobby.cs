@@ -6,19 +6,20 @@ using UnityEngine;
 public class Bobby : Character
 {
 	#region DATA
-	public GameObject spellVFX;
+	public ParticleSystem spellVFX;
 	public ParticleSystem fireVFX;
 
 	public const float BurnDurtion = 3f;
 	public const float SpeedMultiplier = 2f;
 
-	internal ParticleSystem effectInstance;
+	private ParticleSystem effectInstance;
 	#endregion
 
 	protected override IEnumerator SpellEffect () 
 	{
 		// Wait until spell hits
-		while (!spellHit) yield return null;
+		while (spellResult == SpellResult.Undefined) yield return null;
+		if (spellResult == SpellResult.Missed) yield break;
 
 		// Make other player go crazy
 		other.AddCC ("Spell: Burnt", (Locks.Burning | Locks.Dash), (Locks.Spells | Locks.Dash), BurnDurtion);
@@ -26,22 +27,19 @@ public class Bobby : Character
 		// Show Impact VFX
 		spellVFX.transform.parent = null;
 		spellVFX.transform.position = other.transform.position + Vector3.up * 0.75f;
-		spellVFX.SetActive (true);
+		spellVFX.Play (true);
 
-		// Show persistent VFX (spawn new because lol)
+		// Show persistent VFX
 		effectInstance = Instantiate (fireVFX, other.transform);
-		effectInstance.gameObject.SetActive (true);
+		// Make it auto-destroy
+		var main = effectInstance.main;
+		main.stopAction = ParticleSystemStopAction.Destroy;
+		main.duration = BurnDurtion;
+		effectInstance.Play (true);
 
-		// Wait until effect is over
-		yield return new WaitForSeconds (BurnDurtion);
+		// Re-parent
+		yield return new WaitForSeconds (1.5f);
 		spellVFX.transform.parent = transform;
-		if (effectInstance != null)
-			effectInstance.Stop (true, ParticleSystemStopBehavior.StopEmitting);
-	}
-
-	private void OnDestroy () 
-	{
-		if (effectInstance != null)
-			effectInstance.Stop (true, ParticleSystemStopBehavior.StopEmitting);
+		spellVFX.transform.localPosition = Vector3.zero;
 	}
 }

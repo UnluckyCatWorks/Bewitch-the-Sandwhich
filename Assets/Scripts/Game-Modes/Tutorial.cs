@@ -233,6 +233,9 @@ public class Tutorial : MonoBehaviour
 		// Make mode-selection appear
 		yield return new WaitForSeconds (0.5f);
 		ModeCarrousel.Switch (state: true);
+		// Re-enable showcase character
+		yield return new WaitForSeconds (0.5f);
+		showcase.ForEach (s=> s.gameObject.SetActive(true));
 		#endregion
 
 		// End tutorial

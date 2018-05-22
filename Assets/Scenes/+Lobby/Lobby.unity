@@ -24,7 +24,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.506002, g: 0.559292, b: 0.658, a: 1}
   m_AmbientEquatorColor: {r: 0.145152, g: 0.252, b: 0.22122777, a: 1}
   m_AmbientGroundColor: {r: 0.205632, g: 0.27049422, b: 0.459, a: 1}
-  m_AmbientIntensity: 1.2
+  m_AmbientIntensity: 1.76
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
@@ -717,11 +717,6 @@ Prefab:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 771791261}
-    - target: {fileID: 114203027157698776, guid: 87ad8ce7ac3fa8d4b96dbffa3a63666b,
-        type: 2}
-      propertyPath: userName
-      value: 
-      objectReference: {fileID: 422677020}
     - target: {fileID: 223212067670153104, guid: 87ad8ce7ac3fa8d4b96dbffa3a63666b,
         type: 2}
       propertyPath: m_SortingOrder
@@ -1206,6 +1201,26 @@ Prefab:
         type: 2}
       propertyPath: m_SpotAngle
       value: 53
+      objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Shadows.m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.8455882
+      objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.9361055
+      objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
@@ -3085,12 +3100,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &422677020 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114143666824569182, guid: 87ad8ce7ac3fa8d4b96dbffa3a63666b,
-    type: 2}
-  m_PrefabInternal: {fileID: 66826485}
-  m_Script: {fileID: 575553740, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &431378981
 GameObject:
   m_ObjectHideFlags: 0
@@ -3828,9 +3837,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   VFX:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 198391271847752934, guid: e42624df4a0f1ff4dbd5328bdeadad7c, type: 2}
+  - {fileID: 198391271847752934, guid: b2bc8dc781147b942b2f01550bbaecef, type: 2}
 --- !u!4 &592621078
 Transform:
   m_ObjectHideFlags: 0
@@ -4259,8 +4267,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Before going on air you should train a little bit, unless you want to get
-    wet...
+  m_Text: "The Coliseum is a demanding arena, you're both going to get wet a lot.
+    \n\nOur public deserves a good show, so you can train a bit here before exposing
+    yourselves to the real games."
 --- !u!222 &642868485
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4368,11 +4377,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 17
       objectReference: {fileID: 0}
-    - target: {fileID: 223212067670153104, guid: 87ad8ce7ac3fa8d4b96dbffa3a63666b,
-        type: 2}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 771791261}
+    - target: {fileID: 1721879938003920, guid: 87ad8ce7ac3fa8d4b96dbffa3a63666b, type: 2}
+      propertyPath: m_Name
+      value: Selector_1
+      objectReference: {fileID: 0}
     - target: {fileID: 114203027157698776, guid: 87ad8ce7ac3fa8d4b96dbffa3a63666b,
         type: 2}
       propertyPath: showcase.Array.data[0]
@@ -4393,10 +4401,11 @@ Prefab:
       propertyPath: showcase.Array.data[3]
       value: 
       objectReference: {fileID: 1768436918}
-    - target: {fileID: 1721879938003920, guid: 87ad8ce7ac3fa8d4b96dbffa3a63666b, type: 2}
-      propertyPath: m_Name
-      value: Selector_1
-      objectReference: {fileID: 0}
+    - target: {fileID: 223212067670153104, guid: 87ad8ce7ac3fa8d4b96dbffa3a63666b,
+        type: 2}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 771791261}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 87ad8ce7ac3fa8d4b96dbffa3a63666b, type: 2}
   m_IsPrefabParent: 0
@@ -5084,8 +5093,14 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Time is running and we are running out of ice! \n\nPut all the ingredients
-    you can in the cauldron, but beware of the cauldron requirements!"
+  m_Text: 'A wizard''s cauldron can be very hard to please, and you both have a very
+    limited time to do it.
+
+
+    Run fast, don''t fall, and fill your cauldron with it everything it asks for!
+
+
+    Time is running and ice is melting!'
 --- !u!222 &771550702
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6264,6 +6279,21 @@ Prefab:
         type: 2}
       propertyPath: m_SpotAngle
       value: 53
+      objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.8455882
+      objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.9361055
+      objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
@@ -7778,8 +7808,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1036404631}
-  m_LocalRotation: {x: 0.30368212, y: 0.24251093, z: 0.080235295, w: -0.91789323}
-  m_LocalPosition: {x: 7.7775, y: -11.099669, z: -14.209606}
+  m_LocalRotation: {x: 0.0010416347, y: 0.9902547, z: 0.1390666, w: -0.007424518}
+  m_LocalPosition: {x: 0.7268806, y: -8.300456, z: 13.403589}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -8186,7 +8216,7 @@ RectTransform:
   m_GameObject: {fileID: 1039280955}
   m_LocalRotation: {x: 0.00000037299068, y: -0.9814932, z: -0.19149753, w: 0.00000006736992}
   m_LocalPosition: {x: 0, y: 0, z: -4.34}
-  m_LocalScale: {x: 0.0049471133, y: 0.0049471124, z: 0.0049471124}
+  m_LocalScale: {x: 0.004615251, y: 0.00461525, z: 0.00461525}
   m_Children:
   - {fileID: 683773315}
   - {fileID: 1579393095}
@@ -8418,7 +8448,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1084231762}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.000016364}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1401823364}
@@ -8434,7 +8464,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.000054099}
   m_SizeDelta: {x: 716.7, y: 489}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1095768772
@@ -8870,15 +8900,6 @@ Prefab:
         type: 2}
       propertyPath: m_Enabled
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4970239895742028, guid: dd1327ed15696a94397bb7fa9d11da45, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -21
-      objectReference: {fileID: 0}
-    - target: {fileID: 114597854977333202, guid: dd1327ed15696a94397bb7fa9d11da45,
-        type: 2}
-      propertyPath: areaColor.g
-      value: 1.331504
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd1327ed15696a94397bb7fa9d11da45, type: 2}
@@ -9621,6 +9642,21 @@ Prefab:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.8455882
+      objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.9361055
+      objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 749b11d3f596d2e46a5007ddcb61376f, type: 2}
@@ -10221,6 +10257,21 @@ Prefab:
       propertyPath: m_Range
       value: 17.6886
       objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.8455882
+      objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.9361055
+      objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 749b11d3f596d2e46a5007ddcb61376f, type: 2}
@@ -10477,7 +10528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 1571dc53394758d48b4537cd899642d0, type: 2}
+  sharedProfile: {fileID: 11400000, guid: da6ffe7b9067d0f45a81fbf4349e0a42, type: 2}
   isGlobal: 1
   blendDistance: 0
   weight: 1
@@ -10856,6 +10907,36 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114889269517970096, guid: ca1a98ddab6f0f545b644bd5f1a68cef,
+        type: 2}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 8eabad34111009047921b7e16817c02e, type: 2}
+    - target: {fileID: 114889269517970096, guid: ca1a98ddab6f0f545b644bd5f1a68cef,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114466275769364694, guid: ca1a98ddab6f0f545b644bd5f1a68cef,
+        type: 2}
+      propertyPath: m_ShowMaskGraphic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114889269517970096, guid: ca1a98ddab6f0f545b644bd5f1a68cef,
+        type: 2}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114889269517970096, guid: ca1a98ddab6f0f545b644bd5f1a68cef,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114466275769364694, guid: ca1a98ddab6f0f545b644bd5f1a68cef,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ca1a98ddab6f0f545b644bd5f1a68cef, type: 2}
   m_IsPrefabParent: 0
@@ -10932,7 +11013,7 @@ Prefab:
     - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
         type: 2}
       propertyPath: m_Shadows.m_Type
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
         type: 2}
@@ -10943,6 +11024,21 @@ Prefab:
         type: 2}
       propertyPath: m_SpotAngle
       value: 88.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.8455882
+      objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.9361055
+      objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 749b11d3f596d2e46a5007ddcb61376f, type: 2}
@@ -11101,10 +11197,14 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'It''s raining ingredients!
+  m_Text: 'It''s that time of the year again. Ingredients are raining from the sky
+    and you should grab all them all.
 
 
-    Bake them all!'
+    Don''t let your opponent have better cooking material than you.
+
+
+    Try not to get hit in the head!'
 --- !u!222 &1401823366
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11285,7 +11385,22 @@ Prefab:
     - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
         type: 2}
       propertyPath: m_Shadows.m_Type
-      value: 2
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.8455882
+      objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.9361055
+      objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 749b11d3f596d2e46a5007ddcb61376f, type: 2}
@@ -12840,6 +12955,10 @@ Prefab:
       propertyPath: spellCooldown
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1914451009879894, guid: 143bf678644c99442b3a719fdb215a1e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 143bf678644c99442b3a719fdb215a1e, type: 2}
   m_IsPrefabParent: 0
@@ -13942,7 +14061,22 @@ Prefab:
     - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
         type: 2}
       propertyPath: m_Shadows.m_Type
-      value: 0
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.8455882
+      objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.9361055
+      objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
@@ -14197,8 +14331,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Before going on air you should train a little bit, unless you want to get
-    wet...
+  m_Text: "The Coliseum is a demanding arena, you're both going to get wet a lot.
+    \n\nOur public deserves a good show, so you can train a bit here before exposing
+    yourselves to the real games."
 --- !u!222 &1745340127
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15814,7 +15949,7 @@ Prefab:
     - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
         type: 2}
       propertyPath: m_Shadows.m_Type
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
         type: 2}
@@ -15825,6 +15960,21 @@ Prefab:
         type: 2}
       propertyPath: m_SpotAngle
       value: 53
+      objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.8455882
+      objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.9361055
+      objectReference: {fileID: 0}
+    - target: {fileID: 108985080647593766, guid: 749b11d3f596d2e46a5007ddcb61376f,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
@@ -15962,10 +16112,14 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'It''s raining ingredients!
+  m_Text: 'It''s that time of the year again. Ingredients are raining from the sky
+    and you should grab all them all.
 
 
-    Bake them all!'
+    Don''t let your opponent have better cooking material than you.
+
+
+    Try not to get hit in the head!'
 --- !u!222 &1881366541
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16980,10 +17134,14 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Show your skills enchanting your friends!
+  m_Text: 'They say cats have 9 lives. Wizards are not that great and only have 3.
 
 
-    You only have 3 attempts, so show what you''re worth!'
+    Prove who is the most skilled magician by throwing your opponent into the waters
+    of the arena.
+
+
+    Beware, the water is really cold.'
 --- !u!222 &2128225074
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17048,8 +17206,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2139416260}
-  m_LocalRotation: {x: -0.0058767996, y: 0.95986813, z: 0.27966404, w: 0.02016587}
-  m_LocalPosition: {x: -0.14612567, y: -8.650842, z: 2.6277084}
+  m_LocalRotation: {x: 0.010198422, y: 0.9822425, z: 0.1787585, w: -0.056044873}
+  m_LocalPosition: {x: -1.188102, y: -4.589299, z: 1.5123787}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

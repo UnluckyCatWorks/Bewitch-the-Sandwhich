@@ -18,6 +18,13 @@ internal class SoftNormal
 	public Vector4 normal;
 }
 
+public enum SpellResult 
+{
+	Undefined,
+	Missed,
+	Hit
+}
+
 #region PLAYER
 public enum Characters 
 {

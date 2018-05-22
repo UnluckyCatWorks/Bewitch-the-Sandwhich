@@ -6,7 +6,7 @@ using UnityEngine;
 public class Lilith : Character 
 {
 	#region DATA
-	public GameObject spellVFX;
+	public ParticleSystem spellVFX;
 	private const float ForceMultiplier = 1.50f;
 	private const float StunDuration = 1.25f;
 	#endregion
@@ -14,14 +14,25 @@ public class Lilith : Character
 	protected override IEnumerator SpellEffect () 
 	{
 		// Show VFX anyways
-		Instantiate (spellVFX, transform.position + (Vector3.up * 1f), spellVFX.transform.rotation);
+		spellVFX.transform.parent = null;
+		spellVFX.GetComponent<Animation> ().Play ();
+		spellVFX.Play (true);
+		StartCoroutine (Reparent ());
 
 		// Wait until spell hits
-		while (!spellHit) yield return null;
+		while (spellResult == SpellResult.Undefined) yield return null;
+		if (spellResult == SpellResult.Missed) yield break;
 
 		// Knock hit player
 		var dir = other.transform.position - transform.position;
 		other.AddCC ("Spell: Bombed", Locks.All, Locks.All, StunDuration);
 		other.Knock (dir.normalized * ForceMultiplier, 0.5f);
+	}
+
+	private IEnumerator Reparent () 
+	{
+		yield return new WaitForSeconds (2.2f);
+		spellVFX.transform.parent = transform;
+		spellVFX.transform.localPosition = Vector3.up * 0.402f;
 	}
 }

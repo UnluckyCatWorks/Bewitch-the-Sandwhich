@@ -17,14 +17,14 @@ public class MeltingRace : Game
 	public Transform drivers;
 
 	internal Span time;
-	public static List<Grabbable> spawnedIngredients = new List<Grabbable> ();
+	internal List<Grabbable> spawnedIngredients;
 	#endregion
 
 	#region CALLBACKS
 	protected override IEnumerator Logic () 
 	{
 		// Start cauldron
-		MRCauldron.GetStarted ();
+		MRCauldron.current.GetStarted ();
 
 		time = Span.FromSeconds (roundDuration);
 		while (time.TotalSeconds > 0f)
@@ -59,6 +59,7 @@ public class MeltingRace : Game
 			if (i.isActiveAndEnabled) 
 				i.Destroy ();
 		}
+		spawnedIngredients.Clear ();
 
 		// Turn isle to it's original size
 		float factor = 0f;
@@ -76,6 +77,12 @@ public class MeltingRace : Game
 			factor += Time.deltaTime / /*duration*/ 2f;
 		}
 		yield return new WaitForSeconds (1f);
+	}
+
+	public override void OnAwake () 
+	{
+		Boat.Initialize ();
+		spawnedIngredients = new List<Grabbable> ();
 	}
 	#endregion
 }

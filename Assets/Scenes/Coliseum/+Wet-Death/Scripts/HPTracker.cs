@@ -11,7 +11,7 @@ public class HPTracker : MonoBehaviour
 	internal int hp;
 	private bool init;
 
-	internal static List<HPTracker> trackers = new List<HPTracker> (2);
+	internal static List<HPTracker> trackers;
 	#endregion
 
 	#region UTILS
@@ -71,9 +71,6 @@ public class HPTracker : MonoBehaviour
 			s.color = Player.all[playerID].character.focusColor;
 			s.SetAlpha (0f);
 		});
-
-		// Register tracker
-		trackers.Add (this);
 	}
 	#endregion
 }

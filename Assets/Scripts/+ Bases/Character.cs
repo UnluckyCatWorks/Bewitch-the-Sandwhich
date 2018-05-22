@@ -22,7 +22,6 @@ public abstract class Character : Pawn
 	// Internal info
 	protected Dictionary<string, Locks> effects;
 	internal Locks locks;
-	protected bool spellHit;
 
 	protected SmartAnimator anim;
 	protected CharacterController me;
@@ -70,7 +69,7 @@ public abstract class Character : Pawn
 	internal Coroutine knockedCoroutine;
 
 	protected const float spellSelfStun = 0.50f;
-	protected Coroutine spellCoroutine;
+	protected SpellResult spellResult;
 
 	protected Interactable lastMarked;
 	internal Grabbable toy;
@@ -187,18 +186,18 @@ public abstract class Character : Pawn
 
 	public void Respawn () 
 	{
+		// Find a viable position on the Nav Mesh
 		NavMeshHit hit;
 		float radius = 2f;
-		// Find a viable position on the Nav Mesh
 		while (!NavMesh.SamplePosition (lastAlivePos, out hit, radius, NavMesh.AllAreas)) 
 		{
 			radius += 0.5f;
 			if (radius > 4f) throw new System.Exception ("wtf nav mesh");
 		}
-
 		// Teleport to place
 		transform.position = hit.position;
 
+		/*
 		// Disable spells individually
 		if (effects.ContainsKey ("Spell: Stoned")) 
 		{
@@ -213,11 +212,12 @@ public abstract class Character : Pawn
 			effects.Remove ("Spell: Crazy");
 		}
 		else
-		if (effects.ContainsKey ("Spell: Burnt"))
+		if (effects.ContainsKey ("Spell: Burnt")) 
 		{
 			(Get (Characters.Bobby) as Bobby).effectInstance.Stop (true, ParticleSystemStopBehavior.StopEmitting);
 			effects.Remove ("Spell: Burnt");
 		}
+		*/
 	}
 	#endregion
 
@@ -350,17 +350,17 @@ public abstract class Character : Pawn
 		// Self CC used as cooldown
 		AddCC ("-> Spell", Locks.Spells);
 		SwitchCrystal (value: false);
-		StartCoroutine (WaitSpellCD ());
 
 		// Cast spell & put it on CD
-		spellCoroutine = StartCoroutine (CastSpell ());
+		StartCoroutine (CastSpell ());
+		StartCoroutine (WaitSpellCD ());
 	}
 
-	private IEnumerator CastSpell ()
+	private IEnumerator CastSpell () 
 	{
-		areaOfEffect.On (areaColor);                            // Show area
-		yield return new WaitForSeconds (spellSelfStun);        // Allow spell aiming while self-stunned
-		areaOfEffect.Off ();                                    // Hide area
+		areaOfEffect.On (areaColor * 0.5f);						// Show area
+		yield return new WaitForSeconds (spellSelfStun);		// Allow spell aiming while self-stunned
+		areaOfEffect.Off ();									// Hide area
 
 		// Start spell coroutine
 		StartCoroutine (SpellEffect ());
@@ -370,12 +370,11 @@ public abstract class Character : Pawn
 		var hits = Physics.OverlapSphere (areaOfEffect.transform.position, areaCollider.radius, 1<<14);
 		if (hits.Any (c=> c.name == other.name))
 		{
-			// If inside tutorial 
+			// Notify that spell was a hit
+			spellResult = SpellResult.Hit;
 			Tutorial.SetCheckFor (ID, Tutorial.Phases.Casting_Spells, true);
-
-			// Notify character that spell was hit
-			spellHit = true;
 		}
+		else spellResult = SpellResult.Missed;
 	}
 	protected abstract IEnumerator SpellEffect ();
 
@@ -384,8 +383,8 @@ public abstract class Character : Pawn
 		// Just wait until CD is over
 		yield return new WaitForSeconds (spellCooldown);
 		SwitchCrystal (value: true);
+		spellResult = SpellResult.Undefined;
 		RemoveCC ("-> Spell");
-		spellHit = false;
 	}
 
 	public void SwitchCrystal (bool value) 
@@ -482,16 +481,18 @@ public abstract class Character : Pawn
 		{
 			movingSpeed = Vector3.zero;
 			// Interrupt dash
-			if (interrupt.HasFlag (Locks.Dash) &&
-				dashCoroutine != null)
+			if (interrupt.HasFlag (Locks.Dash) && Dashing)
 			{
 				// Reset dashing
 				RemoveCC ("Dashing");
 				Dashing = false;
 				gravityMul = 1f;
 
-				StopCoroutine (dashCoroutine);
-				dashCoroutine = null;
+				if (dashCoroutine != null) 
+				{
+					StopCoroutine (dashCoroutine);
+					dashCoroutine = null; 
+				}
 			}
 		}
 
@@ -499,14 +500,10 @@ public abstract class Character : Pawn
 		if (cc.HasFlag(Locks.Spells)) 
 		{
 			SwitchCrystal (value: false);
+
 			// Interrupt spell casting
-			if (interrupt.HasFlag (Locks.Spells) &&
-				spellCoroutine != null)
-			{
+			if (interrupt.HasFlag (Locks.Spells) && Casting)
 				Casting = false;
-				StopCoroutine (spellCoroutine);
-				spellCoroutine = null;
-			}
 		}
 
 		// If interaction is prevented, de-mark last interactable

@@ -15,7 +15,7 @@ public class Boat : MonoBehaviour
 	public Supply supply;
 
 	// Internal
-	public static List<Boat> boats = new List<Boat>(3);
+	public static List<Boat> boats;
 	#endregion
 
 	#region UTILS
@@ -64,9 +64,9 @@ public class Boat : MonoBehaviour
 		transform.rotation = driver.rotation;
 	}
 
-	private void Awake () 
+	public static void Initialize () 
 	{
-		boats.Add (this);
+		boats = FindObjectsOfType<Boat> ().ToList ();
 	} 
 	#endregion
 }

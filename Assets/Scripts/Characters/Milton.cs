@@ -5,7 +5,7 @@ using UnityEngine;
 public class Milton : Character
 {
 	#region DATA
-	public GameObject spellVFX;
+	public ParticleSystem spellVFX;
 
 	[Header ("Medusa Setting")]
 	public Vector3 triplanarScale;
@@ -91,18 +91,25 @@ public class Milton : Character
 	protected override IEnumerator SpellEffect () 
 	{
 		// Wait until spell hits
-		while (!spellHit) yield return null;
+		while (spellResult == SpellResult.Undefined) yield return null;
+		if (spellResult == SpellResult.Missed) yield break;
 
 		// Apply CC & make other let go their object
 		other.AddCC ("Spell: Stoned", Locks.All, Locks.Spells | Locks.Dash);
 		if (other.toy) other.toy.Throw (-MovingDir * 2f, owner: this);
 
 		// Show impact VFX
+		spellVFX.transform.parent = null;
 		spellVFX.transform.position = other.transform.position + (Vector3.up * 0.3f);
-		spellVFX.SetActive (true);
+		spellVFX.Play (true);
 
 		// Turn other player into stone
 		stoneConversion = StartCoroutine (TurnIntoStone ());
+
+		// Re-parent
+		yield return new WaitForSeconds (1.2f);
+		spellVFX.transform.localPosition = Vector3.zero;
+		spellVFX.transform.parent = transform;
 	}
 
 	protected override void Awake () 

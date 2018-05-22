@@ -16,7 +16,7 @@ public class Supply : Interactable
 
 		// Register spawned ingredient
 		if (Game.manager is MeltingRace)
-			MeltingRace.spawnedIngredients.Add (prefab);
+			(Game.manager as MeltingRace).spawnedIngredients.Add (prefab);
 	}
 
 	public override bool CheckInteraction (Character player) 

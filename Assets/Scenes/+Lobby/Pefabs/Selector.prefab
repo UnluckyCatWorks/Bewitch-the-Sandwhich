@@ -1516,7 +1516,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Milton will make you stoned!
+  m_Text: 'Milton is a serious wizard. He likes good music more than he likes people.
+
+
+    He''s the "Rock Master"'
 --- !u!114 &114376116383449450
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1576,7 +1579,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Bobby is happy to burst your ass into flames!
+  m_Text: 'They say Bobby is TOO happy, sometimes.
+
+
+    He likes to set stuff on fire.'
 --- !u!114 &114390774437866582
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1716,7 +1722,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Lilith pushes her enemies to death.
+  m_Text: 'She looks sad, but in fact she''s just planning how to kill half the universe.
+
+
+    Hobby: Explosions'
 --- !u!114 &114469256174288612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1920,7 +1929,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Amy will make you fall in love!
+  m_Text: 'Young and lovely wizard, Amy enjoys experimenting with dead birds.
+
+
+    She''s a mental expert. '
 --- !u!114 &114576484551862904
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3119,7 +3131,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1276998820678654}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224895149240996336}
@@ -3131,7 +3143,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -883.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 288.3196, y: 334.9035}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224651305829057090

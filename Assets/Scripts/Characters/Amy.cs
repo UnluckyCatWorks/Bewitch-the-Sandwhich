@@ -5,38 +5,39 @@ using UnityEngine;
 public class Amy : Character
 {
 	#region DATA
-	public GameObject spellVFX;
+	public ParticleSystem spellVFX;
 	public ParticleSystem madnessVFX;
 
 	public const float MadnessDuration = 3f;
+
+	private ParticleSystem effectInstance;
 	#endregion
 
 	protected override IEnumerator SpellEffect () 
 	{
 		// Wait until spell hits
-		while (!spellHit) yield return null;
+		while (spellResult == SpellResult.Undefined) yield return null;
+		if (spellResult == SpellResult.Missed) yield break;
 
 		// Make other player go crazy
 		other.AddCC ("Spell: Crazy", Locks.Crazy, Locks.Spells, MadnessDuration);
 
-		// Spawn Impact VFX
-		spellVFX.transform.position = other.transform.position + (Vector3.up * 0.75f);
-		spellVFX.SetActive (true);
+		// Show Impact VFX
+		spellVFX.transform.parent = null;
+		spellVFX.transform.position = other.transform.position + Vector3.up * 0.75f;
+		spellVFX.Play (true);
 
-		// Spawn persistent VFX
-		madnessVFX.transform.SetParent (other.transform, false);
-		madnessVFX.gameObject.SetActive (true);
+		// Show persistent VFX
+		effectInstance = Instantiate (madnessVFX, other.transform);
+		// Make it auto-destroy
+		var main = effectInstance.main;
+		main.stopAction = ParticleSystemStopAction.Destroy;
+		main.duration = MadnessDuration;
+		effectInstance.Play (true);
 
-		// Wait until effect is over
-		yield return new WaitForSeconds (MadnessDuration);
-		madnessVFX.Stop (true, ParticleSystemStopBehavior.StopEmitting);
-		yield return new WaitForSeconds (0.7f);
-		madnessVFX.transform.SetParent (transform, false);
-	}
-
-	private void OnDestroy () 
-	{
-		if (madnessVFX != null)
-			madnessVFX.Stop (true, ParticleSystemStopBehavior.StopEmitting);
+		// Re-parent
+		yield return new WaitForSeconds (1.5f);
+		spellVFX.transform.parent = transform;
+		spellVFX.transform.localPosition = Vector3.zero;
 	}
 }

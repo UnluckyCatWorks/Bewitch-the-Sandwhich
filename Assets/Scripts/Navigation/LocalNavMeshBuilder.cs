@@ -53,8 +53,10 @@ public class LocalNavMeshBuilder : MonoBehaviour
 	{
 		NavMeshSourceTag.Collect (ref m_Sources);
 		var defaultBuildSettings = NavMesh.GetSettingsByID (0);
-		var bounds = QuantizedBounds ();
+		defaultBuildSettings.agentRadius = 0.7f;
+		defaultBuildSettings.agentHeight = 1.5f;
 
+		var bounds = QuantizedBounds ();
 		if (asyncUpdate)
 			m_Operation = NavMeshBuilder.UpdateNavMeshDataAsync (m_NavMesh, defaultBuildSettings, m_Sources, bounds);
 		else

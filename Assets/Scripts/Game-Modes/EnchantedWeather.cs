@@ -21,7 +21,7 @@ public class EnchantedWeather : Game
 	public Vector4 rainRates;
 
 	internal Span time;
-	private static List<Ingredient> spawnedStuff = new List<Ingredient> ();
+	private static List<Ingredient> spawnedStuff;
 	#endregion
 
 	#region CALLBACKS
@@ -64,8 +64,9 @@ public class EnchantedWeather : Game
 
 				// Spawn ingredient
 				var ig = Instantiate (ingredients[ingredientToSpawn]);
-				ig.Process (ingredientState);
 				ig.gameObject.AddComponent<IngredientScaler> ();
+				ig.Process (ingredientState);
+				ig.Throw (-Vector3.up, null, true);
 
 				// Randomize transform
 				ig.transform.rotation = Random.rotation;
@@ -96,18 +97,25 @@ public class EnchantedWeather : Game
 	public override IEnumerator ResetStage () 
 	{
 		EWCauldron.scores = new int[2];
-		spawnedStuff.ForEach (i=> { if (i) i.Destroy (); });
+		foreach (var i in spawnedStuff) 
+		{
+			if (i.isActiveAndEnabled)
+				i.Destroy ();
+		}
+		spawnedStuff.Clear ();
 		yield return new WaitForSeconds (1f);
 	}
 
 	public override void OnAwake () 
 	{
+		spawnedStuff = new List<Ingredient> ();
+
 		// Spawn Cauldrons for the players
 		var ps = FindObjectsOfType<Character> ();
 		foreach (var p in ps)
 		{
 			// Avoid any player interaction
-			p.AddCC ("EW", Locks.Interaction);
+			p.AddCC ("Enchanted-Cauldron", Locks.Interaction);
 			p.simulateCarrying = true;
 
 			// Add them their cauldron
