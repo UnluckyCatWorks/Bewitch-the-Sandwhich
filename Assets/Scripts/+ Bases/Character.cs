@@ -26,7 +26,6 @@ public abstract class Character : Pawn
 
 	protected SmartAnimator anim;
 	protected CharacterController me;
-	protected Character other;
 	protected CharacterSFX sound;
 
 	protected Marker areaOfEffect;
@@ -35,9 +34,9 @@ public abstract class Character : Pawn
 	internal Material mat;
 	internal int _EmissionColor;
 
-	// SPECIALS (Enchanted Weather)
+	// Specials
+	internal Character other;
 	internal bool simulateCarrying;
-
 	private static Character[] cache = new Character[4];
 
 	// Locomotion
@@ -291,7 +290,8 @@ if (effects.ContainsKey ("Spell: Burnt"))
 
 				// Update score
 				if (Game.manager is WetDeath ||
-					Game.manager is WizardWeather) Owner.ranking.scores[1]++;
+					Game.manager is WizardWeather)
+					Owner.ranking.scores[1]++;
 			}
 
 			factor += Time.deltaTime / DashDuration;

@@ -92,7 +92,9 @@ public class Ranking : MonoBehaviour
 		#region SLIDERS
 		// Play sliders
 		StartCoroutine (scores[0].Yeah (0));
+		yield return new WaitForSeconds (0.2f);
 		StartCoroutine (scores[1].Yeah (1));
+		yield return new WaitForSeconds (0.2f);
 		yield return scores[2].Yeah (2);
 		#endregion
 

@@ -20,7 +20,7 @@ public class ModeCarrousel : MonoBehaviour
 	public static ModeCarrousel menu;
 	public const float Speed = 7f;
 	public const float FadeDuration = 1f;
-	public const int selectionMax = (int) Game.Modes.Count;
+	public const float selectionMax = (float) Game.Modes.Count;
 
 	internal SmartAnimator anim;
 
@@ -44,27 +44,28 @@ public class ModeCarrousel : MonoBehaviour
 		slider.text = roundAmount.ToString ();
 	}
 
-	public void MoveMode (int dir) 
+	public void MoveMode (int dir)
 	{
 		if (!closeEnough) return;
 		selected += dir;
 
-		 // Correct out of bounds selection
-		if (selected == 0 - 1) 
+		 // Below lower bound
+		if (selected == -1) 
 		{
-			float lastModeValue = ((float) selectionMax - 1f) / selectionMax;
+			float lastModeValue = (selectionMax - 1f) / selectionMax;
 			anim.SetFloat ("Blend", lastModeValue);
-			selected = selectionMax - 2;
+			selected = (int) selectionMax - 2;
 		}
 		else
+		// Above higher bound
 		if (selected == selectionMax + 1)
 		{
-			anim.SetFloat ("Blend", (float) 1 / selectionMax);
+			anim.SetFloat ("Blend", 1f / selectionMax);
 			selected = 2;
 		}
 
 		// Correct selected mode (for helpers)
-		if (selected == 0)					selectedMode = Game.Modes.Count;
+		if (selected == 0)					selectedMode = Game.Modes.WizardWeather;
 		else if (selected == selectionMax)	selectedMode = Game.Modes.Tutorial;
 		else								selectedMode = (Game.Modes) selected;
 
@@ -128,7 +129,7 @@ public class ModeCarrousel : MonoBehaviour
 	private void Update () 
 	{
 		float iValue = anim.GetFloat ("Blend");
-		float tValue = (float) selected / selectionMax;
+		float tValue = selected / selectionMax;
 		// Move animator towards selected value
 		anim.SetFloat ("Blend", Mathf.Lerp (iValue, tValue, Time.smoothDeltaTime * Speed));
 

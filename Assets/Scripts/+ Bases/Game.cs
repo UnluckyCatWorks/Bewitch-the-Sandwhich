@@ -106,10 +106,9 @@ public abstract class Game : MonoBehaviour
 		WetDeath,
 		MeltingRace,
 		WizardWeather,
-		CauldronCapture,
 
 		// Specials
-		Count = CauldronCapture,
+		Count,
 	}
 
 	public static List<T> Get<T> (string name, bool forEachChar, Action<T> a = null) 
