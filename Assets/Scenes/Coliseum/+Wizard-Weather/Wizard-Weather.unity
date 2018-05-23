@@ -1429,8 +1429,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1650751465}
-  m_LocalRotation: {x: 0.051135987, y: 0.9436042, z: 0.2767707, w: -0.17433965}
-  m_LocalPosition: {x: 5.7346973, y: -9.898019, z: 13.624051}
+  m_LocalRotation: {x: -0.18879408, y: 0.7691658, z: 0.26372468, w: 0.55062705}
+  m_LocalPosition: {x: -8.991234, y: -10.004948, z: 4.120877}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1636,7 +1636,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0686112e51e4534e9f8f8e1b2ff5c7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roundDuration: 15
+  roundDuration: 60
   cauldronPrefab: {fileID: 114544812018650652, guid: f649d803474c01348a1900d25bcc7b9b,
     type: 2}
   playerScores:

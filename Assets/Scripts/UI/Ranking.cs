@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[DefaultExecutionOrder(+100)]
 public class Ranking : MonoBehaviour
 {
 	#region DATA

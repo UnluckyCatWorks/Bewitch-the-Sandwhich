@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Coliseum/+Melting-Race/Melting-Race.unity
     guid: 9280eeb9cae888f48b72bb988292073d
   - enabled: 1
-    path: Assets/Scenes/Coliseum/+Enchanted-Weather/Enchanted-Weather.unity
+    path: Assets/Scenes/Coliseum/+Wizard-Weather/Wizard-Weather.unity
     guid: 977ca07e8cfc44a4e9406a8ddffb075d
   - enabled: 1
     path: Assets/Scenes/Coliseum/+Cauldron-Capture/Cauldron-Capture.unity
