@@ -1855,6 +1855,7 @@ MonoBehaviour:
   overrideControl: 0
   grabHandle: {fileID: 4871902214769434}
   ID: 4
+  avatar: {fileID: 21300000, guid: 47457ab85350f41489fc8e73279fca24, type: 3}
   focusColor: {r: 0.204608, g: 0.736, b: 0.3841818, a: 1}
   crystalEmission: 3.109
   areaColor: {r: 0.36384013, g: 2.1277943, b: 0.031291123, a: 1}

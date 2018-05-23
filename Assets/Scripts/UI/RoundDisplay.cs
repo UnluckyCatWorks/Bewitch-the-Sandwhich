@@ -44,15 +44,18 @@ public class RoundDisplay : MonoBehaviour
 				display.draw.SetActive (false);
 				display.flags.ForEach (f=> f.color = Player.all[winner-1].character.focusColor);
 			}
+
+			// Play round whistle
+			UIMaster.PlayEffect (UIMaster.SFx.Whistle);
 		}
 		else display.draw.SetActive (false);
 
 		display.p1Name.text = Player.all[0].name;
-		display.p1Score.text = Player.all[0].currentStats.roundScore.ToString ();
+		display.p1Score.text = Player.all[0].ranking.roundsWon.ToString ();
 		display.p1Score.color = Character.Get (Player.all[0].playingAs).focusColor;
 
 		display.p2Name.text = Player.all[1].name;
-		display.p2Score.text = Player.all[1].currentStats.roundScore.ToString ();
+		display.p2Score.text = Player.all[1].ranking.roundsWon.ToString ();
 		display.p2Score.color = Character.Get (Player.all[1].playingAs).focusColor; 
 		#endregion
 

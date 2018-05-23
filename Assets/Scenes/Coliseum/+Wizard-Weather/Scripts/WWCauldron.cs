@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EWCauldron : MonoBehaviour 
+public class WWCauldron : MonoBehaviour 
 {
 	#region DATA
 	[Header ("References")]
 	public ParticleSystem splash;
 	public Renderer surface;
+	public AudioSource correctSound;
 
 	internal Character owner;
 
@@ -48,9 +49,18 @@ public class EWCauldron : MonoBehaviour
 		var ingredient = other.GetComponentInParent<Ingredient> ();
 		if (ingredient) 
 		{
-			scores[owner.ownerID - 1]++;
-			ingredient.DestroySilenty ();
+			if (!Game.stopped) 
+			{
+				// Update score
+				int id = owner.ownerID - 1;
+				scores[id]++;
+				owner.Owner.ranking.scores[id]++;
+				(Game.manager as WizardWeather).playerScores[id].text = scores[id].ToString ("00");
+				// Play sound
+				correctSound.Play (); 
+			}
 			splash.Play (true);
+			ingredient.DestroySilenty ();
 		}
 	} 
 	#endregion

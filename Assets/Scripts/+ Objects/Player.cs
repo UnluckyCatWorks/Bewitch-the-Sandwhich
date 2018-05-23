@@ -16,7 +16,7 @@ public class Player
 	public string name;
 	public Characters playingAs;
 	public ControlScheme scheme;
-	public GameStats currentStats;
+	public GameStats ranking;
 
 	private List<string> consumedInputs;
 	#endregion
@@ -27,6 +27,7 @@ public class Player
 		// Initialize player for specific control scheme
 		scheme = Resources.LoadAll<ControlScheme> ("Control-Schemes").First (c => (c.type == controller));
 		consumedInputs = new List<string> (3);
+		ranking = new GameStats (3);
 	}
 
 	[RuntimeInitializeOnLoadMethod

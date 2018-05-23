@@ -7,9 +7,12 @@ using UnityEngine.UI;
 
 public class UIMaster : MonoBehaviour 
 {
-	public AudioSource menu;
-	public AudioSource sound;
-	public static UIMaster manager;
+	#region DATA
+	public static UIMaster manager; 
+
+	internal static List<AudioSource> musics;
+	private static Musics currentlyPlayingMusic;
+	#endregion
 
 	#region CALLBACKS
 	[RuntimeInitializeOnLoadMethod]
@@ -19,11 +22,13 @@ public class UIMaster : MonoBehaviour
 			Instantiate (Resources.Load<UIMaster> ("Prefabs/UI/UI-Master"));
 	}
 
-	private void Awake ()
+	private void Awake () 
 	{
-		menu.Play ();
-		DontDestroyOnLoad (gameObject);
 		manager = this;
+		DontDestroyOnLoad (gameObject);
+
+		musics = GetComponentsInChildren<AudioSource> ().ToList ();
+		PlayMusic (Musics.Menu);
 	} 
 	#endregion
 
@@ -84,8 +89,7 @@ public class UIMaster : MonoBehaviour
 			Character.SpawnPack ();
 			Game.manager.OnAwake ();
 
-			menu.Stop ();
-			sound.Play ();
+			PlayMusic (Musics.Game);
 			Cursor.visible = false;
 		}
 		// If returning to Lobby
@@ -96,8 +100,7 @@ public class UIMaster : MonoBehaviour
 			SceneManager.SetActiveScene (SceneManager.GetSceneByBuildIndex (0));
 			yield return unloading;
 
-			menu.Play ();
-			sound.Stop ();
+			PlayMusic (Musics.Menu);
 			Cursor.visible = true;
 
 			// Activate Lobby
@@ -140,6 +143,46 @@ public class UIMaster : MonoBehaviour
 
 		// Enable game mode logic
 		if (scene!=0) Game.manager.enabled = true;
+	}
+	#endregion
+
+	#region RANKING
+	public static void ShowRanking () 
+	{
+		var prefab = Resources.Load<Ranking> ("Prefabs/UI/UI-Ranking");
+		var ranking = Instantiate (prefab);
+	}
+	#endregion
+
+	#region AUDIO
+	public enum Musics 
+	{
+		None,
+		Menu,
+		Game,
+		Count
+	}
+	public enum SFx 
+	{
+		Whistle
+	}
+
+	public static void PlayMusic (Musics music) 
+	{
+		// Stop if already playing any music
+		if (currentlyPlayingMusic != Musics.None)
+			musics[(int) currentlyPlayingMusic-1].Stop ();
+
+		// Start playing new music
+		int id = (int) music - 1;
+		musics[id].Play ();
+		currentlyPlayingMusic = music;
+	}
+
+	public static void PlayEffect (SFx sfx) 
+	{
+		int id = ((int)Musics.Count - 1) + (int)sfx;
+		musics[id].Play ();
 	}
 	#endregion
 }

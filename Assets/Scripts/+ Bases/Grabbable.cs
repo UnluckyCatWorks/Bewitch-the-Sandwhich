@@ -56,7 +56,11 @@ public class Grabbable : MonoBehaviour
 		}
 		else beingThrown = false;
 
-		colliders.ForEach (c=> c.enabled = true);
+		colliders.ForEach (c=> 
+		{
+			if (c.GetComponent<MeshRenderer> ().enabled)
+				c.enabled = true;
+		});
 		helper.enabled = true;
 	}
 	#endregion
@@ -108,6 +112,10 @@ public class Grabbable : MonoBehaviour
 		// Knock player & stop being a flying weapon
 		victim.Knock (throwDir * 1.2f, 1f);
 		beingThrown = false;
+
+		// Notify thrower's score
+		if (Game.manager is MeltingRace)
+			throwerPlayer.Owner.ranking.scores[1]++;
 
 		// Mark tutorial check
 		if (throwerPlayer) Tutorial.SetCheckFor (throwerPlayer.ID, Tutorial.Phases.Throwing_Stuff, true);

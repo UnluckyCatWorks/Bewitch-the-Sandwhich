@@ -9,12 +9,13 @@ public class MeltingRace : Game
 	#region DATA
 	[Header ("Game settings")]
 	public float roundDuration;
-	public Transform isle;
-	public Text timer;
-
-	[Header ("Boats settings")]
 	public Vector2 boatSpeed;
+
+	[Header ("References")]
+	public Transform isle;
 	public Transform drivers;
+	public Text timer;
+	public List<Text> playerScores;
 
 	internal Span time;
 	internal List<Grabbable> spawnedIngredients;
@@ -53,10 +54,13 @@ public class MeltingRace : Game
 
 	public override IEnumerator ResetStage () 
 	{
+		// Reset scores
 		MRCauldron.scores = new int[2];
+		playerScores.ForEach (s=> s.text = "00");
+
 		foreach (var i in spawnedIngredients)
 		{
-			if (i.isActiveAndEnabled) 
+			if (i && i.isActiveAndEnabled) 
 				i.Destroy ();
 		}
 		spawnedIngredients.Clear ();
@@ -83,6 +87,9 @@ public class MeltingRace : Game
 	{
 		Boat.Initialize ();
 		spawnedIngredients = new List<Grabbable> ();
+		playerScores[0].color = Player.all[0].character.focusColor;
+		playerScores[1].color = Player.all[1].character.focusColor;
+		playerScores.ForEach (s => s.text = "00");
 	}
 	#endregion
 }

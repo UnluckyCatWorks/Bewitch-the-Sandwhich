@@ -25,7 +25,7 @@ public abstract class Game : MonoBehaviour
 		if (winner != 0) 
 		{
 			manager.roundWinner = winner;
-			Player.all[winner - 1].currentStats.roundScore++;
+			Player.all[winner - 1].ranking.roundsWon++;
 		}
 		// Empate (don't count points for anyone!)
 		else manager.roundWinner = 0;
@@ -37,8 +37,18 @@ public abstract class Game : MonoBehaviour
 	#region CALLBACKS
 	protected IEnumerator Start () 
 	{
+		// If not coming from Lobby
+		if (mode == Modes.UNESPECIFIED) 
+		{
+			// Play game music
+			UIMaster.PlayMusic (UIMaster.Musics.Game);
+
+			// Set correct mode, so testing works
+			string modeName = manager.GetType ().Name;
+			mode = (Modes) Enum.Parse (typeof (Modes), modeName);
+		}
 		// Reset game stats for both players
-		Player.all.ForEach (p=> p.currentStats = new GameStats ());
+		Player.all.ForEach (p => p.ranking = new GameStats (3));
 
 		// Start rounds
 		for (int round=1; round<=rounds; round++) 
@@ -57,19 +67,18 @@ public abstract class Game : MonoBehaviour
 			StopCoroutine (logic);
 		}
 
-		// On finalizing every round
+		// At the end of the game
 		stopped = true;
-		yield return RoundDisplay.Show (rounds, roundWinner);
-		#warning show rankings instead!!!
-		UIMaster.LoadScene (Modes.Tutorial);
+		UIMaster.PlayEffect (UIMaster.SFx.Whistle);
+		yield return new WaitForSeconds (1f);
+		StartCoroutine (ResetStage ());
+		UIMaster.ShowRanking ();
 	}
 
 	protected abstract IEnumerator Logic ();
 
 	private void Awake () 
 	{
-		manager = this;
-
 		// Load all ingredients
 		if (ingredients == null)
 			ingredients = Resources.LoadAll<Ingredient> ("Prefabs/Ingredients");
@@ -79,10 +88,10 @@ public abstract class Game : MonoBehaviour
 		{
 			Character.SpawnPack ();
 			enabled = true;
-			rounds = 3;
-
+			rounds = 2;
 			OnAwake ();
 		}
+		manager = this;
 	}
 	public virtual void OnAwake () { }
 	#endregion
@@ -96,12 +105,11 @@ public abstract class Game : MonoBehaviour
 		// Game Modes
 		WetDeath,
 		MeltingRace,
-		EnchantedWeather,
+		WizardWeather,
 		CauldronCapture,
 
 		// Specials
 		Count = CauldronCapture,
-		CountNoTutorial = Count - 1
 	}
 
 	public static List<T> Get<T> (string name, bool forEachChar, Action<T> a = null) 

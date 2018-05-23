@@ -13,6 +13,7 @@ public class MRCauldron : Cauldron
 	public ParticleSystem puff;
 	public Image targetImage;
 	public Timer timer;
+	public AudioSource correctSound;
 
 	internal static int[] scores;
 	internal IngredientID target;
@@ -70,7 +71,14 @@ public class MRCauldron : Cauldron
 	#region CALLBACKS
 	protected override void OnDrop (Character owner) 
 	{
-		scores[owner.ownerID - 1]++;
+		// Update score
+		int id = owner.ownerID - 1;
+		scores[id]++;
+		(Game.manager as MeltingRace).playerScores[id].text = scores[id].ToString ("00");
+		owner.Owner.ranking.scores[0]++;
+
+		// Play sound
+		correctSound.Play ();
 	}
 
 	protected override bool OptionalCheck (Character player) 

@@ -11,6 +11,7 @@ public abstract class Character : Pawn
 	[Header ("Basic settings")]
 	public Transform grabHandle;
 	public Characters ID;
+	public Sprite avatar;
 	public Color focusColor;
 	public float crystalEmission;
 
@@ -197,27 +198,34 @@ public abstract class Character : Pawn
 		// Teleport to place
 		transform.position = hit.position;
 
+		// Notify score
+		if (Game.manager is MeltingRace ||
+			Game.manager is WizardWeather)
+			Owner.ranking.scores[2]++;
+
+		#region UNUSED
 		/*
-		// Disable spells individually
-		if (effects.ContainsKey ("Spell: Stoned")) 
-		{
-			Get (Characters.Milton).StopCoroutine (Milton.stoneConversion);
-			other.mat.SetFloat ("_StoneLevel", 0f);
-			effects.Remove ("Spell: Stoned");
-		}
-		else
-		if (effects.ContainsKey ("Spell: Crazy")) 
-		{
-			(Get (Characters.Amy) as Amy).madnessVFX.Stop (true, ParticleSystemStopBehavior.StopEmitting);
-			effects.Remove ("Spell: Crazy");
-		}
-		else
-		if (effects.ContainsKey ("Spell: Burnt")) 
-		{
-			(Get (Characters.Bobby) as Bobby).effectInstance.Stop (true, ParticleSystemStopBehavior.StopEmitting);
-			effects.Remove ("Spell: Burnt");
-		}
-		*/
+// Disable spells individually
+if (effects.ContainsKey ("Spell: Stoned")) 
+{
+	Get (Characters.Milton).StopCoroutine (Milton.stoneConversion);
+	other.mat.SetFloat ("_StoneLevel", 0f);
+	effects.Remove ("Spell: Stoned");
+}
+else
+if (effects.ContainsKey ("Spell: Crazy")) 
+{
+	(Get (Characters.Amy) as Amy).madnessVFX.Stop (true, ParticleSystemStopBehavior.StopEmitting);
+	effects.Remove ("Spell: Crazy");
+}
+else
+if (effects.ContainsKey ("Spell: Burnt")) 
+{
+	(Get (Characters.Bobby) as Bobby).effectInstance.Stop (true, ParticleSystemStopBehavior.StopEmitting);
+	effects.Remove ("Spell: Burnt");
+}
+*/ 
+		#endregion
 	}
 	#endregion
 
@@ -281,6 +289,9 @@ public abstract class Character : Pawn
 				knockOcurred = true;
 				factor = 0.6f;
 
+				// Update score
+				if (Game.manager is WetDeath ||
+					Game.manager is WizardWeather) Owner.ranking.scores[1]++;
 			}
 
 			factor += Time.deltaTime / DashDuration;

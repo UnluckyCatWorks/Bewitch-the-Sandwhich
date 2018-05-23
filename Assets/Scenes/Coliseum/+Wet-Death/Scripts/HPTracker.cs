@@ -24,6 +24,11 @@ public class HPTracker : MonoBehaviour
 		tracker.hp--; 
 		tracker.hearts[tracker.hp].SetAlpha (0f);
 
+		// Notify score (the other player)
+		#warning USE CHARACTER OTHER FOR THIS SHIT
+		Player.all[id==0? 1 : 0].ranking.scores[0]++;
+
+		// Check for a winner
 		if (tracker.hp == 0)
 			Game.DeclareWinner (player==1? 2 : 1);
 

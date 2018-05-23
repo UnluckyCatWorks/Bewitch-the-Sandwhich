@@ -5,7 +5,12 @@ using UnityEngine;
 
 public struct GameStats 
 {
-	public int roundScore;
-	public int deaths;
-	public int landedSpells;
+	public int roundsWon;
+	public float[] scores;
+
+	public GameStats (int scoreAmount = 3) 
+	{
+		roundsWon = 0;
+		scores = new float[scoreAmount];
+	}
 }

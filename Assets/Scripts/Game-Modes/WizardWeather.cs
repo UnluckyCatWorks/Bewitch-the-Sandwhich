@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using Span = System.TimeSpan;
 
-public class EnchantedWeather : Game 
+public class WizardWeather : Game 
 {
 	#region DATA
 	[Header ("Game settings")]
 	public float roundDuration;
-	public EWCauldron cauldronPrefab;
+	public WWCauldron cauldronPrefab;
+	public List<Text> playerScores;
 	public Text timer;
 
 	[Header ("Isle settings")]
@@ -90,16 +91,18 @@ public class EnchantedWeather : Game
 			timer.text = string.Format ("{0:0}:{1:00}", time.Minutes, time.Seconds);
 		}
 
-		var winner = EWCauldron.GetWinner ();
+		var winner = WWCauldron.GetWinner ();
 		DeclareWinner (winner);
 	}
 
 	public override IEnumerator ResetStage () 
 	{
-		EWCauldron.scores = new int[2];
+		WWCauldron.scores = new int[2];
+		playerScores.ForEach (s => s.text = "00");
+
 		foreach (var i in spawnedStuff) 
 		{
-			if (i.isActiveAndEnabled)
+			if (i && i.isActiveAndEnabled)
 				i.Destroy ();
 		}
 		spawnedStuff.Clear ();
@@ -122,6 +125,9 @@ public class EnchantedWeather : Game
 			var cauldron = Instantiate (cauldronPrefab);
 			cauldron.SetUpFor (p);
 		}
+		playerScores[0].color = Player.all[0].character.focusColor;
+		playerScores[1].color = Player.all[1].character.focusColor;
+		playerScores.ForEach (s => s.text = "00");
 	}
 	#endregion
 
