@@ -6,10 +6,7 @@ using UnityEngine;
 public class WeaponSpawner : MonoBehaviour
 {
 	#region DATA
-	public int maxWeapons;
-	public float spawnRate;
 
-	internal List<WeaponSupply> spawns;
 	#endregion
 
 	#region CALLBACKS
@@ -17,19 +14,14 @@ public class WeaponSpawner : MonoBehaviour
 	{
 		while (true) 
 		{
-			if (Grabbable.globalCount <= maxWeapons)
-			{
-				// Spawn random ingredient
 
-				yield return new WaitForSeconds (spawnRate);
-			}
 			yield return null;
 		}
 	}
 
 	private void Awake ()  
 	{
-		spawns = GetComponentsInChildren<WeaponSupply> ().ToList ();
+		
 	}
 	#endregion
 }

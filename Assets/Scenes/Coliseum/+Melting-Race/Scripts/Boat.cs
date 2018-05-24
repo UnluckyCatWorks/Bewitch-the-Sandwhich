@@ -26,7 +26,7 @@ public class Boat : MonoBehaviour
 		{
 			if (i != chosen) 
 			{
-				// Select a random ingredient
+				// Select a "random" ingredient
 				IngredientID random = target;
 				for (int a=0; a!=i+1; a++) 
 				{

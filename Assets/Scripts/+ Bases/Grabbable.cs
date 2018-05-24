@@ -143,6 +143,8 @@ public class Grabbable : MonoBehaviour
 		// Set up references
 		helper.parent = this;
 		this.helper = helper;
+		// Give initial position
+		helper.LateUpdate ();
 	}
 
 	private void OnDestroy () 

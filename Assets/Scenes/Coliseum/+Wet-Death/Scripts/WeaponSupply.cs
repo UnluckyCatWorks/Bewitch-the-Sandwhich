@@ -9,7 +9,7 @@ public class WeaponSupply : Interactable
 	#region INTERACTABLE
 	public override void Action (Character player) 
 	{
-		// Transfer ownership to player
+		// Transfer ownership to player 
 		ingredient.transform.SetParent (null, true);
 		ingredient.GrabFor (player);
 		ingredient = null;
@@ -17,6 +17,8 @@ public class WeaponSupply : Interactable
 
 	public override bool CheckInteraction (Character player) 
 	{
+		// Can't grab air
+		if (ingredient == null) return false;
 		// Can only grab things if nothing on hand already
 		if (player.toy != null) return false;
 
@@ -26,12 +28,26 @@ public class WeaponSupply : Interactable
 	#endregion
 
 	#region CALLBACKS
-	private void Spawn (IngredientID ingredient, IngredientType type) 
+	private void LateUpdate () 
+	{
+		// Keep position & rotation
+		if (ingredient) ingredient.helper.LateUpdate ();
+	}
+
+	public void Spawn (IngredientID ingredient, IngredientType type) 
 	{
 		// Instantiate prefab
 		var prefab = Resources.Load<Ingredient> ("Prefabs/Ingredients/" + ingredient.ToString ());
 		this.ingredient = Instantiate (prefab, transform);
 		this.ingredient.Process (type);
+
+		// Correct behaviour
+		this.ingredient.helper.enabled = false;
+		marker = this.ingredient.helper.marker;
+
+		// Relocate
+		this.ingredient.transform.localPosition = (Vector3.up * 0.3f);
+		this.ingredient.transform.localScale *= 1.75f;
 	}
 	#endregion
 }

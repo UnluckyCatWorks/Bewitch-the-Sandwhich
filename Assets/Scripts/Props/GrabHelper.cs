@@ -25,7 +25,7 @@ public class GrabHelper : Interactable
 	#endregion
 
 	#region CALLBACKS
-	private void LateUpdate () 
+	public void LateUpdate () 
 	{
 		// Keep helper always at ~= parent's lowest point
 		transform.position = parent.body.worldCenterOfMass - (Vector3.up * 0.5f);

@@ -422,7 +422,7 @@ if (effects.ContainsKey ("Spell: Burnt"))
 			var interactable = hit.collider.GetComponent<Interactable> ();
 			if (interactable && interactable.CheckInteraction (this))
 			{
-				if (!lastMarked)
+				if (!lastMarked) 
 				{
 					// Focus object
 					interactable.marker.On (focusColor);
