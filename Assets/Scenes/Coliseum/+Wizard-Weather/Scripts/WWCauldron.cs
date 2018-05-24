@@ -54,8 +54,11 @@ public class WWCauldron : MonoBehaviour
 				// Update score
 				int id = owner.ownerID - 1;
 				scores[id]++;
-				owner.Owner.ranking.scores[0]++;
+
+				// Notify
+				owner.Owner.ranking[WizardWeather.Scores.IngredientCount]++;
 				(Game.manager as WizardWeather).playerScores[id].text = scores[id].ToString ("00");
+
 				// Play sound
 				correctSound.Play (); 
 			}

@@ -7,6 +7,7 @@ Shader "Hidden/Cortinilla"
     {
         [PerRendererData]
 		_MainTex ("Sprite Texture", 2D) = "white" {}
+		_CTex ("Cortinilla Texture", 2D) = "white" {}
         _Color ("Tint", Color) = (1,1,1,1)
 		_Offset ("Center", Vector) = (0,0,0,0)
 		_Scale ("Scale", Range(0.0, 1.0)) = 1.0
@@ -100,6 +101,7 @@ Shader "Hidden/Cortinilla"
             }
 
             sampler2D _MainTex;
+			sampler2D _CTex;
 			float2 _Offset;
 			float _Scale;
 
@@ -108,10 +110,12 @@ Shader "Hidden/Cortinilla"
 				_Scale = pow ( _Scale, 3.0 );
 
 				// Modify UVs
-				IN.texcoord *= (10.0 * _Scale);
-				IN.texcoord += 0.5 - _Offset * (_Scale * 10.0);
+				float2 coords = IN.texcoord;
+				coords *= (10.0 * _Scale);
+				coords += 0.5 - _Offset * (_Scale * 10.0);
 
-                half4 color = tex2D(_MainTex, IN.texcoord) * IN.color;
+                half alpha = tex2D(_CTex, coords).a;
+				half4 color = half4 (tex2D (_MainTex, IN.texcoord).rgb, alpha) * IN.color;
 
 				// Modify Alpha
 				float alphaAdd = smoothstep (0.7, 1.0, _Scale);

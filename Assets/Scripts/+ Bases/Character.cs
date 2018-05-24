@@ -198,9 +198,11 @@ public abstract class Character : Pawn
 		transform.position = hit.position;
 
 		// Notify score
-		if (Game.manager is MeltingRace ||
-			Game.manager is WizardWeather)
-			Owner.ranking.scores[2]++;
+		if (Game.manager is MeltingRace) 
+			Owner.ranking[MeltingRace.Scores.Deaths]++;
+		else
+		if (Game.manager is WizardWeather) 
+			Owner.ranking[WizardWeather.Scores.Deaths]++;
 
 		#region UNUSED
 		/*
@@ -223,7 +225,7 @@ if (effects.ContainsKey ("Spell: Burnt"))
 	(Get (Characters.Bobby) as Bobby).effectInstance.Stop (true, ParticleSystemStopBehavior.StopEmitting);
 	effects.Remove ("Spell: Burnt");
 }
-*/ 
+*/
 		#endregion
 	}
 	#endregion
@@ -284,14 +286,16 @@ if (effects.ContainsKey ("Spell: Burnt"))
 				// Get force from movement & supress Y-force
 				other.Knock (MovingDir, 0.25f);
 
+				// Update score
+				if (Game.manager is WetDeath)
+					Owner.ranking[WetDeath.Scores.DashHits]++;
+				else
+				if (Game.manager is WizardWeather)
+					Owner.ranking[WizardWeather.Scores.DashHits]++;
+
 				// Hard-slow dash & avoid knocking again
 				knockOcurred = true;
 				factor = 0.6f;
-
-				// Update score
-				if (Game.manager is WetDeath ||
-					Game.manager is WizardWeather)
-					Owner.ranking.scores[1]++;
 			}
 
 			factor += Time.deltaTime / DashDuration;
@@ -570,8 +574,8 @@ if (effects.ContainsKey ("Spell: Burnt"))
 		// Spawn Players' Characters
 		var list = new List<Character>
 		{
-			Instantiate(Resources.Load<Character>("Prefabs/Characters/" + Player.all[0].playingAs)),
-			Instantiate(Resources.Load<Character>("Prefabs/Characters/" + Player.all[1].playingAs)),
+			Instantiate(Resources.Load<Character>("Prefabs/Characters/" + Player.Get(1).playingAs)),
+			Instantiate(Resources.Load<Character>("Prefabs/Characters/" + Player.Get(2).playingAs)),
 		};
 
 		// Correct instances

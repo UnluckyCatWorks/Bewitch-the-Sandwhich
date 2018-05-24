@@ -23,6 +23,13 @@ public class WizardWeather : Game
 
 	internal Span time;
 	private static List<Ingredient> spawnedStuff;
+
+	public enum Scores 
+	{
+		IngredientCount,
+		DashHits,
+		Deaths
+	}
 	#endregion
 
 	#region CALLBACKS
@@ -125,8 +132,8 @@ public class WizardWeather : Game
 			var cauldron = Instantiate (cauldronPrefab);
 			cauldron.SetUpFor (p);
 		}
-		playerScores[0].color = Player.all[0].character.focusColor;
-		playerScores[1].color = Player.all[1].character.focusColor;
+		playerScores[0].color = Player.Get (1).character.focusColor;
+		playerScores[1].color = Player.Get (2).character.focusColor;
 		playerScores.ForEach (s => s.text = "00");
 	}
 	#endregion

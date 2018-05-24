@@ -17,19 +17,16 @@ public class HPTracker : MonoBehaviour
 	#region UTILS
 	public static void Kill (int player) 
 	{
-		int id = player - 1;
-		var tracker = trackers.Find (t => t.playerID == id);
-
 		// Remove a heart from player
-		tracker.hp--; 
-		tracker.hearts[tracker.hp].SetAlpha (0f);
+		var tracker = trackers.Find (t=> t.playerID == player);
+		tracker.hearts[--tracker.hp].SetAlpha (0f);
 
 		// Notify score (the other player)
-		Player.all[id].character.other.Owner.ranking.scores[0]++;
+		Player.GetOther(player).ranking[WetDeath.Scores.Kills]++;
 
 		// Check for a winner
 		if (tracker.hp == 0)
-			Game.DeclareWinner (Player.all[id].character.other.ownerID);
+			Game.DeclareWinner (Player.GetOther(player).character.ownerID);
 
 		// Accelerate rotator
 		WetDeath.rotatorSpeed += (Game.manager as WetDeath).rotationIncrement;
@@ -72,7 +69,7 @@ public class HPTracker : MonoBehaviour
 		// Initialize hearts
 		hearts.ForEach (s =>
 		{
-			s.color = Player.all[playerID].character.focusColor;
+			s.color = Player.Get(playerID).character.focusColor;
 			s.SetAlpha (0f);
 		});
 	}

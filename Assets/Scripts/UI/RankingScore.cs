@@ -18,22 +18,19 @@ public class RankingScore : MonoBehaviour
 	public Image p2Trophy;
 
 	private const float Duration = 3f;
-	private const float BarMinWidth = 69;
-	private const float BarMaxWidth = 279;
+	private const float BarMaxWidth = 294;
 	#endregion
 
 	public IEnumerator Yeah (int id) 
 	{
 		#region INTERNAL DATA
-		var p1 = Player.all[0].ranking;
-		var p2 = Player.all[1].ranking;
+		var p1 = Player.Get (1).ranking;
+		var p2 = Player.Get (2).ranking;
 
 		// Avoid dividing by 0
-		float total = Mathf.Max (p1.scores[id] + p2.scores[id], 0.0001f);
-		float[] temp = new float[2];
-
-		float maxW1 = Mathf.Lerp (BarMinWidth, BarMaxWidth, p1.scores[id] / total);
-		float maxW2 = Mathf.Lerp (BarMinWidth, BarMaxWidth, p2.scores[id] / total);
+		float total = Mathf.Max (p1[id] + p2[id], 0.0001f);
+		float maxW1 = BarMaxWidth * p1[id] / total;
+		float maxW2 = BarMaxWidth * p2[id] / total;
 
 		float factor = 0f; 
 		#endregion
@@ -41,17 +38,15 @@ public class RankingScore : MonoBehaviour
 		while (factor <= 1.1f) 
 		{
 			// Smooth curve
-			float value = Mathf.Pow (factor, 2f);
+			float value = Mathf.Pow (Mathf.Clamp01(factor), 2f);
 
 			// Update numbers
-			p1Score.text = Mathf.Lerp (0, p1.scores[id], value).ToString ("N0");
-			p2Score.text = Mathf.Lerp (0, p2.scores[id], value).ToString ("N0");
+			p1Score.text = Mathf.Lerp (0, p1[id], value).ToString ("N0");
+			p2Score.text = Mathf.Lerp (0, p2[id], value).ToString ("N0");
 
 			// Update bars
-			float w1 = Mathf.Lerp (BarMinWidth, maxW1, value);
-			p1Bar.rectTransform.sizeDelta = new Vector2 (w1, p1Bar.rectTransform.sizeDelta.y);
-			float w2 = Mathf.Lerp (BarMinWidth, maxW2, value);
-			p2Bar.rectTransform.sizeDelta = new Vector2 (w2, p2Bar.rectTransform.sizeDelta.y);
+			p1Bar.rectTransform.sizeDelta = new Vector2 (maxW1 * value, p1Bar.rectTransform.sizeDelta.y);
+			p2Bar.rectTransform.sizeDelta = new Vector2 (maxW2 * value, p2Bar.rectTransform.sizeDelta.y);
 
 			// Continue
 			yield return null;

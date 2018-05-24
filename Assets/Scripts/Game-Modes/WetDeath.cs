@@ -14,6 +14,13 @@ public class WetDeath : Game
 	public Transform isleRotator;
 
 	public static float rotatorSpeed;
+
+	public enum Scores 
+	{
+		Kills,
+		ThrowHits,
+		DashHits
+	}
 	#endregion
 
 	#region CALLBACKS

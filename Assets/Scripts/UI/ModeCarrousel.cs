@@ -66,11 +66,11 @@ public class ModeCarrousel : MonoBehaviour
 
 		// Correct selected mode (for helpers)
 		if (selected == 0)					selectedMode = Game.Modes.WizardWeather;
-		else if (selected == selectionMax)	selectedMode = Game.Modes.Tutorial;
+		else if (selected == selectionMax)	selectedMode = Game.Modes.Lobby;
 		else								selectedMode = (Game.Modes) selected;
 
 		// Disable slider if selecting tutorial
-		if (selectedMode == Game.Modes.Tutorial)
+		if (selectedMode == Game.Modes.Lobby)
 			slider.transform.parent.gameObject.SetActive (false);
 		else
 			slider.transform.parent.gameObject.SetActive (true);
@@ -81,7 +81,7 @@ public class ModeCarrousel : MonoBehaviour
 		Game.mode = selectedMode;
 		Game.rounds = roundAmount;
 
-		if (Game.mode == Game.Modes.Tutorial)
+		if (Game.mode == Game.Modes.Lobby)
 			Tutorial.manager.StartTutorial ();
 		else
 			UIMaster.LoadScene (Game.mode);
@@ -139,8 +139,8 @@ public class ModeCarrousel : MonoBehaviour
 		if (!active) return;
 
 		#region INPUT HANLDING
-		float input1 = Player.all[0].GetAxis ("Horizontal", true);
-		float input2 = Player.all[1].GetAxis ("Horizontal", true);
+		float input1 = Player.Get (1).GetAxis ("Horizontal", true);
+		float input2 = Player.Get (2).GetAxis ("Horizontal", true);
 
 		if (input1 != 0) MoveMode ((int)input1);
 		else

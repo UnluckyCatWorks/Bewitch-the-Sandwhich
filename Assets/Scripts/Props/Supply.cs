@@ -11,8 +11,7 @@ public class Supply : Interactable
 		// Instantiate prefab
 		var prefab = Resources.Load<Grabbable> ("Prefabs/Ingredients/" + ingredient.ToString ());
 		var go = Instantiate(prefab, transform.position, Quaternion.identity);
-		player.toy = go.GetComponent<Grabbable> ();
-		player.toy.body.isKinematic = true;
+		go.GrabFor (player);
 
 		// Register spawned ingredient
 		if (Game.manager is MeltingRace)

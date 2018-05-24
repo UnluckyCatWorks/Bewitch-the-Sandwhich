@@ -7,7 +7,7 @@ public class Lilith : Character
 {
 	#region DATA
 	public ParticleSystem spellVFX;
-	private const float ForceMultiplier = 1.50f;
+	private const float ForceMultiplier = 1.20f;
 	private const float StunDuration = 1.25f;
 	#endregion
 

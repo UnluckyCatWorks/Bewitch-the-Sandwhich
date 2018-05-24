@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Game : MonoBehaviour
+public abstract class Game : MonoBehaviour 
 {
 	#region DATA
 	// 0 (draw), 1 or 2
@@ -22,13 +22,18 @@ public abstract class Game : MonoBehaviour
 	#region UTILS
 	public static void DeclareWinner (int winner) 
 	{
-		if (winner != 0) 
+		if (winner != 0)
 		{
 			manager.roundWinner = winner;
-			Player.all[winner - 1].ranking.roundsWon++;
+			Player.Get (winner).ranking.roundsWon++;
 		}
-		// Empate (don't count points for anyone!)
-		else manager.roundWinner = 0;
+		// Empate (count points for both)
+		else
+		{
+			Player.Get (1).ranking.roundsWon++;
+			Player.Get (2).ranking.roundsWon++;
+			manager.roundWinner = 0;
+		}
 	}
 
 	public abstract IEnumerator ResetStage ();
@@ -48,7 +53,8 @@ public abstract class Game : MonoBehaviour
 			mode = (Modes) Enum.Parse (typeof (Modes), modeName);
 		}
 		// Reset game stats for both players
-		Player.all.ForEach (p => p.ranking = new GameStats (3));
+		Player.Get (1).ranking = new GameStats ();
+		Player.Get (2).ranking = new GameStats ();
 
 		// Start rounds
 		for (int round=1; round<=rounds; round++) 
@@ -100,7 +106,7 @@ public abstract class Game : MonoBehaviour
 	public enum Modes 
 	{
 		UNESPECIFIED,
-		Tutorial,
+		Lobby,
 
 		// Game Modes
 		WetDeath,

@@ -74,8 +74,9 @@ public class MRCauldron : Cauldron
 		// Update score
 		int id = owner.ownerID - 1;
 		scores[id]++;
+
 		(Game.manager as MeltingRace).playerScores[id].text = scores[id].ToString ("00");
-		owner.Owner.ranking.scores[0]++;
+		owner.Owner.ranking[MeltingRace.Scores.IngredientCount]++;
 
 		// Play sound
 		correctSound.Play ();

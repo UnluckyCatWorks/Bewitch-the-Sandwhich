@@ -48,8 +48,8 @@ public class Tutorial : MonoBehaviour
 			Instantiate (iconsPrefab, ps[0].transform),
 			Instantiate (iconsPrefab, ps[1].transform)
 		};
-		icons[0].InitializeAs (Player.all[0].scheme.type);
-		icons[1].InitializeAs (Player.all[1].scheme.type);
+		icons[0].InitializeAs (Player.Get (1).scheme.type);
+		icons[1].InitializeAs (Player.Get (2).scheme.type);
 
 		// Disable showcase characters
 		var showcase = Game.Get<Transform> ("Showcase_", true);
@@ -71,12 +71,12 @@ public class Tutorial : MonoBehaviour
 		// Show movement marks
 		var markers = Game.Get<TutoPoint> ("Movement_", false);
 		// Show correct icon (depends on input scheme)
-		for (int i=0; i!=2; i++) 
+		for (int i=1; i!=3; i++) 
 		{
-			int id = (int) Player.all[i].scheme.type;
-			var child = markers[i].transform.GetChild (id+1);
+			int id = (int) Player.Get (i).scheme.type;
+			var child = markers[i-1].transform.GetChild (id+1);
 
-			markers[i].marker.sign = child.GetComponent<SpriteRenderer> ();
+			markers[i-1].marker.sign = child.GetComponent<SpriteRenderer> ();
 			child.gameObject.SetActive (true);
 		}
 		// Assign observed characters

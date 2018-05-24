@@ -21,12 +21,9 @@ public class Pawn : MonoBehaviour
 			}
 			else
 			{
-				// -1 so that 0 => NULL
-				int id = ownerID - 1;
-
 				// If not overriding, find owner player
-				if (id == -1) owner = null;
-				else owner = Player.all[id];
+				if (ownerID == 0) owner = null;
+				else owner = Player.Get (ownerID);
 			}
 			return owner;
 		}

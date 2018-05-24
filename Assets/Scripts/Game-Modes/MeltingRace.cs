@@ -19,6 +19,13 @@ public class MeltingRace : Game
 
 	internal Span time;
 	internal List<Grabbable> spawnedIngredients;
+
+	public enum Scores 
+	{
+		IngredientCount,
+		ThrowHits,
+		Deaths
+	}
 	#endregion
 
 	#region CALLBACKS
@@ -87,8 +94,8 @@ public class MeltingRace : Game
 	{
 		Boat.Initialize ();
 		spawnedIngredients = new List<Grabbable> ();
-		playerScores[0].color = Player.all[0].character.focusColor;
-		playerScores[1].color = Player.all[1].character.focusColor;
+		playerScores[0].color = Player.Get (1).character.focusColor;
+		playerScores[1].color = Player.Get (2).character.focusColor;
 		playerScores.ForEach (s => s.text = "00");
 	}
 	#endregion

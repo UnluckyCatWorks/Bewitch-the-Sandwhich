@@ -897,7 +897,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e167b1d38e0d714b8b6c56325224d1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerID: 1
+  playerID: 2
   hearts:
   - {fileID: 2067897531}
   - {fileID: 71903408}
@@ -1227,7 +1227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e167b1d38e0d714b8b6c56325224d1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerID: 0
+  playerID: 1
   hearts:
   - {fileID: 557103881}
   - {fileID: 1827784364}
@@ -1279,6 +1279,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec9a251179128af47bb6ac87506a6241, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1423312102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1423312099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fe7137b65aa62d41aa8c802d6dd5c21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!64 &1423312103
@@ -1353,8 +1364,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1650751465}
-  m_LocalRotation: {x: 0.0022561555, y: 0.95351726, z: 0.30124527, w: -0.007145562}
-  m_LocalPosition: {x: 0.26005554, y: -8.966859, z: 14.467461}
+  m_LocalRotation: {x: 0.00863097, y: -0.9750304, z: -0.22019976, w: -0.027445719}
+  m_LocalPosition: {x: -0.040402055, y: -7.6927514, z: 15.197542}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

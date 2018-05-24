@@ -34,6 +34,10 @@ public class Grabbable : MonoBehaviour
 		// Disable colliders so the player doesn't start fucking floating
 		colliders.ForEach (c=> c.enabled = false);
 		helper.enabled = false;
+
+		// De-attach
+		if (transform.parent != null)
+			transform.SetParent (null, true);
 	}
 
 	public void Throw (Vector3 force, Character owner, bool forceThrow = false) 
@@ -115,7 +119,10 @@ public class Grabbable : MonoBehaviour
 
 		// Notify thrower's score
 		if (Game.manager is MeltingRace)
-			throwerPlayer.Owner.ranking.scores[1]++;
+			throwerPlayer.Owner.ranking[MeltingRace.Scores.ThrowHits]++;
+		else
+		if (Game.manager is WetDeath)
+			throwerPlayer.Owner.ranking[WetDeath.Scores.ThrowHits]++;
 
 		// Mark tutorial check
 		if (throwerPlayer) Tutorial.SetCheckFor (throwerPlayer.ID, Tutorial.Phases.Throwing_Stuff, true);

@@ -36,13 +36,13 @@ public class RoundDisplay : MonoBehaviour
 			if (winner == 0)
 			{
 				display.draw.SetActive (true);
-				display.flags[0].color = Player.all[0].character.focusColor;
-				display.flags[1].color = Player.all[1].character.focusColor;
+				display.flags[0].color = Player.Get (1).character.focusColor;
+				display.flags[1].color = Player.Get (2).character.focusColor;
 			}
 			else 
 			{
 				display.draw.SetActive (false);
-				display.flags.ForEach (f=> f.color = Player.all[winner-1].character.focusColor);
+				display.flags.ForEach (f=> f.color = Player.Get (winner).character.focusColor);
 			}
 
 			// Play round whistle
@@ -50,13 +50,13 @@ public class RoundDisplay : MonoBehaviour
 		}
 		else display.draw.SetActive (false);
 
-		display.p1Name.text = Player.all[0].name;
-		display.p1Score.text = Player.all[0].ranking.roundsWon.ToString ();
-		display.p1Score.color = Character.Get (Player.all[0].playingAs).focusColor;
+		display.p1Name.text = Player.Get (1).name;
+		display.p1Score.text = Player.Get (1).ranking.roundsWon.ToString ();
+		display.p1Score.color = Character.Get (Player.Get (1).playingAs).focusColor;
 
-		display.p2Name.text = Player.all[1].name;
-		display.p2Score.text = Player.all[1].ranking.roundsWon.ToString ();
-		display.p2Score.color = Character.Get (Player.all[1].playingAs).focusColor; 
+		display.p2Name.text = Player.Get (2).name;
+		display.p2Score.text = Player.Get (2).ranking.roundsWon.ToString ();
+		display.p2Score.color = Character.Get (Player.Get (2).playingAs).focusColor; 
 		#endregion
 
 		// Fade-in animation
