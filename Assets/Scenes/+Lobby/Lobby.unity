@@ -5288,7 +5288,7 @@ MonoBehaviour:
     limited time to do it.
 
 
-    Run fast, don''t fall, and fill your cauldron with it everything it asks for!
+    Run fast, don''t fall, and fill your cauldron with everything it asks for!
 
 
     Time is running and ice is melting!'
@@ -7999,8 +7999,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1036404631}
-  m_LocalRotation: {x: -0.0045615584, y: 0.9899815, z: -0.14029439, w: -0.015278378}
-  m_LocalPosition: {x: 0.9675029, y: -4.1049623, z: 3.9215837}
+  m_LocalRotation: {x: 0.0012655021, y: 0.9953087, z: 0.095845334, w: -0.013142007}
+  m_LocalPosition: {x: 0.41463053, y: -9.634974, z: 1.8921547}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
