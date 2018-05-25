@@ -13,11 +13,10 @@ public abstract class Character : Pawn
 	public Characters ID;
 	public Sprite avatar;
 	public Color focusColor;
-	public float crystalEmission;
 
 	[Header ("Spell settings")]
 	[ColorUsage(true, true, 0, 8, 0.125f, 3)]
-	public Color areaColor;
+	public Color crystalColor;
 	public float spellCooldown;
 
 	// Internal info
@@ -58,7 +57,7 @@ public abstract class Character : Pawn
 	private Vector3 lastAlivePos;
 
 	// Capabilities
-	internal static float ThrowForce = 30f;
+	internal static float ThrowForce = 25f;
 
 	internal static float DashForce = 40f;
 	internal static float DashCooldown = 0.50f;
@@ -373,7 +372,7 @@ if (effects.ContainsKey ("Spell: Burnt"))
 
 	private IEnumerator CastSpell () 
 	{
-		areaOfEffect.On (areaColor * 0.5f);						// Show area
+		areaOfEffect.On (crystalColor * 0.3f);					// Show area
 		yield return new WaitForSeconds (spellSelfStun);		// Allow spell aiming while self-stunned
 		areaOfEffect.Off ();									// Hide area
 
@@ -404,7 +403,7 @@ if (effects.ContainsKey ("Spell: Burnt"))
 
 	public void SwitchCrystal (bool value) 
 	{
-		var color = Color.white * (value? crystalEmission : 0f);
+		var color = value? crystalColor : Color.black;
 		mat.SetColor (_EmissionColor, color);
 	}
 	#endregion

@@ -15,7 +15,7 @@ MonoBehaviour:
   - message: Greetings!
     speed: 20
     trigger: 
-  - message: You must be the new contestants.
+  - message: You must be the new contestants...
     speed: 20
     trigger: 
   - message: Let me welcome you to...
@@ -26,6 +26,9 @@ MonoBehaviour:
     trigger: Normal
   - message: I hope you're ready for some action, and probably getting a bit wet.
     speed: 20
+    trigger: 
+  - message: Thanks in the name of the whole team for participating in the show.
+    speed: 15
     trigger: 
   - message: Present yourselves in the Arena when you're ready!
     speed: 20

@@ -36,18 +36,14 @@ public class WetDeath : Game
 
 		while (true) 
 		{
-			if (Grabbable.globalCount <= maxWeapons &&
+			if (Grabbable.globalCount < maxWeapons &&
 				Time.time >= nextSpawnTime)
 			{
 				// Select random ingredient
 				int spawn;
-				do
-				{
-					sdsdsd
-					spawn = Random.Range (0, supplies.Count);
-				}
+				do spawn = Random.Range (0, supplies.Count);
 				while (supplies[spawn].ingredient);
-				
+
 				int ingredient = Random.Range (1, (int) IngredientID.Count);
 				int type = Random.Range (0, (int)IngredientType.Count);
 				if (type == (int)IngredientType.Molido) type = 0;
@@ -55,6 +51,11 @@ public class WetDeath : Game
 				// Actually spawn & update timer
 				supplies[spawn].Spawn ((IngredientID)ingredient, (IngredientType)type);
 				nextSpawnTime = Time.time + spawnRate;
+
+				// With a puff
+				var puff = Instantiate (supplies[spawn].ingredient.puff, supplies[spawn].transform);
+				Destroy (puff, 2f);
+				puff.Play (true);
 			}
 
 			// Rotate isle
@@ -72,7 +73,7 @@ public class WetDeath : Game
 	public override void OnAwake () 
 	{
 		HPTracker.trackers = FindObjectsOfType<HPTracker> ().ToList ();
-		supplies = GetComponentsInChildren<WeaponSupply> ().ToList ();
+		supplies = isleRotator.GetComponentsInChildren<WeaponSupply> ().ToList ();
 	}
 	#endregion
 }

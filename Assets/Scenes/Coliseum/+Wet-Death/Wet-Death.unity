@@ -292,8 +292,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.31, y: 1, z: 2.11}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.16, y: 1.23, z: 2.37}
+  m_Center: {x: 0, y: 0.08, z: 0}
 --- !u!33 &181525738
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -388,8 +388,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.31, y: 1, z: 2.11}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.16, y: 1.23, z: 2.37}
+  m_Center: {x: 0, y: 0.08, z: 0}
 --- !u!33 &197628287
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -614,8 +614,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.31, y: 1, z: 2.11}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.16, y: 1.23, z: 2.37}
+  m_Center: {x: 0, y: 0.08, z: 0}
 --- !u!33 &458129940
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -774,8 +774,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.31, y: 1, z: 2.11}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.16, y: 1.23, z: 2.37}
+  m_Center: {x: 0, y: 0.08, z: 0}
 --- !u!33 &528725401
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -943,8 +943,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.31, y: 1, z: 2.11}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.16, y: 1.23, z: 2.37}
+  m_Center: {x: 0, y: 0.08, z: 0}
 --- !u!33 &579492407
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1169,8 +1169,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.31, y: 1, z: 2.11}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.16, y: 1.23, z: 2.37}
+  m_Center: {x: 0, y: 0.08, z: 0}
 --- !u!33 &685702753
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1506,8 +1506,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.31, y: 1, z: 2.11}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.16, y: 1.23, z: 2.37}
+  m_Center: {x: 0, y: 0.08, z: 0}
 --- !u!33 &1144896310
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1807,8 +1807,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.31, y: 1, z: 2.11}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.16, y: 1.23, z: 2.37}
+  m_Center: {x: 0, y: 0.08, z: 0}
 --- !u!33 &1304104858
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2028,8 +2028,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.31, y: 1, z: 2.11}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.16, y: 1.23, z: 2.37}
+  m_Center: {x: 0, y: 0.08, z: 0}
 --- !u!33 &1355430834
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2172,8 +2172,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.31, y: 1, z: 2.11}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.16, y: 1.23, z: 2.37}
+  m_Center: {x: 0, y: 0.08, z: 0}
 --- !u!33 &1404627828
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2241,19 +2241,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec9a251179128af47bb6ac87506a6241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1423312102
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1423312099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fe7137b65aa62d41aa8c802d6dd5c21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxWeapons: 7
-  spawnRate: 5
 --- !u!64 &1423312103
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2326,8 +2313,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1650751465}
-  m_LocalRotation: {x: 0.10372929, y: 0.66800094, z: 0.09481876, w: -0.7307698}
-  m_LocalPosition: {x: 11.75894, y: -2.165009, z: 2.218246}
+  m_LocalRotation: {x: -0.004070848, y: -0.9839277, z: -0.17475004, w: 0.03649748}
+  m_LocalPosition: {x: 0.9277444, y: -1.0652915, z: 6.944167}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2409,8 +2396,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.31, y: 1, z: 2.11}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.16, y: 1.23, z: 2.37}
+  m_Center: {x: 0, y: 0.08, z: 0}
 --- !u!33 &1665124983
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2768,9 +2755,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a6fe951f0656cc498a8e34028207b2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isleRotator: {fileID: 1423312100}
   startRotation: 10
   rotationIncrement: 5
-  isleRotator: {fileID: 1423312100}
+  maxWeapons: 8
+  spawnRate: 2
 --- !u!4 &1843253190
 Transform:
   m_ObjectHideFlags: 0
@@ -2873,8 +2862,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.31, y: 1, z: 2.11}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.16, y: 1.23, z: 2.37}
+  m_Center: {x: 0, y: 0.08, z: 0}
 --- !u!33 &1873293208
 MeshFilter:
   m_ObjectHideFlags: 0

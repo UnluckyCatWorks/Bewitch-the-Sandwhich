@@ -1324,7 +1324,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1785377886934906}
   m_LocalRotation: {x: -0, y: 0.3459391, z: -0, w: 0.938257}
-  m_LocalPosition: {x: 0.15552902, y: -0.14499673, z: -3.2947483}
+  m_LocalPosition: {x: -3.3185513, y: 1.1259477, z: 4.209989}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4900741661584080}
@@ -1932,8 +1932,7 @@ MonoBehaviour:
   ID: 3
   avatar: {fileID: 21300000, guid: 73da3e3992565c940b4e9e1ac0f50fc9, type: 3}
   focusColor: {r: 0.7822513, g: 0.16911763, b: 1, a: 1}
-  crystalEmission: 2.67
-  areaColor: {r: 2.7680004, g: 2.7680004, b: 2.7680004, a: 1}
+  crystalColor: {r: 3.6045284, g: 0.47302055, b: 4.288721, a: 1}
   spellCooldown: 5
   spellVFX: {fileID: 198622194340534388}
   madnessVFX: {fileID: 198106437701523634}

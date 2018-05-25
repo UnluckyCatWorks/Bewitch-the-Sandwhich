@@ -33,7 +33,7 @@ public class WWCauldron : MonoBehaviour
 		this.owner = owner;
 		transform.position = owner.grabHandle.position;
 		surface.material.SetColor ("_Color", owner.focusColor);
-		surface.material.SetColor ("_EmissionColor", owner.areaColor * 0.5f);
+		surface.material.SetColor ("_EmissionColor", owner.crystalColor * 0.5f);
 	}
 	#endregion
 

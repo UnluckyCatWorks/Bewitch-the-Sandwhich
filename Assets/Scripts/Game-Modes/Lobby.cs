@@ -119,6 +119,12 @@ public class Lobby : MonoBehaviour
 
 		// Wait until both players are ready
 		yield return new WaitUntil (() => charactersSelected);
+		// Write first-time key
+		if (firstTime) 
+		{
+			PlayerPrefs.SetInt ("The_Sandwich_Has_Been_Bewitched", 0);
+			PlayerPrefs.Save ();
+		}
 		#endregion
 
 		if (firstTime && !bypassHostIntro) 

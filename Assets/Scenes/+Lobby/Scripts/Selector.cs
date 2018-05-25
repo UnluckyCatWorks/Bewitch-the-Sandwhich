@@ -74,6 +74,8 @@ public class Selector : Pawn
 		active = state;
 		showcase[selected].SwitchCrystal (value: state);
 		StartCoroutine (Switch (state? 1f : 0f));
+
+		if (state) anim.SetBool ("Ready", false);
 	}
 
 	private IEnumerator Switch (float target) 
@@ -116,7 +118,7 @@ public class Selector : Pawn
 
 	public static void SetAllFrozen (bool frozen) 
 	{
-		FindObjectsOfType<Selector> ().ToList ()
+		FindObjectsOfType<Selector> ().ToList () 
 			.ForEach (s =>
 			{
 				s.active = !frozen;

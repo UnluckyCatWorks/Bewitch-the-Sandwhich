@@ -17,6 +17,3 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Coliseum/+Wizard-Weather/Wizard-Weather.unity
     guid: 977ca07e8cfc44a4e9406a8ddffb075d
-  - enabled: 1
-    path: Assets/Scenes/Coliseum/+Cauldron-Capture/Cauldron-Capture.unity
-    guid: b9bbb3bd0250b624aa4bf5e66dd71867

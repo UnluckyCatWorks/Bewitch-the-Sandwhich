@@ -61,9 +61,9 @@ public class UIMaster : MonoBehaviour
 			// Start loading scene (additively)
 			var loading = SceneManager.LoadSceneAsync (scene, LoadSceneMode.Additive);
 			yield return loading;
-
-			// De-activate WHOLE Lobby
-			foreach (var g in SceneManager.GetSceneByBuildIndex (0).GetRootGameObjects ()) 
+			
+			#region DE-ACTIVATE LOBBY
+			foreach (var g in SceneManager.GetSceneByBuildIndex (0).GetRootGameObjects ())
 			{
 				if (g.name == "Camera_Rig")
 				{
@@ -75,14 +75,17 @@ public class UIMaster : MonoBehaviour
 				if (g.name == "Focos")
 				{
 					// Don't de-activate the Focos animator
-					g.GetComponentsInChildren <MeshRenderer> ().ToList ()
-						.ForEach (m=> m.enabled = false);
+					g.GetComponentsInChildren<MeshRenderer> ().ToList ()
+						.ForEach (m => m.enabled = false);
 					continue;
 				}
+				// Don't deactivate selectors' animators
+				if (g.name.Contains ("Selector")) continue;
 
 				// De-activate anything else
 				g.SetActive (false);
-			}
+			} 
+			#endregion
 
 			// Spawn player Characters on new scene
 			SceneManager.SetActiveScene (SceneManager.GetSceneByBuildIndex (scene));
@@ -102,9 +105,9 @@ public class UIMaster : MonoBehaviour
 
 			PlayMusic (Musics.Menu);
 			Cursor.visible = true;
-
-			// Activate Lobby
-			foreach (var g in SceneManager.GetSceneByBuildIndex (0).GetRootGameObjects ()) 
+			
+			#region RE-ACTIVATE LOBBY
+			foreach (var g in SceneManager.GetSceneByBuildIndex (0).GetRootGameObjects ())
 			{
 				if (g.name == "Camera_Rig")
 				{
@@ -116,18 +119,21 @@ public class UIMaster : MonoBehaviour
 				if (g.name == "Focos")
 				{
 					// Re-activate each Foco
-					g.GetComponentsInChildren <MeshRenderer> ().ToList ()
-						.ForEach (m=> m.enabled = true);
+					g.GetComponentsInChildren<MeshRenderer> ().ToList ()
+						.ForEach (m => m.enabled = true);
 					continue;
 				}
 				// Skip some already-disabled objects
 				else if (g.name == "Host") continue;
 				else if (g.name == "Puerta_Wrapper") continue;
 				else if (g.name.Contains ("Supply")) continue;
+				// Selectors are not even disabled
+				else if (g.name.Contains ("Selector")) continue;
 
 				// Re-activate anything else
 				g.SetActive (true);
-			}
+			} 
+			#endregion
 		}
 
 		#region OPEN CORTINILLA

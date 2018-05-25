@@ -8,6 +8,7 @@ public class GrabHelper : Interactable
 {
 	#region DATA
 	internal Grabbable parent;
+	internal List<Collider> colliders;
 	#endregion
 
 	#region INTERACTION
@@ -28,9 +29,15 @@ public class GrabHelper : Interactable
 	public void LateUpdate () 
 	{
 		// Keep helper always at ~= parent's lowest point
-		transform.position = parent.body.worldCenterOfMass - (Vector3.up * 0.5f);
+		transform.position = parent.body.worldCenterOfMass - (Vector3.up * 0.2f);
 		// Keep always unrotated
 		transform.rotation = Quaternion.identity;
+	}
+
+	protected override void Awake () 
+	{
+		base.Awake ();
+		colliders = GetComponents<Collider> ().ToList ();
 	}
 	#endregion
 }

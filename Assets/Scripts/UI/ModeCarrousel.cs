@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -85,6 +86,27 @@ public class ModeCarrousel : MonoBehaviour
 			Tutorial.manager.StartTutorial ();
 		else
 			UIMaster.LoadScene (Game.mode);
+	}
+
+	public void BackToSelection () 
+	{
+		GameObject.Find ("Camera_Rig").GetComponent<Animator> ().SetTrigger ("ToCharSelect");
+//		StartCoroutine (Extensions.FadeAmbient (0.7f, 2f, 0.8f));
+
+		// Wait until players are reselected
+		Lobby.charactersSelected = false;
+		StartCoroutine (WaitUntilReselection ());
+
+		// Enable Selectors
+		FindObjectsOfType<Selector> ().ToList ().ForEach (s => s.SwitchState (state: true));
+		Switch (state: false);
+	}
+
+	IEnumerator WaitUntilReselection () 
+	{
+		yield return new WaitUntil (()=> Lobby.charactersSelected);
+		GameObject.Find ("Camera_Rig").GetComponent<Animator> ().SetTrigger ("ToModeSelect");
+		Switch (state: true);
 	}
 	#endregion
 

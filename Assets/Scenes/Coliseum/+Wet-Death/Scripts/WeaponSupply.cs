@@ -44,6 +44,9 @@ public class WeaponSupply : Interactable
 		// Correct behaviour
 		this.ingredient.helper.enabled = false;
 		marker = this.ingredient.helper.marker;
+		this.ingredient.body.interpolation = RigidbodyInterpolation.None;
+		this.ingredient.colliders.ForEach (c=> c.enabled = false);
+		this.ingredient.helper.colliders.ForEach (c => c.enabled = false);
 
 		// Relocate
 		this.ingredient.transform.localPosition = (Vector3.up * 0.3f);

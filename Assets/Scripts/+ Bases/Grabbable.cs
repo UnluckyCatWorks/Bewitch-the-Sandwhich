@@ -18,7 +18,7 @@ public class Grabbable : MonoBehaviour
 	private bool beingThrown;
 	private Vector3 throwDir;
 
-	private ParticleSystem puff;
+	internal ParticleSystem puff;
 	#endregion
 
 	#region UTILS
@@ -66,6 +66,7 @@ public class Grabbable : MonoBehaviour
 				c.enabled = true;
 		});
 		helper.enabled = true;
+		helper.colliders.ForEach (c=> c.enabled = true);
 	}
 	#endregion
 
@@ -114,7 +115,7 @@ public class Grabbable : MonoBehaviour
 		if (throwerPlayer && victim.ID == throwerPlayer.ID) return;
 
 		// Knock player & stop being a flying weapon
-		victim.Knock (throwDir * 1.2f, 1f);
+		victim.Knock (throwDir * 0.8f, 1f);
 		beingThrown = false;
 
 		// Notify thrower's score
