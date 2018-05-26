@@ -1930,7 +1930,7 @@ MonoBehaviour:
   overrideControl: 0
   grabHandle: {fileID: 4620425760156782}
   ID: 3
-  avatar: {fileID: 21300000, guid: 73da3e3992565c940b4e9e1ac0f50fc9, type: 3}
+  avatar: {fileID: 21300000, guid: 9eb34b37e5454c940a1273b4c882ee70, type: 3}
   focusColor: {r: 0.7822513, g: 0.16911763, b: 1, a: 1}
   crystalColor: {r: 3.6045284, g: 0.47302055, b: 4.288721, a: 1}
   spellCooldown: 5
